@@ -27,3 +27,11 @@ FileRow(.file-row)
 ## Templates (golden screens — clone these to start a new page)
 - templates/chat.html — agent chat: sidebar, message stream, tool calls, citations, composer
 - templates/search.html — search: query bar, filter chips, highlighted results, empty state
+
+## Vue 3 / Vuetify 3.11 package (vue/)
+Production-ready SFCs with ZERO dependencies — drop into src/design/ of a Nuxt+Vuetify app.
+- vue/components/Ds*.vue — 20 components (TypeScript props, ds.css classes)
+- vue/index.ts — barrel export
+- vue/meta.ts — origin + reason (en/ko) per component
+- vue/defaults.ts — Vuetify defaults for VMenu/VDialog/VDataTable etc. (A-group)
+Vuetify-safe: all:unset root reset, no .v-* class collisions, zero !important.
