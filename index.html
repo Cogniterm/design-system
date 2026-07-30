@@ -1,0 +1,579 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Design System — Docs</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<link rel="stylesheet" href="ds.css">
+<style>
+/* ── 문서 사이트 전용 레이아웃 ── */
+.layout { display: flex; min-height: 100vh; }
+.sidebar {
+  width: 220px; flex-shrink: 0; border-right: 1px solid var(--gray-4);
+  padding: 24px 16px; position: sticky; top: 0; height: 100vh; overflow-y: auto;
+}
+.sidebar .logo { font-size: 15px; font-weight: 700; letter-spacing: -0.01em; padding: 0 8px; }
+.sidebar .logo span { color: var(--brand); }
+.nav-group { margin-top: 24px; }
+.nav-group .nav-title {
+  font-size: 11px; font-weight: 600; color: var(--gray-9);
+  text-transform: uppercase; letter-spacing: 0.06em; padding: 0 8px; margin-bottom: 4px;
+}
+.nav-group a {
+  display: block; padding: 5px 8px; border-radius: var(--r-md);
+  color: var(--gray-11); text-decoration: none; font-size: 13.5px;
+}
+.nav-group a:hover { background: var(--gray-3); color: var(--gray-12); }
+.nav-group a.active { background: var(--brand-subtle); color: var(--brand); font-weight: 500; }
+
+.content { flex: 1; min-width: 0; padding: 48px 48px 120px; max-width: 860px; }
+.content h1 { font-size: 22px; font-weight: 600; letter-spacing: -0.01em; }
+.lead { color: var(--gray-11); margin-top: 8px; font-size: 14px; }
+section.doc { margin-top: 64px; scroll-margin-top: 24px; }
+.doc-head { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+.doc-head h2 { font-size: 17px; font-weight: 600; letter-spacing: -0.01em; }
+.origin {
+  display: inline-flex; align-items: center; height: 20px; padding: 0 8px;
+  border-radius: var(--r-full); font-size: 11px; font-weight: 500;
+}
+.origin.custom { background: var(--brand-subtle); color: var(--brand); }
+.origin.vuetify { background: var(--gray-3); color: var(--gray-11); }
+.desc { color: var(--gray-11); font-size: 13.5px; margin-top: 8px; max-width: 640px; }
+.demo {
+  margin-top: 16px; border: 1px solid var(--gray-4); border-radius: var(--r-lg) var(--r-lg) 0 0;
+  padding: 28px; background: var(--gray-1);
+}
+.demo .row { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; }
+.codeblock {
+  position: relative; border: 1px solid var(--gray-4); border-top: none;
+  border-radius: 0 0 var(--r-lg) var(--r-lg); background: var(--gray-2);
+  font-family: var(--mono); font-size: 12.5px; overflow-x: auto;
+}
+.codeblock pre { padding: 14px 16px; }
+.codeblock code { color: var(--gray-11); white-space: pre; }
+.copy-btn {
+  all: unset; box-sizing: border-box; position: absolute; top: 8px; right: 8px;
+  cursor: pointer; font-size: 11.5px; font-weight: 500; color: var(--gray-10);
+  padding: 3px 8px; border-radius: var(--r-md); border: 1px solid var(--gray-5);
+  background: var(--surface); font-family: var(--font);
+}
+.copy-btn:hover { color: var(--gray-12); border-color: var(--gray-8); }
+.swatches { display: flex; border: 1px solid var(--gray-4); border-radius: var(--r-lg); overflow: hidden; }
+.swatch { flex: 1; height: 44px; position: relative; }
+.swatch span { position: absolute; bottom: -20px; left: 50%; transform: translateX(-50%);
+  font-size: 10px; color: var(--gray-9); font-family: var(--mono); }
+.swatch-wrap { padding-bottom: 26px; }
+.brand-row { display: flex; gap: 12px; }
+.brand-chip { flex: 1; height: 56px; border-radius: var(--r-lg); border: 1px solid var(--gray-4);
+  display: flex; align-items: flex-end; padding: 8px 10px; font-size: 11px; font-family: var(--mono); }
+.tpl-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 16px; }
+.tpl-card { border: 1px solid var(--gray-4); border-radius: var(--r-lg); padding: 20px;
+  text-decoration: none; color: var(--gray-12); display: block; transition: border-color .12s, background .12s; }
+.tpl-card:hover { border-color: var(--gray-8); background: var(--gray-2); }
+.tpl-card h3 { font-size: 14px; font-weight: 600; }
+.tpl-card p { font-size: 12.5px; color: var(--gray-10); margin-top: 4px; }
+.tpl-card .go { font-size: 12px; color: var(--brand); margin-top: 10px; font-weight: 500; }
+.cards2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+</style>
+</head>
+<body>
+<button class="theme-toggle" onclick="toggleTheme()"><span id="theme-icon">☾</span><span id="theme-label">Dark</span></button>
+<div class="layout">
+
+  <nav class="sidebar">
+    <div class="logo">DS<span>.</span></div>
+    <div class="nav-group">
+      <div class="nav-title">Docs</div>
+      <a href="#intro" class="active">시작하기</a>
+      <a href="#tokens">Tokens 토큰</a>
+    </div>
+    <div class="nav-group">
+      <div class="nav-title">Components</div>
+      <a href="#button">Button</a>
+      <a href="#input">Input</a>
+      <a href="#badge">Badge</a>
+      <a href="#chip">Chip</a>
+      <a href="#avatar-c">Avatar</a>
+      <a href="#card">Card</a>
+      <a href="#divider">Divider</a>
+      <a href="#skeleton">Skeleton</a>
+      <a href="#toast">Toast</a>
+      <a href="#table">Table</a>
+      <a href="#empty">EmptyState</a>
+    </div>
+    <div class="nav-group">
+      <div class="nav-title">Agent</div>
+      <a href="#chat">ChatMessage</a>
+      <a href="#streaming">StreamingText</a>
+      <a href="#thinking">ThinkingIndicator</a>
+      <a href="#toolcall">ToolCallStep</a>
+      <a href="#agentinput">AgentInput</a>
+      <a href="#citation">CitationChip</a>
+      <a href="#artifact-c">ArtifactPanel</a>
+      <a href="#searchresult">SearchResult</a>
+      <a href="#filegrid">FileGrid</a>
+      <a href="#filerow">FileRow</a>
+    </div>
+    <div class="nav-group">
+      <div class="nav-title">Templates</div>
+      <a href="#templates">골든 스크린</a>
+    </div>
+  </nav>
+
+  <main class="content">
+    <section id="intro">
+      <h1>Design System</h1>
+      <p class="lead">
+        AI SaaS Agent 제품군을 위한 디자인 시스템입니다. Geist 계열의 극한 미니멀 스타일 —
+        그림자 없음, 1px 보더, 색은 회색과 브랜드 블루(#1F7FF0)만.
+        컴포넌트 이름은 영문, 설명은 한글로 제공합니다.
+      </p>
+    </section>
+
+    <section class="doc" id="tokens">
+      <div class="doc-head"><h2>Tokens</h2></div>
+      <p class="desc">모든 색·간격·모서리 값의 단일 원본입니다. 컴포넌트는 반드시 CSS 변수(<code>var(--gray-3)</code>)로만 참조하고, 값을 직접 하드코딩하지 않습니다.</p>
+      <div class="demo">
+        <div style="font-size:12px;font-weight:600;color:var(--gray-10);margin-bottom:10px">Brand — #1F7FF0 (다크에선 자동으로 밝은 변형)</div>
+        <div class="brand-row">
+          <div class="brand-chip" style="background:var(--brand);color:var(--on-brand)">base</div>
+          <div class="brand-chip" style="background:var(--brand-hover);color:var(--on-brand)">hover</div>
+          <div class="brand-chip" style="background:var(--brand-active);color:var(--on-brand)">active</div>
+          <div class="brand-chip" style="background:var(--brand-subtle);color:var(--brand)">subtle</div>
+        </div>
+        <div style="font-size:12px;font-weight:600;color:var(--gray-10);margin:24px 0 10px">Gray — Radix Slate 1–12</div>
+        <div class="swatch-wrap"><div class="swatches">
+          <div class="swatch" style="background:var(--gray-1)"><span>1</span></div>
+          <div class="swatch" style="background:var(--gray-2)"><span>2</span></div>
+          <div class="swatch" style="background:var(--gray-3)"><span>3</span></div>
+          <div class="swatch" style="background:var(--gray-4)"><span>4</span></div>
+          <div class="swatch" style="background:var(--gray-5)"><span>5</span></div>
+          <div class="swatch" style="background:var(--gray-6)"><span>6</span></div>
+          <div class="swatch" style="background:var(--gray-7)"><span>7</span></div>
+          <div class="swatch" style="background:var(--gray-8)"><span>8</span></div>
+          <div class="swatch" style="background:var(--gray-9)"><span>9</span></div>
+          <div class="swatch" style="background:var(--gray-10)"><span>10</span></div>
+          <div class="swatch" style="background:var(--gray-11)"><span>11</span></div>
+          <div class="swatch" style="background:var(--gray-12)"><span>12</span></div>
+        </div></div>
+      </div>
+      <div class="codeblock"><button class="copy-btn" onclick="copyCode(this)">Copy</button><pre><code>/* 사용 규칙 — 회색 12단계의 역할 */
+--gray-1~2   페이지·패널 배경
+--gray-3~5   호버 배경, 비활성 요소
+--gray-6~8   보더 (기본 6, 호버 8)
+--gray-9~11  보조 텍스트 (약 9, 기본 11)
+--gray-12    본문 텍스트, 제목</code></pre></div>
+    </section>
+
+    <section class="doc" id="button">
+      <div class="doc-head"><h2>Button</h2><span class="origin custom">custom — built from scratch</span></div>
+      <p class="desc">액션을 실행하는 기본 버튼. <b>primary는 한 화면에 하나</b>가 원칙입니다. 파괴적 액션(삭제 등)은 danger를 쓰되, 기본은 조용한 외곽선 형태 — 호버했을 때만 빨간 배경이 드러납니다.</p>
+      <div class="demo"><div class="row">
+        <button class="btn btn-primary">New agent</button>
+        <button class="btn btn-secondary">Cancel</button>
+        <button class="btn btn-ghost">Learn more</button>
+        <button class="btn btn-danger">Delete</button>
+        <button class="btn" disabled>Disabled</button>
+        <button class="btn btn-primary btn-sm">Small</button>
+      </div></div>
+      <div class="codeblock"><button class="copy-btn" onclick="copyCode(this)">Copy</button><pre><code>&lt;button class="btn btn-primary"&gt;New agent&lt;/button&gt;
+&lt;button class="btn btn-secondary"&gt;Cancel&lt;/button&gt;
+&lt;button class="btn btn-ghost"&gt;Learn more&lt;/button&gt;
+&lt;button class="btn btn-danger"&gt;Delete&lt;/button&gt;
+&lt;button class="btn" disabled&gt;Disabled&lt;/button&gt;
+&lt;button class="btn btn-primary btn-sm"&gt;Small&lt;/button&gt;</code></pre></div>
+    </section>
+
+    <section class="doc" id="input">
+      <div class="doc-head"><h2>Input</h2><span class="origin custom">custom — built from scratch</span></div>
+      <p class="desc">텍스트 입력 필드. 포커스 시 브랜드 컬러 링이 생깁니다. <b>에러 상태는 필수</b> — 에러 메시지는 "무엇이 잘못됐고 어떻게 고치는지"를 말하고, 사과하지 않습니다. (VTextField는 래퍼가 깊어 직접 제작)</p>
+      <div class="demo"><div class="row" style="align-items:flex-start;gap:24px">
+        <div class="field">
+          <label>Workspace name</label>
+          <input class="input" placeholder="Acme Inc." />
+          <div class="hint">모든 멤버에게 표시됩니다.</div>
+        </div>
+        <div class="field">
+          <label>Email</label>
+          <input class="input error" value="ujin@" />
+          <div class="hint error">올바른 이메일 주소를 입력하세요.</div>
+        </div>
+      </div></div>
+      <div class="codeblock"><button class="copy-btn" onclick="copyCode(this)">Copy</button><pre><code>&lt;div class="field"&gt;
+  &lt;label&gt;Workspace name&lt;/label&gt;
+  &lt;input class="input" placeholder="Acme Inc." /&gt;
+  &lt;div class="hint"&gt;모든 멤버에게 표시됩니다.&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;!-- 에러 상태 --&gt;
+&lt;input class="input error" /&gt;
+&lt;div class="hint error"&gt;올바른 이메일 주소를 입력하세요.&lt;/div&gt;</code></pre></div>
+    </section>
+
+    <section class="doc" id="badge">
+      <div class="doc-head"><h2>Badge</h2><span class="origin custom">custom — built from scratch</span></div>
+      <p class="desc">상태 표시용 작은 라벨. 에이전트 실행 상태(대기·실행 중·완료·실패)에 주로 씁니다. 색 점(dot)이 상태를 말하고, 배경은 조용하게 유지합니다.</p>
+      <div class="demo"><div class="row">
+        <span class="badge"><span class="dot"></span>Draft</span>
+        <span class="badge brand"><span class="dot"></span>Running</span>
+        <span class="badge success"><span class="dot"></span>Completed</span>
+        <span class="badge danger"><span class="dot"></span>Failed</span>
+      </div></div>
+      <div class="codeblock"><button class="copy-btn" onclick="copyCode(this)">Copy</button><pre><code>&lt;span class="badge"&gt;&lt;span class="dot"&gt;&lt;/span&gt;Draft&lt;/span&gt;
+&lt;span class="badge brand"&gt;&lt;span class="dot"&gt;&lt;/span&gt;Running&lt;/span&gt;
+&lt;span class="badge success"&gt;&lt;span class="dot"&gt;&lt;/span&gt;Completed&lt;/span&gt;
+&lt;span class="badge danger"&gt;&lt;span class="dot"&gt;&lt;/span&gt;Failed&lt;/span&gt;</code></pre></div>
+    </section>
+
+    <section class="doc" id="chip">
+      <div class="doc-head"><h2>Chip</h2><span class="origin custom">custom — built from scratch</span></div>
+      <p class="desc">선택된 항목을 표시하고 제거할 수 있는 요소. 필터 조건, 첨부 파일, 선택된 태그 등에 씁니다. Badge는 읽기 전용, Chip은 조작 가능 — 이 구분을 지킵니다.</p>
+      <div class="demo"><div class="row">
+        <span class="chip">design-system.pdf<button class="x" aria-label="Remove">✕</button></span>
+        <span class="chip">Q3 보고서<button class="x" aria-label="Remove">✕</button></span>
+        <span class="chip brand">Status: Running<button class="x" aria-label="Remove">✕</button></span>
+      </div></div>
+      <div class="codeblock"><button class="copy-btn" onclick="copyCode(this)">Copy</button><pre><code>&lt;span class="chip"&gt;
+  design-system.pdf
+  &lt;button class="x" aria-label="Remove"&gt;✕&lt;/button&gt;
+&lt;/span&gt;
+&lt;span class="chip brand"&gt;Status: Running&lt;button class="x"&gt;✕&lt;/button&gt;&lt;/span&gt;</code></pre></div>
+    </section>
+
+    <section class="doc" id="avatar-c">
+      <div class="doc-head"><h2>Avatar</h2><span class="origin custom">custom — built from scratch</span></div>
+      <p class="desc">사람 또는 에이전트를 나타내는 원형 표식. 3가지 크기(sm/기본/lg)와 겹침 그룹을 지원합니다. 사진이 없으면 이니셜을 표시합니다.</p>
+      <div class="demo"><div class="row">
+        <span class="ds-avatar sm">JK</span>
+        <span class="ds-avatar">JK</span>
+        <span class="ds-avatar lg">JK</span>
+        <span class="ds-avatar brand">A</span>
+        <span class="avatar-group">
+          <span class="ds-avatar">JK</span><span class="ds-avatar">MP</span><span class="ds-avatar">+3</span>
+        </span>
+      </div></div>
+      <div class="codeblock"><button class="copy-btn" onclick="copyCode(this)">Copy</button><pre><code>&lt;span class="ds-avatar"&gt;JK&lt;/span&gt;
+&lt;span class="ds-avatar sm"&gt;JK&lt;/span&gt;      &lt;!-- 24px --&gt;
+&lt;span class="ds-avatar lg"&gt;JK&lt;/span&gt;      &lt;!-- 44px --&gt;
+&lt;span class="ds-avatar brand"&gt;A&lt;/span&gt;    &lt;!-- 에이전트 --&gt;
+
+&lt;span class="avatar-group"&gt;
+  &lt;span class="ds-avatar"&gt;JK&lt;/span&gt;&lt;span class="ds-avatar"&gt;MP&lt;/span&gt;&lt;span class="ds-avatar"&gt;+3&lt;/span&gt;
+&lt;/span&gt;</code></pre></div>
+    </section>
+
+    <section class="doc" id="card">
+      <div class="doc-head"><h2>Card</h2><span class="origin custom">custom — built from scratch</span></div>
+      <p class="desc">콘텐츠를 담는 면(Surface). 그림자 대신 1px 보더로 구분합니다. 대시보드 통계, 설정 그룹 등에 사용합니다.</p>
+      <div class="demo"><div class="cards2">
+        <div class="card"><h3>Tasks automated</h3><p>Last 30 days</p><div class="num">1,284<span class="delta">+12.4%</span></div></div>
+        <div class="card"><h3>Active agents</h3><p>Across all workspaces</p><div class="num">17<span class="delta">+2</span></div></div>
+      </div></div>
+      <div class="codeblock"><button class="copy-btn" onclick="copyCode(this)">Copy</button><pre><code>&lt;div class="card"&gt;
+  &lt;h3&gt;Tasks automated&lt;/h3&gt;
+  &lt;p&gt;Last 30 days&lt;/p&gt;
+  &lt;div class="num"&gt;1,284&lt;span class="delta"&gt;+12.4%&lt;/span&gt;&lt;/div&gt;
+&lt;/div&gt;</code></pre></div>
+    </section>
+
+    <section class="doc" id="divider">
+      <div class="doc-head"><h2>Divider</h2><span class="origin custom">custom — built from scratch</span></div>
+      <p class="desc">내용을 구분하는 1px 선. 극한 미니멀에서는 그림자 대신 이것으로 영역을 나눕니다. 라벨이 있는 형태는 "오늘 / 어제" 같은 날짜 구분에 씁니다.</p>
+      <div class="demo">
+        <div style="font-size:13px;color:var(--gray-11)">위 내용</div>
+        <hr class="divider" />
+        <div style="font-size:13px;color:var(--gray-11)">아래 내용</div>
+        <div class="divider-label">Yesterday</div>
+        <div style="font-size:13px;color:var(--gray-11)">어제 대화</div>
+      </div>
+      <div class="codeblock"><button class="copy-btn" onclick="copyCode(this)">Copy</button><pre><code>&lt;hr class="divider" /&gt;
+
+&lt;!-- 라벨 포함 --&gt;
+&lt;div class="divider-label"&gt;Yesterday&lt;/div&gt;</code></pre></div>
+    </section>
+
+    <section class="doc" id="skeleton">
+      <div class="doc-head"><h2>Skeleton</h2><span class="origin custom">custom — built from scratch</span></div>
+      <p class="desc">데이터 로딩 중 실제 콘텐츠의 자리를 미리 보여주는 뼈대. 스피너보다 화면 흔들림이 적습니다. 단, <b>에이전트 응답 대기에는 쓰지 않습니다</b> — 그건 ThinkingIndicator·ToolCallStep의 몫입니다(원칙 1번).</p>
+      <div class="demo">
+        <div style="display:flex;gap:12px;align-items:center;max-width:380px">
+          <div class="skeleton circle" style="width:32px;height:32px;flex-shrink:0"></div>
+          <div style="flex:1;display:flex;flex-direction:column;gap:8px">
+            <div class="skeleton text" style="width:60%"></div>
+            <div class="skeleton text" style="width:90%"></div>
+          </div>
+        </div>
+      </div>
+      <div class="codeblock"><button class="copy-btn" onclick="copyCode(this)">Copy</button><pre><code>&lt;div class="skeleton circle" style="width:32px;height:32px"&gt;&lt;/div&gt;
+&lt;div class="skeleton text" style="width:60%"&gt;&lt;/div&gt;
+&lt;div class="skeleton text" style="width:90%"&gt;&lt;/div&gt;</code></pre></div>
+    </section>
+
+    <section class="doc" id="toast">
+      <div class="doc-head"><h2>Toast</h2><span class="origin custom">custom — built from scratch</span></div>
+      <p class="desc">작업 결과를 잠깐 알려주는 알림. 화면 우하단에 떠서 4초 후 사라집니다. 되돌리기(Undo)나 보기(View) 같은 <b>후속 액션을 하나까지</b> 담을 수 있습니다. 유일하게 그림자가 허용되는 컴포넌트 중 하나(떠 있는 요소이므로).</p>
+      <div class="demo" style="display:flex;flex-direction:column;gap:10px;align-items:flex-start">
+        <div class="toast success"><span class="t-dot"></span><span class="t-body">에이전트가 생성되었습니다.</span><button class="t-action">View</button></div>
+        <div class="toast danger"><span class="t-dot"></span><span class="t-body">파일 업로드에 실패했습니다 — 10MB를 초과합니다.</span><button class="t-action">Retry</button></div>
+      </div>
+      <div class="codeblock"><button class="copy-btn" onclick="copyCode(this)">Copy</button><pre><code>&lt;div class="toast success"&gt;
+  &lt;span class="t-dot"&gt;&lt;/span&gt;
+  &lt;span class="t-body"&gt;에이전트가 생성되었습니다.&lt;/span&gt;
+  &lt;button class="t-action"&gt;View&lt;/button&gt;
+&lt;/div&gt;</code></pre></div>
+    </section>
+
+    <section class="doc" id="chat">
+      <div class="doc-head"><h2>ChatMessage</h2><span class="origin custom">Not available in Vuetify — built from scratch</span></div>
+      <p class="desc">대화형 메시지 컴포넌트. Vuetify에 대응물이 없어 직접 만듭니다. 스트리밍 중 높이가 변하고 역방향 스크롤 앵커링이 필요해 VCard로 대체할 수 없습니다. 인용 칩(CitationChip)과 스트리밍 커서를 포함합니다.</p>
+      <div class="demo">
+        <div class="chat">
+          <div class="msg"><div class="avatar user">U</div><div class="msg-body">
+            <div class="msg-name">You</div>
+            <div class="msg-text">지난달 계약서 파일 찾아서 요약해줘</div>
+          </div></div>
+          <div class="msg"><div class="avatar ai">A</div><div class="msg-body">
+            <div class="msg-name">Agent</div>
+            <div class="msg-text">6월에 체결된 계약서 3건을 찾았습니다. 그중 최종본<span class="cite">1</span>의 핵심 조항을 정리하면<span class="cursor"></span></div>
+          </div></div>
+        </div>
+      </div>
+      <div class="codeblock"><button class="copy-btn" onclick="copyCode(this)">Copy</button><pre><code>&lt;div class="msg"&gt;
+  &lt;div class="avatar ai"&gt;A&lt;/div&gt;
+  &lt;div class="msg-body"&gt;
+    &lt;div class="msg-name"&gt;Agent&lt;/div&gt;
+    &lt;div class="msg-text"&gt;
+      본문 텍스트&lt;span class="cite"&gt;1&lt;/span&gt;
+      &lt;span class="cursor"&gt;&lt;/span&gt;  &lt;!-- 스트리밍 중일 때만 --&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre></div>
+    </section>
+
+    <section class="doc" id="streaming">
+      <div class="doc-head"><h2>StreamingText</h2><span class="origin custom">Not available in Vuetify — built from scratch</span></div>
+      <p class="desc">응답이 실시간으로 흘러나오는 중임을 나타내는 텍스트 + 깜빡이는 커서. 커서는 스트리밍 중에만 존재하고, 완료되면 제거합니다.</p>
+      <div class="demo">
+        <div class="msg-text">6월에 체결된 계약서 3건을 찾았습니다. 핵심 조항을 정리하면<span class="cursor"></span></div>
+      </div>
+      <div class="codeblock"><button class="copy-btn" onclick="copyCode(this)">Copy</button><pre><code>&lt;div class="msg-text"&gt;
+  스트리밍 중인 텍스트&lt;span class="cursor"&gt;&lt;/span&gt;
+&lt;/div&gt;
+&lt;!-- 완료 시 .cursor 제거 --&gt;</code></pre></div>
+    </section>
+
+    <section class="doc" id="thinking">
+      <div class="doc-head"><h2>ThinkingIndicator</h2><span class="origin custom">Not available in Vuetify — built from scratch</span></div>
+      <p class="desc">에이전트가 추론 중일 때 표시. 빈 스피너가 아니라 <b>무엇을 하고 있는지 텍스트로</b> 말해줍니다. 10초 이상 걸리면 텍스트를 단계에 맞게 갱신합니다("문서를 읽는 중…" → "요약을 작성하는 중…").</p>
+      <div class="demo">
+        <div class="thinking"><span class="dots"><i></i><i></i><i></i></span>계약서 조항을 분석하는 중…</div>
+      </div>
+      <div class="codeblock"><button class="copy-btn" onclick="copyCode(this)">Copy</button><pre><code>&lt;div class="thinking"&gt;
+  &lt;span class="dots"&gt;&lt;i&gt;&lt;/i&gt;&lt;i&gt;&lt;/i&gt;&lt;i&gt;&lt;/i&gt;&lt;/span&gt;
+  계약서 조항을 분석하는 중…
+&lt;/div&gt;</code></pre></div>
+    </section>
+
+    <section class="doc" id="toolcall">
+      <div class="doc-head"><h2>ToolCallStep</h2><span class="origin custom">Not available in Vuetify — built from scratch</span></div>
+      <p class="desc">에이전트가 도구를 실행하는 과정을 보여줍니다. 원칙 1번 — 빈 스피너 대신 <b>무슨 일이 진행 중인지</b>를 보여줍니다. 진행 중엔 스피너, 완료되면 체크로 바뀝니다. 접을 수는 있어도 없애지 않습니다(원칙 4번).</p>
+      <div class="demo">
+        <div class="toolcall"><span class="check">✓</span> search_drive("계약서", June) — 3 files found</div>
+        <div class="toolcall"><span class="spinner"></span> read_document("계약서_최종.pdf")</div>
+      </div>
+      <div class="codeblock"><button class="copy-btn" onclick="copyCode(this)">Copy</button><pre><code>&lt;!-- 진행 중 --&gt;
+&lt;div class="toolcall"&gt;&lt;span class="spinner"&gt;&lt;/span&gt; read_document("file.pdf")&lt;/div&gt;
+
+&lt;!-- 완료 --&gt;
+&lt;div class="toolcall"&gt;&lt;span class="check"&gt;✓&lt;/span&gt; search_drive("query") — 3 files found&lt;/div&gt;</code></pre></div>
+    </section>
+
+    <section class="doc" id="agentinput">
+      <div class="doc-head"><h2>AgentInput</h2><span class="origin custom">Not available in Vuetify — built from scratch</span></div>
+      <p class="desc">에이전트에게 보내는 메시지 입력창. 여러 줄 자동 확장(auto-grow), 파일 첨부, 슬래시 명령을 지원합니다. 하단 바에 도구 버튼을 두고, 보내기는 항상 오른쪽 끝.</p>
+      <div class="demo">
+        <div class="agent-input" style="max-width:560px">
+          <textarea rows="1" placeholder="Message agent… (/ 로 명령어)"></textarea>
+          <div class="ai-bar">
+            <button class="ai-tool" aria-label="Attach file">＋</button>
+            <button class="ai-tool" aria-label="Slash commands">/</button>
+            <span class="ai-spacer"></span>
+            <button class="btn btn-primary btn-sm">Send</button>
+          </div>
+        </div>
+      </div>
+      <div class="codeblock"><button class="copy-btn" onclick="copyCode(this)">Copy</button><pre><code>&lt;div class="agent-input"&gt;
+  &lt;textarea rows="1" placeholder="Message agent…"&gt;&lt;/textarea&gt;
+  &lt;div class="ai-bar"&gt;
+    &lt;button class="ai-tool" aria-label="Attach file"&gt;＋&lt;/button&gt;
+    &lt;button class="ai-tool" aria-label="Slash commands"&gt;/&lt;/button&gt;
+    &lt;span class="ai-spacer"&gt;&lt;/span&gt;
+    &lt;button class="btn btn-primary btn-sm"&gt;Send&lt;/button&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre></div>
+    </section>
+
+    <section class="doc" id="citation">
+      <div class="doc-head"><h2>CitationChip</h2><span class="origin custom">Not available in Vuetify — built from scratch</span></div>
+      <p class="desc">에이전트 응답의 근거 출처를 가리키는 번호 칩. 클릭하면 원문 위치로 이동합니다. 원칙 4번 — 근거는 접을 수 있어도 없애지 않습니다.</p>
+      <div class="demo">
+        <div class="msg-text">계약 기간은 12개월이며<span class="cite">1</span> 대금은 30일 이내 지급합니다<span class="cite">2</span></div>
+      </div>
+      <div class="codeblock"><button class="copy-btn" onclick="copyCode(this)">Copy</button><pre><code>본문 텍스트&lt;span class="cite"&gt;1&lt;/span&gt;</code></pre></div>
+    </section>
+
+    <section class="doc" id="artifact-c">
+      <div class="doc-head"><h2>ArtifactPanel</h2><span class="origin custom">Not available in Vuetify — built from scratch</span></div>
+      <p class="desc">에이전트가 만든 산출물(코드·문서·표)을 대화 옆에 따로 보여주는 패널. 헤더에 제목과 복사·다운로드 액션을 둡니다.</p>
+      <div class="demo">
+        <div class="artifact" style="max-width:560px">
+          <div class="a-head"><span class="a-title">summary_report.md</span><button class="btn btn-ghost btn-sm">Copy</button><button class="btn btn-secondary btn-sm">Download</button></div>
+          <div class="a-body"># 6월 계약서 요약
+- 계약 기간: 12개월 (자동 갱신)
+- 대금 지급: 월말 정산 후 30일 이내
+- 해지 조건: 90일 전 서면 통보</div>
+        </div>
+      </div>
+      <div class="codeblock"><button class="copy-btn" onclick="copyCode(this)">Copy</button><pre><code>&lt;div class="artifact"&gt;
+  &lt;div class="a-head"&gt;
+    &lt;span class="a-title"&gt;summary_report.md&lt;/span&gt;
+    &lt;button class="btn btn-ghost btn-sm"&gt;Copy&lt;/button&gt;
+    &lt;button class="btn btn-secondary btn-sm"&gt;Download&lt;/button&gt;
+  &lt;/div&gt;
+  &lt;div class="a-body"&gt;산출물 내용&lt;/div&gt;
+&lt;/div&gt;</code></pre></div>
+    </section>
+
+    <section class="doc" id="searchresult">
+      <div class="doc-head"><h2>SearchResult</h2><span class="origin custom">Not available in Vuetify — built from scratch</span></div>
+      <p class="desc">검색 결과 한 건. 제목·경로·매칭 문맥(하이라이트)·메타 정보로 구성됩니다. 하이라이트는 브랜드 subtle 배경으로 조용하게.</p>
+      <div class="demo">
+        <div class="sresult">
+          <h4><a href="#">계약서_최종.pdf</a></h4>
+          <div class="s-path">Drive / 법무 / 2026</div>
+          <p>본 <mark>계약서</mark>는 2026년 7월 1일부터 효력이 발생하며…</p>
+        </div>
+        <div class="sresult">
+          <h4><a href="#">계약서_v2_검토중.docx</a></h4>
+          <div class="s-path">Drive / 법무 / 2026</div>
+          <p>수정된 <mark>계약서</mark> 초안. 법무팀 검토 대기 중…</p>
+        </div>
+      </div>
+      <div class="codeblock"><button class="copy-btn" onclick="copyCode(this)">Copy</button><pre><code>&lt;div class="sresult"&gt;
+  &lt;h4&gt;&lt;a href="#"&gt;계약서_최종.pdf&lt;/a&gt;&lt;/h4&gt;
+  &lt;div class="s-path"&gt;Drive / 법무 / 2026&lt;/div&gt;
+  &lt;p&gt;본 &lt;mark&gt;계약서&lt;/mark&gt;는 2026년 7월 1일부터…&lt;/p&gt;
+&lt;/div&gt;</code></pre></div>
+    </section>
+
+    <section class="doc" id="filegrid">
+      <div class="doc-head"><h2>FileGrid</h2><span class="origin custom">Not available in Vuetify — built from scratch</span></div>
+      <p class="desc">드라이브의 그리드 보기. 카드 하나가 파일 하나. 선택하면 브랜드 subtle 배경 + 브랜드 보더로 표시합니다. 다중 선택을 지원합니다.</p>
+      <div class="demo">
+        <div class="file-grid">
+          <div class="file-card"><div class="f-icon">📁</div><div class="f-name">법무</div><div class="f-meta">12 files</div></div>
+          <div class="file-card selected"><div class="f-icon">📄</div><div class="f-name">계약서_최종.pdf</div><div class="f-meta">2.1 MB</div></div>
+          <div class="file-card"><div class="f-icon">📄</div><div class="f-name">계약서_v2_검토중.docx</div><div class="f-meta">840 KB</div></div>
+          <div class="file-card"><div class="f-icon">📊</div><div class="f-name">Q3_실적.xlsx</div><div class="f-meta">1.4 MB</div></div>
+        </div>
+      </div>
+      <div class="codeblock"><button class="copy-btn" onclick="copyCode(this)">Copy</button><pre><code>&lt;div class="file-grid"&gt;
+  &lt;div class="file-card"&gt;
+    &lt;div class="f-icon"&gt;📄&lt;/div&gt;
+    &lt;div class="f-name"&gt;계약서_최종.pdf&lt;/div&gt;
+    &lt;div class="f-meta"&gt;2.1 MB&lt;/div&gt;
+  &lt;/div&gt;
+  &lt;div class="file-card selected"&gt;…&lt;/div&gt;  &lt;!-- 선택됨 --&gt;
+&lt;/div&gt;</code></pre></div>
+    </section>
+
+    <section class="doc" id="filerow">
+      <div class="doc-head"><h2>FileRow</h2><span class="origin custom">Not available in Vuetify — built from scratch</span></div>
+      <p class="desc">드라이브의 리스트 보기 한 줄. compact 밀도(40px)로 많은 파일을 훑기 좋게. FileGrid와 같은 데이터로 보기 전환이 가능해야 합니다.</p>
+      <div class="demo">
+        <div class="file-row"><span class="f-icon">📁</span><span class="f-name">법무</span><span class="f-meta">Jun 28</span></div>
+        <div class="file-row selected"><span class="f-icon">📄</span><span class="f-name">계약서_최종.pdf</span><span class="f-meta">2.1 MB · Jun 28</span></div>
+        <div class="file-row"><span class="f-icon">📊</span><span class="f-name">Q3_실적.xlsx</span><span class="f-meta">1.4 MB · Jul 12</span></div>
+      </div>
+      <div class="codeblock"><button class="copy-btn" onclick="copyCode(this)">Copy</button><pre><code>&lt;div class="file-row"&gt;
+  &lt;span class="f-icon"&gt;📄&lt;/span&gt;
+  &lt;span class="f-name"&gt;계약서_최종.pdf&lt;/span&gt;
+  &lt;span class="f-meta"&gt;2.1 MB · Jun 28&lt;/span&gt;
+&lt;/div&gt;</code></pre></div>
+    </section>
+
+    <section class="doc" id="table">
+      <div class="doc-head"><h2>Table</h2><span class="origin vuetify">앱에선 VDataTable 기반 (wrapped)</span></div>
+      <p class="desc">데이터 목록. 실제 앱에서는 정렬·페이지네이션이 필요하므로 VDataTable을 감싸서 씁니다(A그룹). 여기 보이는 것은 목표 스타일 — compact 밀도(행 높이 40px), 호버 시 배경 변화.</p>
+      <div class="demo">
+        <div class="table-wrap"><table>
+          <thead><tr><th>Name</th><th>Status</th><th>Owner</th><th>Updated</th></tr></thead>
+          <tbody>
+            <tr><td>Weekly report agent</td><td><span class="badge brand"><span class="dot"></span>Running</span></td><td>Jiyong Kim</td><td class="mono">2h ago</td></tr>
+            <tr><td>Invoice classifier</td><td><span class="badge success"><span class="dot"></span>Completed</span></td><td>Minji Park</td><td class="mono">1d ago</td></tr>
+            <tr><td>Drive sync</td><td><span class="badge danger"><span class="dot"></span>Failed</span></td><td>Jiyong Kim</td><td class="mono">3d ago</td></tr>
+          </tbody>
+        </table></div>
+      </div>
+      <div class="codeblock"><button class="copy-btn" onclick="copyCode(this)">Copy</button><pre><code>&lt;div class="table-wrap"&gt;&lt;table&gt;
+  &lt;thead&gt;&lt;tr&gt;&lt;th&gt;Name&lt;/th&gt;&lt;th&gt;Status&lt;/th&gt;&lt;/tr&gt;&lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;&lt;td&gt;Weekly report agent&lt;/td&gt;
+        &lt;td&gt;&lt;span class="badge brand"&gt;...&lt;/span&gt;&lt;/td&gt;&lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;&lt;/div&gt;</code></pre></div>
+    </section>
+
+    <section class="doc" id="empty">
+      <div class="doc-head"><h2>EmptyState</h2><span class="origin custom">custom — built from scratch</span></div>
+      <p class="desc">데이터가 없을 때의 화면. 극한 미니멀에서는 빈 화면이 "미완성"처럼 보이기 쉬우므로, 빈 상태는 반드시 <b>다음 행동(CTA)</b>을 제안합니다.</p>
+      <div class="demo">
+        <div class="empty">
+          <h3>No agents yet</h3>
+          <p>첫 에이전트를 만들어 업무 자동화를 시작하세요.</p>
+          <button class="btn btn-primary">New agent</button>
+        </div>
+      </div>
+      <div class="codeblock"><button class="copy-btn" onclick="copyCode(this)">Copy</button><pre><code>&lt;div class="empty"&gt;
+  &lt;h3&gt;No agents yet&lt;/h3&gt;
+  &lt;p&gt;첫 에이전트를 만들어 업무 자동화를 시작하세요.&lt;/p&gt;
+  &lt;button class="btn btn-primary"&gt;New agent&lt;/button&gt;
+&lt;/div&gt;</code></pre></div>
+    </section>
+
+    <section class="doc" id="templates">
+      <div class="doc-head"><h2>Templates — 골든 스크린</h2></div>
+      <p class="desc">컴포넌트를 조합한 완성 화면 예시입니다. AI에게 "이 템플릿처럼 만들어줘"라고 넘겨주는 기준 화면이며, 새 화면은 여기서 복제해서 시작합니다.</p>
+      <div class="tpl-grid">
+        <a class="tpl-card" href="templates/chat.html">
+          <h3>Chat / Agent</h3>
+          <p>메시지 스트림 · 툴콜 · 인용 · 입력창</p>
+          <div class="go">열어보기 →</div>
+        </a>
+        <a class="tpl-card" href="templates/search.html">
+          <h3>Search Results</h3>
+          <p>쿼리 바 · 결과 리스트 · 필터 · 빈 결과</p>
+          <div class="go">열어보기 →</div>
+        </a>
+      </div>
+    </section>
+
+  </main>
+</div>
+<script src="theme.js"></script>
+<script>
+// 스크롤 시 사이드바 현재 위치 표시
+const links = document.querySelectorAll('.nav-group a[href^="#"]');
+const sections = [...links].map(a => document.querySelector(a.getAttribute('href'))).filter(Boolean);
+const obs = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      links.forEach(l => l.classList.toggle('active', l.getAttribute('href') === '#' + e.target.id));
+    }
+  });
+}, { rootMargin: '-20% 0px -70% 0px' });
+sections.forEach(s => obs.observe(s));
+</script>
+</body>
+</html>

@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Template — Chat / Agent</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<link rel="stylesheet" href="../ds.css">
+<style>
+.app { display: flex; height: 100vh; }
+.side { width: 240px; flex-shrink: 0; border-right: 1px solid var(--gray-4); padding: 16px 12px; display: flex; flex-direction: column; }
+.side .back { font-size: 12.5px; color: var(--gray-10); text-decoration: none; padding: 4px 8px; }
+.side .back:hover { color: var(--gray-12); }
+.side .new { margin: 12px 8px; }
+.conv { padding: 7px 10px; border-radius: var(--r-md); font-size: 13.5px; color: var(--gray-11);
+  cursor: pointer; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.conv:hover { background: var(--gray-3); color: var(--gray-12); }
+.conv.active { background: var(--gray-3); color: var(--gray-12); font-weight: 500; }
+.main { flex: 1; display: flex; flex-direction: column; min-width: 0; }
+.stream { flex: 1; overflow-y: auto; }
+.stream-inner { max-width: 720px; margin: 0 auto; padding: 32px 24px; }
+.composer { border-top: 1px solid var(--gray-4); }
+.composer-inner { max-width: 720px; margin: 0 auto; padding: 16px 24px; display: flex; gap: 10px; align-items: center; }
+.composer .input { flex: 1; }
+.msg { padding: 20px 0; border: none; }
+.msg + .msg { border-top: 1px solid var(--gray-3); }
+</style>
+</head>
+<body>
+<button class="theme-toggle" onclick="toggleTheme()"><span id="theme-icon">☾</span><span id="theme-label">Dark</span></button>
+<div class="app">
+  <aside class="side">
+    <a class="back" href="../index.html">← Docs로 돌아가기</a>
+    <button class="btn btn-secondary btn-sm new">＋ New chat</button>
+    <div class="conv active">6월 계약서 요약</div>
+    <div class="conv">주간 리포트 자동화 설정</div>
+    <div class="conv">드라이브 정리 규칙</div>
+  </aside>
+  <div class="main">
+    <div class="stream"><div class="stream-inner">
+      <div class="msg"><div class="avatar user" style="float:left;margin-right:14px">U</div><div class="msg-body" style="overflow:hidden">
+        <div class="msg-name">You</div>
+        <div class="msg-text">지난달 계약서 파일 찾아서 요약해줘</div>
+      </div></div>
+      <div class="msg"><div class="avatar ai" style="float:left;margin-right:14px">A</div><div class="msg-body" style="overflow:hidden">
+        <div class="msg-name">Agent</div>
+        <div class="toolcall"><span class="check">✓</span> search_drive("계약서", June) — 3 files found</div>
+        <div class="toolcall"><span class="check">✓</span> read_document("계약서_최종.pdf")</div>
+        <div class="msg-text">
+          6월에 체결된 계약서 3건을 찾았습니다. 그중 최종본<span class="cite">1</span>의 핵심 조항은 다음과 같습니다:<br><br>
+          <b>계약 기간</b> — 2026년 7월 1일부터 12개월, 자동 갱신 조항 포함<span class="cite">1</span><br>
+          <b>대금 지급</b> — 월말 정산, 세금계산서 발행 후 30일 이내<span class="cite">2</span><br>
+          <b>해지 조건</b> — 90일 전 서면 통보 필요<span class="cite">1</span>
+        </div>
+      </div></div>
+      <div class="msg"><div class="avatar user" style="float:left;margin-right:14px">U</div><div class="msg-body" style="overflow:hidden">
+        <div class="msg-name">You</div>
+        <div class="msg-text">해지 조건 관련 조항 원문도 보여줘</div>
+      </div></div>
+      <div class="msg"><div class="avatar ai" style="float:left;margin-right:14px">A</div><div class="msg-body" style="overflow:hidden">
+        <div class="msg-name">Agent</div>
+        <div class="toolcall"><span class="spinner"></span> extract_section("계약서_최종.pdf", "해지")</div>
+        <div class="msg-text">해지 관련 조항을 찾고 있습니다<span class="cursor"></span></div>
+      </div></div>
+    </div></div>
+    <div class="composer"><div class="composer-inner">
+      <input class="input" placeholder="Message agent…" />
+      <button class="btn btn-primary">Send</button>
+    </div></div>
+  </div>
+</div>
+<script src="../theme.js"></script>
+</body>
+</html>

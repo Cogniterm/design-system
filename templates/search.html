@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Template — Search Results</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<link rel="stylesheet" href="../ds.css">
+<style>
+.page { max-width: 720px; margin: 0 auto; padding: 40px 24px 120px; }
+.back { font-size: 12.5px; color: var(--gray-10); text-decoration: none; }
+.back:hover { color: var(--gray-12); }
+.searchbar { display: flex; gap: 10px; margin-top: 20px; }
+.searchbar .input { flex: 1; height: 40px; }
+.filters { display: flex; gap: 8px; margin-top: 14px; }
+.filter { all: unset; box-sizing: border-box; cursor: pointer; height: 28px; padding: 0 12px;
+  display: inline-flex; align-items: center; border-radius: var(--r-full);
+  font-size: 12.5px; font-weight: 500; color: var(--gray-11); border: 1px solid var(--gray-5);
+  font-family: var(--font); }
+.filter:hover { background: var(--gray-3); }
+.filter.active { background: var(--brand-subtle); color: var(--brand); border-color: transparent; }
+.meta { font-size: 12.5px; color: var(--gray-9); margin-top: 20px; }
+.result { padding: 16px 0; border-bottom: 1px solid var(--gray-3); }
+.result:last-child { border-bottom: none; }
+.result h3 { font-size: 14.5px; font-weight: 600; }
+.result h3 a { color: var(--gray-12); text-decoration: none; }
+.result h3 a:hover { color: var(--brand); }
+.result .path { font-size: 12px; color: var(--gray-9); font-family: var(--mono); margin-top: 2px; }
+.result p { font-size: 13px; color: var(--gray-11); margin-top: 6px; }
+.result mark { background: var(--brand-subtle); color: var(--brand); border-radius: 2px; padding: 0 2px; }
+.result .foot { display: flex; gap: 8px; margin-top: 8px; align-items: center; }
+.result .foot span.date { font-size: 12px; color: var(--gray-9); }
+</style>
+</head>
+<body>
+<button class="theme-toggle" onclick="toggleTheme()"><span id="theme-icon">☾</span><span id="theme-label">Dark</span></button>
+<div class="page">
+  <a class="back" href="../index.html">← Docs로 돌아가기</a>
+  <div class="searchbar">
+    <input class="input" value="계약서" />
+    <button class="btn btn-primary">Search</button>
+  </div>
+  <div class="filters">
+    <button class="filter active">All</button>
+    <button class="filter">Documents</button>
+    <button class="filter">Chats</button>
+    <button class="filter">Agents</button>
+  </div>
+  <div class="meta">3 results · 0.4s</div>
+
+  <div class="result">
+    <h3><a href="#">계약서_최종.pdf</a></h3>
+    <div class="path">Drive / 법무 / 2026</div>
+    <p>본 <mark>계약서</mark>는 2026년 7월 1일부터 효력이 발생하며, 계약 기간은 12개월로 하되 자동 갱신 조항을 포함한다…</p>
+    <div class="foot"><span class="badge success"><span class="dot"></span>Signed</span><span class="date">Jun 28, 2026</span></div>
+  </div>
+  <div class="result">
+    <h3><a href="#">계약서_v2_검토중.docx</a></h3>
+    <div class="path">Drive / 법무 / 2026</div>
+    <p>수정된 <mark>계약서</mark> 초안. 대금 지급 조건이 45일에서 30일로 변경되었으며 법무팀 검토 대기 중…</p>
+    <div class="foot"><span class="badge"><span class="dot"></span>Draft</span><span class="date">Jun 15, 2026</span></div>
+  </div>
+  <div class="result">
+    <h3><a href="#">6월 계약서 요약</a></h3>
+    <div class="path">Chats</div>
+    <p>에이전트 대화 — "지난달 <mark>계약서</mark> 파일 찾아서 요약해줘"에 대한 결과, 핵심 조항 3건 정리…</p>
+    <div class="foot"><span class="date">Jul 30, 2026</span></div>
+  </div>
+
+  <div style="margin-top:48px">
+    <div style="font-size:12px;font-weight:600;color:var(--gray-9);text-transform:uppercase;letter-spacing:.05em;margin-bottom:12px">빈 결과 상태 (empty state)</div>
+    <div class="empty">
+      <h3>No results for "회의록 2019"</h3>
+      <p>검색어를 바꾸거나 필터를 해제해보세요.</p>
+      <button class="btn btn-secondary">Clear filters</button>
+    </div>
+  </div>
+</div>
+<script src="../theme.js"></script>
+</body>
+</html>
