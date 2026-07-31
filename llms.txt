@@ -106,14 +106,18 @@ Key foundation rules an AI must follow when generating screens:
   9 faint text, 11 secondary text, 12 body text.
 - Type: Pretendard, 5 sizes (12/13/14/16/20), weights 400/500/600 only (never 700+).
   Hierarchy comes from weight and color, not size. No uppercase (breaks Korean).
+  Line-height 1.62 base, 1.7 for long prose and agent responses.
   No positive letter-spacing. word-break: keep-all.
 - Spacing: 4px multiples only (0,4,8,12,16,24,32,48,64). Grouping = proximity.
   Reading width max 720px; data screens 1080-1280px.
-- Shape: radius 2/4/6/full. Border always 1px. Nested radius <= parent radius.
+- Shape: radius 4/6/8/12/full (sm/md/lg/xl). Border always 1px.
+  Controls (button, input) use lg=8; large surfaces (card, panel, dialog, table)
+  use xl=12. Nested radius <= parent radius.
 - Elevation: NO elevation scale. Shadow only on Menu/Dialog/Tooltip/Snackbar.
-- Density: compact 32px / comfortable 40px (default) / spacious 48px row heights.
+- Density: compact 34px / comfortable 42px (default) / spacious 50px row heights.
+  Buttons and inputs are 38px tall (32px for size="sm").
   Never mix densities within one screen.
-- Motion: 120ms default, 240ms max, ease only, fade only for overlays, no ripple.
+- Motion: 160ms default, 240ms max, ease only (never linear), fade for overlays, no ripple.
   Respect prefers-reduced-motion.
 - State: every list/table needs default, loading, empty, error, partial.
   Every interactive element needs hover, focus-visible, active, disabled, selected.

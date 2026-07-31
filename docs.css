@@ -49,8 +49,9 @@
 .nav-title:first-child { margin-top: 0; }
 .sidebar a {
   display: flex; align-items: center; gap: 6px;
-  padding: 5px 8px; border-radius: var(--r-md);
+  padding: 6px 9px; border-radius: var(--r-md);
   color: var(--gray-11); text-decoration: none; font-size: 13.5px;
+  transition: background .16s ease, color .16s ease;
 }
 .sidebar a:hover { background: var(--gray-3); color: var(--gray-12); }
 .sidebar a.on { background: var(--brand-subtle); color: var(--brand); font-weight: 500; }
@@ -91,11 +92,11 @@
 
 /* ── Demo + code ── */
 .demo {
-  border: 1px solid var(--gray-4); border-radius: var(--r-lg) var(--r-lg) 0 0;
-  padding: 28px; background: var(--gray-1);
+  border: 1px solid var(--gray-4); border-radius: var(--r-xl) var(--r-xl) 0 0;
+  padding: 30px; background: var(--gray-1);
 }
 .demo .row { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; }
-.codewrap { border: 1px solid var(--gray-4); border-top: none; border-radius: 0 0 var(--r-lg) var(--r-lg); overflow: hidden; }
+.codewrap { border: 1px solid var(--gray-4); border-top: none; border-radius: 0 0 var(--r-xl) var(--r-xl); overflow: hidden; }
 .codetabs { display: flex; background: var(--gray-2); border-bottom: 1px solid var(--gray-4); }
 .codetabs button {
   all: unset; box-sizing: border-box; cursor: pointer;
@@ -117,7 +118,7 @@
 .codebody code { font-family: var(--mono); font-size: 12.5px; color: var(--gray-11); white-space: pre; }
 
 /* ── Props table ── */
-.ptable { width: 100%; border-collapse: collapse; border: 1px solid var(--gray-4); border-radius: var(--r-lg); }
+.ptable { width: 100%; border-collapse: collapse; border: 1px solid var(--gray-4); border-radius: var(--r-xl); }
 .ptable th {
   text-align: left; font-size: 11.5px; font-weight: 600; color: var(--gray-10);
   text-transform: uppercase; letter-spacing: .04em;
@@ -134,7 +135,7 @@
 .tbl-title:first-child { margin-top: 0; }
 
 /* ── Guidelines ── */
-.gl { border: 1px solid var(--gray-4); border-radius: var(--r-lg); overflow: hidden; }
+.gl { border: 1px solid var(--gray-4); border-radius: var(--r-xl); overflow: hidden; }
 .gl-item { display: flex; gap: 14px; padding: 14px 16px; border-bottom: 1px solid var(--gray-3); }
 .gl-item:last-child { border-bottom: none; }
 .gl-tag {
@@ -152,8 +153,8 @@
 /* ── Reason callout ── */
 .callout {
   border: 1px solid var(--gray-4); border-left: 3px solid var(--brand);
-  border-radius: var(--r-md); padding: 14px 16px; background: var(--gray-1);
-  font-size: 13.5px; color: var(--gray-11); line-height: 1.65;
+  border-radius: var(--r-lg); padding: 16px 18px; background: var(--gray-1);
+  font-size: 13.5px; color: var(--gray-11); line-height: 1.7;
 }
 .callout.warn { border-left-color: var(--warning); }
 .callout b { color: var(--gray-12); }
@@ -167,9 +168,9 @@
 .cat-head span { font-size: 12.5px; color: var(--gray-9); }
 .cat-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(212px, 1fr)); gap: 10px; }
 .cat-card {
-  border: 1px solid var(--gray-4); border-radius: var(--r-lg); padding: 14px 16px;
+  border: 1px solid var(--gray-4); border-radius: var(--r-xl); padding: 16px 18px;
   text-decoration: none; color: var(--gray-12); display: block;
-  transition: border-color .12s, background .12s;
+  transition: border-color .16s ease, background .16s ease;
 }
 .cat-card:hover { border-color: var(--gray-8); background: var(--gray-2); }
 .cat-card .cc-top { display: flex; align-items: center; gap: 6px; }
@@ -188,19 +189,19 @@
 .prose { max-width: 680px; }
 .prose h2 { font-size: 17px; font-weight: 600; margin: 40px 0 12px; letter-spacing: -0.01em; }
 .prose h3 { font-size: 14.5px; font-weight: 600; margin: 26px 0 8px; }
-.prose p { font-size: 14px; color: var(--gray-11); line-height: 1.7; margin-bottom: 12px; }
+.prose p { font-size: 14px; color: var(--gray-11); line-height: 1.75; margin-bottom: 13px; }
 .prose ul, .prose ol { margin: 0 0 14px 18px; }
-.prose li { font-size: 14px; color: var(--gray-11); line-height: 1.7; margin-bottom: 5px; }
+.prose li { font-size: 14px; color: var(--gray-11); line-height: 1.75; margin-bottom: 6px; }
 .prose code { font-family: var(--mono); font-size: 12.5px; color: var(--brand);
   background: var(--gray-3); padding: 1px 5px; border-radius: 3px; }
 .prose b { color: var(--gray-12); }
 .prose pre {
   background: var(--gray-2); border: 1px solid var(--gray-4); border-radius: var(--r-lg);
-  padding: 14px 16px; overflow-x: auto; margin-bottom: 16px;
+  padding: 16px 18px; overflow-x: auto; margin-bottom: 16px;
 }
 .prose pre code { background: none; padding: 0; color: var(--gray-11); white-space: pre; }
 .prose table { width: 100%; border-collapse: collapse; border: 1px solid var(--gray-4);
-  border-radius: var(--r-lg); margin-bottom: 16px; }
+  border-radius: var(--r-xl); margin-bottom: 16px; }
 .prose table th { text-align: left; font-size: 11.5px; font-weight: 600; color: var(--gray-10);
   text-transform: uppercase; letter-spacing: .04em; padding: 9px 14px;
   background: var(--gray-2); border-bottom: 1px solid var(--gray-4); }
@@ -220,8 +221,8 @@
 
 /* ── Templates ── */
 .tpl-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 24px; }
-.tpl-card { border: 1px solid var(--gray-4); border-radius: var(--r-lg); padding: 20px;
-  text-decoration: none; color: var(--gray-12); display: block; transition: border-color .12s, background .12s; }
+.tpl-card { border: 1px solid var(--gray-4); border-radius: var(--r-xl); padding: 22px;
+  text-decoration: none; color: var(--gray-12); display: block; transition: border-color .16s ease, background .16s ease; }
 .tpl-card:hover { border-color: var(--gray-8); background: var(--gray-2); }
 .tpl-card h3 { font-size: 14.5px; font-weight: 600; }
 .tpl-card p { font-size: 12.5px; color: var(--gray-10); margin-top: 4px; }
@@ -238,7 +239,7 @@
 }
 
 /* ── 왜/어디에 박스 ── */
-.whybox { border: 1px solid var(--gray-4); border-radius: var(--r-lg); overflow: hidden; margin-bottom: 20px; }
+.whybox { border: 1px solid var(--gray-4); border-radius: var(--r-xl); overflow: hidden; margin-bottom: 20px; }
 .wb-row { display: flex; gap: 14px; padding: 12px 16px; font-size: 13.5px; color: var(--gray-11); line-height: 1.6; }
 .wb-row + .wb-row { border-top: 1px solid var(--gray-3); }
 .wb-tag { flex-shrink: 0; width: 82px; font-size: 11px; font-weight: 700;
@@ -355,7 +356,7 @@
 
 /* Do / Don't 2열 */
 .dodont { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 16px 0 20px; }
-.dd { border: 1px solid var(--gray-4); border-radius: var(--r-lg); padding: 14px 16px; }
+.dd { border: 1px solid var(--gray-4); border-radius: var(--r-xl); padding: 16px 18px; }
 .dd.do { border-color: color-mix(in srgb, var(--success) 30%, var(--gray-4)); }
 .dd.dont { border-color: color-mix(in srgb, var(--danger) 25%, var(--gray-4)); }
 .dd-tag { display: inline-flex; align-items: center; height: 20px; padding: 0 9px;
@@ -407,7 +408,7 @@
 
 /* 글쓰기 비교 */
 .writecmp { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 14px 0 18px; }
-.wc { border: 1px solid var(--gray-4); border-radius: var(--r-lg); padding: 14px 16px; }
+.wc { border: 1px solid var(--gray-4); border-radius: var(--r-xl); padding: 16px 18px; }
 .wc.bad { border-color: color-mix(in srgb, var(--danger) 25%, var(--gray-4)); }
 .wc.good { border-color: color-mix(in srgb, var(--success) 30%, var(--gray-4)); }
 .wc-tag { display: inline-flex; height: 20px; align-items: center; padding: 0 9px; border-radius: var(--r-full);
@@ -422,8 +423,8 @@
 /* 이전 / 다음 */
 .pagenav { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 56px;
   padding-top: 24px; border-top: 1px solid var(--gray-4); }
-.pagenav a { border: 1px solid var(--gray-4); border-radius: var(--r-lg); padding: 12px 16px;
-  text-decoration: none; display: block; transition: border-color .12s, background .12s; }
+.pagenav a { border: 1px solid var(--gray-4); border-radius: var(--r-xl); padding: 14px 18px;
+  text-decoration: none; display: block; transition: border-color .16s ease, background .16s ease; }
 .pagenav a:hover { border-color: var(--gray-8); background: var(--gray-2); }
 .pagenav a.nx { text-align: right; }
 .pagenav span { font-size: 11.5px; color: var(--gray-9); display: block; }

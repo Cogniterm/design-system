@@ -115,7 +115,7 @@ export function fdTokens() {
           <tr><td><code>--brand-*</code></td><td>브랜드 색과 그 변형</td><td><code>--brand-hover</code></td></tr>
           <tr><td><code>--gray-1~12</code></td><td>중립 회색 12단계</td><td><code>--gray-6</code></td></tr>
           <tr><td><code>--success/warning/danger/info</code></td><td>상태 색</td><td><code>--danger</code></td></tr>
-          <tr><td><code>--r-*</code></td><td>모서리 반경</td><td><code>--r-lg</code></td></tr>
+          <tr><td><code>--r-*</code></td><td>모서리 반경 (sm·md·lg·xl·full)</td><td><code>--r-xl</code></td></tr>
           <tr><td><code>--bg</code> / <code>--surface</code></td><td>페이지 배경 / 요소 면</td><td>—</td></tr>
           <tr><td><code>--font</code> / <code>--mono</code></td><td>글꼴</td><td>—</td></tr>
         </tbody>
@@ -307,7 +307,7 @@ export function fdTypography() {
       <table>
         <thead><tr><th>값</th><th>용도</th></tr></thead>
         <tbody>
-          <tr><td><code>1.55</code></td><td>기본. UI 전반</td></tr>
+          <tr><td><code>1.62</code></td><td>기본. UI 전반</td></tr>
           <tr><td><code>1.7</code></td><td>긴 문단, 에이전트 응답 본문</td></tr>
           <tr><td><code>1.2</code></td><td>제목, 한 줄로 끝나는 라벨</td></tr>
         </tbody>
@@ -379,6 +379,7 @@ export function fdSpacing() {
           <tr><td>사이드바 너비</td><td><code>232px</code></td></tr>
           <tr><td>페이지 좌우 여백</td><td><code>24px</code> (모바일) / <code>44px</code> (데스크톱)</td></tr>
           <tr><td>상단 바 높이</td><td><code>52px</code></td></tr>
+          <tr><td>버튼 · 입력 높이</td><td><code>38px</code> (기본) / <code>32px</code> (작게)</td></tr>
         </tbody>
       </table>
       <div class="callout">
@@ -408,14 +409,17 @@ export function fdShape() {
     <div class="prose">
       <h2>Radius</h2>
       <div class="radiusrow">
-        <div><div class="rd" style="border-radius:var(--r-sm)"></div><code>--r-sm</code><span>2px</span><em>작은 표식, 코드 태그</em></div>
-        <div><div class="rd" style="border-radius:var(--r-md)"></div><code>--r-md</code><span>4px</span><em>메뉴 항목, 툴콜, 알림</em></div>
-        <div><div class="rd" style="border-radius:var(--r-lg)"></div><code>--r-lg</code><span>6px</span><em>버튼, 입력, 카드, 패널</em></div>
+        <div><div class="rd" style="border-radius:var(--r-sm)"></div><code>--r-sm</code><span>4px</span><em>작은 표식, 코드 태그</em></div>
+        <div><div class="rd" style="border-radius:var(--r-md)"></div><code>--r-md</code><span>6px</span><em>메뉴 항목, 툴콜, 목록 행</em></div>
+        <div><div class="rd" style="border-radius:var(--r-lg)"></div><code>--r-lg</code><span>8px</span><em>버튼, 입력, 알림</em></div>
+        <div><div class="rd" style="border-radius:var(--r-xl)"></div><code>--r-xl</code><span>12px</span><em>카드, 패널, 다이얼로그, 테이블</em></div>
         <div><div class="rd" style="border-radius:var(--r-full)"></div><code>--r-full</code><span>9999px</span><em>배지, 칩, 아바타</em></div>
       </div>
       <p>
-        일반적인 시스템보다 <b>한 단계 작습니다</b>(보통 8~12px).
-        모서리가 둥글수록 친근하지만 무릅니다. 업무 도구는 각진 쪽이 신뢰가 갑니다.
+        일반적인 시스템(보통 8~16px)보다 <b>조금 작습니다</b>.
+        각질수록 정확해 보이지만 지나치면 차갑고 딱딱해집니다.
+        큰 면(카드·패널)은 12px로 부드럽게, 조작 요소(버튼·입력)는 8px로 또렷하게 —
+        이 <b>두 단계 차이</b>가 위계를 만듭니다.
       </p>
       <div class="callout">
         <b>중첩 규칙</b> — 안쪽 요소의 radius는 바깥보다 작거나 같아야 합니다.
@@ -482,7 +486,7 @@ export function fdElevation() {
         <thead><tr><th>상황</th><th>처리</th></tr></thead>
         <tbody>
           <tr><td>페이지 안에 놓인 모든 것</td><td>그림자 없음. <code>1px solid var(--gray-4)</code></td></tr>
-          <tr><td>페이지 위에 <b>떠 있는</b> 것</td><td>보더 + <code>0 4px 16px rgba(0,0,0,.08)</code></td></tr>
+          <tr><td>페이지 위에 <b>떠 있는</b> 것</td><td>보더 + <code>0 6px 20px rgba(0,0,0,.09)</code></td></tr>
         </tbody>
       </table>
       <p>떠 있는 것은 넷뿐입니다 — <b>Menu · Dialog · Tooltip · Snackbar</b>.</p>
@@ -540,15 +544,15 @@ export function fdDensity() {
       <table>
         <thead><tr><th>이름</th><th>행 높이</th><th>세로 여백</th><th>쓰는 곳</th></tr></thead>
         <tbody>
-          <tr><td><code>compact</code></td><td>32px</td><td>4px</td><td>드라이브 목록, 감사 로그, 대량 테이블</td></tr>
-          <tr><td><code>comfortable</code></td><td>40px</td><td>8px</td><td><b>기본</b>. 대부분의 화면</td></tr>
-          <tr><td><code>spacious</code></td><td>48px</td><td>12px</td><td>챗, 읽는 화면, 설정</td></tr>
+          <tr><td><code>compact</code></td><td>34px</td><td>4px</td><td>드라이브 목록, 감사 로그, 대량 테이블</td></tr>
+          <tr><td><code>comfortable</code></td><td>42px</td><td>8px</td><td><b>기본</b>. 대부분의 화면</td></tr>
+          <tr><td><code>spacious</code></td><td>50px</td><td>12px</td><td>챗, 읽는 화면, 설정</td></tr>
         </tbody>
       </table>
 
       <div class="demo" style="border-radius:var(--r-lg)">
         <div style="display:flex;gap:16px;flex-wrap:wrap">
-          ${['compact:32', 'comfortable:40', 'spacious:48'].map((s) => {
+          ${['compact:34', 'comfortable:42', 'spacious:50'].map((s) => {
             const [n, h] = s.split(':')
             return `<div style="flex:1;min-width:180px">
               <div style="font-size:11px;font-weight:600;color:var(--gray-9);margin-bottom:8px">${n} · ${h}px</div>
@@ -726,14 +730,14 @@ export function fdMotion() {
         <thead><tr><th>값</th><th>쓰는 곳</th></tr></thead>
         <tbody>
           <tr><td><code>0ms</code></td><td>즉시 반영되어야 하는 것 — 체크박스, 탭 전환 내용</td></tr>
-          <tr><td><code>120ms</code></td><td><b>기본</b> — 호버, 보더 색, 배경 변화</td></tr>
-          <tr><td><code>160ms</code></td><td>테마 전환, 패널 열고 닫기</td></tr>
+          <tr><td><code>160ms</code></td><td><b>기본</b> — 호버, 보더 색, 배경 변화</td></tr>
+          <tr><td><code>200ms</code></td><td>테마 전환, 패널 열고 닫기</td></tr>
           <tr><td><code>240ms</code></td><td>최대. 이보다 길면 느리게 느껴집니다.</td></tr>
         </tbody>
       </table>
       <div class="demo" style="border-radius:var(--r-lg)">
         <div class="row">
-          <button class="btn btn-secondary">호버해보세요 — 120ms</button>
+          <button class="btn btn-secondary">호버해보세요 — 160ms</button>
           <input class="input" placeholder="포커스해보세요" style="width:200px" />
         </div>
       </div>
@@ -741,6 +745,7 @@ export function fdMotion() {
       <h2>가속</h2>
       <p>
         기본은 <code>ease</code> 하나입니다. 커스텀 베지어 곡선을 만들지 않습니다.
+        <code>linear</code>는 쓰지 않습니다 — 기계적으로 느껴집니다.
         오버레이는 <b>fade만</b> 씁니다 — Vuetify 기본인 scale 전환을
         <code>defaults.ts</code>에서 <code>fade-transition</code>으로 바꾼 이유입니다.
       </p>
@@ -1083,7 +1088,7 @@ export function fdI18n() {
           <tr><td>자간</td><td>양수 금지. 제목만 <code>-0.01~-0.02em</code></td></tr>
           <tr><td>줄바꿈</td><td><code>word-break: keep-all</code> — 단어 중간에서 끊지 않음</td></tr>
           <tr><td>대문자 변환</td><td>금지 — 한글에는 대문자가 없어 영문만 튐</td></tr>
-          <tr><td>줄 간격</td><td>영문보다 넉넉하게. 기본 1.55</td></tr>
+          <tr><td>줄 간격</td><td>영문보다 넉넉하게. 기본 1.62</td></tr>
         </tbody>
       </table>
 

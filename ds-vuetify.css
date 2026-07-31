@@ -16,36 +16,37 @@
   border-bottom: 1px solid var(--gray-3);
 }
 .ds-vtable .v-table__wrapper > table > tbody > tr:hover > td { background: var(--gray-2); }
-.ds-vtable[data-density="compact"] .v-table__wrapper > table > tbody > tr > td { height: 32px; }
-.ds-vtable[data-density="comfortable"] .v-table__wrapper > table > tbody > tr > td { height: 40px; }
-.ds-vtable[data-density="spacious"] .v-table__wrapper > table > tbody > tr > td { height: 48px; }
+.ds-vtable[data-density="compact"] .v-table__wrapper > table > tbody > tr > td { height: 34px; }
+.ds-vtable[data-density="comfortable"] .v-table__wrapper > table > tbody > tr > td { height: 42px; }
+.ds-vtable[data-density="spacious"] .v-table__wrapper > table > tbody > tr > td { height: 50px; }
 .ds-vtable .v-data-table-footer { border-top: 1px solid var(--gray-4); font-size: 12.5px; }
 
 /* ── DsDialog — VDialog 내부 면 ── */
 .ds-dialog-panel {
   background: var(--surface); border: 1px solid var(--gray-4);
-  border-radius: var(--r-lg); overflow: hidden; font-family: var(--font);
+  border-radius: var(--r-xl); overflow: hidden; font-family: var(--font);
 }
 .ds-dialog-head {
-  padding: 16px 20px; font-size: 15px; font-weight: 600; color: var(--gray-12);
+  padding: 18px 22px; font-size: 15px; font-weight: 600; color: var(--gray-12);
   border-bottom: 1px solid var(--gray-3);
 }
-.ds-dialog-body { padding: 20px; font-size: 14px; color: var(--gray-11); }
+.ds-dialog-body { padding: 20px 22px; font-size: 14px; color: var(--gray-11); line-height: 1.7; }
 .ds-dialog-foot {
-  padding: 12px 20px; border-top: 1px solid var(--gray-3);
+  padding: 14px 22px; border-top: 1px solid var(--gray-3);
   display: flex; gap: 8px; justify-content: flex-end; background: var(--gray-2);
 }
 
 /* ── DsMenu — VMenu 내부 면 ── */
 .ds-menu-panel {
   background: var(--surface); border: 1px solid var(--gray-4);
-  border-radius: var(--r-lg); padding: 4px; min-width: 180px;
-  font-family: var(--font); box-shadow: 0 4px 16px rgba(0,0,0,.08);
+  border-radius: var(--r-lg); padding: 5px; min-width: 180px;
+  font-family: var(--font); box-shadow: 0 6px 20px rgba(0,0,0,.09);
 }
 [data-theme="dark"] .ds-menu-panel { box-shadow: 0 4px 16px rgba(0,0,0,.4); }
 .ds-menu-item {
-  display: flex; align-items: center; gap: 8px; height: 32px; padding: 0 10px;
+  display: flex; align-items: center; gap: 9px; height: 34px; padding: 0 11px;
   border-radius: var(--r-md); font-size: 13.5px; color: var(--gray-12); cursor: pointer;
+  transition: background .16s ease;
 }
 .ds-menu-item:hover { background: var(--gray-3); }
 
@@ -89,7 +90,7 @@
 .v-application .rounded    { border-radius: var(--r-md) !important; }
 .v-application .rounded-md { border-radius: var(--r-md) !important; }
 .v-application .rounded-lg { border-radius: var(--r-lg) !important; }
-.v-application .rounded-xl { border-radius: var(--r-lg) !important; }
+.v-application .rounded-xl { border-radius: var(--r-xl) !important; }
 
 /* 보더 색 통일 */
 .v-application .v-card--variant-outlined,
@@ -102,13 +103,13 @@
 .v-btn--variant-text:hover { background: var(--gray-3); }
 
 /* ── VAlert / VBanner ── */
-.v-alert { border-radius: var(--r-md); font-size: 13.5px; }
+.v-alert { border-radius: var(--r-lg); font-size: 13.5px; line-height: 1.65; }
 .v-alert--variant-tonal .v-alert__underlay { opacity: .08; }
 .v-banner { border-color: var(--gray-4); font-size: 13.5px; }
 
 /* ── VList ── */
 .v-list { background: var(--surface); padding: 4px; }
-.v-list-item { min-height: 34px; border-radius: var(--r-md); font-size: 13.5px; }
+.v-list-item { min-height: 36px; border-radius: var(--r-md); font-size: 13.5px; }
 .v-list-item__overlay { opacity: 0; }
 .v-list-item:hover { background: var(--gray-3); }
 .v-list-item--active { background: var(--brand-subtle); color: var(--brand); }
@@ -141,6 +142,7 @@
 
 /* ── VField (VTextField·VSelect 등 입력 공통) ── */
 .v-field { border-radius: var(--r-lg); font-size: 14px; background: var(--surface); }
+.v-field.v-field--variant-outlined { --v-field-padding-start: 13px; }
 .v-field__outline__start, .v-field__outline__end,
 .v-field__outline__notch::before, .v-field__outline__notch::after { border-color: var(--gray-6); }
 .v-field--focused .v-field__outline__start, .v-field--focused .v-field__outline__end,
@@ -175,13 +177,13 @@
 
 /* ── VSnackbar ── */
 .v-snackbar__wrapper { border: 1px solid var(--gray-4); background: var(--surface);
-  color: var(--gray-12); font-size: 13.5px; box-shadow: 0 4px 16px rgba(0,0,0,.08); }
+  color: var(--gray-12); font-size: 13.5px; box-shadow: 0 6px 20px rgba(0,0,0,.09); }
 [data-theme="dark"] .v-snackbar__wrapper { box-shadow: 0 4px 16px rgba(0,0,0,.4); }
 
 /* ── VOverlay 계열 공통 (VMenu·VDialog 내부 면) ── */
 .v-overlay__content > .v-card,
 .v-overlay__content > .v-list,
-.v-overlay__content > .v-sheet { border: 1px solid var(--gray-4); box-shadow: 0 4px 16px rgba(0,0,0,.08); }
+.v-overlay__content > .v-sheet { border: 1px solid var(--gray-4); box-shadow: 0 6px 20px rgba(0,0,0,.09); }
 [data-theme="dark"] .v-overlay__content > .v-card,
 [data-theme="dark"] .v-overlay__content > .v-list,
 [data-theme="dark"] .v-overlay__content > .v-sheet { box-shadow: 0 4px 16px rgba(0,0,0,.4); }
@@ -245,7 +247,7 @@
 
 /* ── DsNavList ── */
 .ds-navlist.v-list { padding: 4px; background: transparent; }
-.ds-navlist .v-list-item { min-height: 32px; font-size: 13.5px; }
+.ds-navlist .v-list-item { min-height: 34px; font-size: 13.5px; }
 .ds-nav-icon { font-size: 15px; margin-right: 8px; opacity: .8; }
 .ds-nav-badge {
   font-size: 11px; font-weight: 600; padding: 1px 6px; border-radius: var(--r-full);

@@ -8,7 +8,7 @@
    원칙:
    - elevation: 0        그림자 없음 (떠 있는 요소만 예외)
    - variant: 'outlined' 면은 1px 보더로 구분
-   - rounded: 'md'       radius 4px
+   - rounded: 'md'       radius 6px (큰 면은 lg/xl)
    - ripple: false       미니멀 — 물결 효과 제거
 */
 
@@ -32,8 +32,8 @@ export const dsDefaults = {
   VSpeedDial: { transition: 'fade-transition' },
 
   /* ── Surface / Container ── */
-  VCard: { variant: 'outlined', rounded: 'lg', elevation: 0 },
-  VSheet: { elevation: 0, rounded: 'lg' },
+  VCard: { variant: 'outlined', rounded: 'xl', elevation: 0 },
+  VSheet: { elevation: 0, rounded: 'xl' },
   VToolbar: { flat: true, density: 'comfortable' },
   VAppBar: { flat: true, elevation: 0, density: 'comfortable', border: 'b' },
   VFooter: { elevation: 0, border: 't' },
@@ -49,7 +49,7 @@ export const dsDefaults = {
   VTab: { ripple: false, style: 'text-transform:none;letter-spacing:0;font-weight:500;' },
   VBreadcrumbs: { density: 'comfortable' },
   VPagination: { variant: 'text', rounded: 'md', activeColor: 'primary', totalVisible: 7 },
-  VStepper: { flat: true, elevation: 0, rounded: 'lg' },
+  VStepper: { flat: true, elevation: 0, rounded: 'xl' },
 
   /* ── Data Input ── */
   VTextField: { variant: 'outlined', density: 'comfortable', hideDetails: 'auto', rounded: 'md' },
@@ -74,15 +74,15 @@ export const dsDefaults = {
   VConfirmEdit: { color: 'primary' },
 
   /* ── Feedback & Status ── */
-  VAlert: { variant: 'tonal', rounded: 'md', border: 'start', density: 'comfortable' },
+  VAlert: { variant: 'tonal', rounded: 'lg', border: 'start', density: 'comfortable' },
   VBanner: { rounded: 'md', density: 'comfortable', lines: 'one' },
   VChip: { variant: 'outlined', rounded: 'pill', size: 'small', ripple: false },
   VBadge: { color: 'primary' },
   VProgressLinear: { color: 'primary', height: 2, rounded: false },
   VProgressCircular: { color: 'primary', width: 2, size: 20 },
   VSkeletonLoader: { elevation: 0, color: 'surface' },
-  VSnackbar: { elevation: 0, rounded: 'lg', location: 'bottom right', timeout: 4000 },
-  VSnackbarQueue: { elevation: 0, rounded: 'lg', location: 'bottom right' },
+  VSnackbar: { elevation: 0, rounded: 'xl', location: 'bottom right', timeout: 4000 },
+  VSnackbarQueue: { elevation: 0, rounded: 'xl', location: 'bottom right' },
   VEmptyState: { size: 48 },
 
   /* ── Overlay ── */

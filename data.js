@@ -30,7 +30,7 @@ export const COMPONENTS = [
             en: 'Purely visual; building it ourselves avoids specificity wars with Vuetify.' },
   props: [
     ['variant', `'primary' | 'secondary' | 'ghost' | 'danger'`, `'primary'`, '시각 강도. primary는 한 화면에 하나만.'],
-    ['size', `'default' | 'sm'`, `'default'`, '높이 36px / 30px.'],
+    ['size', `'default' | 'sm'`, `'default'`, '높이 38px / 32px.'],
     ['disabled', 'boolean', 'false', '비활성화. 이유를 Tooltip으로 알려주는 것을 권장.'],
   ],
   events: [['click', 'MouseEvent', '클릭 시 발생.']],
@@ -513,7 +513,7 @@ export const COMPONENTS = [
   props: [
     ['headers', 'any[]', '필수', 'Vuetify VDataTable의 headers 형식 그대로.'],
     ['items', 'any[]', '필수', '행 데이터.'],
-    ['density', `'compact' | 'comfortable' | 'spacious'`, `'comfortable'`, '행 높이 32 / 40 / 48px (원칙 3).'],
+    ['density', `'compact' | 'comfortable' | 'spacious'`, `'comfortable'`, '행 높이 34 / 42 / 50px (원칙 3).'],
     ['loading', 'boolean', 'false', '로딩 표시.'],
   ],
   slots: [['(VDataTable의 모든 슬롯)', 'item.* 등 Vuetify 슬롯이 그대로 전달됩니다.']],
@@ -598,7 +598,7 @@ export const COMPONENTS = [
   <span class="f-name">계약서_최종.pdf</span>
   <span class="f-meta">2.1 MB · Jun 28</span>
 </div>`,
-  guidelines: [['해야 할 것', 'compact 밀도(40px)를 유지해 많은 파일을 훑기 좋게 합니다.']],
+  guidelines: [['해야 할 것', 'compact 밀도(42px)를 유지해 많은 파일을 훑기 좋게 합니다.']],
 },
 {
   id: 'searchresult', name: 'SearchResult', ko: '검색 결과', category: 'data',
@@ -821,7 +821,7 @@ export const COMPONENTS = [
   props: [
     ['label', 'string', '필수', 'aria-label. 아이콘만 있으므로 생략할 수 없습니다.'],
     ['variant', "'ghost' | 'secondary'", "'ghost'", '보더 유무.'],
-    ['size', "'sm' | 'default'", "'default'", '26 / 30px.'],
+    ['size', "'sm' | 'default'", "'default'", '28 / 32px.'],
   ],
   events: [['click', 'MouseEvent', '클릭 시 발생.']],
   slots: [['default', '아이콘.']],

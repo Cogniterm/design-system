@@ -377,11 +377,12 @@ function exportCsv() { toast.value = { msg: '내보내기에 실패했습니다 
 .filters .field { width: 260px; }
 .lvl-chips { display: flex; gap: 6px; }
 .lvl-chip {
-  all: unset; box-sizing: border-box; cursor: pointer; height: 36px; padding: 0 12px;
+  all: unset; box-sizing: border-box; cursor: pointer; height: 38px; padding: 0 13px;
   display: inline-flex; align-items: center; gap: 6px;
   border: 1px solid var(--gray-6); border-radius: var(--r-lg);
   font-size: 13px; font-weight: 500; color: var(--gray-11);
   font-family: var(--font); background: var(--surface);
+  transition: background .16s ease, border-color .16s ease, color .16s ease;
 }
 .lvl-chip:hover { background: var(--gray-2); border-color: var(--gray-8); }
 .lvl-chip.on { background: var(--brand-subtle); color: var(--brand); border-color: transparent; }
@@ -408,14 +409,14 @@ function exportCsv() { toast.value = { msg: '내보내기에 실패했습니다 
 }
 .row-more:hover { background: var(--gray-3); color: var(--gray-12); }
 
-.tbl-skel { margin-top: 18px; border: 1px solid var(--gray-4); border-radius: var(--r-lg); overflow: hidden; }
+.tbl-skel { margin-top: 18px; border: 1px solid var(--gray-4); border-radius: var(--r-xl); overflow: hidden; }
 .skel-row { display: flex; gap: 24px; align-items: center; padding: 12px 16px; border-bottom: 1px solid var(--gray-3); }
 .skel-row:last-child { border-bottom: none; }
 
 .kv { display: flex; gap: 12px; padding: 7px 0; font-size: 13.5px; color: var(--gray-12); align-items: center; }
 .kv span:first-child { width: 78px; flex-shrink: 0; color: var(--gray-10); font-size: 12.5px; }
 .kv code { font-family: var(--mono); font-size: 12.5px; color: var(--gray-11); }
-.detail-box { font-size: 13.5px; padding: 12px 14px; border-radius: var(--r-md);
+.detail-box { font-size: 13.5px; padding: 14px 16px; border-radius: var(--r-lg); line-height: 1.7;
   background: var(--gray-2); border-left: 3px solid var(--gray-6); color: var(--gray-11); }
 .detail-box[data-lvl="error"] { border-left-color: var(--danger); }
 .detail-box[data-lvl="warn"]  { border-left-color: var(--brand); }
@@ -426,7 +427,7 @@ function exportCsv() { toast.value = { msg: '내보내기에 실패했습니다 
 .sec { font-size: 15px; font-weight: 600; color: var(--gray-12); margin: 48px 0 8px; }
 .sec-note { font-size: 13px; color: var(--gray-10); margin-bottom: 14px; }
 .sec-note code { font-family: var(--mono); color: var(--brand); }
-.agent-box { border: 1px solid var(--gray-4); border-radius: var(--r-lg); padding: 20px; background: var(--gray-1); }
+.agent-box { border: 1px solid var(--gray-4); border-radius: var(--r-xl); padding: 22px; background: var(--gray-1); }
 .vrow { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; }
 .mt-2 { margin-top: 8px; } .mt-4 { margin-top: 16px; } .mb-3 { margin-bottom: 12px; }
 
