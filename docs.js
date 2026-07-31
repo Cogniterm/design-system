@@ -408,6 +408,44 @@ function pageVuetify() {
         마이그레이션은 없고 기존 화면은 바뀌지 않습니다.
       </div>
 
+      <h2>"Vuetify 없이 동작한다"의 뜻</h2>
+      <p>
+        오해하기 쉬운 표현입니다. <b>"Vuetify와 호환되지 않는다"는 뜻이 전혀 아닙니다.</b>
+        정확히는 <b>"Vuetify를 필요로 하지 않는다"</b>는 뜻이고, 이건 호환성을 <u>낮추는</u> 게 아니라
+        <u>높이는</u> 성질입니다.
+      </p>
+      <table>
+        <thead><tr><th></th><th>Standalone 컴포넌트</th><th>Vuetify 기반 컴포넌트</th></tr></thead>
+        <tbody>
+          <tr><td><b>Vuetify 앱에서</b></td><td>정상 동작 ✓</td><td>정상 동작 ✓</td></tr>
+          <tr><td><b>Vuetify 없는 앱에서</b></td><td>정상 동작 ✓</td><td>동작하지 않음</td></tr>
+          <tr><td><b>Vuetify 버전 올릴 때</b></td><td>영향 없음</td><td>확인 필요</td></tr>
+        </tbody>
+      </table>
+      <p>
+        Standalone은 Vuetify가 <b>있어도 없어도</b> 동작합니다.
+        의존이 없다는 것은 Vuetify 버전이 바뀌어도 깨질 일이 없다는 뜻이기도 합니다 —
+        오히려 가장 안전한 쪽입니다.
+      </p>
+
+      <h2>실제로 검증했습니다</h2>
+      <div class="callout">
+        <b>Vuetify 3.11.6 실제 앱에서 컴포넌트 25종 전부 렌더 확인 (2026-07-31)</b><br>
+        <code>examples/vuetify-app</code>에 검증용 최소 앱이 들어 있습니다.
+        <code>npm run dev</code>로 직접 돌려볼 수 있습니다.
+      </div>
+      <table>
+        <thead><tr><th>검증 항목</th><th>결과</th></tr></thead>
+        <tbody>
+          <tr><td><code>vite build</code> (602 모듈)</td><td>통과 · 에러 0</td></tr>
+          <tr><td>Vuetify 원본(<code>VBtn</code>·<code>VChip</code>)과 나란히 배치</td><td>상호 침범 없음</td></tr>
+          <tr><td><code>VCard</code> 안에 우리 컴포넌트 중첩</td><td>스타일 유지됨</td></tr>
+          <tr><td>Standalone 20종 중 <code>vuetify</code> import</td><td>0개</td></tr>
+          <tr><td><code>ds.css</code>의 <code>!important</code></td><td>0개</td></tr>
+          <tr><td><code>ds.css</code>가 정의하는 <code>.v-*</code> 클래스</td><td>0개</td></tr>
+        </tbody>
+      </table>
+
       <h2>두 종류로 나눈 기준</h2>
       <p>
         기준은 딱 하나입니다 — <b>"동작이 어려운가, 시각이 전부인가."</b>

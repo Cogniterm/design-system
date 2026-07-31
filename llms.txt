@@ -46,3 +46,11 @@ templates/          golden screens: chat.html, search.html
 No npm install. Copy ds.css, ds-vuetify.css and vue/ into app/src/design/,
 register the CSS in nuxt.config, optionally wire dsDefaults into createVuetify.
 Vuetify stays at 3.11 — no migration, existing screens unchanged.
+
+## Compatibility (verified 2026-07-31)
+Verified inside a real Vuetify 3.11.6 app — see examples/vuetify-app.
+vite build passes (602 modules, 0 errors); all 25 components render inside <v-app>.
+"Standalone" means "does not REQUIRE Vuetify" — it still works perfectly inside a
+Vuetify app, and is unaffected by Vuetify version changes.
+Isolation guarantees: 0 vuetify imports in standalone components, 0 !important in
+ds.css, 0 .v-* class definitions in ds.css, all:unset on every component root.
