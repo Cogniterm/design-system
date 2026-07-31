@@ -1,4 +1,4 @@
-import { CATEGORIES, COMPONENTS, TEMPLATES, VUETIFY_COVERAGE } from './data.js'
+import { CATEGORIES, COMPONENTS, TEMPLATES, VUETIFY_COVERAGE, WHERE } from './data.js'
 
 /* ═══════════ 유틸 ═══════════ */
 const $ = (s) => document.querySelector(s)
@@ -144,14 +144,25 @@ function renderComponent(id, tab) {
 
 function overviewPane(c) {
   const need = c.origin === 'wrapped'
-    ? `<div class="callout warn" style="margin-bottom:24px">
-         <b>이 컴포넌트는 Vuetify가 필요합니다.</b> 내부적으로 <code>${c.vuetifyBase}</code>를 사용합니다 —
-         ${c.reason.ko}
+    ? `<div class="callout warn" style="margin-bottom:20px">
+         <b>Vuetify 기반</b> — 내부적으로 <code>${c.vuetifyBase}</code>를 사용합니다.
+         <code>~/design/vuetify</code>에서 import 하세요.
        </div>`
-    : `<div class="callout" style="margin-bottom:24px">
-         <b>Vuetify 없이 동작합니다.</b> ${c.reason.ko}
+    : `<div class="callout" style="margin-bottom:20px">
+         <b>Standalone</b> — Vuetify 없이 동작합니다. <code>~/design</code>에서 import 하세요.
        </div>`
-  return need + `<div class="demo">${c.demo}</div>` + codeBlock(c)
+
+  const wherebox = WHERE[c.id] ? `
+    <div class="whybox">
+      <div class="wb-row"><span class="wb-tag why">왜 필요한가</span><span>${c.reason.ko}</span></div>
+      <div class="wb-row"><span class="wb-tag where">어디에 쓰나</span><span>${WHERE[c.id]}</span></div>
+    </div>` : ''
+
+  return need + wherebox + `<div class="demo">${c.demo}</div>` + codeBlock(c) + `
+    <div class="livehint">
+      위 예시는 문서용 정적 렌더입니다.
+      실제 Vuetify 위에서 동작하는 화면은 <b>examples/vuetify-app</b>의 라이브 갤러리에서 확인하세요.
+    </div>`
 }
 
 function codePane(c) {

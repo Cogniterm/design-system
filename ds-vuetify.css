@@ -204,3 +204,126 @@
 .v-toolbar { background: var(--surface); }
 .v-app-bar { border-color: var(--gray-4) !important; background: var(--bg); }
 .v-navigation-drawer { border-color: var(--gray-4) !important; background: var(--bg); }
+
+/* ============================================================
+   Ds* 래퍼 컴포넌트 전용 스타일
+   ============================================================ */
+
+/* ── DsIconButton ── */
+.ds-icon-btn.v-btn { width: 30px; height: 30px; min-width: 0; border-radius: var(--r-md); color: var(--gray-10); }
+.ds-icon-btn.v-btn:hover { background: var(--gray-3); color: var(--gray-12); }
+.ds-icon-btn.is-secondary.v-btn { border: 1px solid var(--gray-6); background: var(--surface); }
+.ds-icon-btn.is-secondary.v-btn:hover { border-color: var(--gray-8); }
+.ds-icon-btn.is-sm.v-btn { width: 26px; height: 26px; font-size: 12px; }
+
+/* ── DsButtonGroup ── */
+.ds-btn-group.v-btn-toggle { height: 32px; border-radius: var(--r-lg); border: 1px solid var(--gray-6); overflow: hidden; }
+.ds-btn-group .v-btn { height: 30px; font-size: 12.5px; font-weight: 500; color: var(--gray-11);
+  border-radius: 0; border: none; min-width: 0; padding: 0 12px; }
+.ds-btn-group .v-btn:hover { background: var(--gray-2); }
+.ds-btn-group .v-btn--active { background: var(--brand-subtle); color: var(--brand); }
+.ds-btn-group .v-btn__overlay { display: none; }
+
+/* ── DsTabs ── */
+.ds-tab-count {
+  margin-left: 6px; font-size: 11px; font-weight: 600; padding: 1px 6px;
+  border-radius: var(--r-full); background: var(--gray-3); color: var(--gray-10);
+}
+.ds-tabs .v-tab--selected .ds-tab-count { background: var(--brand-subtle); color: var(--brand); }
+
+/* ── DsBreadcrumbs ── */
+.ds-breadcrumbs.v-breadcrumbs { padding: 0; font-size: 12.5px; }
+.ds-breadcrumbs .v-breadcrumbs-item { color: var(--gray-10); padding: 0; }
+.ds-breadcrumbs .v-breadcrumbs-item:hover { color: var(--gray-12); }
+.ds-breadcrumbs .v-breadcrumbs-item--disabled { color: var(--gray-12); opacity: 1; font-weight: 500; }
+.ds-bc-sep { color: var(--gray-7); margin: 0 6px; }
+
+/* ── DsPagination ── */
+.ds-pagination .v-btn { font-size: 12.5px; min-width: 28px; height: 28px; color: var(--gray-11); }
+.ds-pagination .v-btn:hover { background: var(--gray-3); }
+.ds-pagination .v-pagination__item--is-active .v-btn { background: var(--brand-subtle); color: var(--brand); }
+
+/* ── DsNavList ── */
+.ds-navlist.v-list { padding: 4px; background: transparent; }
+.ds-navlist .v-list-item { min-height: 32px; font-size: 13.5px; }
+.ds-nav-icon { font-size: 15px; margin-right: 8px; opacity: .8; }
+.ds-nav-badge {
+  font-size: 11px; font-weight: 600; padding: 1px 6px; border-radius: var(--r-full);
+  background: var(--gray-3); color: var(--gray-10);
+}
+.ds-navlist .v-list-item--active .ds-nav-badge { background: var(--brand); color: var(--on-brand); }
+
+/* ── 입력 래퍼 공통 (DsTextarea·DsAutocomplete·DsFileInput 등) ── */
+.ds-vfield .v-field { border-radius: var(--r-lg); }
+.ds-vfield .v-field__outline__start, .ds-vfield .v-field__outline__end,
+.ds-vfield .v-field__outline__notch::before, .ds-vfield .v-field__outline__notch::after { border-color: var(--gray-6); }
+.ds-vfield .v-field--focused .v-field__outline__start, .ds-vfield .v-field--focused .v-field__outline__end,
+.ds-vfield .v-field--focused .v-field__outline__notch::before, .ds-vfield .v-field--focused .v-field__outline__notch::after { border-color: var(--brand); }
+
+/* ── DsCheckbox · DsSwitch · DsRadioGroup ── */
+.ds-check .v-label, .ds-switch .v-label, .ds-radio .v-label { font-size: 13.5px; color: var(--gray-12); opacity: 1; }
+.ds-check-hint { margin-left: 32px; margin-top: -4px; }
+.ds-radio-label { display: flex; flex-direction: column; gap: 1px; }
+.ds-radio-hint { font-size: 12px; color: var(--gray-10); }
+.ds-radio .v-selection-control-group { gap: 2px; }
+
+/* ── DsSlider ── */
+.ds-slider-label { display: flex; justify-content: space-between; align-items: baseline; }
+.ds-slider-val { font-family: var(--mono); font-size: 12.5px; color: var(--gray-11); font-weight: 400; }
+.ds-slider .v-slider-track__background { background: var(--gray-5); }
+
+/* ── DsDatePicker ── */
+.ds-datepicker .v-date-picker { border: 1px solid var(--gray-4); border-radius: var(--r-lg); background: var(--surface); }
+.ds-dp-label { display: block; font-size: 13px; font-weight: 500; margin-bottom: 6px; }
+.ds-datepicker .v-date-picker-month__day .v-btn { font-size: 12.5px; }
+
+/* ── DsAlert ── */
+.ds-alert.v-alert { font-size: 13.5px; border-radius: var(--r-md); }
+.ds-alert .v-alert-title { font-size: 13.5px; font-weight: 600; margin-bottom: 2px; }
+.ds-alert-actions { display: flex; gap: 8px; margin-top: 10px; }
+
+/* ── DsBanner ── */
+.ds-banner.v-banner { border: 1px solid var(--gray-4); background: var(--gray-2); font-size: 13.5px; }
+
+/* ── DsProgressBar ── */
+.ds-progress-head { display: flex; justify-content: space-between; align-items: baseline;
+  font-size: 12.5px; color: var(--gray-11); margin-bottom: 6px; }
+.ds-progress-val { font-family: var(--mono); color: var(--gray-10); }
+
+/* ── DsList ── */
+.ds-list.v-list { background: transparent; padding: 0; }
+.ds-list .v-list-item { border-radius: var(--r-md); min-height: 40px; }
+.ds-list .v-list-item-title { font-size: 13.5px; }
+.ds-list .v-list-item-subtitle { font-size: 12px; color: var(--gray-10); }
+.ds-list-meta { font-family: var(--mono); font-size: 12px; color: var(--gray-9); }
+
+/* ── DsTreeview ── */
+.ds-treeview.v-treeview { background: transparent; }
+.ds-treeview .v-list-item { min-height: 30px; font-size: 13.5px; border-radius: var(--r-md); }
+.ds-treeview .v-list-item--active { background: var(--brand-subtle); color: var(--brand); }
+
+/* ── DsTimeline ── */
+.ds-timeline .v-timeline-divider__dot { box-shadow: none; }
+.ds-tl-time { font-family: var(--mono); font-size: 11.5px; color: var(--gray-9); }
+.ds-tl-title { font-size: 13.5px; font-weight: 500; color: var(--gray-12); margin-top: 2px; }
+.ds-tl-body { font-size: 12.5px; color: var(--gray-11); margin-top: 2px; }
+
+/* ── DsAccordion ── */
+.ds-accordion .v-expansion-panel { background: var(--surface); border: 1px solid var(--gray-4); }
+.ds-accordion .v-expansion-panel::after { display: none; }
+.ds-accordion .v-expansion-panel-title { font-size: 13.5px; font-weight: 500; min-height: 40px; padding: 0 14px; }
+.ds-accordion .v-expansion-panel-text__wrapper { padding: 4px 14px 14px; font-size: 13px; color: var(--gray-11); }
+
+/* ── DsStepper ── */
+.ds-stepper.v-stepper { background: var(--surface); border: 1px solid var(--gray-4); border-radius: var(--r-lg); }
+.ds-stepper .v-stepper-item__avatar.v-avatar { background: var(--gray-4); color: var(--gray-11); font-size: 12px; }
+.ds-stepper .v-stepper-item--selected .v-stepper-item__avatar.v-avatar { background: var(--brand); color: var(--on-brand); }
+.ds-stepper .v-stepper-item__title { font-size: 13px; font-weight: 500; }
+
+/* ── DsSnackbar ── */
+.ds-snackbar .v-snackbar__wrapper { min-width: 280px; border: 1px solid var(--gray-4);
+  background: var(--surface); color: var(--gray-12); }
+.ds-snackbar .t-dot { display: inline-block; width: 8px; height: 8px; border-radius: 50%; margin-right: 10px; }
+.ds-snackbar .t-dot.success { background: var(--success); }
+.ds-snackbar .t-dot.danger { background: var(--danger); }
+.ds-snack-body { font-size: 13.5px; }

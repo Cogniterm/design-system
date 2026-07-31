@@ -13,10 +13,15 @@
    ChatMessage, StreamingText, ThinkingIndicator, ToolCallStep, AgentInput,
    CitationChip, ArtifactPanel, SearchResult, FileGrid, FileRow
 
-2. VUETIFY-BASED (5) — wraps a Vuetify component. Needs ds.css + ds-vuetify.css.
+2. VUETIFY-BASED (29) — wraps a Vuetify component. Needs ds.css + ds-vuetify.css.
    import { DsDataTable, ... } from '~/design/vuetify'
-   DsDataTable(VDataTable), DsDialog(VDialog), DsMenu(VMenu),
-   DsTooltip(VTooltip), DsSelect(VSelect)
+   Action:   DsIconButton(VBtn), DsButtonGroup(VBtnToggle), DsMenu(VMenu)
+   Nav:      DsTabs, DsBreadcrumbs, DsPagination, DsNavList(VList), DsStepper
+   Input:    DsSelect, DsAutocomplete, DsTextarea, DsCheckbox, DsRadioGroup,
+             DsSwitch, DsSlider, DsFileInput, DsDatePicker
+   Feedback: DsAlert, DsBanner, DsProgressBar, DsSpinner, DsSnackbar
+   Overlay:  DsDialog, DsTooltip
+   Data:     DsDataTable, DsList, DsTreeview, DsTimeline, DsAccordion
 
 Rule for choosing: behavior that is hard to rebuild (focus trap, positioning,
 scroll lock, keyboard nav, sorting/pagination) stays Vuetify. Purely visual
@@ -71,3 +76,19 @@ examples/vuetify-app — an Audit Log screen (table-centric) on real Vuetify 3.1
 Covers: DataTable with cell slots, filters, density switch, row menu, detail dialog,
 loading/empty states, toast, agent analysis panel, and a section of raw <v-*> components
 proving theme+defaults alone produce our styling.
+
+## Choosing between similar components
+Checkbox vs Switch  — Switch = instant apply; Checkbox = needs a save button.
+Alert vs Snackbar   — Alert persists on screen; Snackbar appears and disappears.
+Alert vs Banner     — Alert is regional; Banner is page-wide.
+Spinner vs Thinking — Spinner for <2s waits; agent work always uses ThinkingIndicator
+                      or ToolCallStep (Principle 1: show progress, not a bare spinner).
+Select vs Autocomplete — >10 options means Autocomplete.
+DataTable vs List   — fixed columns + sorting means DataTable; otherwise List.
+Badge vs Chip       — Badge is read-only; Chip is removable.
+ProgressBar         — only when the percentage is known; otherwise ThinkingIndicator.
+
+## Live gallery
+examples/vuetify-app renders every component on real Vuetify 3.11.6:
+  #        → component gallery (each entry states WHY it exists and WHERE to use it)
+  #audit   → audit log screen (table, filters, dialog, loading/empty states)
