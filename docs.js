@@ -1,6 +1,7 @@
 import { CATEGORIES, COMPONENTS, TEMPLATES, VUETIFY_COVERAGE, WHERE, A11Y, VERSUS } from './data.js'
 import { FOUNDATION_PAGES, FD_RENDERERS } from './foundation.js'
 import { ic, ICON_NAMES } from './icons-svg.js'
+import { PATTERNS, PATTERN_GROUPS, PATTERN_BY_ID } from './patterns.js'
 
 /* ═══════════ 유틸 ═══════════ */
 const $ = (s) => document.querySelector(s)
@@ -52,11 +53,13 @@ function render() {
   let navKey = 'components'
   if (section === 'docs') navKey = 'docs'
   else if (section === 'foundation') navKey = 'foundation'
+  else if (section === 'patterns') navKey = 'patterns'
   else if (section === 'templates') navKey = 'templates'
   document.querySelectorAll('.topnav-links a').forEach((a) =>
     a.classList.toggle('on', a.dataset.nav === navKey))
 
   if (section === 'foundation') renderFoundation(id || 'overview')
+  else if (section === 'patterns') { id ? renderPattern(id) : renderPatternIndex() }
   else if (section === 'docs') renderDocsPage(id || 'start')
   else if (section === 'templates') renderTemplates()
   else if (id) renderComponent(id, tab)
@@ -98,6 +101,17 @@ function renderSidebar(section, activeId) {
       const tag = c.origin === 'wrapped' ? `<span class="vtag">V</span>` : ''
       return `<a href="#/components/${c.id}" class="${on}">${c.name}${tag}</a>`
     }).join('')
+  }
+
+  if (section === 'patterns') {
+    for (const g of PATTERN_GROUPS) {
+      const items = PATTERNS.filter((p) => p.group === g.id)
+      if (!items.length) continue
+      html += `<div class="nav-title">${g.name}</div>` + items.map((p) =>
+        `<a href="#/patterns/${p.id}" class="${activeId === p.id ? 'on' : ''}">${p.ko}<span class="nav-en">${p.name}</span></a>`).join('')
+    }
+  } else {
+    html += `<div class="nav-title">Patterns</div><a href="#/patterns">전체 보기</a>`
   }
 
   html += `<div class="nav-title">Templates</div>` +
@@ -375,6 +389,51 @@ function renderTemplates() {
         <div class="covers">${t.covers.map((x) => `<span>${x}</span>`).join('')}</div>
         <div class="go">열어보기 ${ic('forward','sm')}</div>
       </a>`).join('') + `</div>`
+}
+
+/* ═══════════ Patterns ═══════════ */
+function renderPatternIndex() {
+  let html = `
+    <div class="page-head"><h1>Patterns</h1><span class="page-ko">패턴</span></div>
+    <p class="page-lead">
+      컴포넌트가 "무엇"이라면 패턴은 <b>"어떻게 조합하나"</b>입니다.
+      같은 문제를 화면마다 다르게 풀면 컴포넌트가 같아도 제품은 일관되지 않습니다.
+    </p>`
+  for (const g of PATTERN_GROUPS) {
+    const items = PATTERNS.filter((p) => p.group === g.id)
+    if (!items.length) continue
+    html += `<div class="cat-group">
+      <div class="cat-head"><h2>${g.name}</h2><span>${g.ko} · ${items.length}</span></div>
+      <div class="cat-grid">` + items.map((p) => `
+        <a class="cat-card" href="#/patterns/${p.id}">
+          <div class="cc-top"><h3>${p.name}</h3><span class="cc-ko">${p.ko}</span></div>
+          <p>${p.summary}</p>
+        </a>`).join('') + `</div></div>`
+  }
+  $('#content').innerHTML = html
+}
+
+function renderPattern(id) {
+  const p = PATTERN_BY_ID[id]
+  if (!p) return renderPatternIndex()
+  const g = PATTERN_GROUPS.find((x) => x.id === p.group)
+  const list = PATTERNS.filter((x) => x.group === p.group)
+  const i = list.findIndex((x) => x.id === id)
+  const prev = i > 0 ? list[i - 1] : null
+  const next = i < list.length - 1 ? list[i + 1] : null
+
+  $('#content').innerHTML = `
+    <div class="page-head">
+      <h1>${p.name}</h1><span class="page-ko">${p.ko}</span>
+      <span class="origin-badge custom">${g.ko}</span>
+    </div>
+    <p class="page-lead">${p.summary}</p>
+    <div class="tabpane">${p.body()}</div>
+    <div class="pagenav">
+      ${prev ? `<a href="#/patterns/${prev.id}"><span>${ic('back', 12)} 이전</span><b>${prev.ko}</b></a>` : '<span></span>'}
+      ${next ? `<a class="nx" href="#/patterns/${next.id}"><span>다음 ${ic('forward', 12)}</span><b>${next.ko}</b></a>` : '<span></span>'}
+    </div>`
+  wireCodeTabs()
 }
 
 /* ═══════════ Foundation ═══════════ */

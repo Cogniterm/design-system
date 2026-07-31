@@ -90,6 +90,29 @@ DataTable vs List   — fixed columns + sorting means DataTable; otherwise List.
 Badge vs Chip       — Badge is read-only; Chip is removable.
 ProgressBar         — only when the percentage is known; otherwise ThinkingIndicator.
 
+## Patterns (docs site: #/patterns/*)
+How to COMBINE components. Solving the same problem differently on each screen makes
+the product inconsistent even when the components match.
+
+Core (5): forms, filtering, states (loading/empty/error/partial), destructive, status
+Agent (5) — where this system differs from general-purpose ones:
+  streaming   — 4 stages: thinking -> tool calls -> streaming text -> done.
+                Update the wording every ~10s. Never force-scroll. Send button
+                becomes Stop while generating.
+  evidence    — 3 layers: what it did (ToolCallStep, expanded) / where it came from
+                (CitationChip, always) / raw source (Accordion, collapsed).
+                Tool calls go ABOVE the answer.
+  approval    — read/search: just run. create/edit: run then offer undo.
+                delete/send/pay/permissions: approve BEFORE running, listing exactly
+                what will happen. Keep "always allow" narrowly scoped.
+  ai-content  — label AI-generated content outside chat with a brand-subtle badge
+                plus what it was based on. Remove the badge once a human edits it.
+                Express uncertainty in words, not percentages.
+  recovery    — never apologize; keep partial work; don't leak error codes; don't
+                repeat the same failure twice; ask back instead of guessing.
+Page templates (7): index, detail, settings, wizard, chat, search, file browser.
+  Density per template: index/drive compact, detail comfortable, settings/chat spacious.
+
 ## Live gallery
 examples/vuetify-app renders every component on real Vuetify 3.11.6:
   #        → component gallery (each entry states WHY it exists and WHERE to use it)

@@ -2,6 +2,7 @@
    기계가 막아야 사람이 빠져도 유지됩니다 (브리프 11장). */
 import { COMPONENTS, CATEGORIES, WHERE, VUETIFY_COVERAGE, A11Y, VERSUS } from './data.js'
 import { FOUNDATION_PAGES, FD_RENDERERS } from './foundation.js'
+import { PATTERNS, PATTERN_GROUPS } from './patterns.js'
 import { ICON_NAMES } from './icons-svg.js'
 import { readFileSync } from 'node:fs'
 
@@ -67,6 +68,16 @@ for (const [id] of FOUNDATION_PAGES) {
   else if (FD_RENDERERS[id]().length < 400) errors.push(`Foundation '${id}': 내용이 비었습니다`)
 }
 ok(`Foundation ${FOUNDATION_PAGES.length}페이지`)
+
+/* ── 4b. 패턴 ── */
+const pIds = PATTERNS.map((p) => p.id)
+const pDup = pIds.filter((x, i) => pIds.indexOf(x) !== i)
+if (pDup.length) errors.push(`패턴 id 중복: ${pDup.join(', ')}`)
+for (const p of PATTERNS) {
+  if (!PATTERN_GROUPS.some((g) => g.id === p.group)) errors.push(`패턴 '${p.id}': 알 수 없는 그룹 '${p.group}'`)
+  if (p.body().length < 400) errors.push(`패턴 '${p.id}': 내용이 비었습니다`)
+}
+ok(`패턴 ${PATTERNS.length}종 (${PATTERN_GROUPS.map((g) => `${g.ko} ${PATTERNS.filter((p) => p.group === g.id).length}`).join(' · ')})`)
 
 /* ── 5. Vuetify 커버리지 ── */
 const covIds = VUETIFY_COVERAGE.map((r) => r[0])

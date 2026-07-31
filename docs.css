@@ -520,3 +520,8 @@
 .a11-col li:last-child { margin-bottom: 0; }
 
 @media (max-width: 760px) { .a11y-split { grid-template-columns: 1fr; } }
+
+.tpl-link { display: flex; gap: 16px; flex-wrap: wrap; margin-top: 18px; }
+.tpl-link a { display: inline-flex; align-items: center; gap: 5px; font-size: 13px;
+  color: var(--brand); text-decoration: none; font-weight: 500; }
+.tpl-link a:hover { text-decoration: underline; }
