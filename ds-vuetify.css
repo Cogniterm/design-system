@@ -1,0 +1,72 @@
+/* ============================================
+   ds-vuetify.css — A그룹(Vuetify 기반) 시각 조정
+   Vuetify가 설치된 앱에서만 필요합니다.
+   ds.css 다음에 로드하세요.
+   ============================================ */
+
+/* ── DsDataTable — VDataTable 시각 조정 ── */
+.ds-vtable .v-table { background: var(--surface); font-family: var(--font); }
+.ds-vtable .v-table__wrapper > table > thead > tr > th {
+  background: var(--gray-2); color: var(--gray-11);
+  font-size: 12px; font-weight: 500; letter-spacing: 0;
+  border-bottom: 1px solid var(--gray-4);
+}
+.ds-vtable .v-table__wrapper > table > tbody > tr > td {
+  font-size: 13.5px; color: var(--gray-12);
+  border-bottom: 1px solid var(--gray-3);
+}
+.ds-vtable .v-table__wrapper > table > tbody > tr:hover > td { background: var(--gray-2); }
+.ds-vtable[data-density="compact"] .v-table__wrapper > table > tbody > tr > td { height: 32px; }
+.ds-vtable[data-density="comfortable"] .v-table__wrapper > table > tbody > tr > td { height: 40px; }
+.ds-vtable[data-density="spacious"] .v-table__wrapper > table > tbody > tr > td { height: 48px; }
+.ds-vtable .v-data-table-footer { border-top: 1px solid var(--gray-4); font-size: 12.5px; }
+
+/* ── DsDialog — VDialog 내부 면 ── */
+.ds-dialog-panel {
+  background: var(--surface); border: 1px solid var(--gray-4);
+  border-radius: var(--r-lg); overflow: hidden; font-family: var(--font);
+}
+.ds-dialog-head {
+  padding: 16px 20px; font-size: 15px; font-weight: 600; color: var(--gray-12);
+  border-bottom: 1px solid var(--gray-3);
+}
+.ds-dialog-body { padding: 20px; font-size: 14px; color: var(--gray-11); }
+.ds-dialog-foot {
+  padding: 12px 20px; border-top: 1px solid var(--gray-3);
+  display: flex; gap: 8px; justify-content: flex-end; background: var(--gray-2);
+}
+
+/* ── DsMenu — VMenu 내부 면 ── */
+.ds-menu-panel {
+  background: var(--surface); border: 1px solid var(--gray-4);
+  border-radius: var(--r-lg); padding: 4px; min-width: 180px;
+  font-family: var(--font); box-shadow: 0 4px 16px rgba(0,0,0,.08);
+}
+[data-theme="dark"] .ds-menu-panel { box-shadow: 0 4px 16px rgba(0,0,0,.4); }
+.ds-menu-item {
+  display: flex; align-items: center; gap: 8px; height: 32px; padding: 0 10px;
+  border-radius: var(--r-md); font-size: 13.5px; color: var(--gray-12); cursor: pointer;
+}
+.ds-menu-item:hover { background: var(--gray-3); }
+
+/* ── DsTooltip ── */
+.v-tooltip > .v-overlay__content {
+  background: var(--gray-12) !important;   /* A그룹 한정 — 브리프 2장 규칙 3 */
+  color: var(--bg) !important;
+  font-family: var(--font); font-size: 12.5px;
+  border-radius: var(--r-md); padding: 5px 9px;
+}
+
+/* ── DsSelect — VSelect 필드 외형 ── */
+.ds-vselect .v-field {
+  border-radius: var(--r-lg); font-family: var(--font); font-size: 14px;
+  background: var(--surface);
+}
+.ds-vselect .v-field__outline__start,
+.ds-vselect .v-field__outline__end,
+.ds-vselect .v-field__outline__notch::before,
+.ds-vselect .v-field__outline__notch::after { border-color: var(--gray-6); }
+.ds-vselect .v-field--focused .v-field__outline__start,
+.ds-vselect .v-field--focused .v-field__outline__end,
+.ds-vselect .v-field--focused .v-field__outline__notch::before,
+.ds-vselect .v-field--focused .v-field__outline__notch::after { border-color: var(--brand); }

@@ -1,37 +1,48 @@
 # Design System (AI SaaS Agent)
 
-> Extreme-minimal design system for AI agent products. Geist-inspired: no shadows,
-> 1px borders, radius 2/4/6px, Pretendard font, brand blue #1F7FF0 (light) / #4593F5 (dark),
-> Radix Slate gray scale 1-12. Light + dark themes via [data-theme="dark"].
+> Extreme-minimal design system for AI agent products, for Vue 3 + Vuetify 3.11.
+> Geist-inspired: no shadows, 1px borders, radius 2/4/6px, Pretendard font,
+> brand blue #1F7FF0 (light) / #4593F5 (dark), Radix Slate gray 1-12.
+> Light + dark via [data-theme="dark"]. Docs: https://kimjiyong995-coder.github.io/design-system/
+
+## Two kinds of components — DO NOT MIX THE IMPORTS
+
+1. STANDALONE (20) — no Vuetify needed. Needs ds.css only.
+   import { DsButton, ... } from '~/design'
+   Button, Input, Badge, Chip, Avatar, Card, Divider, Skeleton, Toast, EmptyState,
+   ChatMessage, StreamingText, ThinkingIndicator, ToolCallStep, AgentInput,
+   CitationChip, ArtifactPanel, SearchResult, FileGrid, FileRow
+
+2. VUETIFY-BASED (5) — wraps a Vuetify component. Needs ds.css + ds-vuetify.css.
+   import { DsDataTable, ... } from '~/design/vuetify'
+   DsDataTable(VDataTable), DsDialog(VDialog), DsMenu(VMenu),
+   DsTooltip(VTooltip), DsSelect(VSelect)
+
+Rule for choosing: behavior that is hard to rebuild (focus trap, positioning,
+scroll lock, keyboard nav, sorting/pagination) stays Vuetify. Purely visual
+components and agent-specific ones are built from scratch.
 
 ## Rules for AI code generation
-- Use ONLY CSS variables from ds.css (var(--gray-3), var(--brand), ...). Never hardcode hex colors.
-- Gray roles: 1-2 backgrounds, 3-5 hover/disabled, 6-8 borders, 9-11 secondary text, 12 body text.
-- Brand color only for primary actions, selection, focus, links. Backgrounds/borders stay neutral.
-- No box-shadow except Toast and floating overlays.
-- One .btn-primary per screen.
-- Every async surface shows PROGRESS (toolcall/thinking), not a bare spinner.
-- Every component must handle: default, loading, empty, error states.
-- Component names are English; UI copy may be Korean.
+- Use ONLY CSS variables (var(--gray-3), var(--brand)). Never hardcode hex.
+- Gray roles: 1-2 bg, 3-5 hover/disabled, 6-8 borders, 9-11 secondary text, 12 body.
+- Brand color only for actions, selection, focus, links. Backgrounds stay neutral.
+- No box-shadow except floating elements (Toast, Menu, Dialog).
+- One primary button per screen.
+- Async surfaces show PROGRESS (ToolCallStep/ThinkingIndicator), not a bare spinner.
+- Every component handles: default, loading, empty, error.
+- Component names English; UI copy may be Korean.
 
-## Components (all in ds.css, copy markup from index.html)
-Core: Button(.btn -primary/-secondary/-ghost/-danger/-sm), Input(.field/.input/.hint),
-Badge(.badge +brand/success/danger), Chip(.chip), Avatar(.ds-avatar sm/lg/brand, .avatar-group),
-Card(.card), Divider(.divider, .divider-label), Skeleton(.skeleton text/circle),
-Toast(.toast success/danger), Table(.table-wrap), EmptyState(.empty)
-Agent: ChatMessage(.msg/.avatar/.msg-body), StreamingText(.cursor), ThinkingIndicator(.thinking),
-ToolCallStep(.toolcall + .spinner|.check), AgentInput(.agent-input), CitationChip(.cite),
-ArtifactPanel(.artifact), SearchResult(.sresult), FileGrid(.file-grid/.file-card),
-FileRow(.file-row)
+## Files
+ds.css              tokens + standalone component styles (single source of truth)
+ds-vuetify.css      restyles for the 5 Vuetify-based components
+vue/index.ts        barrel — standalone components (no Vuetify import)
+vue/vuetify.ts      barrel — Vuetify-based components
+vue/meta.ts         origin + reason (en/ko) per component
+vue/defaults.ts     Vuetify defaults (VMenu/VDialog/VDataTable...) — enforcement layer
+data.js             component registry powering the docs site
+templates/          golden screens: chat.html, search.html
 
-## Templates (golden screens — clone these to start a new page)
-- templates/chat.html — agent chat: sidebar, message stream, tool calls, citations, composer
-- templates/search.html — search: query bar, filter chips, highlighted results, empty state
-
-## Vue 3 / Vuetify 3.11 package (vue/)
-Production-ready SFCs with ZERO dependencies — drop into src/design/ of a Nuxt+Vuetify app.
-- vue/components/Ds*.vue — 20 components (TypeScript props, ds.css classes)
-- vue/index.ts — barrel export
-- vue/meta.ts — origin + reason (en/ko) per component
-- vue/defaults.ts — Vuetify defaults for VMenu/VDialog/VDataTable etc. (A-group)
-Vuetify-safe: all:unset root reset, no .v-* class collisions, zero !important.
+## Installation
+No npm install. Copy ds.css, ds-vuetify.css and vue/ into app/src/design/,
+register the CSS in nuxt.config, optionally wire dsDefaults into createVuetify.
+Vuetify stays at 3.11 — no migration, existing screens unchanged.
