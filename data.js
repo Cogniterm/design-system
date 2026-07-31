@@ -1,3 +1,5 @@
+import { ic } from './icons-svg.js'
+
 /* ============================================
    컴포넌트 레지스트리 — 문서 사이트의 단일 원본
    여기에 추가하면 사이드바·페이지·검색에 자동 반영됩니다.
@@ -71,10 +73,10 @@ export const COMPONENTS = [
   ],
   slots: [['activator', '메뉴를 여는 요소. v-bind="props" 필수.'], ['default', '메뉴 내용. .ds-menu-item 사용.']],
   demo: `<div class="ds-menu-panel" style="max-width:200px">
-    <div class="ds-menu-item">이름 바꾸기</div>
-    <div class="ds-menu-item">복제</div>
+    <div class="ds-menu-item">${ic('edit','sm')}이름 바꾸기</div>
+    <div class="ds-menu-item">${ic('copy','sm')}복제</div>
     <hr class="divider" style="margin:4px 0">
-    <div class="ds-menu-item" style="color:var(--danger)">삭제</div>
+    <div class="ds-menu-item" style="color:var(--danger)">${ic('delete','sm')}삭제</div>
   </div>
   <div class="hint" style="margin-top:10px">↑ 실제로는 버튼 클릭 시 이 패널이 떠서 열립니다.</div>`,
   vue: `<DsMenu location="bottom end">
@@ -276,7 +278,7 @@ export const COMPONENTS = [
   slots: [],
   demo: `<div class="field"><label>Status</label>
     <div class="input" style="display:flex;align-items:center;justify-content:space-between;cursor:pointer">
-      <span>Running</span><span style="color:var(--gray-9);font-size:11px">▾</span>
+      <span>Running</span><span style="color:var(--gray-9)">${ic('expand','sm')}</span>
     </div>
     <div class="hint">Vuetify VSelect 위에 우리 필드 외형을 입힙니다.</div>
   </div>`,
@@ -297,15 +299,15 @@ export const COMPONENTS = [
   events: [['remove', '—', '✕ 클릭 시 발생.']],
   slots: [['default', '칩 라벨.']],
   demo: `<div class="row">
-    <span class="chip">design-system.pdf<button class="x" aria-label="Remove">✕</button></span>
-    <span class="chip">Q3 보고서<button class="x" aria-label="Remove">✕</button></span>
-    <span class="chip brand">Status: Running<button class="x" aria-label="Remove">✕</button></span>
+    <span class="chip">design-system.pdf<button class="x" aria-label="Remove">${ic('close',12)}</button></span>
+    <span class="chip">Q3 보고서<button class="x" aria-label="Remove">${ic('close',12)}</button></span>
+    <span class="chip brand">Status: Running<button class="x" aria-label="Remove">${ic('close',12)}</button></span>
   </div>`,
   vue: `<DsChip @remove="detach(file)">design-system.pdf</DsChip>
 <DsChip variant="brand" @remove="clearFilter">Status: Running</DsChip>`,
   html: `<span class="chip">
   design-system.pdf
-  <button class="x" aria-label="Remove">✕</button>
+  <button class="x" aria-label="Remove">${ic('close',12)}</button>
 </span>`,
   guidelines: [
     ['해야 할 것', 'Badge는 읽기 전용, Chip은 조작 가능 — 이 구분을 지킵니다.'],
@@ -328,8 +330,8 @@ export const COMPONENTS = [
   demo: `<div class="agent-input" style="max-width:560px">
     <textarea rows="1" placeholder="Message agent… (/ 로 명령어)"></textarea>
     <div class="ai-bar">
-      <button class="ai-tool" aria-label="Attach file">＋</button>
-      <button class="ai-tool" aria-label="Slash commands">/</button>
+      <button class="ai-tool" aria-label="Attach file">${ic('attach','sm')}</button>
+      <button class="ai-tool" aria-label="Slash commands">${ic('command','sm')}</button>
       <span class="ai-spacer"></span>
       <button class="btn btn-primary btn-sm">Send</button>
     </div>
@@ -338,8 +340,8 @@ export const COMPONENTS = [
   html: `<div class="agent-input">
   <textarea rows="1" placeholder="Message agent…"></textarea>
   <div class="ai-bar">
-    <button class="ai-tool" aria-label="Attach file">＋</button>
-    <button class="ai-tool" aria-label="Slash commands">/</button>
+    <button class="ai-tool" aria-label="Attach file">${ic('attach','sm')}</button>
+    <button class="ai-tool" aria-label="Slash commands">${ic('command','sm')}</button>
     <span class="ai-spacer"></span>
     <button class="btn btn-primary btn-sm">Send</button>
   </div>
@@ -492,7 +494,7 @@ export const COMPONENTS = [
   demo: `<span style="display:inline-flex;align-items:center;height:26px;padding:0 9px;border-radius:var(--r-md);background:var(--gray-12);color:var(--bg);font-size:12.5px">보관함으로 이동</span>
   <div class="hint" style="margin-top:10px">↑ 아이콘 버튼 위에 이렇게 뜹니다.</div>`,
   vue: `<DsTooltip text="보관함으로 이동">
-  <button class="ai-tool" aria-label="Archive">□</button>
+  <button class="ai-tool" aria-label="Archive">${ic('archive','sm')}</button>
 </DsTooltip>`,
   html: null,
   guidelines: [
@@ -550,17 +552,19 @@ export const COMPONENTS = [
     ['selected', 'string[]', '—', '선택된 파일 id 목록.'],
   ],
   events: [['select', 'DsFile', '카드 클릭.']],
-  slots: [],
+  slots: [['icon', '파일 아이콘. <DsIcon>을 넣습니다. 생략하면 file.icon 문자열이 그대로 표시됩니다.']],
   demo: `<div class="file-grid">
-    <div class="file-card"><div class="f-icon">📁</div><div class="f-name">법무</div><div class="f-meta">12 files</div></div>
-    <div class="file-card selected"><div class="f-icon">📄</div><div class="f-name">계약서_최종.pdf</div><div class="f-meta">2.1 MB</div></div>
-    <div class="file-card"><div class="f-icon">📄</div><div class="f-name">계약서_v2_검토중.docx</div><div class="f-meta">840 KB</div></div>
-    <div class="file-card"><div class="f-icon">📊</div><div class="f-name">Q3_실적.xlsx</div><div class="f-meta">1.4 MB</div></div>
+    <div class="file-card"><div class="f-icon">${ic('folder','lg')}</div><div class="f-name">법무</div><div class="f-meta">12 files</div></div>
+    <div class="file-card selected"><div class="f-icon">${ic('document','lg')}</div><div class="f-name">계약서_최종.pdf</div><div class="f-meta">2.1 MB</div></div>
+    <div class="file-card"><div class="f-icon">${ic('document','lg')}</div><div class="f-name">계약서_v2_검토중.docx</div><div class="f-meta">840 KB</div></div>
+    <div class="file-card"><div class="f-icon">${ic('spreadsheet','lg')}</div><div class="f-name">Q3_실적.xlsx</div><div class="f-meta">1.4 MB</div></div>
   </div>`,
-  vue: `<DsFileGrid :files="files" :selected="selectedIds" @select="toggle" />`,
+  vue: `<DsFileGrid :files="files" :selected="selectedIds" @select="toggle">
+  <template #icon="{ file }"><DsIcon :name="file.icon" size="lg" /></template>
+</DsFileGrid>`,
   html: `<div class="file-grid">
   <div class="file-card">
-    <div class="f-icon">📄</div>
+    <div class="f-icon">${ic('document','lg')}</div>
     <div class="f-name">계약서_최종.pdf</div>
     <div class="f-meta">2.1 MB</div>
   </div>
@@ -576,19 +580,21 @@ export const COMPONENTS = [
   props: [
     ['name', 'string', '필수', '파일 이름.'],
     ['meta', 'string', '—', '크기·날짜 등.'],
-    ['icon', 'string', `'📄'`, '아이콘.'],
+    ['icon', 'string', '—', '텍스트 아이콘. 보통은 #icon 슬롯에 <DsIcon>을 넣습니다.'],
     ['selected', 'boolean', 'false', '선택 상태.'],
   ],
   events: [['select', '—', '행 클릭.']],
   slots: [],
-  demo: `<div class="file-row"><span class="f-icon">📁</span><span class="f-name">법무</span><span class="f-meta">Jun 28</span></div>
-  <div class="file-row selected"><span class="f-icon">📄</span><span class="f-name">계약서_최종.pdf</span><span class="f-meta">2.1 MB · Jun 28</span></div>
-  <div class="file-row"><span class="f-icon">📊</span><span class="f-name">Q3_실적.xlsx</span><span class="f-meta">1.4 MB · Jul 12</span></div>`,
+  demo: `<div class="file-row"><span class="f-icon">${ic('folder','sm')}</span><span class="f-name">법무</span><span class="f-meta">Jun 28</span></div>
+  <div class="file-row selected"><span class="f-icon">${ic('document','sm')}</span><span class="f-name">계약서_최종.pdf</span><span class="f-meta">2.1 MB · Jun 28</span></div>
+  <div class="file-row"><span class="f-icon">${ic('spreadsheet','sm')}</span><span class="f-name">Q3_실적.xlsx</span><span class="f-meta">1.4 MB · Jul 12</span></div>`,
   vue: `<DsFileRow v-for="f in files" :key="f.id"
-  :name="f.name" :meta="f.meta" :icon="f.icon"
-  :selected="isSelected(f)" @select="toggle(f)" />`,
+  :name="f.name" :meta="f.meta"
+  :selected="isSelected(f)" @select="toggle(f)"&gt;
+  <template #icon><DsIcon :name="f.icon" size="sm" /></template>
+</DsFileRow>`,
   html: `<div class="file-row">
-  <span class="f-icon">📄</span>
+  <span class="f-icon">${ic('document','sm')}</span>
   <span class="f-name">계약서_최종.pdf</span>
   <span class="f-meta">2.1 MB · Jun 28</span>
 </div>`,
@@ -648,7 +654,7 @@ export const COMPONENTS = [
     </div></div>
     <div class="msg"><div class="avatar ai">A</div><div class="msg-body">
       <div class="msg-name">Agent</div>
-      <div class="toolcall"><span class="check">✓</span> search_drive("계약서", June) — 3 files found</div>
+      <div class="toolcall"><span class="check">${ic('confirm','sm')}</span> search_drive("계약서", June) — 3 files found</div>
       <div class="msg-text">6월에 체결된 계약서 3건을 찾았습니다. 그중 최종본<span class="cite">1</span>의 핵심 조항을 정리하면<span class="cursor"></span></div>
     </div></div>
   </div>`,
@@ -720,9 +726,9 @@ export const COMPONENTS = [
             en: 'Not in Vuetify; the key device for showing the agent is working.' },
   props: [['status', `'running' | 'done' | 'error'`, `'running'`, '진행 중 스피너 / 완료 체크 / 실패 ✕.']],
   slots: [['default', '실행 내용. 도구 이름과 인자를 그대로 보여줍니다.']],
-  demo: `<div class="toolcall"><span class="check">✓</span> search_drive("계약서", June) — 3 files found</div>
+  demo: `<div class="toolcall"><span class="check">${ic('confirm','sm')}</span> search_drive("계약서", June) — 3 files found</div>
   <div class="toolcall"><span class="spinner"></span> read_document("계약서_최종.pdf")</div>
-  <div class="toolcall"><span class="check" style="color:var(--danger)">✕</span> extract_table("스캔본.pdf") — 텍스트 레이어 없음</div>`,
+  <div class="toolcall"><span class="check" style="color:var(--danger)">${ic('close','sm')}</span> extract_table("스캔본.pdf") — 텍스트 레이어 없음</div>`,
   vue: `<DsToolCallStep status="done">search_drive("계약서", June) — 3 files</DsToolCallStep>
 <DsToolCallStep status="running">read_document("계약서_최종.pdf")</DsToolCallStep>
 <DsToolCallStep status="error">extract_table("스캔본.pdf") — 텍스트 레이어 없음</DsToolCallStep>`,
@@ -730,7 +736,7 @@ export const COMPONENTS = [
 <div class="toolcall"><span class="spinner"></span> read_document("file.pdf")</div>
 
 <!-- 완료 -->
-<div class="toolcall"><span class="check">✓</span> search_drive("query") — 3 files found</div>`,
+<div class="toolcall"><span class="check">${ic('confirm','sm')}</span> search_drive("query") — 3 files found</div>`,
   guidelines: [
     ['해야 할 것', '원칙 4 — 접을 수는 있어도 없애지 않습니다. 항상 열어볼 수 있게 합니다.'],
     ['해야 할 것', '실패한 단계도 그대로 보여줍니다. 무엇이 안 됐는지 아는 것이 사용자에게 유용합니다.'],
@@ -819,9 +825,9 @@ export const COMPONENTS = [
   ],
   events: [['click', 'MouseEvent', '클릭 시 발생.']],
   slots: [['default', '아이콘.']],
-  demo: `<div class="row"><button class="row-more-demo">⋯</button><button class="row-more-demo bordered">□</button></div>`,
-  vue: `<DsIconButton label="More">⋯</DsIconButton>
-<DsIconButton label="Archive" variant="secondary">□</DsIconButton>`,
+  demo: `<div class="row"><button class="row-more-demo">${ic('more')}</button><button class="row-more-demo bordered">${ic('archive')}</button></div>`,
+  vue: `<DsIconButton label="More"><DsIcon name="more" /></DsIconButton>
+<DsIconButton label="Archive" variant="secondary"><DsIcon name="archive" /></DsIconButton>`,
   html: null,
   guidelines: [
     ['접근성', 'label은 필수입니다. 스크린리더에는 아이콘이 읽히지 않습니다.'],
@@ -897,7 +903,7 @@ export const COMPONENTS = [
     ['totalVisible', 'number', '7', '한 번에 보이는 버튼 수.'],
   ],
   slots: [],
-  demo: `<div class="ds-pg-demo"><span>‹</span><span>1</span><span class="on">2</span><span>3</span><span>4</span><span>›</span></div>`,
+  demo: `<div class="ds-pg-demo"><span>${ic('prev','sm')}</span><span>1</span><span class="on">2</span><span>3</span><span>4</span><span>${ic('forward','sm')}</span></div>`,
   vue: `<DsPagination v-model="page" :length="8" />`,
   html: null,
   guidelines: [['해야 할 것', '무한 스크롤이 나은 화면도 있습니다. 되돌아올 일이 많으면 페이지네이션입니다.']],
@@ -913,12 +919,14 @@ export const COMPONENTS = [
     ['items', 'NavItem[]', '필수', '{ value, title, icon?, badge?, subheader? }'],
   ],
   slots: [],
-  demo: `<div class="ds-nav-demo"><div class="sub">워크스페이스</div><div>◆ 에이전트 <b>17</b></div><div class="on">▤ 감사 로그 <b>3</b></div></div>`,
+  demo: `<div class="ds-nav-demo"><div class="sub">워크스페이스</div><div>${ic('agent','sm')} 에이전트 <b>17</b></div><div class="on">${ic('tableView','sm')} 감사 로그 <b>3</b></div></div>`,
   vue: `<DsNavList v-model="nav" :items="[
   { subheader: '워크스페이스' },
-  { value: 'agents', title: '에이전트', icon: '◆', badge: 17 },
-  { value: 'logs', title: '감사 로그', icon: '▤', badge: 3 },
-]" />`,
+  { value: 'agents', title: '에이전트', icon: 'agent', badge: 17 },
+  { value: 'logs', title: '감사 로그', icon: 'tableView', badge: 3 },
+]">
+  <template #icon="{ item }"><DsIcon :name="item.icon" size="sm" /></template>
+</DsNavList>`,
   html: null,
   guidelines: [['해야 할 것', '항목이 7개를 넘으면 subheader로 묶습니다.']],
 },
@@ -971,7 +979,7 @@ export const COMPONENTS = [
     ['error', 'string', '—', '에러 메시지.'],
   ],
   slots: [],
-  demo: `<div class="field"><label>폴더</label><div class="input" style="display:flex;gap:6px;align-items:center"><span class="chip" style="height:20px">법무<button class="x">✕</button></span><span style="color:var(--gray-9);font-size:13px">검색…</span></div></div>`,
+  demo: `<div class="field"><label>폴더</label><div class="input" style="display:flex;gap:6px;align-items:center"><span class="chip" style="height:20px">법무<button class="x">${ic('close',12)}</button></span><span style="color:var(--gray-9);font-size:13px">검색…</span></div></div>`,
   vue: `<DsAutocomplete v-model="folders" label="폴더" multiple
   :items="['법무', '재무', '인사', '영업']" />`,
   html: null,
@@ -1133,7 +1141,7 @@ export const COMPONENTS = [
             en: 'Alert is regional, Banner is page-wide; without the distinction both get overused.' },
   props: [['icon', 'string', '—', '앞에 붙는 아이콘.']],
   slots: [['default', '공지 문구.'], ['actions', '액션 버튼.']],
-  demo: `<div class="ds-banner-demo">◈ 8월 3일 02:00~04:00 서비스 점검이 예정되어 있습니다.</div>`,
+  demo: `<div class="ds-banner-demo">${ic('notification','sm')} 8월 3일 02:00~04:00 서비스 점검이 예정되어 있습니다.</div>`,
   vue: `<DsBanner icon="◈">
   8월 3일 02:00~04:00 서비스 점검이 예정되어 있습니다.
   <template #actions><DsButton variant="ghost" size="sm">자세히</DsButton></template>
@@ -1213,10 +1221,12 @@ export const COMPONENTS = [
     ['selectable', 'boolean', 'false', '선택 가능 여부.'],
   ],
   slots: [],
-  demo: `<div class="ds-list-demo"><div><span>◆</span><b>자동 분류</b><i>수신 문서를 규칙에 따라 분류</i><em>켜짐</em></div><div><span>▤</span><b>주간 리포트</b><i>매주 월요일 09:00</i><em>켜짐</em></div></div>`,
+  demo: `<div class="ds-list-demo"><div><span>${ic('run','sm')}</span><b>자동 분류</b><i>수신 문서를 규칙에 따라 분류</i><em>켜짐</em></div><div><span>${ic('tableView','sm')}</span><b>주간 리포트</b><i>매주 월요일 09:00</i><em>켜짐</em></div></div>`,
   vue: `<DsList :items="[
-  { value: 'a', title: '자동 분류', subtitle: '규칙에 따라 분류', icon: '◆', meta: '켜짐' },
-]" selectable />`,
+  { value: 'a', title: '자동 분류', subtitle: '규칙에 따라 분류', icon: 'run', meta: '켜짐' },
+]" selectable>
+  <template #icon="{ item }"><DsIcon :name="item.icon" size="sm" /></template>
+</DsList>`,
   html: null,
   guidelines: [['해야 할 것', '정렬·필터가 필요해지면 DataTable로 바꿉니다.']],
 },
@@ -1231,7 +1241,7 @@ export const COMPONENTS = [
     ['itemTitle / itemValue', 'string', "'title' / 'id'", '필드 이름.'],
   ],
   slots: [],
-  demo: `<div class="ds-tree-demo"><div>▾ 법무</div><div class="ind on">2026</div><div class="ind">2025</div><div>▸ 재무</div></div>`,
+  demo: `<div class="ds-tree-demo"><div>${ic('expand','sm')} 법무</div><div class="ind on">2026</div><div class="ind">2025</div><div>${ic('collapse','sm')} 재무</div></div>`,
   vue: `<DsTreeview v-model="activated" :items="[
   { id: 1, title: '법무', children: [{ id: 2, title: '2026' }] },
 ]" />`,
@@ -1262,7 +1272,7 @@ export const COMPONENTS = [
             en: 'Principle 4 — evidence may be collapsed, never removed. This is that collapse.' },
   props: [['items', '{ title, text? }[]', '필수', '패널 목록.']],
   slots: [['item-N', 'N번째 패널의 내용(텍스트 대신 컴포넌트를 넣을 때).']],
-  demo: `<div class="ds-acc-demo"><div class="h">원본 페이로드 보기 <span>▾</span></div><div class="b">{ "event": "document.delete", "allowed": false }</div><div class="h">고급 설정 <span>▸</span></div></div>`,
+  demo: `<div class="ds-acc-demo"><div class="h">원본 페이로드 보기 <span>${ic('expand','sm')}</span></div><div class="b">{ "event": "document.delete", "allowed": false }</div><div class="h">고급 설정 <span>${ic('collapse','sm')}</span></div></div>`,
   vue: `<DsAccordion v-model="open" :items="[
   { title: '원본 페이로드 보기' },
 ]">

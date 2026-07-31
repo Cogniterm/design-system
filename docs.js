@@ -1,5 +1,6 @@
 import { CATEGORIES, COMPONENTS, TEMPLATES, VUETIFY_COVERAGE, WHERE } from './data.js'
 import { FOUNDATION_PAGES, FD_RENDERERS } from './foundation.js'
+import { ic, ICON_NAMES } from './icons-svg.js'
 
 /* ═══════════ 유틸 ═══════════ */
 const $ = (s) => document.querySelector(s)
@@ -21,9 +22,16 @@ function originBadge(c) {
 /* ═══════════ 테마 ═══════════ */
 function applyTheme(dark) {
   document.documentElement.setAttribute('data-theme', dark ? 'dark' : 'light')
-  $('#theme-icon').textContent = dark ? '☀' : '☾'
+  $('#theme-icon').innerHTML = ic(dark ? 'light' : 'dark', 'sm')
   localStorage.setItem('theme', dark ? 'dark' : 'light')
 }
+// 상단 바 아이콘 주입
+{
+  const gh = $('#ghBtn'); if (gh) gh.innerHTML = ic('externalLink', 'sm')
+  const si = $('#searchIcon'); if (si) si.innerHTML = ic('search', 'sm')
+  document.querySelectorAll('.nav-ext').forEach((e) => { e.innerHTML = ic('externalLink', 12) })
+}
+
 applyTheme(localStorage.getItem('theme') === 'dark')
 $('#themeBtn').addEventListener('click', () =>
   applyTheme(document.documentElement.getAttribute('data-theme') !== 'dark'))
@@ -295,23 +303,23 @@ function renderTemplates() {
     </p>
     <div class="tpl-grid">
       <a class="tpl-card live" href="live/" target="_blank" rel="noopener">
-        <h3>Live Gallery ↗</h3>
+        <h3>Live Gallery ${ic('externalLink', 'sm')}</h3>
         <p>실제 Vuetify 3.11.6 위에서 렌더된 컴포넌트 49종 전부</p>
         <div class="covers"><span>왜 필요한가</span><span>어디에 쓰나</span><span>실제 동작</span><span>다크 모드</span></div>
-        <div class="go">새 탭에서 열기 →</div>
+        <div class="go">새 탭에서 열기 ${ic('forward','sm')}</div>
       </a>
       <a class="tpl-card live" href="live/#audit" target="_blank" rel="noopener">
-        <h3>Audit Log ↗</h3>
+        <h3>Audit Log ${ic('externalLink', 'sm')}</h3>
         <p>테이블 · 필터 · 다이얼로그 · 로딩/빈 상태가 동작하는 실제 화면</p>
         <div class="covers"><span>DataTable</span><span>Menu</span><span>Dialog</span><span>EmptyState</span></div>
-        <div class="go">새 탭에서 열기 →</div>
+        <div class="go">새 탭에서 열기 ${ic('forward','sm')}</div>
       </a>` +
     TEMPLATES.map((t) => `
       <a class="tpl-card" href="${t.file}">
         <h3>${t.name}</h3>
         <p>${t.desc}</p>
         <div class="covers">${t.covers.map((x) => `<span>${x}</span>`).join('')}</div>
-        <div class="go">열어보기 →</div>
+        <div class="go">열어보기 ${ic('forward','sm')}</div>
       </a>`).join('') + `</div>`
 }
 
@@ -324,8 +332,8 @@ function renderFoundation(id) {
 
   const nav = (prev || next) ? `
     <div class="pagenav">
-      ${prev ? `<a href="#/foundation/${prev[0]}"><span>← 이전</span><b>${prev[1]}</b></a>` : '<span></span>'}
-      ${next ? `<a class="nx" href="#/foundation/${next[0]}"><span>다음 →</span><b>${next[1]}</b></a>` : '<span></span>'}
+      ${prev ? `<a href="#/foundation/${prev[0]}"><span>${ic('back', 12)} 이전</span><b>${prev[1]}</b></a>` : '<span></span>'}
+      ${next ? `<a class="nx" href="#/foundation/${next[0]}"><span>다음 ${ic('forward', 12)}</span><b>${next[1]}</b></a>` : '<span></span>'}
     </div>` : ''
 
   $('#content').innerHTML = fn() + nav

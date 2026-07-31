@@ -4,6 +4,8 @@
         polaris.shopify.com, paste.twilio.design
    ============================================ */
 
+import { ic, ICON_NAMES } from './icons-svg.js'
+
 export const FOUNDATION_PAGES = [
   ['overview', '개요', 'Overview'],
   ['tokens', '토큰', 'Design Tokens'],
@@ -655,7 +657,22 @@ export function fdIconography() {
         쓰는 아이콘만 번들에 들어갑니다.
       </p>
 
+      <h2>등록된 아이콘 ${ICON_NAMES.length}개</h2>
+      <p>
+        Lucide 5,845개 중 <b>실제로 쓰는 것만</b> 우리 어휘로 등록했습니다.
+        필요한 아이콘이 없으면 <code>vue/icons.ts</code>에 의미 이름으로 추가합니다.
+      </p>
+      <div class="fd-icons">
+        ${ICON_NAMES.map((n) => `<div class="fd-ic">${ic(n)}<span>${n}</span></div>`).join('')}
+      </div>
+
       <h2>크기</h2>
+      <div class="fd-icsizes">
+        <div>${ic('search', 'sm')}<span>sm · 16</span></div>
+        <div>${ic('search', 'md')}<span>md · 20</span></div>
+        <div>${ic('search', 'lg')}<span>lg · 24</span></div>
+        <div>${ic('loading', 'md', 'spin')}<span>spin</span></div>
+      </div>
       <table>
         <thead><tr><th>크기</th><th>쓰는 곳</th></tr></thead>
         <tbody>
@@ -836,7 +853,7 @@ export function fdState() {
         </tbody>
       </table>
       <div class="demo" style="border-radius:var(--r-lg)">
-        <div class="toolcall"><span class="check">✓</span> search_drive("계약서", June) — 3 files found</div>
+        <div class="toolcall"><span class="check">${ic('success','sm')}</span> search_drive("계약서", June) — 3 files found</div>
         <div class="toolcall"><span class="spinner"></span> read_document("계약서_최종.pdf")</div>
         <div class="thinking" style="margin-top:12px"><span class="dots"><i></i><i></i><i></i></span>계약서 조항을 분석하는 중…</div>
       </div>

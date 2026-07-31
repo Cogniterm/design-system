@@ -291,3 +291,7 @@ td.mono { font-family: var(--mono); font-size: 12.5px; color: var(--gray-11); }
 /* ── ds-icon ── */
 .ds-icon { flex-shrink: 0; vertical-align: -0.125em; }
 .ds-icon.is-spin { animation: spin .8s linear infinite; }
+
+/* ── 인라인 Lucide SVG (문서·템플릿용) ── */
+.lic { flex-shrink: 0; vertical-align: -0.15em; fill: none; stroke: currentColor;
+  stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }

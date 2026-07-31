@@ -438,3 +438,52 @@
 .tpl-card.live { border-color: color-mix(in srgb, var(--brand) 35%, var(--gray-4)); }
 .tpl-card.live:hover { border-color: var(--brand); background: var(--brand-subtle); }
 .tpl-card.live h3 { color: var(--brand); }
+
+/* ── Lucide 인라인 SVG ── */
+.lic { flex-shrink: 0; vertical-align: -0.15em; }
+.lic.spin { animation: spin .8s linear infinite; }
+
+/* 아이콘이 들어간 요소 정렬 */
+.topnav-links a { display: inline-flex; align-items: center; gap: 5px; }
+.nav-ext { display: inline-flex; align-items: center; color: var(--gray-9); }
+.icon-btn svg { display: block; }
+#theme-icon { display: inline-flex; }
+
+.searchwrap { position: relative; display: inline-flex; align-items: center; }
+.search-ic { position: absolute; left: 9px; display: inline-flex; color: var(--gray-9); pointer-events: none; }
+.searchwrap .searchbox { padding-left: 30px; }
+
+.ds-menu-item { gap: 8px; }
+.ds-menu-item .lic { color: var(--gray-9); }
+
+.tpl-card h3 { display: inline-flex; align-items: center; gap: 6px; }
+.tpl-card .go { display: inline-flex; align-items: center; gap: 4px; }
+.pagenav span { display: inline-flex; align-items: center; gap: 4px; }
+.f-icon { display: inline-flex; align-items: center; justify-content: center; color: var(--gray-10); }
+.file-card .f-icon { justify-content: flex-start; }
+.file-card.selected .f-icon, .file-row.selected .f-icon { color: var(--brand); }
+.ds-nav-demo > div .lic, .ds-list-demo .lic { color: var(--gray-9); }
+.ds-nav-demo > div.on .lic { color: var(--brand); }
+.ds-banner-demo { display: flex; align-items: center; gap: 8px; }
+.ds-tree-demo > div { display: flex; align-items: center; gap: 6px; }
+.ds-tree-demo .lic { color: var(--gray-8); }
+.ds-acc-demo .h { align-items: center; }
+.ds-pg-demo span .lic { color: var(--gray-9); }
+.check .lic { display: block; }
+.toolcall .check, .toolcall .lic { display: inline-flex; }
+.chip .x .lic, .badge .lic { display: block; }
+.ai-tool { display: inline-flex; align-items: center; justify-content: center; }
+.row-more-demo svg { display: block; }
+
+/* ── Foundation 아이콘 갤러리 ── */
+.fd-icons { display: grid; grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+  gap: 2px; border: 1px solid var(--gray-4); border-radius: var(--r-lg); padding: 8px; margin-bottom: 22px; }
+.fd-ic { display: flex; flex-direction: column; align-items: center; gap: 7px;
+  padding: 13px 6px; border-radius: var(--r-md); color: var(--gray-11); }
+.fd-ic:hover { background: var(--gray-2); color: var(--gray-12); }
+.fd-ic span { font-family: var(--mono); font-size: 10px; color: var(--gray-9);
+  text-align: center; word-break: break-all; line-height: 1.3; }
+.fd-icsizes { display: flex; gap: 26px; align-items: flex-end; padding: 18px 20px;
+  border: 1px solid var(--gray-4); border-radius: var(--r-lg); margin-bottom: 20px; }
+.fd-icsizes > div { display: flex; flex-direction: column; align-items: center; gap: 10px; color: var(--gray-11); }
+.fd-icsizes span { font-family: var(--mono); font-size: 10.5px; color: var(--gray-9); }
