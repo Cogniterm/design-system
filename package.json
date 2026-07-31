@@ -1,0 +1,19 @@
+{
+  "name": "@ds/design-system",
+  "version": "0.3.0",
+  "private": true,
+  "description": "AI SaaS Agent 제품군을 위한 극한 미니멀 디자인 시스템 (Vue 3 · Vuetify 3.11)",
+  "license": "MIT",
+  "type": "module",
+  "scripts": {
+    "gen:meta": "node scripts-gen-meta.mjs",
+    "check:data": "node scripts-check.mjs",
+    "lint:css": "stylelint 'ds.css' 'ds-vuetify.css' 'docs.css'",
+    "check": "npm run check:data && npm run lint:css",
+    "docs": "python3 -m http.server 4173"
+  },
+  "devDependencies": {
+    "stylelint": "^16.10.0",
+    "stylelint-config-standard": "^36.0.1"
+  }
+}

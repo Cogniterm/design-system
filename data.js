@@ -7,7 +7,9 @@ import { ic } from './icons-svg.js'
 
 // origin: 'custom'   직접 만듦 (Vuetify 불필요)
 //         'wrapped'  Vuetify 컴포넌트를 감쌈 (Vuetify 필요)
-//         'vuetify'  Vuetify 그대로 + defaults만 조정
+//
+// vuetifyBase — wrapped일 때 감싼 Vuetify 컴포넌트
+// vuetifyAlt  — custom이지만 Vuetify에 대안이 있는 경우 (왜 안 썼는지는 reason에)
 
 export const CATEGORIES = [
   { id: 'action',   name: 'Action',            ko: '액션' },
@@ -384,7 +386,7 @@ export const COMPONENTS = [
 },
 {
   id: 'skeleton', name: 'Skeleton', ko: '스켈레톤', category: 'feedback',
-  origin: 'custom', vuetifyBase: 'VSkeletonLoader',
+  origin: 'custom', vuetifyBase: null, vuetifyAlt: 'VSkeletonLoader',
   summary: '데이터 로딩 중 콘텐츠의 자리를 미리 보여줍니다.',
   reason: { ko: 'VSkeletonLoader는 프리셋 타입이 많아 무겁습니다. 우리는 3가지 형태만 필요합니다.',
             en: 'VSkeletonLoader ships many presets; we need only three shapes.' },
@@ -414,7 +416,7 @@ export const COMPONENTS = [
 },
 {
   id: 'toast', name: 'Toast', ko: '토스트', category: 'feedback',
-  origin: 'custom', vuetifyBase: 'VSnackbar',
+  origin: 'custom', vuetifyBase: null, vuetifyAlt: 'VSnackbar',
   summary: '작업 결과를 잠깐 알리는 알림.',
   reason: { ko: 'VSnackbar를 쓸 수도 있지만 큐 관리를 우리가 하고 싶고 시각이 단순합니다.',
             en: 'We manage the queue ourselves; visuals are simple.' },
@@ -1478,4 +1480,152 @@ export const WHERE = {
   agentinput: '챗 화면 하단. Enter 전송, Shift+Enter 줄바꿈.',
   citation: '에이전트 응답에서 근거가 있는 주장 뒤.',
   artifact: '20줄이 넘는 에이전트 산출물 — 코드·문서·표.',
+}
+
+/* ============================================
+   접근성 — 컴포넌트별 (Carbon 방식)
+   keys   : 키보드 상호작용 표
+   free   : 이 컴포넌트가 알아서 해주는 것
+   yours  : 쓰는 사람이 반드시 해야 하는 것
+   ============================================ */
+export const A11Y = {
+  button: {
+    keys: [['Tab', '버튼으로 이동'], ['Enter · Space', '실행']],
+    free: ['focus-visible 링 (마우스 클릭 시에는 뜨지 않음)', 'disabled 시 포커스에서 제외', '네이티브 <button> — 스크린리더가 "버튼"으로 읽음'],
+    yours: ['아이콘만 있으면 aria-label', 'disabled 이유를 Tooltip으로 알리기', '라벨을 동사로 — "확인"이 아니라 "삭제"'],
+  },
+  iconbutton: {
+    keys: [['Tab', '버튼으로 이동'], ['Enter · Space', '실행']],
+    free: ['aria-label prop이 필수라 빠뜨릴 수 없음', 'focus-visible 링'],
+    yours: ['label에 동작을 씀 — "아이콘 이름"이 아니라 "보관함으로 이동"', '뜻이 모호하면 Tooltip 병기'],
+  },
+  input: {
+    keys: [['Tab', '필드로 이동'], ['Esc', '입력 취소 (구현 시)']],
+    free: ['label과 input 연결', 'error 시 aria-invalid', '포커스 링'],
+    yours: ['label을 반드시 채우기 — placeholder로 대신하지 않음', '에러 메시지를 구체적으로'],
+  },
+  select: {
+    keys: [['Tab', '필드로 이동'], ['Enter · Space · ↓', '목록 열기'], ['↑ ↓', '항목 이동'], ['Enter', '선택'], ['Esc', '닫기'], ['글자 입력', '해당 글자로 시작하는 항목으로 점프']],
+    free: ['Vuetify가 role="listbox"·aria-expanded·활성 항목 추적을 처리', '포커스 복귀'],
+    yours: ['label 채우기', '옵션 10개 초과 시 Autocomplete로 교체'],
+  },
+  autocomplete: {
+    keys: [['Tab', '필드로 이동'], ['글자 입력', '검색'], ['↑ ↓', '결과 이동'], ['Enter', '선택'], ['Backspace', '마지막 칩 제거'], ['Esc', '닫기']],
+    free: ['role="combobox"·aria-autocomplete', '한글 조합 입력(IME) 처리', '결과 개수 안내'],
+    yours: ['결과 없음 문구 제공', '로딩 중 상태 표시'],
+  },
+  checkbox: {
+    keys: [['Tab', '이동'], ['Space', '켜고 끄기']],
+    free: ['indeterminate 시 aria-checked="mixed"', 'label 클릭으로 토글'],
+    yours: ['label 필수', '테이블 전체 선택은 부분 선택 시 indeterminate로'],
+  },
+  switch: {
+    keys: [['Tab', '이동'], ['Space · Enter', '켜고 끄기']],
+    free: ['role="switch"·aria-checked'],
+    yours: ['즉시 반영되므로 되돌리기(Undo) 제공 검토', '끄면 무슨 일이 생기는지 hint에'],
+  },
+  radiogroup: {
+    keys: [['Tab', '그룹으로 진입 (선택된 항목)'], ['↑ ↓ ← →', '항목 이동 — 이동하면 바로 선택됨'], ['Space', '선택']],
+    free: ['role="radiogroup"·그룹 내 단일 Tab 정지'],
+    yours: ['그룹 label 채우기', '기본 선택을 지정 — 빈 상태로 두지 않기'],
+  },
+  slider: {
+    keys: [['Tab', '이동'], ['← →', '한 단계'], ['Home · End', '최소 · 최대'], ['PageUp · PageDown', '큰 단위']],
+    free: ['role="slider"·aria-valuenow/min/max'],
+    yours: ['현재 값을 눈으로도 보이게 (label에 포함됨)', '정확한 값이 중요하면 숫자 입력 병기'],
+  },
+  dialog: {
+    keys: [['Tab', '내부에서만 순환 (포커스 트랩)'], ['Esc', '닫기 — persistent면 무시'], ['Enter', '기본 액션']],
+    free: ['포커스 트랩·배경 스크롤 락', '열 때 첫 요소로 포커스, 닫을 때 원래 자리로 복귀', 'role="dialog"·aria-modal'],
+    yours: ['title 채우기 — 스크린리더가 읽는 이름입니다', '되돌릴 수 없는 작업은 결과를 구체적으로'],
+  },
+  menu: {
+    keys: [['Enter · Space · ↓', '열기'], ['↑ ↓', '항목 이동'], ['Enter', '실행'], ['Esc', '닫고 트리거로 복귀'], ['Tab', '닫기']],
+    free: ['포지셔닝·포커스 복귀·바깥 클릭 닫기'],
+    yours: ['항목에 role="menuitem" 부여', '파괴적 항목은 마지막에 두고 구분선으로 분리'],
+  },
+  tooltip: {
+    keys: [['Tab', '트리거에 포커스 시 표시'], ['Esc', '숨기기']],
+    free: ['지연 표시·포지셔닝·터치 대응'],
+    yours: ['툴팁에만 있는 정보를 만들지 않기 — 터치 기기에서 안 보임', 'aria-label과 중복되지 않게'],
+  },
+  datatable: {
+    keys: [['Tab', '테이블 진입'], ['↑ ↓', '행 이동'], ['Enter · Space', '정렬 (헤더에서)'], ['Space', '행 선택']],
+    free: ['정렬 상태 aria-sort', '행 선택 상태 전달'],
+    yours: ['빈 상태·로딩·에러 상태 제공', '색만으로 상태 구분하지 않기 — 배지에 텍스트 포함'],
+  },
+  tabs: {
+    keys: [['Tab', '탭 목록으로 진입'], ['← →', '탭 이동'], ['Home · End', '첫 · 마지막'], ['Enter · Space', '선택']],
+    free: ['role="tablist"·aria-selected·패널 연결'],
+    yours: ['탭 이름을 짧게 — 줄바꿈되면 읽기 어려움'],
+  },
+  accordion: {
+    keys: [['Tab', '헤더로 이동'], ['Enter · Space', '펴고 접기']],
+    free: ['aria-expanded·패널 연결'],
+    yours: ['에러 메시지를 접어두지 않기', '기본은 접힌 상태로'],
+  },
+  chatmessage: {
+    keys: [['Tab', '메시지 내 링크·인용 칩으로 이동']],
+    free: ['의미 있는 순서로 DOM 구성 (툴콜 → 본문)'],
+    yours: ['스트리밍 영역에 aria-live="polite" — 응답 도착을 읽어줌', '아바타 이니셜만으로 화자를 구분하지 않기 (이름 병기)'],
+  },
+  toolcall: {
+    keys: [],
+    free: ['상태를 아이콘 + 텍스트로 함께 표현'],
+    yours: ['진행 → 완료 전환 시 aria-live로 알리기', '실패한 단계를 숨기지 않기'],
+  },
+  agentinput: {
+    keys: [['Enter', '전송'], ['Shift + Enter', '줄바꿈'], ['Tab', '도구 버튼으로 이동']],
+    free: ['auto-grow — 내용에 따라 높이 조절'],
+    yours: ['도구 버튼에 aria-label', '전송 중에는 버튼을 정지(Stop)로 바꾸기'],
+  },
+  alert: {
+    keys: [['Tab', '액션 버튼으로 이동']],
+    free: ['type에 따른 role="alert" 부여'],
+    yours: ['색만으로 심각도 구분하지 않기 — 아이콘·제목 병기', '에러에는 다음 행동을 함께'],
+  },
+  snackbar: {
+    keys: [['Tab', '액션으로 이동']],
+    free: ['role="status" — 스크린리더가 읽음', '자동 닫힘'],
+    yours: ['중요한 정보는 Snackbar에 담지 않기 — 사라집니다', '액션은 하나까지'],
+  },
+  empty: {
+    keys: [['Tab', 'CTA로 이동']],
+    free: [],
+    yours: ['제목을 h2/h3 계층에 맞추기', '다음 행동을 반드시 제공'],
+  },
+}
+
+/* ============================================
+   비슷한 컴포넌트 구분 — 오용의 가장 큰 원인
+   ============================================ */
+export const VERSUS = {
+  checkbox: [['Switch', '즉시 반영되면 Switch, 저장 버튼을 눌러야 반영되면 Checkbox']],
+  switch: [['Checkbox', '저장 버튼이 필요하면 Checkbox, 즉시 반영이면 Switch']],
+  alert: [['Snackbar', '사라지면 안 되는 정보는 Alert, 지나가도 되는 결과는 Snackbar'],
+          ['Banner', 'Alert는 영역 단위, Banner는 페이지 전체 단위']],
+  banner: [['Alert', '페이지 전체에 해당하면 Banner, 특정 영역이면 Alert']],
+  snackbar: [['Toast', 'Toast는 생김새만, Snackbar는 표시·타이머까지 담당'],
+             ['Alert', '지나가도 되면 Snackbar, 남아야 하면 Alert']],
+  toast: [['Snackbar', '실제로 떠서 사라지는 동작이 필요하면 Snackbar']],
+  spinner: [['ThinkingIndicator', '2초 이내면 Spinner, 에이전트 작업이면 ThinkingIndicator (원칙 1)'],
+            ['Skeleton', '자리를 미리 보여줘야 하면 Skeleton']],
+  skeleton: [['ThinkingIndicator', '에이전트 응답 대기에는 Skeleton을 쓰지 않습니다']],
+  progressbar: [['ThinkingIndicator', '진행률을 모르면 ProgressBar 대신 ThinkingIndicator']],
+  select: [['Autocomplete', '옵션 10개를 넘으면 Autocomplete']],
+  autocomplete: [['Select', '옵션 10개 이하면 Select로 충분']],
+  badge: [['Chip', 'Badge는 읽기 전용, Chip은 제거 가능']],
+  chip: [['Badge', '조작할 수 없으면 Badge']],
+  datatable: [['List', '열이 고정되고 정렬이 필요하면 DataTable, 아니면 List'],
+              ['FileRow', '파일이면 FileRow']],
+  list: [['DataTable', '정렬·필터가 필요해지면 DataTable로 바꿉니다']],
+  dialog: [['Snackbar', '단순 알림이면 Dialog가 아니라 Snackbar'],
+           ['Menu', '선택지 나열이면 Menu']],
+  menu: [['Dialog', '폼이 들어가면 Menu가 아니라 Dialog']],
+  tabs: [['ButtonGroup', '페이지 섹션 전환이면 Tabs, 같은 데이터의 보기 전환이면 ButtonGroup']],
+  buttongroup: [['Tabs', '내용이 통째로 바뀌면 Tabs']],
+  textarea: [['AgentInput', '에이전트 대화 입력이면 AgentInput']],
+  agentinput: [['Textarea', '일반 여러 줄 입력이면 Textarea']],
+  filegrid: [['FileRow', '훑어보기면 그리드, 세부 비교면 리스트']],
+  filerow: [['FileGrid', '썸네일이 중요하면 그리드']],
 }

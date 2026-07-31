@@ -1,0 +1,60 @@
+{
+  "extends": "stylelint-config-standard",
+  "rules": {
+    "color-no-hex": [true, {
+      "message": "hex를 직접 쓰지 마세요. var(--gray-6) 같은 CSS 변수를 씁니다 (Foundation → 토큰)"
+    }],
+    "declaration-no-important": [true, {
+      "message": "!important는 ds-vuetify.css의 Vuetify 조정에서만 허용됩니다. 직접 만든 컴포넌트에 필요해지면 구조가 잘못된 신호입니다"
+    }],
+    "declaration-property-value-disallowed-list": [
+      {
+        "font-weight": ["700", "800", "900", "bold", "bolder"],
+        "text-transform": ["uppercase"],
+        "/^border(-(top|right|bottom|left))?$/": ["/^([2-9]|[1-9][0-9])px/"],
+        "border-width": ["/^([2-9]|[1-9][0-9])px/"]
+      },
+      {
+        "message": "굵기 700+, uppercase(한글에 대문자 없음), 2px 이상 보더는 이 시스템에서 쓰지 않습니다"
+      }
+    ],
+    "unit-allowed-list": ["px", "%", "em", "rem", "s", "ms", "deg", "fr", "vh", "vw", "ch"],
+    "custom-property-pattern": null,
+
+    "selector-class-pattern": null,
+    "no-descending-specificity": null,
+    "declaration-block-no-redundant-longhand-properties": null,
+    "shorthand-property-no-redundant-values": null,
+    "alpha-value-notation": null,
+    "color-function-notation": null,
+    "color-hex-length": null,
+    "value-keyword-case": null,
+    "font-family-name-quotes": null,
+    "keyframes-name-pattern": null,
+    "media-feature-range-notation": null,
+    "no-duplicate-selectors": null,
+    "declaration-block-single-line-max-declarations": null,
+    "comment-empty-line-before": null,
+    "rule-empty-line-before": null,
+    "declaration-empty-line-before": null,
+    "custom-property-empty-line-before": null,
+    "at-rule-empty-line-before": null,
+    "comment-whitespace-inside": null,
+    "length-zero-no-unit": null,
+    "number-max-precision": null
+  },
+  "overrides": [
+    {
+      "files": ["ds.css"],
+      "rules": { "color-no-hex": null }
+    },
+    {
+      "files": ["ds-vuetify.css"],
+      "rules": { "declaration-no-important": null, "color-no-hex": null }
+    },
+    {
+      "files": ["docs.css"],
+      "rules": { "color-no-hex": null, "declaration-property-value-disallowed-list": null }
+    }
+  ]
+}

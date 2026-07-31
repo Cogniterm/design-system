@@ -1,0 +1,48 @@
+name: check
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  integrity:
+    name: 문서 데이터 무결성
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: '20' }
+      # 컴포넌트 필수 항목, 배럴/문서/meta 동기화, 아이콘·토큰 일치,
+      # Standalone 컴포넌트의 외부 의존 여부를 검사합니다.
+      - run: node scripts-check.mjs
+
+  stylelint:
+    name: CSS 규칙
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: '20' }
+      - run: npm install --no-save stylelint@^16 stylelint-config-standard@^36
+      # raw hex, !important, 700 이상 굵기, 2px 이상 보더를 차단합니다.
+      - run: npx stylelint 'ds.css' 'ds-vuetify.css' 'docs.css'
+
+  build-example:
+    name: Vuetify 예제 빌드
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: '20' }
+      - name: 디자인 시스템 복사
+        run: |
+          cd examples/vuetify-app
+          cp -r ../../vue src/design
+          cp ../../ds.css ../../ds-vuetify.css src/design/
+      # 컴포넌트가 실제 Vuetify 3.11 앱에서 컴파일되는지 확인합니다.
+      - name: 설치 · 빌드
+        run: |
+          cd examples/vuetify-app
+          npm install
+          npx vite build --base=/design-system/live/

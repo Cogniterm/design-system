@@ -1,4 +1,4 @@
-import { CATEGORIES, COMPONENTS, TEMPLATES, VUETIFY_COVERAGE, WHERE } from './data.js'
+import { CATEGORIES, COMPONENTS, TEMPLATES, VUETIFY_COVERAGE, WHERE, A11Y, VERSUS } from './data.js'
 import { FOUNDATION_PAGES, FD_RENDERERS } from './foundation.js'
 import { ic, ICON_NAMES } from './icons-svg.js'
 
@@ -143,12 +143,14 @@ function renderComponent(id, tab) {
   const c = byId(id)
   if (!c) return renderCatalog()
 
-  const tabs = [['overview', 'Overview'], ['properties', 'Properties'], ['guidelines', 'Guidelines'], ['code', 'Code']]
+  const tabs = [['overview', 'Overview'], ['properties', 'Properties'],
+                ['guidelines', 'Guidelines'], ['a11y', 'Accessibility'], ['code', 'Code']]
   const tabsHtml = tabs.map(([t, label]) =>
     `<a href="#/components/${id}?tab=${t}" class="${tab === t ? 'on' : ''}">${label}</a>`).join('')
 
   let pane = ''
   if (tab === 'properties') pane = propsPane(c)
+  else if (tab === 'a11y') pane = a11yPane(c)
   else if (tab === 'guidelines') pane = guidelinesPane(c)
   else if (tab === 'code') pane = codePane(c, true)
   else pane = overviewPane(c)
@@ -173,6 +175,7 @@ function overviewPane(c) {
        </div>`
     : `<div class="callout" style="margin-bottom:20px">
          <b>Standalone</b> — Vuetify 없이 동작합니다. <code>~/design</code>에서 import 하세요.
+         ${c.vuetifyAlt ? `<br>Vuetify에 <code>${c.vuetifyAlt}</code>가 있지만 쓰지 않았습니다 — 이유는 아래.` : ''}
        </div>`
 
   const wherebox = WHERE[c.id] ? `
@@ -181,7 +184,17 @@ function overviewPane(c) {
       <div class="wb-row"><span class="wb-tag where">어디에 쓰나</span><span>${WHERE[c.id]}</span></div>
     </div>` : ''
 
-  return need + wherebox + `<div class="demo">${c.demo}</div>` + codeBlock(c) + `
+  const vs = VERSUS[c.id] ? `
+    <div class="vsbox">
+      <div class="vs-head">${ic('filter', 'sm')} 비슷한 것과의 구분</div>
+      ${VERSUS[c.id].map(([other, rule]) => {
+        const t = COMPONENTS.find((x) => x.name === other)
+        const link = t ? `<a href="#/components/${t.id}">${other}</a>` : `<b>${other}</b>`
+        return `<div class="vs-row"><span class="vs-name">vs ${link}</span><span>${rule}</span></div>`
+      }).join('')}
+    </div>` : ''
+
+  return need + wherebox + vs + `<div class="demo">${c.demo}</div>` + codeBlock(c) + `
     <div class="livehint">
       위 예시는 문서용 정적 렌더입니다.
       실제 Vuetify 위에서 동작하는 화면은 <b>examples/vuetify-app</b>의 라이브 갤러리에서 확인하세요.
@@ -253,6 +266,47 @@ function propsPane(c) {
   }
   if (!html) html = `<div class="callout">이 컴포넌트는 props가 없습니다.</div>`
   return html
+}
+
+function a11yPane(c) {
+  const a = A11Y[c.id]
+  const level = `
+    <div class="callout" style="margin-bottom:24px">
+      <b>기준: WCAG 2.2 AA</b> — 대비 4.5:1(본문) · 3:1(보더·아이콘),
+      포커스 표시 필수, 색만으로 의미를 전달하지 않음.
+      <a href="#/foundation/a11y">접근성 Foundation →</a>
+    </div>`
+
+  if (!a) {
+    return level + `<div class="callout warn">
+      이 컴포넌트의 접근성 문서가 아직 없습니다.
+      <code>data.js</code>의 <code>A11Y</code>에 추가해주세요 —
+      키보드 표, 컴포넌트가 해주는 것, 쓰는 사람이 해야 할 것.
+    </div>`
+  }
+
+  const keys = a.keys?.length ? `
+    <div class="tbl-title">키보드</div>
+    <table class="ptable">
+      <thead><tr><th style="width:220px">키</th><th>동작</th></tr></thead>
+      <tbody>${a.keys.map(([k, v]) =>
+        `<tr><td class="pname">${k.split(' · ').map((x) => `<kbd class="kbd">${x}</kbd>`).join(' 또는 ')}</td><td class="pdesc">${v}</td></tr>`).join('')}</tbody>
+    </table>` : ''
+
+  const split = `
+    <div class="tbl-title">역할 분담</div>
+    <div class="a11y-split">
+      <div class="a11-col free">
+        <span class="a11-tag">컴포넌트가 해줍니다</span>
+        <ul>${(a.free.length ? a.free : ['—']).map((x) => `<li>${x}</li>`).join('')}</ul>
+      </div>
+      <div class="a11-col yours">
+        <span class="a11-tag">직접 해야 합니다</span>
+        <ul>${a.yours.map((x) => `<li>${x}</li>`).join('')}</ul>
+      </div>
+    </div>`
+
+  return level + keys + split
 }
 
 function guidelinesPane(c) {

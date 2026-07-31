@@ -124,7 +124,7 @@
 .v-list-item--active { background: var(--brand-subtle); color: var(--brand); }
 .v-list-item-title { font-size: 13.5px; font-weight: 400; }
 .v-list-subheader { font-size: 11px; font-weight: 600; color: var(--gray-9);
-  text-transform: uppercase; letter-spacing: .06em; min-height: 28px; }
+  letter-spacing: .04em; min-height: 28px; }
 
 /* ── VTable (VDataTable의 기반) ── */
 .v-table { background: var(--surface); }
