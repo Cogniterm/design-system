@@ -70,3 +70,137 @@
 .ds-vselect .v-field--focused .v-field__outline__end,
 .ds-vselect .v-field--focused .v-field__outline__notch::before,
 .ds-vselect .v-field--focused .v-field__outline__notch::after { border-color: var(--brand); }
+
+/* ============================================================
+   전역 — Vuetify 컴포넌트 96종 공통 (테마로 덮이지 않는 것들)
+   폰트·모서리·보더는 Vuetify 테마가 제어하지 않으므로 여기서 맞춥니다.
+   ============================================================ */
+.v-application,
+.v-application .v-btn,
+.v-application .v-field,
+.v-application .v-list,
+.v-application .v-table,
+.v-application .v-chip,
+.v-application .v-alert,
+.v-application .v-tab { font-family: var(--font); }
+
+/* 모서리 — Vuetify의 rounded 스케일을 우리 값으로 재정의 */
+.v-application .rounded-sm { border-radius: var(--r-sm) !important; }
+.v-application .rounded    { border-radius: var(--r-md) !important; }
+.v-application .rounded-md { border-radius: var(--r-md) !important; }
+.v-application .rounded-lg { border-radius: var(--r-lg) !important; }
+.v-application .rounded-xl { border-radius: var(--r-lg) !important; }
+
+/* 보더 색 통일 */
+.v-application .v-card--variant-outlined,
+.v-application .v-sheet--variant-outlined { border-color: var(--gray-4); }
+
+/* ── VBtn ── */
+.v-btn { letter-spacing: 0; text-transform: none; font-weight: 500; }
+.v-btn--variant-outlined { border-color: var(--gray-6); }
+.v-btn--variant-outlined:hover { border-color: var(--gray-8); background: var(--gray-2); }
+.v-btn--variant-text:hover { background: var(--gray-3); }
+
+/* ── VAlert / VBanner ── */
+.v-alert { border-radius: var(--r-md); font-size: 13.5px; }
+.v-alert--variant-tonal .v-alert__underlay { opacity: .08; }
+.v-banner { border-color: var(--gray-4); font-size: 13.5px; }
+
+/* ── VList ── */
+.v-list { background: var(--surface); padding: 4px; }
+.v-list-item { min-height: 34px; border-radius: var(--r-md); font-size: 13.5px; }
+.v-list-item__overlay { opacity: 0; }
+.v-list-item:hover { background: var(--gray-3); }
+.v-list-item--active { background: var(--brand-subtle); color: var(--brand); }
+.v-list-item-title { font-size: 13.5px; font-weight: 400; }
+.v-list-subheader { font-size: 11px; font-weight: 600; color: var(--gray-9);
+  text-transform: uppercase; letter-spacing: .06em; min-height: 28px; }
+
+/* ── VTable (VDataTable의 기반) ── */
+.v-table { background: var(--surface); }
+.v-table > .v-table__wrapper > table > thead > tr > th {
+  background: var(--gray-2); color: var(--gray-11);
+  font-size: 12px; font-weight: 500; letter-spacing: 0;
+  border-bottom: 1px solid var(--gray-4) !important;
+}
+.v-table > .v-table__wrapper > table > tbody > tr > td {
+  font-size: 13.5px; color: var(--gray-12);
+  border-bottom: 1px solid var(--gray-3) !important;
+}
+.v-table--hover > .v-table__wrapper > table > tbody > tr:hover > td { background: var(--gray-2); }
+.v-data-table-footer { border-top: 1px solid var(--gray-4); font-size: 12.5px; padding: 8px 12px; }
+.v-data-table__td--select-row .v-selection-control { justify-content: flex-start; }
+
+/* ── VTabs ── */
+.v-tabs { border-bottom: 1px solid var(--gray-4); }
+.v-tab { text-transform: none; letter-spacing: 0; font-size: 13.5px; font-weight: 500;
+  color: var(--gray-10); min-width: 0; padding: 0 12px; }
+.v-tab:hover { color: var(--gray-12); }
+.v-tab--selected { color: var(--brand); }
+.v-tabs .v-tab__slider { height: 2px; }
+
+/* ── VField (VTextField·VSelect 등 입력 공통) ── */
+.v-field { border-radius: var(--r-lg); font-size: 14px; background: var(--surface); }
+.v-field__outline__start, .v-field__outline__end,
+.v-field__outline__notch::before, .v-field__outline__notch::after { border-color: var(--gray-6); }
+.v-field--focused .v-field__outline__start, .v-field--focused .v-field__outline__end,
+.v-field--focused .v-field__outline__notch::before, .v-field--focused .v-field__outline__notch::after {
+  border-color: var(--brand); border-width: 1px;
+}
+.v-field__input { font-size: 14px; color: var(--gray-12); }
+.v-label { font-size: 13.5px; color: var(--gray-10); opacity: 1; }
+.v-messages__message { font-size: 12px; }
+
+/* ── VChip ── */
+.v-chip { font-size: 12.5px; font-weight: 500; border-color: var(--gray-5); }
+.v-chip--variant-outlined { background: var(--surface); }
+
+/* ── VBreadcrumbs / VPagination ── */
+.v-breadcrumbs { font-size: 13px; padding: 0; }
+.v-breadcrumbs-item { color: var(--gray-10); }
+.v-breadcrumbs-item--disabled { color: var(--gray-12); opacity: 1; }
+.v-pagination__item .v-btn { font-size: 13px; }
+.v-pagination__item--is-active .v-btn { background: var(--brand-subtle); color: var(--brand); }
+
+/* ── VExpansionPanels / VStepper / VTimeline ── */
+.v-expansion-panel { background: var(--surface); border: 1px solid var(--gray-4); }
+.v-expansion-panel-title { font-size: 13.5px; font-weight: 500; min-height: 42px; }
+.v-stepper { background: var(--surface); border: 1px solid var(--gray-4); }
+.v-stepper-item__title { font-size: 13.5px; font-weight: 500; }
+.v-timeline-item__body { font-size: 13.5px; }
+
+/* ── VProgress ── */
+.v-progress-linear { border-radius: 0; }
+.v-progress-linear__background { opacity: .12; }
+
+/* ── VSnackbar ── */
+.v-snackbar__wrapper { border: 1px solid var(--gray-4); background: var(--surface);
+  color: var(--gray-12); font-size: 13.5px; box-shadow: 0 4px 16px rgba(0,0,0,.08); }
+[data-theme="dark"] .v-snackbar__wrapper { box-shadow: 0 4px 16px rgba(0,0,0,.4); }
+
+/* ── VOverlay 계열 공통 (VMenu·VDialog 내부 면) ── */
+.v-overlay__content > .v-card,
+.v-overlay__content > .v-list,
+.v-overlay__content > .v-sheet { border: 1px solid var(--gray-4); box-shadow: 0 4px 16px rgba(0,0,0,.08); }
+[data-theme="dark"] .v-overlay__content > .v-card,
+[data-theme="dark"] .v-overlay__content > .v-list,
+[data-theme="dark"] .v-overlay__content > .v-sheet { box-shadow: 0 4px 16px rgba(0,0,0,.4); }
+
+/* ── VSelectionControl (체크박스·라디오·스위치 공통) ── */
+.v-selection-control__input > .v-icon { font-size: 19px; }
+.v-selection-control--density-comfortable { --v-selection-control-size: 36px; }
+
+/* ── VTreeview / VVirtualScroll ── */
+.v-treeview-item { font-size: 13.5px; border-radius: var(--r-md); min-height: 32px; }
+.v-treeview-item:hover { background: var(--gray-3); }
+
+/* ── VCode / VKbd ── */
+.v-code { font-family: var(--mono); font-size: 12.5px; background: var(--gray-3);
+  color: var(--brand); padding: 1px 5px; border-radius: 3px; }
+.v-kbd { font-family: var(--mono); font-size: 11.5px; background: var(--gray-12);
+  color: var(--bg); border-radius: 3px; box-shadow: none; padding: 2px 5px; }
+
+/* ── VToolbar / VAppBar / VNavigationDrawer ── */
+.v-toolbar { background: var(--surface); }
+.v-app-bar { border-color: var(--gray-4) !important; background: var(--bg); }
+.v-navigation-drawer { border-color: var(--gray-4) !important; background: var(--bg); }

@@ -1,202 +1,348 @@
 <script setup lang="ts">
-import { ref } from 'vue'
-// ① Standalone 컴포넌트 — Vuetify를 import 하지 않는 것들
+import { ref, computed } from 'vue'
+import { useTheme } from 'vuetify'
 import {
   DsButton, DsInput, DsBadge, DsChip, DsAvatar, DsCard, DsDivider,
-  DsSkeleton, DsToast, DsEmptyState, DsChatMessage, DsStreamingText,
-  DsThinkingIndicator, DsToolCallStep, DsAgentInput, DsCitationChip,
-  DsArtifactPanel, DsSearchResult, DsFileGrid, DsFileRow,
+  DsSkeleton, DsToast, DsEmptyState, DsChatMessage, DsToolCallStep,
+  DsAgentInput, DsCitationChip, DsArtifactPanel, DsSearchResult,
+  DsFileGrid, DsFileRow, DsThinkingIndicator, DsStreamingText,
 } from '~/design'
-// ② Vuetify 기반 컴포넌트
 import { DsDataTable, DsDialog, DsMenu, DsTooltip, DsSelect } from '~/design/vuetify'
 
+/* ── 테마 ── */
+const theme = useTheme()
 const dark = ref(false)
-function toggle() {
+function toggleTheme() {
   dark.value = !dark.value
+  theme.change(dark.value ? 'dsDark' : 'dsLight')
   document.documentElement.setAttribute('data-theme', dark.value ? 'dark' : 'light')
 }
 
-const name = ref('Acme Inc.')
-const email = ref('ujin@')
-const draft = ref('')
-const status = ref('Running')
-const dialogOpen = ref(false)
+/* ══════════════════════════════════════════
+   감사 로그 데이터
+   ══════════════════════════════════════════ */
+type Level = 'info' | 'warn' | 'error' | 'success'
+interface Log {
+  id: number; time: string; level: Level; actor: string; actorInit: string
+  action: string; target: string; ip: string; agent: string; detail: string
+}
+
+const RAW: Log[] = [
+  { id: 1,  time: '2026-07-31 09:14:02', level: 'error',   actor: 'Jiyong Kim',  actorInit: 'JK', action: 'document.delete',   target: '계약서_v2_검토중.docx', ip: '10.4.22.108', agent: 'Drive Sync',        detail: '권한 없음 — 법무 폴더는 관리자만 삭제할 수 있습니다.' },
+  { id: 2,  time: '2026-07-31 09:12:47', level: 'success', actor: 'Minji Park',  actorInit: 'MP', action: 'agent.run',         target: 'Invoice classifier',  ip: '10.4.19.55',  agent: 'Invoice classifier', detail: '문서 42건 분류 완료 (12.4초)' },
+  { id: 3,  time: '2026-07-31 09:11:20', level: 'warn',    actor: 'system',      actorInit: 'SY', action: 'quota.threshold',   target: 'workspace/acme',      ip: '—',           agent: '—',                  detail: '월간 실행 한도의 80%에 도달했습니다.' },
+  { id: 4,  time: '2026-07-31 09:08:33', level: 'info',    actor: 'Jiyong Kim',  actorInit: 'JK', action: 'document.read',     target: '계약서_최종.pdf',      ip: '10.4.22.108', agent: 'DocuRAG',            detail: '3개 섹션 인용됨' },
+  { id: 5,  time: '2026-07-31 09:02:11', level: 'success', actor: 'Seoyeon Han', actorInit: 'SH', action: 'agent.create',      target: 'Weekly report agent', ip: '10.4.31.7',   agent: '—',                  detail: '스케줄: 매주 월요일 09:00' },
+  { id: 6,  time: '2026-07-31 08:57:40', level: 'error',   actor: 'system',      actorInit: 'SY', action: 'tool.extract_table', target: '스캔본.pdf',          ip: '—',           agent: 'DocuRAG',            detail: '텍스트 레이어 없음 — OCR이 필요합니다.' },
+  { id: 7,  time: '2026-07-31 08:51:09', level: 'info',    actor: 'Minji Park',  actorInit: 'MP', action: 'search.query',      target: '"계약서" June',        ip: '10.4.19.55',  agent: 'Search',             detail: '결과 3건 · 0.4초' },
+  { id: 8,  time: '2026-07-31 08:44:55', level: 'warn',    actor: 'Seoyeon Han', actorInit: 'SH', action: 'auth.login',        target: 'seoyeon@acme.co',     ip: '203.0.113.9', agent: '—',                  detail: '새 기기에서 로그인 — 승인 필요' },
+  { id: 9,  time: '2026-07-31 08:30:02', level: 'success', actor: 'system',      actorInit: 'SY', action: 'drive.sync',        target: 'Drive / 법무',        ip: '—',           agent: 'Drive Sync',         detail: '파일 128건 동기화' },
+  { id: 10, time: '2026-07-31 08:12:18', level: 'info',    actor: 'Jiyong Kim',  actorInit: 'JK', action: 'settings.update',   target: 'workspace/acme',      ip: '10.4.22.108', agent: '—',                  detail: '보존 기간 90일 → 180일' },
+  { id: 11, time: '2026-07-30 18:44:31', level: 'error',   actor: 'Minji Park',  actorInit: 'MP', action: 'file.upload',       target: '실적_원본.xlsx',       ip: '10.4.19.55',  agent: '—',                  detail: '10MB를 초과합니다 (14.2MB)' },
+  { id: 12, time: '2026-07-30 18:20:07', level: 'success', actor: 'system',      actorInit: 'SY', action: 'agent.run',         target: 'Weekly report agent', ip: '—',           agent: 'Weekly report',      detail: '리포트 생성 완료 · 수신자 4명' },
+]
+
+const LEVEL_META: Record<Level, { label: string; variant: 'default'|'brand'|'success'|'danger'; ko: string }> = {
+  info:    { label: 'Info',    variant: 'default', ko: '정보' },
+  success: { label: 'Success', variant: 'success', ko: '성공' },
+  warn:    { label: 'Warning', variant: 'brand',   ko: '경고' },
+  error:   { label: 'Error',   variant: 'danger',  ko: '실패' },
+}
+
+/* ── 필터 상태 ── */
+const q = ref('')
+const levelFilter = ref<Level | null>(null)
+const actorFilter = ref<string>('전체')
+const density = ref<'compact' | 'comfortable' | 'spacious'>('compact')
+const loading = ref(false)
+const selected = ref<Log | null>(null)
+const toast = ref<{ msg: string; variant: 'success' | 'danger' } | null>(null)
+
+const actors = ['전체', ...new Set(RAW.map((r) => r.actor))]
+
+const rows = computed(() =>
+  RAW.filter((r) => {
+    if (levelFilter.value && r.level !== levelFilter.value) return false
+    if (actorFilter.value !== '전체' && r.actor !== actorFilter.value) return false
+    if (q.value) {
+      const s = q.value.toLowerCase()
+      return r.action.toLowerCase().includes(s) || r.target.toLowerCase().includes(s) ||
+             r.actor.toLowerCase().includes(s) || r.detail.toLowerCase().includes(s)
+    }
+    return true
+  }))
+
+const counts = computed(() => ({
+  all: RAW.length,
+  error: RAW.filter((r) => r.level === 'error').length,
+  warn: RAW.filter((r) => r.level === 'warn').length,
+  success: RAW.filter((r) => r.level === 'success').length,
+}))
 
 const headers = [
-  { title: 'Name', key: 'name' },
-  { title: 'Status', key: 'status' },
-  { title: 'Owner', key: 'owner' },
+  { title: '시각', key: 'time', width: 160 },
+  { title: '수준', key: 'level', width: 96 },
+  { title: '수행자', key: 'actor', width: 150 },
+  { title: '동작', key: 'action', width: 180 },
+  { title: '대상', key: 'target' },
+  { title: '', key: 'more', width: 52, sortable: false },
 ]
-const rows = [
-  { name: 'Weekly report agent', status: 'brand', label: 'Running', owner: 'Jiyong Kim' },
-  { name: 'Invoice classifier', status: 'success', label: 'Completed', owner: 'Minji Park' },
-  { name: 'Drive sync', status: 'danger', label: 'Failed', owner: 'Jiyong Kim' },
-]
-const files = [
-  { id: '1', name: '법무', meta: '12 files', icon: '📁' },
-  { id: '2', name: '계약서_최종.pdf', meta: '2.1 MB', icon: '📄' },
-  { id: '3', name: 'Q3_실적.xlsx', meta: '1.4 MB', icon: '📊' },
-]
+
+function clearFilters() { q.value = ''; levelFilter.value = null; actorFilter.value = '전체' }
+function simulateLoad() {
+  loading.value = true
+  setTimeout(() => { loading.value = false; toast.value = { msg: '로그를 새로 불러왔습니다.', variant: 'success' } }, 1200)
+  setTimeout(() => { toast.value = null }, 4200)
+}
+function exportCsv() { toast.value = { msg: '내보내기에 실패했습니다 — 권한이 없습니다.', variant: 'danger' }; setTimeout(() => { toast.value = null }, 4000) }
 </script>
 
 <template>
   <v-app>
-    <v-main style="background: var(--bg)">
-      <div style="max-width: 880px; margin: 0 auto; padding: 40px 24px 120px">
+    <v-main :style="{ background: 'var(--bg)' }">
+      <div class="wrap">
 
-        <div style="display:flex;align-items:center;gap:12px">
-          <h1 style="font-size:22px;font-weight:650;letter-spacing:-.02em;color:var(--gray-12)">
-            Vuetify 3.11.6 호환 검증
-          </h1>
-          <DsButton variant="secondary" size="sm" @click="toggle">
-            {{ dark ? '☀ Light' : '☾ Dark' }}
-          </DsButton>
-        </div>
-        <p style="color:var(--gray-11);font-size:14px;margin-top:8px">
-          이 페이지 전체가 <code>&lt;v-app&gt;</code> 안에서 렌더됩니다.
-          Vuetify 전역 스타일(<code>vuetify/styles</code>)이 로드된 상태입니다.
-        </p>
-
-        <!-- ═══ 1. Vuetify 원본과 나란히 ═══ -->
-        <h2 class="sec">1. Vuetify 원본 컴포넌트와 나란히</h2>
-        <div class="demo">
-          <div class="row">
-            <v-btn color="primary">Vuetify VBtn</v-btn>
-            <DsButton variant="primary">Ds Button</DsButton>
-            <v-chip>Vuetify VChip</v-chip>
-            <DsChip>Ds Chip</DsChip>
+        <!-- ═══ 헤더 ═══ -->
+        <div class="head">
+          <div>
+            <div class="crumb">Workspace / Acme Inc.</div>
+            <h1>감사 로그 <span class="h1-en">Audit Log</span></h1>
           </div>
-          <p class="note">
-            같은 화면·같은 부모 안에서 둘 다 자기 스타일을 유지하면 충돌이 없다는 뜻입니다.
-          </p>
+          <div class="head-actions">
+            <DsButton variant="ghost" size="sm" @click="toggleTheme">{{ dark ? '☀ Light' : '☾ Dark' }}</DsButton>
+            <DsButton variant="secondary" size="sm" @click="exportCsv">Export CSV</DsButton>
+            <DsButton variant="primary" size="sm" @click="simulateLoad">새로고침</DsButton>
+          </div>
         </div>
 
-        <!-- ═══ 2. Vuetify 컴포넌트 안에 우리 컴포넌트 ═══ -->
-        <h2 class="sec">2. Vuetify 컴포넌트 <b>안에</b> 우리 컴포넌트 넣기</h2>
-        <div class="demo">
-          <v-card class="pa-4" style="max-width:420px">
-            <div style="font-size:13px;font-weight:600;margin-bottom:10px;color:var(--gray-12)">
-              VCard 내부입니다
-            </div>
-            <DsBadge variant="brand">Running</DsBadge>
-            <DsBadge variant="success" style="margin-left:6px">Completed</DsBadge>
-            <DsDivider />
-            <DsInput v-model="name" label="Workspace name" hint="VCard 안의 Ds Input" />
-            <div style="margin-top:12px">
-              <DsButton variant="primary" size="sm">Save</DsButton>
-            </div>
-          </v-card>
-          <p class="note">
-            Vuetify가 자식 요소에 거는 전역 리셋(<code>.v-card *</code> 등)의 영향을
-            <code>all: unset</code>이 차단합니다.
-          </p>
+        <!-- ═══ 요약 카드 ═══ -->
+        <div class="stats">
+          <DsCard title="전체 이벤트" subtitle="최근 24시간">
+            <div class="num">{{ counts.all }}</div>
+          </DsCard>
+          <DsCard title="실패" subtitle="조치 필요">
+            <div class="num" style="color:var(--danger)">{{ counts.error }}</div>
+          </DsCard>
+          <DsCard title="경고" subtitle="확인 권장">
+            <div class="num">{{ counts.warn }}</div>
+          </DsCard>
+          <DsCard title="성공" subtitle="정상 처리">
+            <div class="num" style="color:var(--success)">{{ counts.success }}</div>
+          </DsCard>
         </div>
 
-        <!-- ═══ 3. Vuetify 기반 컴포넌트 ═══ -->
-        <h2 class="sec">3. Vuetify 기반 컴포넌트 (VDataTable · VDialog · VMenu · VTooltip · VSelect)</h2>
-        <div class="demo">
-          <DsDataTable :headers="headers" :items="rows" density="compact">
-            <template #item.status="{ item }">
-              <DsBadge :variant="(item as any).status">{{ (item as any).label }}</DsBadge>
+        <!-- ═══ 필터 바 ═══ -->
+        <div class="filters">
+          <DsInput v-model="q" placeholder="동작·대상·수행자 검색…" />
+          <DsSelect v-model="actorFilter" :items="actors" style="width:180px" />
+          <div class="lvl-chips">
+            <button
+              v-for="(m, k) in LEVEL_META" :key="k"
+              class="lvl-chip" :class="{ on: levelFilter === k }"
+              @click="levelFilter = levelFilter === k ? null : (k as Level)"
+            >
+              <span class="lvl-dot" :data-lvl="k"></span>{{ m.ko }}
+            </button>
+          </div>
+          <span style="flex:1"></span>
+          <DsTooltip text="행 높이를 바꿉니다 (원칙 3 — 밀도는 선택)">
+            <DsSelect v-model="density" :items="['compact', 'comfortable', 'spacious']" style="width:150px" />
+          </DsTooltip>
+        </div>
+
+        <!-- 활성 필터 표시 -->
+        <div v-if="q || levelFilter || actorFilter !== '전체'" class="active-filters">
+          <span class="af-label">필터</span>
+          <DsChip v-if="q" variant="brand" @remove="q = ''">검색: {{ q }}</DsChip>
+          <DsChip v-if="levelFilter" variant="brand" @remove="levelFilter = null">수준: {{ LEVEL_META[levelFilter].ko }}</DsChip>
+          <DsChip v-if="actorFilter !== '전체'" variant="brand" @remove="actorFilter = '전체'">수행자: {{ actorFilter }}</DsChip>
+          <DsButton variant="ghost" size="sm" @click="clearFilters">모두 해제</DsButton>
+        </div>
+
+        <!-- ═══ 로딩 상태 ═══ -->
+        <div v-if="loading" class="tbl-skel">
+          <div v-for="i in 6" :key="i" class="skel-row">
+            <DsSkeleton width="140px" /><DsSkeleton width="70px" />
+            <DsSkeleton width="120px" /><DsSkeleton width="160px" /><DsSkeleton width="200px" />
+          </div>
+        </div>
+
+        <!-- ═══ 빈 상태 ═══ -->
+        <DsEmptyState
+          v-else-if="!rows.length"
+          title="조건에 맞는 로그가 없습니다"
+          description="검색어를 바꾸거나 필터를 해제해보세요."
+        >
+          <DsButton variant="secondary" @click="clearFilters">필터 해제</DsButton>
+        </DsEmptyState>
+
+        <!-- ═══ 테이블 ═══ -->
+        <div v-else class="tbl">
+          <DsDataTable :headers="headers" :items="rows" :density="density">
+            <template #item.time="{ item }">
+              <span class="mono-cell">{{ (item as any).time }}</span>
+            </template>
+
+            <template #item.level="{ item }">
+              <DsBadge :variant="LEVEL_META[(item as any).level as Level].variant">
+                {{ LEVEL_META[(item as any).level as Level].ko }}
+              </DsBadge>
+            </template>
+
+            <template #item.actor="{ item }">
+              <span class="actor">
+                <DsAvatar size="sm">{{ (item as any).actorInit }}</DsAvatar>
+                {{ (item as any).actor }}
+              </span>
+            </template>
+
+            <template #item.action="{ item }">
+              <code class="code-cell">{{ (item as any).action }}</code>
+            </template>
+
+            <template #item.target="{ item }">
+              <span class="target">{{ (item as any).target }}</span>
+            </template>
+
+            <template #item.more="{ item }">
+              <DsMenu location="bottom end">
+                <template #activator="props">
+                  <button class="row-more" v-bind="props" aria-label="More">⋯</button>
+                </template>
+                <div class="ds-menu-item" @click="selected = item as any">상세 보기</div>
+                <div class="ds-menu-item">이 수행자로 필터</div>
+                <div class="ds-menu-item">이벤트 ID 복사</div>
+              </DsMenu>
             </template>
           </DsDataTable>
-
-          <div class="row" style="margin-top:20px">
-            <DsSelect v-model="status" label="Status" :items="['Draft', 'Running', 'Completed']" />
-          </div>
-
-          <div class="row" style="margin-top:20px">
-            <DsMenu location="bottom start">
-              <template #activator="props">
-                <DsButton variant="secondary" v-bind="props">More ▾</DsButton>
-              </template>
-              <div class="ds-menu-item">이름 바꾸기</div>
-              <div class="ds-menu-item">복제</div>
-              <div class="ds-menu-item" style="color:var(--danger)">삭제</div>
-            </DsMenu>
-
-            <DsTooltip text="Vuetify VTooltip 기반">
-              <DsButton variant="ghost">Hover me</DsButton>
-            </DsTooltip>
-
-            <DsButton variant="danger" @click="dialogOpen = true">Open Dialog</DsButton>
-          </div>
-
-          <DsDialog v-model="dialogOpen" title="에이전트를 삭제할까요?">
-            이 작업은 되돌릴 수 없습니다. 연결된 실행 기록 128건도 함께 삭제됩니다.
-            <template #actions>
-              <DsButton variant="secondary" size="sm" @click="dialogOpen = false">Cancel</DsButton>
-              <DsButton variant="danger" size="sm" @click="dialogOpen = false">Delete</DsButton>
-            </template>
-          </DsDialog>
-          <p class="note">
-            동작(정렬·포커스 트랩·포지셔닝)은 Vuetify가, 생김새는 우리가 담당합니다.
-          </p>
         </div>
 
-        <!-- ═══ 4. 에이전트 컴포넌트 ═══ -->
-        <h2 class="sec">4. 에이전트 전용 컴포넌트 (Vuetify에 없는 것들)</h2>
-        <div class="demo">
+        <!-- ═══ 상세 다이얼로그 ═══ -->
+        <DsDialog v-model="selected" :title="selected ? `이벤트 #${selected.id}` : ''" :width="560">
+          <template v-if="selected">
+            <div class="kv"><span>시각</span><code>{{ selected.time }}</code></div>
+            <div class="kv"><span>수준</span>
+              <DsBadge :variant="LEVEL_META[selected.level].variant">{{ LEVEL_META[selected.level].ko }}</DsBadge>
+            </div>
+            <div class="kv"><span>수행자</span>{{ selected.actor }}</div>
+            <div class="kv"><span>동작</span><code>{{ selected.action }}</code></div>
+            <div class="kv"><span>대상</span>{{ selected.target }}</div>
+            <div class="kv"><span>IP</span><code>{{ selected.ip }}</code></div>
+            <div class="kv"><span>에이전트</span>{{ selected.agent }}</div>
+            <DsDivider />
+            <div class="detail-box" :data-lvl="selected.level">{{ selected.detail }}</div>
+          </template>
+          <template #actions>
+            <DsButton variant="secondary" size="sm" @click="selected = null">닫기</DsButton>
+            <DsButton variant="primary" size="sm" @click="selected = null">에이전트에게 분석 요청</DsButton>
+          </template>
+        </DsDialog>
+
+        <!-- ═══ 토스트 ═══ -->
+        <div v-if="toast" class="toast-slot">
+          <DsToast :variant="toast.variant">{{ toast.msg }}</DsToast>
+        </div>
+
+        <!-- ═══ 에이전트 분석 패널 ═══ -->
+        <h2 class="sec">에이전트 분석</h2>
+        <div class="agent-box">
           <div class="chat">
-            <DsChatMessage role="user" name="You">지난달 계약서 파일 찾아서 요약해줘</DsChatMessage>
-            <DsChatMessage role="agent" name="Agent" :streaming="true">
+            <DsChatMessage role="user" name="You">오늘 실패한 이벤트 원인 정리해줘</DsChatMessage>
+            <DsChatMessage role="agent" name="Audit Agent" :streaming="true">
               <template #tools>
-                <DsToolCallStep status="done">search_drive("계약서", June) — 3 files found</DsToolCallStep>
-                <DsToolCallStep status="running">read_document("계약서_최종.pdf")</DsToolCallStep>
+                <DsToolCallStep status="done">query_logs(level="error", since="24h") — 3건</DsToolCallStep>
+                <DsToolCallStep status="done">group_by(cause) — 3개 원인</DsToolCallStep>
+                <DsToolCallStep status="running">check_permissions("법무")</DsToolCallStep>
               </template>
-              6월에 체결된 계약서 3건을 찾았습니다. 그중 최종본<DsCitationChip :index="1" />의 핵심 조항은
+              오늘 실패 3건은 서로 다른 원인입니다. ① 법무 폴더 삭제 권한 부족<DsCitationChip :index="1" />
+              ② 스캔 PDF의 텍스트 레이어 부재<DsCitationChip :index="6" />
+              ③ 업로드 용량 초과<DsCitationChip :index="11" />. 이 중 ①만
             </DsChatMessage>
           </div>
-          <div style="margin-top:16px">
-            <DsThinkingIndicator label="계약서 조항을 분석하는 중…" />
+          <div style="margin-top:14px">
+            <DsThinkingIndicator label="권한 설정을 확인하는 중…" />
           </div>
-          <div style="margin-top:16px;max-width:560px">
-            <DsAgentInput v-model="draft" />
-          </div>
-          <div style="margin-top:16px;max-width:560px">
-            <DsArtifactPanel title="summary_report.md" copyable downloadable>
-# 6월 계약서 요약
-- 계약 기간: 12개월 (자동 갱신)
-- 해지 조건: 90일 전 서면 통보</DsArtifactPanel>
+          <div style="margin-top:14px">
+            <DsAgentInput placeholder="감사 로그에 대해 질문하세요…" />
           </div>
         </div>
 
-        <!-- ═══ 5. 나머지 ═══ -->
-        <h2 class="sec">5. 나머지 Standalone 컴포넌트</h2>
-        <div class="demo">
-          <div class="row">
-            <DsAvatar size="sm">JK</DsAvatar>
-            <DsAvatar>JK</DsAvatar>
-            <DsAvatar variant="brand">A</DsAvatar>
+        <!-- ═══ Vuetify 원본 컴포넌트 검증 ═══ -->
+        <h2 class="sec">Vuetify 원본 컴포넌트 — defaults + theme 적용 확인</h2>
+        <p class="sec-note">
+          아래는 <b>감싸지 않은 Vuetify 컴포넌트를 그대로</b> 쓴 것입니다.
+          <code>theme.ts</code>와 <code>defaults.ts</code>만으로 우리 스타일이 나오는지 확인하는 영역입니다.
+        </p>
+        <div class="agent-box">
+          <div class="vrow">
+            <v-btn color="primary">v-btn</v-btn>
+            <v-btn variant="outlined">outlined</v-btn>
+            <v-btn variant="text">text</v-btn>
+            <v-chip>v-chip</v-chip>
+            <v-chip color="primary">primary</v-chip>
           </div>
-          <DsDivider />
-          <div class="row">
-            <DsSkeleton variant="circle" width="32px" height="32px" />
-            <DsSkeleton width="200px" />
+
+          <v-alert type="error" class="mt-4">
+            v-alert — 권한이 없어 삭제하지 못했습니다.
+          </v-alert>
+          <v-alert type="warning" class="mt-2">v-alert — 월간 한도의 80%에 도달했습니다.</v-alert>
+          <v-alert type="success" class="mt-2">v-alert — 파일 128건 동기화 완료.</v-alert>
+
+          <div class="vrow mt-4">
+            <v-text-field label="v-text-field" style="max-width:240px" />
+            <v-select label="v-select" :items="['A', 'B']" style="max-width:180px" />
+            <v-checkbox label="v-checkbox" />
+            <v-switch label="v-switch" />
           </div>
-          <DsDivider />
-          <div class="row" style="flex-direction:column;align-items:flex-start">
-            <DsToast variant="success" action="View">에이전트가 생성되었습니다.</DsToast>
-            <DsToast variant="danger" action="Retry">파일 업로드에 실패했습니다 — 10MB를 초과합니다.</DsToast>
+
+          <v-tabs v-model="density" class="mt-2">
+            <v-tab value="compact">compact</v-tab>
+            <v-tab value="comfortable">comfortable</v-tab>
+            <v-tab value="spacious">spacious</v-tab>
+          </v-tabs>
+
+          <div class="mt-4">
+            <v-progress-linear model-value="62" class="mb-3" />
+            <v-list style="max-width:320px">
+              <v-list-subheader>보존 정책</v-list-subheader>
+              <v-list-item title="90일" subtitle="기본" />
+              <v-list-item title="180일" subtitle="현재 설정" active />
+              <v-list-item title="365일" subtitle="엔터프라이즈" />
+            </v-list>
           </div>
-          <DsDivider />
-          <DsInput v-model="email" label="Email" error="올바른 이메일 주소를 입력하세요." />
-          <DsDivider />
+
+          <v-expansion-panels class="mt-4">
+            <v-expansion-panel title="v-expansion-panel — 원본 페이로드">
+              <template #text>
+                <code style="font-size:12px">{ "event": "document.delete", "allowed": false }</code>
+              </template>
+            </v-expansion-panel>
+          </v-expansion-panels>
+
+          <div class="vrow mt-4">
+            <v-pagination :length="5" :total-visible="5" />
+          </div>
+        </div>
+
+        <!-- ═══ 그 외 Standalone 컴포넌트 ═══ -->
+        <h2 class="sec">그 외 Standalone 컴포넌트</h2>
+        <div class="agent-box">
           <DsSearchResult title="계약서_최종.pdf" path="Drive / 법무 / 2026">
             본 <mark>계약서</mark>는 2026년 7월 1일부터 효력이 발생하며…
           </DsSearchResult>
           <DsDivider />
-          <DsFileGrid :files="files" :selected="['2']" />
+          <DsFileGrid :files="[
+            { id: '1', name: '법무', meta: '12 files', icon: '📁' },
+            { id: '2', name: '계약서_최종.pdf', meta: '2.1 MB', icon: '📄' },
+            { id: '3', name: 'Q3_실적.xlsx', meta: '1.4 MB', icon: '📊' }]" :selected="['2']" />
           <DsDivider />
-          <DsFileRow v-for="f in files" :key="f.id" :name="f.name" :meta="f.meta" :icon="f.icon" />
+          <DsFileRow name="계약서_최종.pdf" meta="2.1 MB · Jun 28" icon="📄" :selected="true" />
+          <DsFileRow name="Q3_실적.xlsx" meta="1.4 MB · Jul 12" icon="📊" />
           <DsDivider />
-          <DsCard title="Tasks automated" subtitle="Last 30 days">
-            <div class="num">1,284<span class="delta">+12.4%</span></div>
-          </DsCard>
-          <DsDivider />
-          <DsEmptyState title="No agents yet" description="첫 에이전트를 만들어 업무 자동화를 시작하세요.">
-            <DsButton>New agent</DsButton>
-          </DsEmptyState>
+          <DsArtifactPanel title="audit_summary.md" copyable downloadable>
+# 감사 요약 (2026-07-31)
+- 실패 3건 · 경고 2건
+- 반복 원인: 법무 폴더 권한</DsArtifactPanel>
           <DsDivider />
           <DsStreamingText :done="false">스트리밍 중인 텍스트</DsStreamingText>
         </div>
@@ -207,9 +353,73 @@ const files = [
 </template>
 
 <style>
-.sec { font-size: 15px; font-weight: 600; color: var(--gray-12); margin: 40px 0 12px; }
-.demo { border: 1px solid var(--gray-4); border-radius: var(--r-lg); padding: 24px; background: var(--gray-1); }
-.demo .row { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; }
-.note { font-size: 12.5px; color: var(--gray-9); margin-top: 14px; }
-.note code { font-family: var(--mono); color: var(--brand); }
+.wrap { max-width: 1080px; margin: 0 auto; padding: 32px 24px 120px; }
+
+.head { display: flex; align-items: flex-end; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
+.crumb { font-size: 12.5px; color: var(--gray-9); }
+.head h1 { font-size: 24px; font-weight: 650; letter-spacing: -.02em; color: var(--gray-12); margin-top: 4px; }
+.h1-en { font-size: 14px; font-weight: 500; color: var(--gray-9); margin-left: 6px; }
+.head-actions { display: flex; gap: 8px; }
+
+.stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-top: 24px; }
+.stats .num { font-size: 26px; font-weight: 650; letter-spacing: -.02em; margin-top: 10px; color: var(--gray-12); }
+
+.filters { display: flex; align-items: flex-start; gap: 10px; margin-top: 24px; flex-wrap: wrap; }
+.filters .field { width: 260px; }
+.lvl-chips { display: flex; gap: 6px; }
+.lvl-chip {
+  all: unset; box-sizing: border-box; cursor: pointer; height: 36px; padding: 0 12px;
+  display: inline-flex; align-items: center; gap: 6px;
+  border: 1px solid var(--gray-6); border-radius: var(--r-lg);
+  font-size: 13px; font-weight: 500; color: var(--gray-11);
+  font-family: var(--font); background: var(--surface);
+}
+.lvl-chip:hover { background: var(--gray-2); border-color: var(--gray-8); }
+.lvl-chip.on { background: var(--brand-subtle); color: var(--brand); border-color: transparent; }
+.lvl-dot { width: 6px; height: 6px; border-radius: 50%; }
+.lvl-dot[data-lvl="info"]    { background: var(--gray-8); }
+.lvl-dot[data-lvl="success"] { background: var(--success); }
+.lvl-dot[data-lvl="warn"]    { background: var(--brand); }
+.lvl-dot[data-lvl="error"]   { background: var(--danger); }
+
+.active-filters { display: flex; align-items: center; gap: 8px; margin-top: 14px; flex-wrap: wrap; }
+.af-label { font-size: 12px; font-weight: 600; color: var(--gray-9);
+  text-transform: uppercase; letter-spacing: .05em; }
+
+.tbl { margin-top: 18px; }
+.mono-cell { font-family: var(--mono); font-size: 12.5px; color: var(--gray-11); white-space: nowrap; }
+.code-cell { font-family: var(--mono); font-size: 12.5px; color: var(--brand);
+  background: var(--gray-3); padding: 1px 6px; border-radius: 3px; }
+.actor { display: inline-flex; align-items: center; gap: 8px; white-space: nowrap; }
+.target { color: var(--gray-11); }
+.row-more {
+  all: unset; box-sizing: border-box; cursor: pointer;
+  width: 26px; height: 26px; display: flex; align-items: center; justify-content: center;
+  border-radius: var(--r-md); color: var(--gray-9); font-size: 15px;
+}
+.row-more:hover { background: var(--gray-3); color: var(--gray-12); }
+
+.tbl-skel { margin-top: 18px; border: 1px solid var(--gray-4); border-radius: var(--r-lg); overflow: hidden; }
+.skel-row { display: flex; gap: 24px; align-items: center; padding: 12px 16px; border-bottom: 1px solid var(--gray-3); }
+.skel-row:last-child { border-bottom: none; }
+
+.kv { display: flex; gap: 12px; padding: 7px 0; font-size: 13.5px; color: var(--gray-12); align-items: center; }
+.kv span:first-child { width: 78px; flex-shrink: 0; color: var(--gray-10); font-size: 12.5px; }
+.kv code { font-family: var(--mono); font-size: 12.5px; color: var(--gray-11); }
+.detail-box { font-size: 13.5px; padding: 12px 14px; border-radius: var(--r-md);
+  background: var(--gray-2); border-left: 3px solid var(--gray-6); color: var(--gray-11); }
+.detail-box[data-lvl="error"] { border-left-color: var(--danger); }
+.detail-box[data-lvl="warn"]  { border-left-color: var(--brand); }
+.detail-box[data-lvl="success"] { border-left-color: var(--success); }
+
+.toast-slot { position: fixed; right: 24px; bottom: 24px; z-index: 3000; }
+
+.sec { font-size: 15px; font-weight: 600; color: var(--gray-12); margin: 48px 0 8px; }
+.sec-note { font-size: 13px; color: var(--gray-10); margin-bottom: 14px; }
+.sec-note code { font-family: var(--mono); color: var(--brand); }
+.agent-box { border: 1px solid var(--gray-4); border-radius: var(--r-lg); padding: 20px; background: var(--gray-1); }
+.vrow { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; }
+.mt-2 { margin-top: 8px; } .mt-4 { margin-top: 16px; } .mb-3 { margin-bottom: 12px; }
+
+@media (max-width: 900px) { .stats { grid-template-columns: 1fr 1fr; } }
 </style>

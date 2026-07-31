@@ -1,4 +1,4 @@
-import { CATEGORIES, COMPONENTS, TEMPLATES } from './data.js'
+import { CATEGORIES, COMPONENTS, TEMPLATES, VUETIFY_COVERAGE } from './data.js'
 
 /* ═══════════ 유틸 ═══════════ */
 const $ = (s) => document.querySelector(s)
@@ -60,7 +60,7 @@ window.addEventListener('hashchange', render)
 function renderSidebar(section, activeId) {
   const docsLinks = [
     ['start', '시작하기'], ['install', '설치 · 사용법'], ['vuetify', 'Vuetify와의 관계'],
-    ['principles', '디자인 원칙'], ['tokens', '토큰'],
+    ['coverage', 'Vuetify 커버리지'], ['principles', '디자인 원칙'], ['tokens', '토큰'],
   ]
   let html = `<div class="nav-title">Docs</div>` +
     docsLinks.map(([id, ko]) =>
@@ -279,7 +279,8 @@ function renderTemplates() {
 
 /* ═══════════ Docs 페이지 ═══════════ */
 function renderDocsPage(id) {
-  const pages = { start: pageStart, install: pageInstall, vuetify: pageVuetify, principles: pagePrinciples, tokens: pageTokens }
+  const pages = { start: pageStart, install: pageInstall, vuetify: pageVuetify,
+                  coverage: pageCoverage, principles: pagePrinciples, tokens: pageTokens }
   $('#content').innerHTML = (pages[id] || pageStart)()
   wireCodeTabs()
 }
@@ -488,6 +489,81 @@ function pageVuetify() {
         우리는 시각 컴포넌트를 직접 만들기로 했습니다. 직접 만든 버튼은 Vuetify와 부딪힐 상대가 없습니다.
         마이그레이션 비용은 3~5주인데 우리 계획의 버전 의존도는 약 20%입니다.
       </p>
+    </div>`
+}
+
+function pageCoverage() {
+  const STATUS = {
+    wrapped:    ['Ds 컴포넌트', 'wrapped', 'Ds*로 감싸서 제공합니다. 슬롯·props가 그대로 전달됩니다.'],
+    themed:     ['defaults + CSS', 'themed', 'defaults.ts가 기본값을 고정하고 ds-vuetify.css가 시각을 맞춥니다. 그냥 <v-alert>를 써도 우리 스타일이 나옵니다.'],
+    css:        ['CSS만', 'css', '내부 프리미티브라 직접 쓸 일이 드뭅니다. CSS로 시각만 맞춥니다.'],
+    structural: ['스타일 불필요', 'structural', '시각 표면이 없는 레이아웃·프로바이더입니다.'],
+  }
+  const count = (s) => VUETIFY_COVERAGE.filter((r) => r[1] === s).length
+  const total = VUETIFY_COVERAGE.length
+
+  const section = (s) => {
+    const rows = VUETIFY_COVERAGE.filter((r) => r[1] === s)
+    const [label, cls, desc] = STATUS[s]
+    return `
+      <h2 style="margin-top:36px">${label} <span style="font-size:13px;font-weight:500;color:var(--gray-9)">${rows.length}종</span></h2>
+      <p>${desc}</p>
+      <table class="ptable">
+        <thead><tr><th>Vuetify</th>${s === 'wrapped' ? '<th>제공 이름</th>' : ''}<th>적용 내용</th></tr></thead>
+        <tbody>${rows.map((r) => `<tr>
+          <td class="pname">${r[0]}</td>
+          ${s === 'wrapped' ? `<td class="ptype">${r[2]}</td>` : ''}
+          <td class="pdesc">${r[3]}</td></tr>`).join('')}</tbody>
+      </table>`
+  }
+
+  return `
+    <div class="page-head"><h1>Vuetify 커버리지</h1></div>
+    <p class="page-lead">
+      Vuetify 3.11이 제공하는 컴포넌트 <b>${total}종 전부</b>가 이 디자인 시스템의 스타일을 받습니다.
+      우리가 감싼 것은 5종뿐이지만, 나머지도 <code>theme.ts</code>와 <code>defaults.ts</code>를 통해
+      자동으로 우리 색·모서리·밀도로 렌더됩니다.
+    </p>
+    <div class="prose">
+      <div class="callout">
+        <b>핵심 — 96종을 전부 감쌀 필요가 없습니다.</b><br>
+        Vuetify의 모든 컴포넌트는 <b>테마 색</b>과 <b>defaults</b>를 참조합니다.
+        <code>theme.ts</code>에 우리 토큰을 한 번 주입하면
+        <code>&lt;v-alert&gt;</code>·<code>&lt;v-stepper&gt;</code>·<code>&lt;v-timeline&gt;</code>처럼
+        우리가 만지지 않은 컴포넌트도 같은 파랑, 같은 회색, 같은 모서리로 나옵니다.
+        감싸는 것은 <b>동작을 우리 API로 단순화할 필요가 있을 때만</b> 합니다.
+      </div>
+
+      <table>
+        <thead><tr><th>분류</th><th>개수</th><th>개발자가 쓰는 법</th></tr></thead>
+        <tbody>
+          <tr><td><b>Ds 컴포넌트</b></td><td>${count('wrapped')}</td><td><code>import { DsDataTable } from '~/design/vuetify'</code></td></tr>
+          <tr><td><b>defaults + CSS</b></td><td>${count('themed')}</td><td><code>&lt;v-alert&gt;</code> 그대로 — 설정 불필요</td></tr>
+          <tr><td><b>CSS만</b></td><td>${count('css')}</td><td>내부 프리미티브 — 직접 쓸 일 드묾</td></tr>
+          <tr><td><b>스타일 불필요</b></td><td>${count('structural')}</td><td>레이아웃·프로바이더</td></tr>
+        </tbody>
+      </table>
+
+      <h2>연결 방법</h2>
+      <p>이 한 번의 설정이 ${total}종 전부에 적용됩니다.</p>
+      <pre><code>import { createVuetify } from 'vuetify'
+import { dsTheme } from '~/design/theme'       // 색 — 96종 전부에 적용
+import { dsDefaults } from '~/design/defaults' // 기본값 — 77종에 지정
+
+createVuetify({
+  theme: dsTheme,
+  defaults: dsDefaults,
+})</code></pre>
+      <p>
+        <code>ds-vuetify.css</code>도 함께 로드해야 테마가 제어하지 못하는
+        폰트·모서리·보더 두께까지 맞춰집니다.
+      </p>
+    </div>
+    <div class="prose">
+      ${section('wrapped')}
+      ${section('themed')}
+      ${section('css')}
+      ${section('structural')}
     </div>`
 }
 

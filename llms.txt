@@ -54,3 +54,20 @@ vite build passes (602 modules, 0 errors); all 25 components render inside <v-ap
 Vuetify app, and is unaffected by Vuetify version changes.
 Isolation guarantees: 0 vuetify imports in standalone components, 0 !important in
 ds.css, 0 .v-* class definitions in ds.css, all:unset on every component root.
+
+## Vuetify coverage — ALL 96 Vuetify 3.11 components are styled
+Do NOT wrap every Vuetify component. Coverage works in three layers:
+1. vue/theme.ts    — injects our tokens into Vuetify's theme (colors). Applies to ALL components.
+2. vue/defaults.ts — per-component defaults for 77 components (elevation 0, outlined, rounded md,
+                     ripple off, density comfortable). <v-alert> etc. need no extra setup.
+3. ds-vuetify.css  — font, radius, border weight that the theme system cannot control.
+Only 5 components are wrapped as Ds* (DataTable, Dialog, Menu, Tooltip, Select) because their
+API benefits from simplification. Everything else is used as plain <v-*> and still looks correct.
+
+Setup: createVuetify({ theme: dsTheme, defaults: dsDefaults }) + load ds.css and ds-vuetify.css.
+
+## Example app
+examples/vuetify-app — an Audit Log screen (table-centric) on real Vuetify 3.11.6.
+Covers: DataTable with cell slots, filters, density switch, row menu, detail dialog,
+loading/empty states, toast, agent analysis panel, and a section of raw <v-*> components
+proving theme+defaults alone produce our styling.

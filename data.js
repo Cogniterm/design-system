@@ -778,3 +778,132 @@ export const TEMPLATES = [
   { id: 'search', name: 'Search Results', ko: '검색 결과',     file: 'templates/search.html',
     desc: '쿼리 바 · 필터 · 하이라이트 결과 · 빈 결과', covers: ['SearchResult', 'Chip', 'EmptyState', 'Input'] },
 ]
+
+/* ============================================
+   Vuetify 3.11 전 컴포넌트 커버리지
+   status: 'wrapped'  Ds* 컴포넌트로 제공 (감쌈)
+           'themed'   defaults.ts + ds-vuetify.css로 스타일 적용
+           'css'      CSS로만 스타일 적용 (내부 프리미티브·타이포)
+           'structural' 시각 표면이 없음 (레이아웃·프로바이더) — 스타일 불필요
+   ============================================ */
+export const VUETIFY_COVERAGE = [
+  // ── wrapped (5) ──
+  ['VDataTable', 'wrapped', 'DsDataTable', '정렬·페이지네이션·선택'],
+  ['VDialog', 'wrapped', 'DsDialog', '포커스 트랩·스크롤 락'],
+  ['VMenu', 'wrapped', 'DsMenu', '포지셔닝·키보드 네비'],
+  ['VTooltip', 'wrapped', 'DsTooltip', '지연 표시·터치 대응'],
+  ['VSelect', 'wrapped', 'DsSelect', '옵션 포지셔닝·다중 선택'],
+
+  // ── themed: Action ──
+  ['VBtn', 'themed', '', 'flat · rounded md · ripple 제거'],
+  ['VBtnGroup', 'themed', '', 'outlined · divided'],
+  ['VBtnToggle', 'themed', '', 'outlined · divided'],
+  ['VFab', 'themed', '', 'elevation 0'],
+  ['VSpeedDial', 'themed', '', 'fade 전환'],
+
+  // ── themed: Surface ──
+  ['VCard', 'themed', '', 'outlined · elevation 0'],
+  ['VSheet', 'themed', '', 'elevation 0'],
+  ['VToolbar', 'themed', '', 'flat'],
+  ['VAppBar', 'themed', '', 'flat · 하단 보더'],
+  ['VFooter', 'themed', '', '상단 보더'],
+  ['VSystemBar', 'themed', '', 'surface 색'],
+  ['VExpansionPanel', 'themed', '', 'elevation 0 · 보더'],
+  ['VParallax', 'themed', '', 'scale 1'],
+
+  // ── themed: Navigation ──
+  ['VNavigationDrawer', 'themed', '', 'elevation 0 · 보더'],
+  ['VBottomNavigation', 'themed', '', 'elevation 0'],
+  ['VTabs', 'themed', '', '2px 슬라이더 · 대문자 변환 해제'],
+  ['VBreadcrumbs', 'themed', '', 'comfortable'],
+  ['VPagination', 'themed', '', 'text · 활성 시 브랜드 배경'],
+  ['VStepper', 'themed', '', 'flat · 보더'],
+
+  // ── themed: Data Input ──
+  ['VTextField', 'themed', '', 'outlined · 포커스 시 브랜드 보더'],
+  ['VTextarea', 'themed', '', 'outlined · auto-grow'],
+  ['VAutocomplete', 'themed', '', 'outlined'],
+  ['VCombobox', 'themed', '', 'outlined'],
+  ['VFileInput', 'themed', '', 'outlined'],
+  ['VNumberInput', 'themed', '', 'outlined'],
+  ['VOtpInput', 'themed', '', 'outlined'],
+  ['VCheckbox', 'themed', '', 'primary · ripple 제거'],
+  ['VRadio', 'themed', '', 'primary · ripple 제거'],
+  ['VRadioGroup', 'themed', '', 'primary'],
+  ['VSwitch', 'themed', '', 'inset · primary'],
+  ['VSlider', 'themed', '', 'thumb 14 · track 3'],
+  ['VRangeSlider', 'themed', '', 'thumb 14 · track 3'],
+  ['VRating', 'themed', '', 'small · primary'],
+  ['VDatePicker', 'themed', '', 'elevation 0'],
+  ['VTimePicker', 'themed', '', 'elevation 0'],
+  ['VColorPicker', 'themed', '', 'elevation 0 · hexa'],
+  ['VCalendar', 'themed', '', 'primary'],
+  ['VConfirmEdit', 'themed', '', 'primary'],
+  ['VForm', 'themed', '', 'submit 시 검증'],
+
+  // ── themed: Feedback ──
+  ['VAlert', 'themed', '', 'tonal · 좌측 보더'],
+  ['VBanner', 'themed', '', 'rounded md'],
+  ['VChip', 'themed', '', 'outlined · pill · small'],
+  ['VBadge', 'themed', '', 'primary'],
+  ['VProgressLinear', 'themed', '', '높이 2px'],
+  ['VProgressCircular', 'themed', '', '두께 2 · 크기 20'],
+  ['VSkeletonLoader', 'themed', '', 'elevation 0'],
+  ['VSnackbar', 'themed', '', '보더 · 우하단 · 4초'],
+  ['VSnackbarQueue', 'themed', '', '보더 · 우하단'],
+  ['VEmptyState', 'themed', '', '아이콘 48'],
+
+  // ── themed: Overlay ──
+  ['VOverlay', 'themed', '', 'fade · scrim 32%'],
+  ['VBottomSheet', 'themed', '', 'fade 전환'],
+
+  // ── themed: Table & List ──
+  ['VTable', 'themed', '', '헤더 회색 · 호버 배경'],
+  ['VDataTableServer', 'themed', '', 'DsDataTable과 동일 스타일'],
+  ['VDataTableVirtual', 'themed', '', 'DsDataTable과 동일 스타일'],
+  ['VDataIterator', 'themed', '', '페이지당 20'],
+  ['VList', 'themed', '', 'nav · rounded · 34px 행'],
+  ['VTreeview', 'themed', '', 'rounded · 32px 행'],
+  ['VVirtualScroll', 'themed', '', '행 높이 40'],
+  ['VInfiniteScroll', 'themed', '', 'intersect 모드'],
+  ['VTimeline', 'themed', '', '선 1px · 브랜드 점'],
+  ['VSparkline', 'themed', '', 'primary · smooth'],
+
+  // ── themed: Content ──
+  ['VAvatar', 'themed', '', 'circle · 32px'],
+  ['VIcon', 'themed', '', '20px'],
+  ['VImg', 'themed', '', 'cover'],
+  ['VCarousel', 'themed', '', '호버 시 화살표'],
+  ['VWindow', 'themed', '', '화살표 숨김'],
+  ['VSlideGroup', 'themed', '', '화살표 표시'],
+  ['VDivider', 'themed', '', '1px'],
+  ['VLazy', 'themed', '', 'minHeight 0'],
+
+  // ── css: 내부 프리미티브 · 타이포 ──
+  ['VField', 'css', '', '입력 공통 껍데기 — 보더·radius·포커스 링'],
+  ['VInput', 'css', '', '입력 공통 래퍼'],
+  ['VLabel', 'css', '', '라벨 크기·색'],
+  ['VMessages', 'css', '', '힌트·에러 문구 크기'],
+  ['VCounter', 'css', '', '글자수 표시'],
+  ['VSelectionControl', 'css', '', '체크박스·라디오 공통'],
+  ['VSelectionControlGroup', 'css', '', '선택 컨트롤 그룹'],
+  ['VChipGroup', 'css', '', '칩 묶음'],
+  ['VItemGroup', 'css', '', '선택 그룹'],
+  ['VCode', 'css', '', 'mono · 회색 배경'],
+  ['VKbd', 'css', '', 'mono · 반전 배경'],
+  ['VHotkey', 'css', '', 'VKbd 기반'],
+  ['VOverflowBtn', 'css', '', 'VSelect 기반'],
+
+  // ── structural: 시각 표면 없음 ──
+  ['VApp', 'structural', '', '앱 루트'],
+  ['VMain', 'structural', '', '본문 영역'],
+  ['VLayout', 'structural', '', '레이아웃 컨테이너'],
+  ['VGrid', 'structural', '', '그리드 (row/col/container)'],
+  ['VResponsive', 'structural', '', '비율 유지 박스'],
+  ['VHover', 'structural', '', '호버 상태 제공'],
+  ['VNoSsr', 'structural', '', 'SSR 제외'],
+  ['VValidation', 'structural', '', '검증 로직'],
+  ['VDefaultsProvider', 'structural', '', 'defaults 주입'],
+  ['VThemeProvider', 'structural', '', '테마 주입'],
+  ['VLocaleProvider', 'structural', '', '로케일 주입'],
+]
