@@ -601,17 +601,45 @@ export function fdIconography() {
       세트 하나, 크기 3개, 굵기 하나. 아이콘은 <b>글자를 대체하지 않고 보조합니다</b>.
     </p>
     <div class="prose">
-      <div class="callout warn">
-        <b>현재 상태</b> — 세트는 <b>Lucide</b>로 정했지만 아직 적용 전입니다.
-        예제와 갤러리에는 임시로 이모지·기호를 쓰고 있습니다.
-        <code>lucide-vue-next</code> 설치 후 일괄 교체가 남아 있습니다.
+      <div class="callout">
+        <b>적용 완료</b> — <code>lucide-vue-next</code>를 등록하고
+        <code>DsIcon</code> 컴포넌트와 아이콘 레지스트리(<code>vue/icons.ts</code>)를 만들었습니다.
+        라이브 갤러리의 <b>Iconography</b> 섹션에서 등록된 아이콘 전체를 볼 수 있습니다.
       </div>
+
+      <h2>의미로 부릅니다</h2>
+      <p>
+        Lucide의 아이콘 이름이 아니라 <b>우리 어휘</b>로 부릅니다.
+        <code>Trash2</code>가 아니라 <code>delete</code>, <code>Bot</code>이 아니라 <code>agent</code>입니다.
+        나중에 세트를 바꾸더라도 화면 코드는 그대로 둘 수 있습니다.
+      </p>
+      <pre><code>import { DsIcon } from '~/design/icon'
+
+&lt;DsIcon name="delete" /&gt;
+&lt;DsIcon name="agent" size="lg" /&gt;
+&lt;DsIcon name="loading" spin /&gt;
+&lt;DsIcon name="search" label="검색" /&gt;   &lt;!-- 뜻을 전달하면 label 필수 --&gt;</code></pre>
+      <p>
+        등록은 <code>vue/icons.ts</code> 한 곳에서 합니다.
+        필요한 아이콘이 없으면 거기에 <b>의미 이름</b>으로 추가합니다.
+        Lucide 5,845개 중 실제로 쓰는 것만 번들에 들어갑니다.
+      </p>
+
+      <h2>슬롯으로 받습니다</h2>
+      <p>
+        <code>DsFileRow</code>·<code>DsNavList</code>처럼 아이콘이 들어가는 컴포넌트는
+        아이콘을 <b>슬롯</b>으로 받습니다. 그래야 Standalone 컴포넌트가
+        Lucide에 의존하지 않게 됩니다.
+      </p>
+      <pre><code>&lt;DsFileRow name="계약서_최종.pdf" meta="2.1 MB"&gt;
+  &lt;template #icon&gt;&lt;DsIcon name="document" size="sm" /&gt;&lt;/template&gt;
+&lt;/DsFileRow&gt;</code></pre>
 
       <h2>세트 — Lucide</h2>
       <table>
         <thead><tr><th>항목</th><th>값</th></tr></thead>
         <tbody>
-          <tr><td>패키지</td><td><code>lucide-vue-next</code></td></tr>
+          <tr><td>패키지</td><td><code>lucide-vue-next</code> — 이 시스템의 <b>유일한 외부 의존성</b></td></tr>
           <tr><td>라이선스</td><td>ISC (상업적 사용 가능)</td></tr>
           <tr><td>개수</td><td>1,600+ — 드라이브·검색까지 충분</td></tr>
           <tr><td>선 굵기</td><td>2px 고정</td></tr>

@@ -6,7 +6,9 @@ defineProps<{ icon?: string }>()
 </script>
 <template>
   <VBanner class="ds-banner" density="comfortable" rounded="md" lines="one">
-    <template v-if="icon" #prepend><span>{{ icon }}</span></template>
+    <template v-if="icon || $slots.icon" #prepend>
+      <span class="ds-banner-icon"><slot name="icon">{{ icon }}</slot></span>
+    </template>
     <slot />
     <template v-if="$slots.actions" #actions><slot name="actions" /></template>
   </VBanner>

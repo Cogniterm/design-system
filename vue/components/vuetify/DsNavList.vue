@@ -11,7 +11,9 @@ const model = defineModel<any>()
     <template v-for="(i, n) in items" :key="n">
       <VListSubheader v-if="i.subheader">{{ i.subheader }}</VListSubheader>
       <VListItem v-else :value="i.value" :ripple="false">
-        <template v-if="i.icon" #prepend><span class="ds-nav-icon">{{ i.icon }}</span></template>
+        <template v-if="i.icon || $slots.icon" #prepend>
+          <span class="ds-nav-icon"><slot name="icon" :item="i">{{ i.icon }}</slot></span>
+        </template>
         <template #title>{{ i.title }}</template>
         <template v-if="i.badge !== undefined" #append>
           <span class="ds-nav-badge">{{ i.badge }}</span>

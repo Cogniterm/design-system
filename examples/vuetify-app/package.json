@@ -1,6 +1,19 @@
 {
-  "name": "vtest", "private": true, "type": "module",
-  "scripts": { "dev": "vite", "build": "vite build" },
-  "dependencies": { "vue": "^3.5.13", "vuetify": "3.11.6" },
-  "devDependencies": { "@vitejs/plugin-vue": "^5.2.1", "vite": "^6.0.7", "vite-plugin-vuetify": "^2.1.0" }
+  "name": "vtest",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build"
+  },
+  "dependencies": {
+    "lucide-vue-next": "^1.0.0",
+    "vue": "^3.5.13",
+    "vuetify": "3.11.6"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^5.2.1",
+    "vite": "^6.0.7",
+    "vite-plugin-vuetify": "^2.1.0"
+  }
 }

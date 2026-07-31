@@ -327,3 +327,5 @@
 .ds-snackbar .t-dot.success { background: var(--success); }
 .ds-snackbar .t-dot.danger { background: var(--danger); }
 .ds-snack-body { font-size: 13.5px; }
+.ds-banner-icon { display: inline-flex; align-items: center; color: var(--gray-10); margin-right: 4px; }
+.ds-nav-icon { display: inline-flex; align-items: center; }

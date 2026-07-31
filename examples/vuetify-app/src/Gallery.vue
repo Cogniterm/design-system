@@ -14,6 +14,9 @@ import {
   DsBanner, DsProgressBar, DsSpinner, DsSnackbar, DsDialog, DsTooltip,
   DsDataTable, DsList, DsTreeview, DsTimeline, DsAccordion,
 } from '~/design/vuetify'
+import { DsIcon } from '~/design/icon'
+import { icons } from '~/design/icons'
+const iconNames = Object.keys(icons) as any[]
 
 const theme = useTheme()
 const dark = ref(false)
@@ -75,7 +78,9 @@ const SECTIONS = [
             <p>실제 Vuetify 3.11.6 위에서 렌더된 화면입니다. 모든 컴포넌트를 눈으로 확인할 수 있습니다.</p>
           </div>
           <div style="display:flex;gap:8px">
-            <DsButton variant="ghost" size="sm" @click="toggleTheme">{{ dark ? '☀ Light' : '☾ Dark' }}</DsButton>
+            <DsButton variant="ghost" size="sm" @click="toggleTheme">
+              <DsIcon :name="dark ? 'light' : 'dark'" size="sm" />{{ dark ? 'Light' : 'Dark' }}
+            </DsButton>
             <DsButton variant="secondary" size="sm" @click="$emit('nav', 'audit')">감사 로그 화면 →</DsButton>
           </div>
         </div>
@@ -95,7 +100,7 @@ const SECTIONS = [
             <div class="g-where"><b>어디에</b> 모든 화면의 액션. primary는 화면당 하나.</div>
           </div>
           <div class="g-demo">
-            <DsButton>New agent</DsButton>
+            <DsButton><DsIcon name="add" size="sm" />New agent</DsButton>
             <DsButton variant="secondary">Cancel</DsButton>
             <DsButton variant="ghost">Learn more</DsButton>
             <DsButton variant="danger">Delete</DsButton>
@@ -110,9 +115,9 @@ const SECTIONS = [
             <div class="g-where"><b>어디에</b> 테이블 행 끝 ⋯, 툴바, 입력창 부가 버튼.</div>
           </div>
           <div class="g-demo">
-            <DsIconButton label="More">⋯</DsIconButton>
-            <DsIconButton label="Archive" variant="secondary">□</DsIconButton>
-            <DsIconButton label="Close" size="sm">✕</DsIconButton>
+            <DsIconButton label="More"><DsIcon name="more" /></DsIconButton>
+            <DsIconButton label="Archive" variant="secondary"><DsIcon name="archive" /></DsIconButton>
+            <DsIconButton label="Close" size="sm"><DsIcon name="close" size="sm" /></DsIconButton>
           </div>
         </div>
 
@@ -138,7 +143,7 @@ const SECTIONS = [
           <div class="g-demo">
             <DsMenu location="bottom start">
               <template #activator="props">
-                <DsButton variant="secondary" v-bind="props">More ▾</DsButton>
+                <DsButton variant="secondary" v-bind="props">More <DsIcon name="expand" size="sm" /></DsButton>
               </template>
               <div class="ds-menu-item">이름 바꾸기</div>
               <div class="ds-menu-item">복제</div>
@@ -194,9 +199,11 @@ const SECTIONS = [
           <div class="g-demo" style="display:block;max-width:240px">
             <DsNavList v-model="nav" :items="[
               { subheader: '워크스페이스' },
-              { value: 'agents', title: '에이전트', icon: '◆', badge: 17 },
-              { value: 'drive', title: '드라이브', icon: '▣' },
-              { value: 'logs', title: '감사 로그', icon: '▤', badge: 3 }]" />
+              { value: 'agents', title: '에이전트', icon: 'agent', badge: 17 },
+              { value: 'drive', title: '드라이브', icon: 'drive' },
+              { value: 'logs', title: '감사 로그', icon: 'tableView', badge: 3 }]">
+              <template #icon="{ item }"><DsIcon :name="item.icon" size="sm" /></template>
+            </DsNavList>
           </div>
         </div>
 
@@ -345,7 +352,9 @@ const SECTIONS = [
             <div class="g-where"><b>어디에</b> 화면 최상단 전역 공지 — 점검 예정, 요금제 만료.</div>
           </div>
           <div class="g-demo" style="display:block">
-            <DsBanner icon="◈">8월 3일 02:00~04:00 서비스 점검이 예정되어 있습니다.
+            <DsBanner>
+              <template #icon><DsIcon name="notification" size="sm" /></template>
+              8월 3일 02:00~04:00 서비스 점검이 예정되어 있습니다.
               <template #actions><DsButton variant="ghost" size="sm">자세히</DsButton></template>
             </DsBanner>
           </div>
@@ -370,7 +379,7 @@ const SECTIONS = [
           </div>
           <div class="g-demo">
             <DsSpinner />
-            <DsButton variant="secondary"><DsSpinner :size="13" /> 저장 중…</DsButton>
+            <DsButton variant="secondary"><DsIcon name="loading" size="sm" spin /> 저장 중…</DsButton>
           </div>
         </div>
 
@@ -449,7 +458,7 @@ const SECTIONS = [
             <div class="g-where"><b>어디에</b> 아이콘 버튼 설명, 잘린 텍스트 전체 보기.</div>
           </div>
           <div class="g-demo">
-            <DsTooltip text="보관함으로 이동"><DsIconButton label="Archive">□</DsIconButton></DsTooltip>
+            <DsTooltip text="보관함으로 이동"><DsIconButton label="Archive"><DsIcon name="archive" /></DsIconButton></DsTooltip>
             <DsTooltip text="이 값은 변경할 수 없습니다"><DsButton variant="ghost">호버해보세요</DsButton></DsTooltip>
           </div>
         </div>
@@ -480,9 +489,11 @@ const SECTIONS = [
           </div>
           <div class="g-demo" style="display:block;max-width:420px">
             <DsList v-model="listSel" selectable :items="[
-              { value: 'a', title: '자동 분류', subtitle: '수신 문서를 규칙에 따라 분류', icon: '◆', meta: '켜짐' },
-              { value: 'b', title: '주간 리포트', subtitle: '매주 월요일 09:00', icon: '▤', meta: '켜짐' },
-              { value: 'c', title: '드라이브 동기화', subtitle: '10분마다', icon: '▣', meta: '꺼짐' }]" />
+              { value: 'a', title: '자동 분류', subtitle: '수신 문서를 규칙에 따라 분류', icon: 'run', meta: '켜짐' },
+              { value: 'b', title: '주간 리포트', subtitle: '매주 월요일 09:00', icon: 'tableView', meta: '켜짐' },
+              { value: 'c', title: '드라이브 동기화', subtitle: '10분마다', icon: 'drive', meta: '꺼짐' }]">
+              <template #icon="{ item }"><DsIcon :name="item.icon" size="sm" /></template>
+            </DsList>
           </div>
         </div>
 
@@ -529,12 +540,47 @@ const SECTIONS = [
           </div>
           <div class="g-demo" style="display:block">
             <DsFileGrid :files="[
-              { id: '1', name: '법무', meta: '12 files', icon: '📁' },
-              { id: '2', name: '계약서_최종.pdf', meta: '2.1 MB', icon: '📄' },
-              { id: '3', name: 'Q3_실적.xlsx', meta: '1.4 MB', icon: '📊' }]" :selected="['2']" />
+              { id: '1', name: '법무', meta: '12 files', icon: 'folder' },
+              { id: '2', name: '계약서_최종.pdf', meta: '2.1 MB', icon: 'document' },
+              { id: '3', name: 'Q3_실적.xlsx', meta: '1.4 MB', icon: 'spreadsheet' }]" :selected="['2']">
+              <template #icon="{ file }"><DsIcon :name="file.icon" size="lg" /></template>
+            </DsFileGrid>
             <div style="margin-top:12px">
-              <DsFileRow name="계약서_최종.pdf" meta="2.1 MB · Jun 28" icon="📄" :selected="true" />
-              <DsFileRow name="Q3_실적.xlsx" meta="1.4 MB · Jul 12" icon="📊" />
+              <DsFileRow name="계약서_최종.pdf" meta="2.1 MB · Jun 28" :selected="true">
+                <template #icon><DsIcon name="document" size="sm" /></template>
+              </DsFileRow>
+              <DsFileRow name="Q3_실적.xlsx" meta="1.4 MB · Jul 12">
+                <template #icon><DsIcon name="spreadsheet" size="sm" /></template>
+              </DsFileRow>
+            </div>
+          </div>
+        </div>
+
+        <!-- ══════ ICONS ══════ -->
+        <h2 class="g-sec">Iconography <span>아이콘 — Lucide</span></h2>
+
+        <div class="g-item">
+          <div class="g-meta">
+            <div class="g-name">DsIcon <i class="lg wrapped"></i> <code>Lucide</code></div>
+            <div class="g-why"><b>왜</b> 세트가 3종 섞여 있으면 굵기·광학 크기가 달라 같은 줄에서 어긋남. 하나로 고정.</div>
+            <div class="g-where"><b>어디에</b> 아이콘이 필요한 모든 곳. Lucide 이름이 아니라 <b>의미 이름</b>으로 부릅니다.</div>
+          </div>
+          <div class="g-demo" style="display:block">
+            <div style="display:flex;gap:20px;align-items:flex-end;margin-bottom:18px">
+              <div style="text-align:center"><DsIcon name="search" size="sm" /><div class="ic-sz">sm · 16</div></div>
+              <div style="text-align:center"><DsIcon name="search" size="md" /><div class="ic-sz">md · 20</div></div>
+              <div style="text-align:center"><DsIcon name="search" size="lg" /><div class="ic-sz">lg · 24</div></div>
+              <div style="text-align:center"><DsIcon name="loading" size="md" spin /><div class="ic-sz">spin</div></div>
+            </div>
+            <div class="icon-grid">
+              <div v-for="n in iconNames" :key="n" class="ic">
+                <DsIcon :name="n" />
+                <span>{{ n }}</span>
+              </div>
+            </div>
+            <div style="font-size:12.5px;color:var(--gray-10);margin-top:14px">
+              전체 {{ iconNames.length }}개. Lucide 5,845개 중 우리 어휘로 등록한 것만 보입니다.
+              필요한 아이콘이 없으면 <code style="font-family:var(--mono);color:var(--brand)">vue/icons.ts</code>에 의미 이름으로 추가합니다.
             </div>
           </div>
         </div>
@@ -675,6 +721,14 @@ const SECTIONS = [
 
 .g-foot { margin-top: 40px; padding: 16px; text-align: center; font-size: 13px; color: var(--gray-10);
   border: 1px solid var(--gray-4); border-radius: var(--r-lg); background: var(--gray-1); }
+
+.icon-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(104px, 1fr)); gap: 2px; }
+.ic { display: flex; flex-direction: column; align-items: center; gap: 7px;
+  padding: 14px 6px; border-radius: var(--r-md); color: var(--gray-11); }
+.ic:hover { background: var(--gray-2); color: var(--gray-12); }
+.ic span { font-family: var(--mono); font-size: 10.5px; color: var(--gray-9);
+  text-align: center; word-break: break-all; }
+.ic-sz { font-family: var(--mono); font-size: 10.5px; color: var(--gray-9); margin-top: 8px; }
 
 @media (max-width: 860px) {
   .g-item { grid-template-columns: 1fr; }

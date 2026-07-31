@@ -18,6 +18,7 @@ Vue 3 · Vuetify 3.11 환경에서 그대로 사용합니다.
 | 폰트 | Pretendard |
 | 모서리 | 2 / 4 / 6px |
 | 그림자 | 없음 (떠 있는 요소만 예외) |
+| 아이콘 | Lucide — 의미 이름 59개 등록 |
 | 컴포넌트 | 49종 — Standalone 20 · Vuetify 기반 29 |
 
 ## 두 종류의 컴포넌트
@@ -35,11 +36,13 @@ import { DsDataTable, DsDialog, DsAlert } from '~/design/vuetify'
 
 Vuetify 컴포넌트 96종 전부가 `theme.ts` + `defaults.ts`로 우리 스타일을 받습니다.
 
-## 설치 — npm 설치 없음
+## 설치
 
 ```bash
 cp -r vue/ <app>/src/design/
 cp ds.css ds-vuetify.css <app>/src/design/
+
+npm install lucide-vue-next   # 아이콘 — 유일한 외부 의존성
 ```
 
 ```ts
@@ -73,6 +76,7 @@ vue/
   theme.ts            Vuetify 테마에 토큰 주입 — 96종 전부에 적용
   defaults.ts         Vuetify 컴포넌트 기본값 77종
   meta.ts             컴포넌트별 origin·이유 (en/ko)
+  icon.ts / icons.ts  DsIcon 배럴 + 아이콘 레지스트리 (Lucide)
   components/         Ds*.vue
 templates/            골든 스크린 (HTML)
 examples/vuetify-app/ 실제 Vuetify 앱 예제 (소스)

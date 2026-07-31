@@ -13,7 +13,7 @@ const emit = defineEmits<{ select: [file: DsFile] }>()
       :class="{ selected: selected?.includes(f.id) }"
       @click="emit('select', f)"
     >
-      <div class="f-icon">{{ f.icon || '📄' }}</div>
+      <div class="f-icon"><slot name="icon" :file="f">{{ f.icon }}</slot></div>
       <div class="f-name">{{ f.name }}</div>
       <div v-if="f.meta" class="f-meta">{{ f.meta }}</div>
     </div>

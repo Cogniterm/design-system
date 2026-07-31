@@ -9,7 +9,9 @@ const model = defineModel<any>()
 <template>
   <VList v-model:selected="model" class="ds-list" density="comfortable" rounded="md" :nav="selectable">
     <VListItem v-for="(i, n) in items" :key="n" :value="i.value ?? n" :ripple="false">
-      <template v-if="i.icon" #prepend><span class="ds-nav-icon">{{ i.icon }}</span></template>
+      <template v-if="i.icon || $slots.icon" #prepend>
+        <span class="ds-nav-icon"><slot name="icon" :item="i">{{ i.icon }}</slot></span>
+      </template>
       <template #title>{{ i.title }}</template>
       <template v-if="i.subtitle" #subtitle>{{ i.subtitle }}</template>
       <template v-if="i.meta" #append><span class="ds-list-meta">{{ i.meta }}</span></template>

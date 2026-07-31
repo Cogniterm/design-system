@@ -8,6 +8,7 @@ import {
   DsFileGrid, DsFileRow, DsThinkingIndicator, DsStreamingText,
 } from '~/design'
 import { DsDataTable, DsDialog, DsMenu, DsTooltip, DsSelect } from '~/design/vuetify'
+import { DsIcon } from '~/design/icon'
 
 /* ── 테마 ── */
 const theme = useTheme()
@@ -109,9 +110,11 @@ function exportCsv() { toast.value = { msg: '내보내기에 실패했습니다 
             <h1>감사 로그 <span class="h1-en">Audit Log</span></h1>
           </div>
           <div class="head-actions">
-            <DsButton variant="ghost" size="sm" @click="toggleTheme">{{ dark ? '☀ Light' : '☾ Dark' }}</DsButton>
-            <DsButton variant="secondary" size="sm" @click="exportCsv">Export CSV</DsButton>
-            <DsButton variant="primary" size="sm" @click="simulateLoad">새로고침</DsButton>
+            <DsButton variant="ghost" size="sm" @click="toggleTheme">
+              <DsIcon :name="dark ? 'light' : 'dark'" size="sm" />{{ dark ? 'Light' : 'Dark' }}
+            </DsButton>
+            <DsButton variant="secondary" size="sm" @click="exportCsv"><DsIcon name="download" size="sm" />Export CSV</DsButton>
+            <DsButton variant="primary" size="sm" @click="simulateLoad"><DsIcon name="refresh" size="sm" />새로고침</DsButton>
           </div>
         </div>
 
@@ -207,7 +210,7 @@ function exportCsv() { toast.value = { msg: '내보내기에 실패했습니다 
             <template #item.more="{ item }">
               <DsMenu location="bottom end">
                 <template #activator="props">
-                  <button class="row-more" v-bind="props" aria-label="More">⋯</button>
+                  <button class="row-more" v-bind="props" aria-label="More"><DsIcon name="more" size="sm" /></button>
                 </template>
                 <div class="ds-menu-item" @click="selected = item as any">상세 보기</div>
                 <div class="ds-menu-item">이 수행자로 필터</div>
@@ -332,12 +335,18 @@ function exportCsv() { toast.value = { msg: '내보내기에 실패했습니다 
           </DsSearchResult>
           <DsDivider />
           <DsFileGrid :files="[
-            { id: '1', name: '법무', meta: '12 files', icon: '📁' },
-            { id: '2', name: '계약서_최종.pdf', meta: '2.1 MB', icon: '📄' },
-            { id: '3', name: 'Q3_실적.xlsx', meta: '1.4 MB', icon: '📊' }]" :selected="['2']" />
+            { id: '1', name: '법무', meta: '12 files', icon: 'folder' },
+            { id: '2', name: '계약서_최종.pdf', meta: '2.1 MB', icon: 'document' },
+            { id: '3', name: 'Q3_실적.xlsx', meta: '1.4 MB', icon: 'spreadsheet' }]" :selected="['2']">
+            <template #icon="{ file }"><DsIcon :name="file.icon" size="lg" /></template>
+          </DsFileGrid>
           <DsDivider />
-          <DsFileRow name="계약서_최종.pdf" meta="2.1 MB · Jun 28" icon="📄" :selected="true" />
-          <DsFileRow name="Q3_실적.xlsx" meta="1.4 MB · Jul 12" icon="📊" />
+          <DsFileRow name="계약서_최종.pdf" meta="2.1 MB · Jun 28" :selected="true">
+            <template #icon><DsIcon name="document" size="sm" /></template>
+          </DsFileRow>
+          <DsFileRow name="Q3_실적.xlsx" meta="1.4 MB · Jul 12">
+            <template #icon><DsIcon name="spreadsheet" size="sm" /></template>
+          </DsFileRow>
           <DsDivider />
           <DsArtifactPanel title="audit_summary.md" copyable downloadable>
 # 감사 요약 (2026-07-31)

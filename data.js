@@ -770,6 +770,41 @@ export const COMPONENTS = [
 </div>`,
   guidelines: [['해야 할 것', '산출물이 20줄을 넘으면 대화에 인라인으로 넣지 말고 이 패널로 분리합니다.']],
 },
+{
+  id: 'icon', name: 'Icon', ko: '아이콘', category: 'content',
+  origin: 'wrapped', vuetifyBase: 'Lucide',
+  summary: '아이콘 하나를 그립니다.',
+  reason: { ko: '아이콘 세트가 섞이면 굵기와 광학 크기가 달라 같은 줄에서 어긋나 보입니다. Lucide 하나로 고정하고, Lucide 이름이 아니라 우리 어휘(의미 이름)로 부릅니다 — 나중에 세트를 바꿔도 화면 코드는 그대로입니다.',
+            en: 'Mixed icon sets misalign due to differing stroke and optical size. Fixed to Lucide, addressed by semantic name so the set can be swapped without touching screens.' },
+  props: [
+    ['name', 'IconName', '필수', "의미 이름. 'delete', 'agent', 'search' 등. vue/icons.ts에 등록된 것만."],
+    ['size', "'sm' | 'md' | 'lg' | number", "'md'", '16 / 20 / 24px. 그 사이 값은 픽셀 그리드가 어긋납니다.'],
+    ['label', 'string', '—', '뜻을 전달하는 아이콘이면 필수. 없으면 aria-hidden 처리됩니다.'],
+    ['spin', 'boolean', 'false', '회전. loading 아이콘에 씁니다.'],
+  ],
+  slots: [],
+  demo: `<div class="row" style="gap:20px;color:var(--gray-11)">
+    <span style="display:inline-flex;gap:8px;align-items:center;font-size:13px">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg> search</span>
+    <span style="display:inline-flex;gap:8px;align-items:center;font-size:13px">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 8V4H8"/><rect width="16" height="12" x="4" y="8" rx="2"/><path d="M2 14h2M20 14h2M15 13v2M9 13v2"/></svg> agent</span>
+    <span style="display:inline-flex;gap:8px;align-items:center;font-size:13px">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg> delete</span>
+  </div>`,
+  vue: `import { DsIcon } from '~/design/icon'
+
+<DsIcon name="delete" />
+<DsIcon name="agent" size="lg" />
+<DsIcon name="loading" spin />
+<DsIcon name="search" label="검색" />`,
+  html: null,
+  guidelines: [
+    ['해야 할 것', '같은 뜻에는 항상 같은 아이콘을 씁니다. 새 아이콘은 vue/icons.ts에 의미 이름으로 등록합니다.'],
+    ['해야 할 것', '아이콘은 옆 글자와 같은 색(currentColor)을 씁니다. 아이콘만 브랜드 색으로 칠하지 않습니다.'],
+    ['접근성', '뜻을 전달하는 아이콘에는 label을, 장식이면 생략합니다(자동으로 aria-hidden).'],
+    ['하지 말 것', '16/20/24 외의 크기를 쓰지 않습니다. 18px, 22px는 픽셀 그리드가 어긋나 흐려집니다.'],
+  ],
+},
 /* ══════════════ 신규 — Vuetify 기반 래퍼 ══════════════ */
 {
   id: 'iconbutton', name: 'IconButton', ko: '아이콘 버튼', category: 'action',
@@ -1422,6 +1457,7 @@ export const WHERE = {
   filegrid: '드라이브 그리드 보기 — 훑어보기용.',
   filerow: '드라이브 리스트 보기 — 세부 비교용.',
   searchresult: '검색 화면, 문서 찾기 결과.',
+  icon: '아이콘이 필요한 모든 곳. 의미 이름으로 부르고, 없으면 vue/icons.ts에 등록합니다.',
   avatar: '사용자·에이전트 표시. 이름과 함께 씁니다.',
   card: '대시보드 통계, 설정 그룹.',
   divider: '설정 그룹 사이, 대화의 날짜 구분.',
