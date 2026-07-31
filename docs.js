@@ -293,7 +293,19 @@ function renderTemplates() {
       컴포넌트를 조합한 완성 화면입니다. 새 화면은 여기서 복제해 시작하고,
       AI에게는 "이 템플릿처럼 만들어줘"라고 넘깁니다.
     </p>
-    <div class="tpl-grid">` +
+    <div class="tpl-grid">
+      <a class="tpl-card live" href="live/" target="_blank" rel="noopener">
+        <h3>Live Gallery ↗</h3>
+        <p>실제 Vuetify 3.11.6 위에서 렌더된 컴포넌트 49종 전부</p>
+        <div class="covers"><span>왜 필요한가</span><span>어디에 쓰나</span><span>실제 동작</span><span>다크 모드</span></div>
+        <div class="go">새 탭에서 열기 →</div>
+      </a>
+      <a class="tpl-card live" href="live/#audit" target="_blank" rel="noopener">
+        <h3>Audit Log ↗</h3>
+        <p>테이블 · 필터 · 다이얼로그 · 로딩/빈 상태가 동작하는 실제 화면</p>
+        <div class="covers"><span>DataTable</span><span>Menu</span><span>Dialog</span><span>EmptyState</span></div>
+        <div class="go">새 탭에서 열기 →</div>
+      </a>` +
     TEMPLATES.map((t) => `
       <a class="tpl-card" href="${t.file}">
         <h3>${t.name}</h3>

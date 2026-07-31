@@ -434,3 +434,7 @@
   .ts-row { grid-template-columns: 100px 1fr; }
   .ts-use { display: none; }
 }
+
+.tpl-card.live { border-color: color-mix(in srgb, var(--brand) 35%, var(--gray-4)); }
+.tpl-card.live:hover { border-color: var(--brand); background: var(--brand-subtle); }
+.tpl-card.live h3 { color: var(--brand); }

@@ -1,36 +1,98 @@
 # Design System
 
 AI SaaS Agent 제품군을 위한 극한 미니멀 디자인 시스템.
-Extreme-minimal design system for AI agent products.
+Vue 3 · Vuetify 3.11 환경에서 그대로 사용합니다.
 
-- **스타일**: Geist 계열 — 그림자 없음, 1px 보더, radius 2/4/6px
-- **브랜드**: `#1F7FF0` (다크에선 `#4593F5`)
-- **회색**: Radix Slate 1–12 (라이트/다크 쌍)
-- **폰트**: Pretendard
-- **테마**: 라이트 + 다크 (`data-theme="dark"`)
+**문서 사이트** → https://kimjiyong995-coder.github.io/design-system/
+**라이브 갤러리** → https://kimjiyong995-coder.github.io/design-system/live/
+**감사 로그 예시** → https://kimjiyong995-coder.github.io/design-system/live/#audit
 
-## 사용법 / Usage
+---
 
-`ds.css` 하나만 가져오면 됩니다:
+## 무엇인가
 
-```html
-<link rel="stylesheet" href="ds.css">
+| 항목 | 값 |
+|---|---|
+| 브랜드 | `#1F7FF0` (다크 `#4593F5`) |
+| 회색 | Radix Slate 1–12 (라이트/다크 쌍) |
+| 폰트 | Pretendard |
+| 모서리 | 2 / 4 / 6px |
+| 그림자 | 없음 (떠 있는 요소만 예외) |
+| 컴포넌트 | 49종 — Standalone 20 · Vuetify 기반 29 |
+
+## 두 종류의 컴포넌트
+
+```ts
+// Vuetify가 없어도 동작합니다. ds.css만 필요.
+import { DsButton, DsChatMessage, DsToolCallStep } from '~/design'
+
+// Vuetify 컴포넌트를 감싼 것들. ds.css + ds-vuetify.css 필요.
+import { DsDataTable, DsDialog, DsAlert } from '~/design/vuetify'
 ```
 
-컴포넌트 마크업은 문서 사이트의 각 섹션에서 복사하세요.
+동작이 어려운 것(포커스 트랩·포지셔닝·정렬·페이지네이션)은 Vuetify에 맡기고,
+시각이 전부인 것과 에이전트 전용 컴포넌트는 직접 만들었습니다.
 
-## AI에게 시킬 때 / For AI
+Vuetify 컴포넌트 96종 전부가 `theme.ts` + `defaults.ts`로 우리 스타일을 받습니다.
 
-`llms.txt`를 컨텍스트로 넣고 이렇게 요청하세요:
+## 설치 — npm 설치 없음
 
-> "이 디자인 시스템으로 검색 화면 만들어줘. templates/search.html 참고해."
+```bash
+cp -r vue/ <app>/src/design/
+cp ds.css ds-vuetify.css <app>/src/design/
+```
+
+```ts
+// nuxt.config.ts
+css: ['~/src/design/ds.css', '~/src/design/ds-vuetify.css']
+
+// vuetify 설정
+import { dsTheme } from '~/src/design/theme'
+import { dsDefaults } from '~/src/design/defaults'
+createVuetify({ theme: dsTheme, defaults: dsDefaults })
+```
+
+기존 화면은 바뀌지 않습니다. `src/design/` 밖의 파일을 건드리지 않으므로
+폴더째 지워도 앱은 그대로 동작합니다.
+
+## AI에게 시킬 때
+
+`llms.txt`를 컨텍스트로 넣고 요청하세요.
+
+> "이 디자인 시스템으로 설정 화면 만들어줘. llms.txt 규칙 따르고 live 갤러리 참고해."
 
 ## 구조
 
 ```
-ds.css            토큰 + 전체 컴포넌트 스타일 (단일 원본)
-theme.js          다크 모드 토글
-index.html        문서 사이트 (컴포넌트 21종, 한글 설명 + 코드)
-templates/        골든 스크린 (chat, search)
-llms.txt          AI용 요약 컨텍스트
+index.html · docs.js · docs.css · data.js · foundation.js   문서 사이트
+ds.css                토큰 + Standalone 컴포넌트 스타일 (단일 원본)
+ds-vuetify.css        Vuetify 기반 컴포넌트 스타일
+vue/
+  index.ts            Standalone 배럴 (Vuetify 불필요)
+  vuetify.ts          Vuetify 기반 배럴
+  theme.ts            Vuetify 테마에 토큰 주입 — 96종 전부에 적용
+  defaults.ts         Vuetify 컴포넌트 기본값 77종
+  meta.ts             컴포넌트별 origin·이유 (en/ko)
+  components/         Ds*.vue
+templates/            골든 스크린 (HTML)
+examples/vuetify-app/ 실제 Vuetify 앱 예제 (소스)
+live/                 위 예제의 빌드 결과 — 공개 사이트에서 바로 열림
+llms.txt              AI용 컨텍스트
+```
+
+## Foundation
+
+컴포넌트 이전의 결정 14가지 — 토큰 · 색 · 타이포그래피 · 여백 · 모서리 · 높낮이 ·
+밀도 · 아이콘 · 모션 · 상태 · 접근성 · 글쓰기 · 다국어.
+
+https://kimjiyong995-coder.github.io/design-system/#/foundation/overview
+
+## 라이브 갤러리 직접 실행
+
+```bash
+cd examples/vuetify-app
+npm install
+cp -r ../../vue src/design
+cp ../../ds.css ../../ds-vuetify.css src/design/
+npm run dev
 ```
