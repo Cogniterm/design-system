@@ -1,179 +1,41 @@
 # Design System (AI SaaS Agent)
 
-> Extreme-minimal design system for AI agent products, for Vue 3 + Vuetify 3.11.
-> Geist-inspired: no shadows, 1px borders, radius 2/4/6px, Pretendard font,
-> brand blue #1F7FF0 (light) / #4593F5 (dark), Radix Slate gray 1-12.
-> Light + dark via [data-theme="dark"]. Docs: https://kimjiyong995-coder.github.io/design-system/
+> Extreme-minimal design system for AI agent products, built for Vue 3 + Vuetify 3.11.
+> No shadows, 1px borders, radius 4/6/8/12, Pretendard, brand blue #1F7FF0
+> (#4593F5 in dark), Radix Slate gray 1-12. Light + dark via [data-theme="dark"].
+> 50 components, 17 patterns, 15 foundation pages.
+> Docs: https://kimjiyong995-coder.github.io/design-system
 
-## Two kinds of components — DO NOT MIX THE IMPORTS
+## Read the section you need — not everything
 
-1. STANDALONE (20) — no Vuetify needed. Needs ds.css only.
-   import { DsButton, ... } from '~/design'
-   Button, Input, Badge, Chip, Avatar, Card, Divider, Skeleton, Toast, EmptyState,
-   ChatMessage, StreamingText, ThinkingIndicator, ToolCallStep, AgentInput,
-   CitationChip, ArtifactPanel, SearchResult, FileGrid, FileRow
+| Section | File | Use it when |
+|---|---|---|
+| Components | https://kimjiyong995-coder.github.io/design-system/components/llms.txt | Building UI. Props, imports, usage, disambiguation. |
+| Patterns | https://kimjiyong995-coder.github.io/design-system/patterns/llms.txt | Composing a whole screen or an agent flow. |
+| Foundation | https://kimjiyong995-coder.github.io/design-system/foundation/llms.txt | Choosing colors, spacing, type, density. Full token list. |
+| Vuetify | https://kimjiyong995-coder.github.io/design-system/vuetify/llms.txt | Setup, and which components need Vuetify. |
+| Accessibility | https://kimjiyong995-coder.github.io/design-system/a11y/llms.txt | Keyboard tables and per-component a11y duties. |
 
-2. VUETIFY-BASED (29) — wraps a Vuetify component. Needs ds.css + ds-vuetify.css.
-   import { DsDataTable, ... } from '~/design/vuetify'
-   Action:   DsIconButton(VBtn), DsButtonGroup(VBtnToggle), DsMenu(VMenu)
-   Nav:      DsTabs, DsBreadcrumbs, DsPagination, DsNavList(VList), DsStepper
-   Input:    DsSelect, DsAutocomplete, DsTextarea, DsCheckbox, DsRadioGroup,
-             DsSwitch, DsSlider, DsFileInput, DsDatePicker
-   Feedback: DsAlert, DsBanner, DsProgressBar, DsSpinner, DsSnackbar
-   Overlay:  DsDialog, DsTooltip
-   Data:     DsDataTable, DsList, DsTreeview, DsTimeline, DsAccordion
+For a whole screen you usually need **Foundation + Components + Patterns**.
 
-Rule for choosing: behavior that is hard to rebuild (focus trap, positioning,
-scroll lock, keyboard nav, sorting/pagination) stays Vuetify. Purely visual
-components and agent-specific ones are built from scratch.
+## The ten rules that matter most
 
-## Rules for AI code generation
-- Use ONLY CSS variables (var(--gray-3), var(--brand)). Never hardcode hex.
-- Gray roles: 1-2 bg, 3-5 hover/disabled, 6-8 borders, 9-11 secondary text, 12 body.
-- Brand color only for actions, selection, focus, links. Backgrounds stay neutral.
-- No box-shadow except floating elements (Toast, Menu, Dialog).
-- One primary button per screen.
-- Async surfaces show PROGRESS (ToolCallStep/ThinkingIndicator), not a bare spinner.
-- Every component handles: default, loading, empty, error.
-- Component names English; UI copy may be Korean.
+1. Import from the right barrel — `~/design` (standalone) or `~/design/vuetify`
+   (needs Vuetify). Mixing them breaks builds.
+2. CSS variables only. Never hardcode hex, spacing or radius.
+3. Gray does 95% of the work. Brand color only for actions, selection, focus, links.
+4. Spacing is multiples of 4. Radius: controls 8px, large surfaces 12px. Borders 1px.
+5. No shadows except Menu, Dialog, Tooltip, Snackbar.
+6. One primary button per screen. Buttons start with a verb.
+7. Every list/table ships default, loading, empty, error AND partial states.
+8. Agent work shows PROGRESS — DsToolCallStep / DsThinkingIndicator, never a bare
+   spinner. Tool calls render ABOVE the answer.
+9. Errors never apologize: what happened + why + what you can do.
+10. Never remove the focus outline. Never rely on colour alone.
 
-## Files
-ds.css              tokens + standalone component styles (single source of truth)
-ds-vuetify.css      restyles for the 5 Vuetify-based components
-vue/index.ts        barrel — standalone components (no Vuetify import)
-vue/vuetify.ts      barrel — Vuetify-based components
-vue/meta.ts         origin + reason (en/ko) per component
-vue/defaults.ts     Vuetify defaults (VMenu/VDialog/VDataTable...) — enforcement layer
-data.js             component registry powering the docs site
-templates/          golden screens: chat.html, search.html
+## Component names are English, UI copy is Korean
+`DsChatMessage`, `variant`, `@send` stay English. User-facing text is Korean.
 
-## Installation
-Two npm packages only: `pretendard` (SIL OFL) and `lucide-vue-next` (ISC).
-Register the Pretendard CSS BEFORE ds.css — omitting it silently falls back to the
-system font with no error. Then copy ds.css, ds-vuetify.css and vue/ into app/src/design/,
-register the CSS in nuxt.config, optionally wire dsDefaults into createVuetify.
-Vuetify stays at 3.11 — no migration, existing screens unchanged.
-
-## Compatibility (verified 2026-07-31)
-Verified inside a real Vuetify 3.11.6 app — see examples/vuetify-app.
-vite build passes (602 modules, 0 errors); all 25 components render inside <v-app>.
-"Standalone" means "does not REQUIRE Vuetify" — it still works perfectly inside a
-Vuetify app, and is unaffected by Vuetify version changes.
-Isolation guarantees: 0 vuetify imports in standalone components, 0 !important in
-ds.css, 0 .v-* class definitions in ds.css, all:unset on every component root.
-
-## Vuetify coverage — ALL 96 Vuetify 3.11 components are styled
-Do NOT wrap every Vuetify component. Coverage works in three layers:
-1. vue/theme.ts    — injects our tokens into Vuetify's theme (colors). Applies to ALL components.
-2. vue/defaults.ts — per-component defaults for 77 components (elevation 0, outlined, rounded md,
-                     ripple off, density comfortable). <v-alert> etc. need no extra setup.
-3. ds-vuetify.css  — font, radius, border weight that the theme system cannot control.
-Only 5 components are wrapped as Ds* (DataTable, Dialog, Menu, Tooltip, Select) because their
-API benefits from simplification. Everything else is used as plain <v-*> and still looks correct.
-
-Setup: createVuetify({ theme: dsTheme, defaults: dsDefaults }) + load ds.css and ds-vuetify.css.
-
-## Example app
-examples/vuetify-app — an Audit Log screen (table-centric) on real Vuetify 3.11.6.
-Covers: DataTable with cell slots, filters, density switch, row menu, detail dialog,
-loading/empty states, toast, agent analysis panel, and a section of raw <v-*> components
-proving theme+defaults alone produce our styling.
-
-## Choosing between similar components
-Checkbox vs Switch  — Switch = instant apply; Checkbox = needs a save button.
-Alert vs Snackbar   — Alert persists on screen; Snackbar appears and disappears.
-Alert vs Banner     — Alert is regional; Banner is page-wide.
-Spinner vs Thinking — Spinner for <2s waits; agent work always uses ThinkingIndicator
-                      or ToolCallStep (Principle 1: show progress, not a bare spinner).
-Select vs Autocomplete — >10 options means Autocomplete.
-DataTable vs List   — fixed columns + sorting means DataTable; otherwise List.
-Badge vs Chip       — Badge is read-only; Chip is removable.
-ProgressBar         — only when the percentage is known; otherwise ThinkingIndicator.
-
-## Patterns (docs site: #/patterns/*)
-How to COMBINE components. Solving the same problem differently on each screen makes
-the product inconsistent even when the components match.
-
-Core (5): forms, filtering, states (loading/empty/error/partial), destructive, status
-Agent (5) — where this system differs from general-purpose ones:
-  streaming   — 4 stages: thinking -> tool calls -> streaming text -> done.
-                Update the wording every ~10s. Never force-scroll. Send button
-                becomes Stop while generating.
-  evidence    — 3 layers: what it did (ToolCallStep, expanded) / where it came from
-                (CitationChip, always) / raw source (Accordion, collapsed).
-                Tool calls go ABOVE the answer.
-  approval    — read/search: just run. create/edit: run then offer undo.
-                delete/send/pay/permissions: approve BEFORE running, listing exactly
-                what will happen. Keep "always allow" narrowly scoped.
-  ai-content  — label AI-generated content outside chat with a brand-subtle badge
-                plus what it was based on. Remove the badge once a human edits it.
-                Express uncertainty in words, not percentages.
-  recovery    — never apologize; keep partial work; don't leak error codes; don't
-                repeat the same failure twice; ask back instead of guessing.
-Page templates (7): index, detail, settings, wizard, chat, search, file browser.
-  Density per template: index/drive compact, detail comfortable, settings/chat spacious.
-
-## Live gallery
-examples/vuetify-app renders every component on real Vuetify 3.11.6:
-  #        → component gallery (each entry states WHY it exists and WHERE to use it)
-  #audit   → audit log screen (table, filters, dialog, loading/empty states)
-
-## Foundation (docs site: #/foundation/*)
-Decisions made before components. 14 pages, modeled on seed-design.io (Karrot) and
-atlassian.design, with density/grid from IBM Carbon and writing from Shopify Polaris.
-
-overview, tokens, color, typography, spacing, shape (radius+border), elevation,
-density, iconography, motion, state, a11y, writing, i18n
-
-Key foundation rules an AI must follow when generating screens:
-- Color: brand ONLY for actions/selection/focus/links. Gray does 95% of the work.
-  Gray roles: 1-2 bg, 3 hover, 4-5 soft border, 6 default border, 8 hover border,
-  9 faint text, 11 secondary text, 12 body text.
-- Type: Pretendard, 5 sizes (12/13/14/16/20), weights 400/500/600 only (never 700+).
-  Hierarchy comes from weight and color, not size. No uppercase (breaks Korean).
-  Line-height 1.62 base, 1.7 for long prose and agent responses.
-  No positive letter-spacing. word-break: keep-all.
-- Spacing: 4px multiples only (0,4,8,12,16,24,32,48,64). Grouping = proximity.
-  Reading width max 720px; data screens 1080-1280px.
-- Shape: radius 4/6/8/12/full (sm/md/lg/xl). Border always 1px.
-  Controls (button, input) use lg=8; large surfaces (card, panel, dialog, table)
-  use xl=12. Nested radius <= parent radius.
-- Elevation: NO elevation scale. Shadow only on Menu/Dialog/Tooltip/Snackbar.
-- Density: compact 34px / comfortable 42px (default) / spacious 50px row heights.
-  Buttons and inputs are 38px tall (32px for size="sm").
-  Never mix densities within one screen.
-- Motion: 160ms default, 240ms max, ease only (never linear), fade for overlays, no ripple.
-  Respect prefers-reduced-motion.
-- State: every list/table needs default, loading, empty, error, partial.
-  Every interactive element needs hover, focus-visible, active, disabled, selected.
-  Never remove focus outline.
-- A11y: WCAG 2.2 AA. Never rely on color alone. aria-label on icon-only buttons.
-- Writing: errors never apologize. Formula = what happened + why + what you can do.
-  Buttons start with a verb; dialog buttons repeat the action ("Delete", not "OK").
-
-## Icons — Lucide (registered, applied)
-The ONLY external dependency: `lucide-vue-next` (ISC). 2px stroke.
-
-  import { DsIcon } from '~/design/icon'
-  <DsIcon name="delete" />            <!-- semantic name, NOT the Lucide name -->
-  <DsIcon name="agent" size="lg" />   <!-- sm=16 md=20 lg=24 only -->
-  <DsIcon name="loading" spin />
-  <DsIcon name="search" label="검색" /> <!-- label required if meaningful -->
-
-Icons are addressed by MEANING, not by Lucide's name (delete, not Trash2; agent,
-not Bot). The registry lives in vue/icons.ts — add new icons there with a semantic
-name. Never import from 'lucide-vue-next' directly in a screen.
-
-Registered vocabulary (59): search filter close add confirm copy download upload
-delete edit more refresh settings view archive send attach command externalLink
-link | expand collapse prev back forward | folder folderOpen file document
-spreadsheet drive | agent ai run chat citation artifact source | gridView listView
-tableView calendar time notification | user team permission permissionDenied lock
-signOut | error warning success info loading | play pause light dark
-
-Components that display icons (DsFileRow, DsFileGrid, DsNavList, DsList, DsBanner)
-take them through an `#icon` SLOT, so standalone components stay dependency-free:
-  <DsFileRow name="x.pdf"><template #icon><DsIcon name="document" size="sm" /></template></DsFileRow>
-
-Rules: icon color = currentColor (same as adjacent text; never brand-only).
-Sizes 16/20/24 only. aria-label on icon-only buttons. One set — never mix.
+## Live examples
+https://kimjiyong995-coder.github.io/design-system/live/        every component rendered on real Vuetify 3.11.6
+https://kimjiyong995-coder.github.io/design-system/live/#audit  an audit-log screen: table, filters, dialog, loading/empty states

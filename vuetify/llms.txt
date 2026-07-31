@@ -1,0 +1,46 @@
+# Vuetify integration — Design System
+
+> This system lives ALONGSIDE Vuetify 3.11, it does not replace it.
+> No migration. Existing screens are unchanged. Vuetify stays at 3.11 — v4 is not planned.
+> Docs: https://kimjiyong995-coder.github.io/design-system/#/docs/vuetify
+
+## Setup
+```ts
+import { createVuetify } from 'vuetify'
+import { dsTheme } from '~/design/theme'       // colors — applies to ALL Vuetify components
+import { dsDefaults } from '~/design/defaults' // per-component defaults (77 components)
+
+createVuetify({ theme: dsTheme, defaults: dsDefaults })
+```
+Load `ds.css` and `ds-vuetify.css`. Install `pretendard` and `lucide-vue-next`.
+Omitting the Pretendard CSS silently falls back to the system font with no error.
+
+## Why some components need Vuetify and others don't
+Behavior that is hard to rebuild correctly (focus trap, viewport-aware positioning,
+scroll lock, keyboard navigation, sorting, pagination, IME-safe filtering) stays
+Vuetify. Purely visual components and agent-specific ones are built from scratch.
+"Standalone" means "does not REQUIRE Vuetify" — those components still work perfectly
+inside a Vuetify app and are unaffected by Vuetify version changes.
+
+## Isolation guarantees (verified in CI)
+- 0 vuetify imports in standalone components
+- 0 !important in ds.css
+- 0 .v-* class definitions in ds.css
+- all:unset on every component root
+
+## Coverage — all 98 Vuetify components are styled
+### Wrapped as Ds* (5) — import from ~/design/vuetify
+- VDataTable -> DsDataTable (정렬·페이지네이션·선택)
+- VDialog -> DsDialog (포커스 트랩·스크롤 락)
+- VMenu -> DsMenu (포지셔닝·키보드 네비)
+- VTooltip -> DsTooltip (지연 표시·터치 대응)
+- VSelect -> DsSelect (옵션 포지셔닝·다중 선택)
+
+### Styled by theme + defaults (69) — use plain <v-*>, no setup needed
+VBtn, VBtnGroup, VBtnToggle, VFab, VSpeedDial, VCard, VSheet, VToolbar, VAppBar, VFooter, VSystemBar, VExpansionPanel, VParallax, VNavigationDrawer, VBottomNavigation, VTabs, VBreadcrumbs, VPagination, VStepper, VTextField, VTextarea, VAutocomplete, VCombobox, VFileInput, VNumberInput, VOtpInput, VCheckbox, VRadio, VRadioGroup, VSwitch, VSlider, VRangeSlider, VRating, VDatePicker, VTimePicker, VColorPicker, VCalendar, VConfirmEdit, VForm, VAlert, VBanner, VChip, VBadge, VProgressLinear, VProgressCircular, VSkeletonLoader, VSnackbar, VSnackbarQueue, VEmptyState, VOverlay, VBottomSheet, VTable, VDataTableServer, VDataTableVirtual, VDataIterator, VList, VTreeview, VVirtualScroll, VInfiniteScroll, VTimeline, VSparkline, VAvatar, VIcon, VImg, VCarousel, VWindow, VSlideGroup, VDivider, VLazy
+
+### Styled by CSS only (13) — internal primitives
+VField, VInput, VLabel, VMessages, VCounter, VSelectionControl, VSelectionControlGroup, VChipGroup, VItemGroup, VCode, VKbd, VHotkey, VOverflowBtn
+
+### No visual surface (11)
+VApp, VMain, VLayout, VGrid, VResponsive, VHover, VNoSsr, VValidation, VDefaultsProvider, VThemeProvider, VLocaleProvider

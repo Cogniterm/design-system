@@ -16,6 +16,17 @@ jobs:
       # 컴포넌트 필수 항목, 배럴/문서/meta 동기화, 아이콘·토큰 일치,
       # Standalone 컴포넌트의 외부 의존 여부를 검사합니다.
       - run: node scripts-check.mjs
+      # 자동 생성물이 최신인지 — 생성기를 돌리고 diff가 나오면 실패
+      - name: 생성물 최신 여부
+        run: |
+          node scripts-gen-meta.mjs
+          node scripts-gen-llms.mjs
+          if ! git diff --quiet; then
+            echo "생성물이 오래됐습니다. 아래를 실행하고 커밋하세요:"
+            echo "  node scripts-gen-meta.mjs && node scripts-gen-llms.mjs"
+            git diff --stat
+            exit 1
+          fi
 
   stylelint:
     name: CSS 규칙

@@ -1596,6 +1596,172 @@ export const A11Y = {
   },
 }
 
+
+/* ── 나머지 컴포넌트 ── */
+Object.assign(A11Y, {
+  avatar: {
+    keys: [],
+    free: ['장식용이므로 aria-hidden 처리 (label 없을 때)'],
+    yours: ['아바타만으로 사람을 식별하게 하지 않기 — 이름을 함께 표시', '이미지에는 의미 있는 alt 또는 빈 alt'],
+  },
+  card: {
+    keys: [['Tab', '클릭 가능한 카드일 때만 포커스']],
+    free: [],
+    yours: ['클릭 가능하면 <a> 또는 <button>으로 감싸기 — div에 onclick만 달지 않기',
+            '제목을 h2/h3 계층에 맞추기', '카드 전체가 링크면 안쪽에 또 링크를 넣지 않기'],
+  },
+  divider: {
+    keys: [],
+    free: ['<hr>은 스크린리더가 구분선으로 인식'],
+    yours: ['장식용 구분선이 많으면 aria-hidden 처리', '라벨형은 제목이 아니므로 h 태그를 쓰지 않기'],
+  },
+  citation: {
+    keys: [['Tab', '칩으로 이동'], ['Enter', '원문으로 이동']],
+    free: ['role="button" · tabindex 부여'],
+    yours: ['번호만으로는 뜻이 없으므로 aria-label에 "출처 1: 계약서_최종.pdf"처럼 대상 명시',
+            '이동 후 포커스를 원문 위치로 옮기기'],
+  },
+  chip: {
+    keys: [['Tab', '칩 · 제거 버튼으로 이동'], ['Enter · Space', '제거']],
+    free: ['제거 버튼이 네이티브 <button>'],
+    yours: ['제거 버튼에 aria-label="Remove" — 무엇을 제거하는지 포함하면 더 좋음',
+            '제거 후 포커스를 다음 칩 또는 컨테이너로 옮기기'],
+  },
+  badge: {
+    keys: [],
+    free: ['점 + 텍스트를 함께 렌더 — 색만으로 구분되지 않음'],
+    yours: ['텍스트를 반드시 넣기 (dot만 두지 않기)', '상태가 바뀌면 aria-live로 알릴지 검토'],
+  },
+  skeleton: {
+    keys: [],
+    free: [],
+    yours: ['로딩 영역에 aria-busy="true"', '스켈레톤 자체는 aria-hidden — 스크린리더가 읽을 내용이 없음',
+            'prefers-reduced-motion에서 셔머 애니메이션 정지'],
+  },
+  toast: {
+    keys: [['Tab', '액션으로 이동']],
+    free: [],
+    yours: ['role="status" 부여 — DsSnackbar를 쓰면 자동입니다',
+            '사라지는 시간을 충분히 (4초 이상). 액션이 있으면 더 길게'],
+  },
+  progressbar: {
+    keys: [],
+    free: ['Vuetify가 role="progressbar" · aria-valuenow 처리'],
+    yours: ['label을 채워 무엇의 진행률인지 알리기', '완료 시 aria-live로 알리기'],
+  },
+  spinner: {
+    keys: [],
+    free: ['Vuetify가 role="progressbar" · indeterminate 처리'],
+    yours: ['주변에 무엇을 기다리는지 텍스트로 함께 표시', '2초를 넘길 것 같으면 Skeleton이나 진행 표시로 교체'],
+  },
+  banner: {
+    keys: [['Tab', '액션으로 이동']],
+    free: [],
+    yours: ['페이지 최상단에 두고 랜드마크(role="region")로 표시', '닫을 수 있으면 닫기 버튼에 aria-label'],
+  },
+  buttongroup: {
+    keys: [['Tab', '그룹으로 진입'], ['← →', '항목 이동'], ['Enter · Space', '선택']],
+    free: ['Vuetify가 그룹 내 단일 Tab 정지 · aria-pressed 처리'],
+    yours: ['각 버튼의 라벨을 명확히 — 아이콘만이면 aria-label', '그룹 자체에 aria-label로 무엇을 고르는지 설명'],
+  },
+  breadcrumbs: {
+    keys: [['Tab', '각 항목으로 이동']],
+    free: ['<nav> 랜드마크 · 구분자는 aria-hidden'],
+    yours: ['nav에 aria-label="경로"', '마지막 항목은 링크가 아니라 현재 위치 — aria-current="page"'],
+  },
+  pagination: {
+    keys: [['Tab', '페이지 버튼으로 이동'], ['Enter · Space', '이동']],
+    free: ['Vuetify가 aria-current · 이전/다음 라벨 처리'],
+    yours: ['페이지 이동 후 결과 영역으로 포커스를 옮기거나 aria-live로 알리기',
+            '전체 개수를 텍스트로도 제공'],
+  },
+  navlist: {
+    keys: [['Tab', '목록 진입'], ['↑ ↓', '항목 이동'], ['Enter', '이동']],
+    free: ['Vuetify가 목록 시맨틱 · 활성 상태 처리'],
+    yours: ['<nav>로 감싸고 aria-label 부여', '현재 페이지에 aria-current="page"',
+            '배지 숫자에 의미를 붙이기 — "3"이 아니라 "미확인 3건"'],
+  },
+  stepper: {
+    keys: [['Tab', '단계로 이동']],
+    free: ['Vuetify가 단계 상태 전달'],
+    yours: ['현재 단계에 aria-current="step"', '"3단계 중 2단계"를 텍스트로도 제공',
+            '단계 전환 시 새 단계 제목으로 포커스 이동'],
+  },
+  list: {
+    keys: [['Tab', '목록 진입'], ['↑ ↓', '항목 이동 (선택 가능할 때)'], ['Enter · Space', '선택']],
+    free: ['Vuetify가 목록 시맨틱 · 선택 상태 처리'],
+    yours: ['목록에 aria-label로 무엇의 목록인지', 'meta 텍스트가 상태라면 색만으로 구분하지 않기'],
+  },
+  treeview: {
+    keys: [['Tab', '트리 진입'], ['↑ ↓', '항목 이동'], ['← →', '접기 · 펴기'], ['Enter', '선택'], ['Home · End', '처음 · 끝']],
+    free: ['Vuetify가 role="tree" · aria-expanded · 레벨 정보 처리'],
+    yours: ['트리에 aria-label', '깊이가 3단계를 넘으면 검색을 함께 제공'],
+  },
+  timeline: {
+    keys: [['Tab', '항목 내 링크로 이동']],
+    free: ['시간순 DOM 구성'],
+    yours: ['<ol>로 마크업해 순서를 전달', '시각을 <time datetime="">로 표기',
+            '점 색만으로 성공·실패를 구분하지 않기'],
+  },
+  textarea: {
+    keys: [['Tab', '필드로 이동'], ['Enter', '줄바꿈']],
+    free: ['label 연결 · auto-grow · error 시 aria-invalid'],
+    yours: ['label 채우기', '글자 수 제한이 있으면 남은 수를 aria-live로 알리기'],
+  },
+  fileinput: {
+    keys: [['Tab', '필드로 이동'], ['Enter · Space', '파일 선택 창 열기']],
+    free: ['네이티브 <input type="file"> 사용'],
+    yours: ['허용 형식·최대 크기를 hint에 미리 표시', '드래그 앤 드롭만 제공하지 않기 — 버튼도 함께',
+            '업로드 진행률을 aria-live로'],
+  },
+  datepicker: {
+    keys: [['Tab', '달력 진입'], ['← → ↑ ↓', '날짜 이동'], ['PageUp · PageDown', '월 이동'], ['Enter', '선택'], ['Esc', '닫기']],
+    free: ['Vuetify가 role="grid" · 로케일 · 요일 헤더 처리'],
+    yours: ['locale을 ko로 설정 (createVuetify의 locale)', '선택한 날짜를 텍스트로도 표시',
+            '기간 선택이면 시작·종료를 각각 라벨링'],
+  },
+  searchresult: {
+    keys: [['Tab', '결과 제목으로 이동']],
+    free: [],
+    yours: ['결과 목록을 <ol>로 마크업', '결과 개수를 aria-live로 알리기',
+            '<mark> 하이라이트는 스크린리더가 읽지 않으므로 문맥이 스스로 이해되게'],
+  },
+  filegrid: {
+    keys: [['Tab', '그리드 진입'], ['↑ ↓ ← →', '항목 이동'], ['Space', '선택'], ['Enter', '열기']],
+    free: [],
+    yours: ['선택 상태를 aria-selected로', '선택 개수를 aria-live로 알리기',
+            '아이콘만으로 파일 종류를 구분하지 않기 — 확장자가 이름에 포함됨'],
+  },
+  filerow: {
+    keys: [['Tab', '행으로 이동'], ['Enter', '열기'], ['Space', '선택']],
+    free: [],
+    yours: ['행 전체가 클릭 가능하면 <a> 또는 <button>으로', '선택 상태를 aria-selected로'],
+  },
+  artifact: {
+    keys: [['Tab', '복사 · 다운로드 버튼으로 이동']],
+    free: [],
+    yours: ['패널에 aria-label로 무엇의 산출물인지', '복사 완료를 aria-live로 알리기',
+            '코드면 <pre><code>로 마크업'],
+  },
+  streamingtext: {
+    keys: [],
+    free: ['완료 시 커서 제거'],
+    yours: ['부모 영역에 aria-live="polite" — 도착하는 대로 읽어줌',
+            '커서는 aria-hidden', 'aria-busy로 생성 중임을 알리기'],
+  },
+  thinking: {
+    keys: [],
+    free: ['텍스트로 현재 작업을 표현 — 스크린리더가 읽을 내용이 있음'],
+    yours: ['aria-live="polite"로 단계 변경을 알리기', '점 애니메이션은 aria-hidden',
+            'prefers-reduced-motion에서 애니메이션 정지'],
+  },
+  icon: {
+    keys: [],
+    free: ['label이 없으면 aria-hidden="true" 자동 부여', 'label이 있으면 role="img"'],
+    yours: ['뜻을 전달하는 아이콘에는 label 필수', '장식이면 label을 비워두기 (자동 숨김)'],
+  },
+})
+
 /* ============================================
    비슷한 컴포넌트 구분 — 오용의 가장 큰 원인
    ============================================ */

@@ -1,0 +1,107 @@
+# Foundation — Design System
+
+> Decisions made before components: tokens, color, type, spacing, shape, elevation,
+> density, icons, motion, state, accessibility, writing, i18n.
+> Docs: https://kimjiyong995-coder.github.io/design-system/#/foundation
+
+## Pages
+- Overview (개요) — https://kimjiyong995-coder.github.io/design-system/#/foundation/overview
+- Design Tokens (토큰) — https://kimjiyong995-coder.github.io/design-system/#/foundation/tokens
+- Color (색) — https://kimjiyong995-coder.github.io/design-system/#/foundation/color
+- Typography (타이포그래피) — https://kimjiyong995-coder.github.io/design-system/#/foundation/typography
+- Spacing & Layout (여백 · 레이아웃) — https://kimjiyong995-coder.github.io/design-system/#/foundation/spacing
+- Radius & Border (모서리 · 보더) — https://kimjiyong995-coder.github.io/design-system/#/foundation/shape
+- Elevation (높낮이) — https://kimjiyong995-coder.github.io/design-system/#/foundation/elevation
+- Density (밀도) — https://kimjiyong995-coder.github.io/design-system/#/foundation/density
+- Iconography (아이콘) — https://kimjiyong995-coder.github.io/design-system/#/foundation/iconography
+- Motion (모션) — https://kimjiyong995-coder.github.io/design-system/#/foundation/motion
+- State (상태) — https://kimjiyong995-coder.github.io/design-system/#/foundation/state
+- Accessibility (접근성) — https://kimjiyong995-coder.github.io/design-system/#/foundation/a11y
+- Writing (글쓰기) — https://kimjiyong995-coder.github.io/design-system/#/foundation/writing
+- Word List (용어집) — https://kimjiyong995-coder.github.io/design-system/#/foundation/wordlist
+- Internationalization (다국어) — https://kimjiyong995-coder.github.io/design-system/#/foundation/i18n
+
+## Hard rules for generating screens
+- Color: brand ONLY for actions, selection, focus, links. Gray does 95% of the work.
+  Gray roles — 1-2 background, 3 hover, 4-5 soft border, 6 default border,
+  8 hover border, 9 faint text, 11 secondary text, 12 body text.
+- Type: Pretendard. Sizes 12/13/14/16/20 only. Weights 400/500/600 — never 700+.
+  Hierarchy comes from weight and color, not size.
+  No uppercase and no positive letter-spacing (both break Korean). word-break: keep-all.
+  Line-height 1.62 base, 1.7 for prose and agent responses.
+- Spacing: multiples of 4 only (0 4 8 12 16 24 32 48 64). Grouping is proximity.
+  Reading width max 720px; data screens 1080-1280px.
+- Shape: radius sm=4 md=6 lg=8 xl=12. Controls use lg, large surfaces use xl.
+  Border always 1px. Nested radius must be <= parent radius.
+- Elevation: NO elevation scale. Shadow only on Menu, Dialog, Tooltip, Snackbar.
+- Density: compact 34px / comfortable 42px (default) / spacious 50px row height.
+  Never mix densities within one screen.
+- Motion: 160ms default, 240ms max, ease only, fade for overlays, no ripple.
+  Honor prefers-reduced-motion.
+- Accessibility: WCAG 2.2 AA. Never rely on color alone. Never remove focus outline.
+  aria-label on icon-only buttons.
+- Writing: errors never apologize. Formula = what happened + why + what you can do.
+  Buttons start with a verb; dialog buttons repeat the action ("삭제", not "확인").
+- Korean UI vocabulary is FIXED — see the word list. Key ones:
+  에이전트 (not AI/봇), 실행 (not 수행/구동), 실행 기록 (not 히스토리),
+  실행 중 (not 진행 중/처리 중), 실패 (not 오류/에러), 부분 완료,
+  만들기 (not 생성/추가), 저장 (not 적용/확인), 되돌리기 (not 언두).
+  Sentences end 합니다; instructions 하세요; dialog titles 할까요? (never 하시겠습니까?).
+  Units are spaced from numbers: 2.1 MB, 128건, 12.4초.
+  Full list: https://kimjiyong995-coder.github.io/design-system/#/foundation/wordlist
+
+## Tokens (source of truth: ds.css)
+```css
+:root {
+  /* ── Brand ── */
+  --brand: #1F7FF0;
+  --brand-hover: #1a6fd6;
+  --brand-active: #155eb8;
+  --brand-subtle: #EBF3FE;
+  --on-brand: #ffffff;
+
+  /* ── Radix Slate (light) 1~12 ── */
+  --gray-1: #fcfcfd; --gray-2: #f9f9fb; --gray-3: #f0f0f3; --gray-4: #e8e8ec;
+  --gray-5: #e0e1e6; --gray-6: #d9d9e0; --gray-7: #cdced6; --gray-8: #b9bbc6;
+  --gray-9: #8b8d98; --gray-10: #80838d; --gray-11: #60646c; --gray-12: #1c2024;
+
+  /* ── Status ── */
+  --success: #17803d; --warning: #ab6400; --danger: #d93036; --info: var(--brand);
+
+  /* ── Shape ── */
+  --r-sm: 4px; --r-md: 6px; --r-lg: 8px; --r-xl: 12px; --r-full: 9999px;
+
+  --font: "Pretendard Variable", Pretendard, system-ui, sans-serif;
+  --mono: ui-monospace, SFMono-Regular, monospace;
+
+  --bg: #ffffff;
+  --surface: #ffffff;
+  --danger-subtle: #fef2f2;
+  --danger-border: #f5c6c8;
+}
+
+[data-theme="dark"] {
+  /* ── Radix Slate Dark 1~12 ── */
+  --gray-1: #111113; --gray-2: #18191b; --gray-3: #212225; --gray-4: #272a2d;
+  --gray-5: #2e3135; --gray-6: #363a3f; --gray-7: #43484e; --gray-8: #5a6169;
+  --gray-9: #696e77; --gray-10: #777b84; --gray-11: #b0b4ba; --gray-12: #edeef0;
+
+  /* 다크에선 파랑을 한 톤 밝게 */
+  --brand: #4593F5;
+  --brand-hover: #5CA1F7;
+  --brand-active: #77B1F9;
+  --brand-subtle: #10243E;
+  --on-brand: #0b1220;
+
+  --success: #46a758; --warning: #f0b429; --danger: #e5484d;
+
+  --bg: #111113;
+  --surface: #18191b;
+  --danger-subtle: #2b1517;
+  --danger-border: #642026;
+}
+```
+
+## Icons (59 registered, Lucide)
+Addressed by MEANING, not Lucide's name. `delete` not `Trash2`, `agent` not `Bot`.
+search filter close add confirm copy download upload delete edit more refresh settings view archive send attach command externalLink link expand collapse prev back forward folder folderOpen file document spreadsheet drive agent ai run chat citation artifact source gridView listView tableView calendar time notification user team permission permissionDenied lock signOut error warning success info loading play pause light dark

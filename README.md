@@ -64,9 +64,19 @@ createVuetify({ theme: dsTheme, defaults: dsDefaults })
 
 ## AI에게 시킬 때
 
-`llms.txt`를 컨텍스트로 넣고 요청하세요.
+섹션별로 나뉘어 있어 필요한 것만 읽히면 됩니다.
 
-> "이 디자인 시스템으로 설정 화면 만들어줘. llms.txt 규칙 따르고 live 갤러리 참고해."
+| 파일 | 언제 |
+|---|---|
+| [`/llms.txt`](llms.txt) | 색인 — 항상 먼저 (2.4 KB) |
+| [`/components/llms.txt`](components/llms.txt) | UI를 만들 때 (19 KB) |
+| [`/patterns/llms.txt`](patterns/llms.txt) | 화면 전체·에이전트 흐름 (10 KB) |
+| [`/foundation/llms.txt`](foundation/llms.txt) | 색·여백·타이포·토큰 (5 KB) |
+| [`/vuetify/llms.txt`](vuetify/llms.txt) | 설치와 연동 (3 KB) |
+| [`/a11y/llms.txt`](a11y/llms.txt) | 접근성 (10 KB) |
+
+> "이 디자인 시스템으로 설정 화면 만들어줘.
+> foundation/llms.txt, components/llms.txt, patterns/llms.txt 읽고 규칙 따라줘."
 
 ## 구조
 
@@ -85,7 +95,11 @@ vue/
 templates/            골든 스크린 (HTML)
 examples/vuetify-app/ 실제 Vuetify 앱 예제 (소스)
 live/                 위 예제의 빌드 결과 — 공개 사이트에서 바로 열림
-llms.txt              AI용 컨텍스트
+llms.txt              AI용 색인
+{components,patterns,foundation,vuetify,a11y}/llms.txt   섹션별 컨텍스트 (자동 생성)
+scripts-gen-llms.mjs  llms.txt 생성기
+scripts-gen-meta.mjs  meta.ts 생성기
+scripts-check.mjs     문서 무결성 검사 (CI)
 ```
 
 ## Foundation

@@ -489,6 +489,24 @@ function pageStart() {
         </tbody>
       </table>
 
+      <h2>AI에게 시킬 때</h2>
+      <p>
+        <code>llms.txt</code>를 컨텍스트로 넣으면 이 시스템의 규칙을 따라 코드를 생성합니다.
+        필요한 섹션만 읽히면 됩니다.
+      </p>
+      <table>
+        <thead><tr><th>파일</th><th>언제 쓰나</th><th>크기</th></tr></thead>
+        <tbody>
+          <tr><td><a href="llms.txt" target="_blank"><code>/llms.txt</code></a></td><td>색인 — 항상 먼저</td><td>2.4 KB</td></tr>
+          <tr><td><a href="components/llms.txt" target="_blank"><code>/components/llms.txt</code></a></td><td>UI를 만들 때 — props·import·구분</td><td>19 KB</td></tr>
+          <tr><td><a href="patterns/llms.txt" target="_blank"><code>/patterns/llms.txt</code></a></td><td>화면 전체나 에이전트 흐름을 짤 때</td><td>10 KB</td></tr>
+          <tr><td><a href="foundation/llms.txt" target="_blank"><code>/foundation/llms.txt</code></a></td><td>색·여백·타이포를 고를 때 · 토큰 전체</td><td>5 KB</td></tr>
+          <tr><td><a href="vuetify/llms.txt" target="_blank"><code>/vuetify/llms.txt</code></a></td><td>설치와 Vuetify 연동</td><td>3 KB</td></tr>
+          <tr><td><a href="a11y/llms.txt" target="_blank"><code>/a11y/llms.txt</code></a></td><td>접근성 — 키보드 표·역할 분담</td><td>10 KB</td></tr>
+        </tbody>
+      </table>
+      <p>화면 하나를 만들 때는 보통 <b>Foundation + Components + Patterns</b> 세 개면 충분합니다.</p>
+
       <h2>어디서 시작하나</h2>
       <ul>
         <li><b><a href="#/docs/install">설치 · 사용법</a></b> — 개발자가 앱에 넣는 법 (10분)</li>

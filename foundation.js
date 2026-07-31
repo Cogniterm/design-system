@@ -20,6 +20,7 @@ export const FOUNDATION_PAGES = [
   ['state', '상태', 'State'],
   ['a11y', '접근성', 'Accessibility'],
   ['writing', '글쓰기', 'Writing'],
+  ['wordlist', '용어집', 'Word List'],
   ['i18n', '다국어', 'Internationalization'],
 ]
 
@@ -1128,9 +1129,121 @@ createVuetify({
     </div>`
 }
 
+
+/* ════════════════════════════════════════ */
+export function fdWordlist() {
+  const T = (rows) => `<table class="wl">
+    <thead><tr><th>이렇게 씁니다</th><th>이렇게 쓰지 않습니다</th><th>이유</th></tr></thead>
+    <tbody>${rows.map(([a, b, c]) =>
+      `<tr><td class="wl-do">${a}</td><td class="wl-dont">${b}</td><td class="wl-why">${c}</td></tr>`).join('')}</tbody>
+  </table>`
+
+  return `
+    <div class="page-head"><h1>Word List</h1><span class="page-ko">용어집</span></div>
+    <p class="page-lead">
+      같은 것을 화면마다 다르게 부르면 사용자는 <b>다른 것이라고 생각합니다</b>.
+      제품 전체에서 하나의 어휘를 씁니다.
+    </p>
+    <div class="prose">
+      <div class="callout">
+        <b>여기 없는 말이 필요하면 추가하고 알립니다.</b>
+        혼자 정해서 쓰면 다음 사람이 또 다르게 씁니다.
+        영문 컴포넌트 이름과 달리 <b>UI 문구는 전부 한글</b>입니다.
+      </div>
+
+      <h2>제품 개념</h2>
+      ${T([
+        ['에이전트', 'AI, 봇, 어시스턴트', '제품이 파는 것이 "에이전트"입니다. 한 이름으로 고정합니다.'],
+        ['실행', '수행, 구동, 돌리기', '에이전트가 일하는 것은 항상 "실행"입니다.'],
+        ['실행 기록', '히스토리, 로그, 이력', '사용자에게 보이는 곳은 "실행 기록". "로그"는 감사 로그에만.'],
+        ['워크스페이스', '작업 공간, 팀, 조직', '영문 그대로 음차합니다. 이미 널리 쓰입니다.'],
+        ['드라이브', '저장소, 파일함', '제품 표면의 이름입니다.'],
+        ['문서', '파일, 자료', '드라이브에 있는 것은 "파일", 에이전트가 읽는 것은 "문서".'],
+        ['도구', '툴, 기능', '에이전트가 쓰는 것은 "도구"입니다.'],
+        ['근거', '출처, 소스, 레퍼런스', '인용 칩이 가리키는 것은 "근거"입니다.'],
+      ])}
+
+      <h2>동작</h2>
+      ${T([
+        ['만들기', '생성, 추가, 새로 만들기', '버튼 라벨은 "만들기". 짧고 동사로.'],
+        ['저장', '적용, 확인, 완료', '값을 남기는 것은 "저장"입니다.'],
+        ['삭제', '제거, 지우기', '영구적으로 없애는 것. Chip에서 빼는 것은 "제거".'],
+        ['제거', '삭제, 빼기', '목록에서 빼되 원본은 남는 경우.'],
+        ['불러오기', '로드, 가져오기', '외부에서 데이터를 읽어올 때.'],
+        ['내보내기', '다운로드, 익스포트', '파일로 뽑을 때. 단순 다운로드는 "다운로드".'],
+        ['되돌리기', '취소, 언두, 롤백', 'Snackbar의 Undo 액션.'],
+        ['취소', '닫기, 그만두기', '진행 중이던 것을 중단. 다이얼로그의 부(副) 버튼.'],
+        ['다시 시도', '재시도, 리트라이', '실패 후 같은 작업을 반복.'],
+      ])}
+
+      <h2>상태</h2>
+      ${T([
+        ['대기', '준비, 예약됨, 대기 중', '아직 시작하지 않음.'],
+        ['실행 중', '진행 중, 처리 중, 작업 중', '가장 많이 흔들리는 말입니다. "실행 중"으로 고정.'],
+        ['완료', '성공, 종료, 끝남', '정상적으로 끝남.'],
+        ['실패', '오류, 에러, 문제 발생', '사용자에게는 "실패". "에러"는 개발 로그에만.'],
+        ['부분 완료', '일부 성공, 부분 성공', '일부만 성공한 상태 — 에이전트 제품에서 자주 나옵니다.'],
+        ['중단됨', '정지, 멈춤, 취소됨', '사용자가 멈춘 경우.'],
+      ])}
+
+      <h2>사람 · 권한</h2>
+      ${T([
+        ['멤버', '사용자, 유저, 구성원', '워크스페이스에 속한 사람.'],
+        ['관리자', '어드민, 매니저', '권한을 가진 멤버.'],
+        ['권한', '퍼미션, 접근 권한', '무엇을 할 수 있는지.'],
+        ['공유', '초대, 공유하기', '다른 사람이 볼 수 있게 하는 것.'],
+      ])}
+
+      <h2>문장 규칙</h2>
+      <table>
+        <thead><tr><th>상황</th><th>규칙</th><th>예</th></tr></thead>
+        <tbody>
+          <tr><td>안내 문장</td><td><b>~합니다</b> 체</td><td>"모든 멤버에게 표시됩니다."</td></tr>
+          <tr><td>버튼</td><td><b>동사</b>, 2~4글자</td><td>"저장" "삭제" "만들기"</td></tr>
+          <tr><td>지시</td><td><b>~하세요</b></td><td>"올바른 이메일 주소를 입력하세요."</td></tr>
+          <tr><td>질문 (다이얼로그 제목)</td><td><b>~할까요?</b></td><td>"에이전트를 삭제할까요?"</td></tr>
+          <tr><td>빈 상태 제목</td><td>명사구 — 무엇이 없는지</td><td>"에이전트가 없습니다"</td></tr>
+        </tbody>
+      </table>
+      <p>
+        <b>"~하시겠습니까?"를 쓰지 않습니다.</b> 딱딱하고 깁니다. "~할까요?"가 같은 뜻이면서 짧습니다.<br>
+        <b>"죄송합니다"를 쓰지 않습니다.</b> 사과는 정보가 아닙니다 (<a href="#/foundation/writing">글쓰기 →</a>).
+      </p>
+
+      <h2>한글과 영문이 섞일 때</h2>
+      <table>
+        <thead><tr><th>대상</th><th>표기</th><th>예</th></tr></thead>
+        <tbody>
+          <tr><td>제품·기술 고유명사</td><td>원문 그대로</td><td>Vuetify, Pretendard, PDF</td></tr>
+          <tr><td>일반화된 외래어</td><td>한글 음차</td><td>워크스페이스, 드라이브, 에이전트</td></tr>
+          <tr><td>번역이 자연스러운 것</td><td>한글</td><td>설정, 권한, 실행 기록</td></tr>
+          <tr><td>파일 확장자</td><td>소문자</td><td>.pdf, .docx, .xlsx</td></tr>
+          <tr><td>단위</td><td>숫자와 띄어쓰기</td><td>2.1 MB, 30초, 128건</td></tr>
+        </tbody>
+      </table>
+      <p>
+        <b>조사는 앞말에 맞춥니다.</b> 프로그램이 붙이는 조사는 "을(를)"처럼 두 개를 쓰지 말고,
+        문장을 바꿔 조사를 피합니다 — "PDF을(를) 선택하세요" 대신 "파일 형식: PDF".
+      </p>
+
+      <h2>숫자와 시각</h2>
+      <table>
+        <thead><tr><th>대상</th><th>표기</th></tr></thead>
+        <tbody>
+          <tr><td>개수</td><td>천 단위 쉼표 · "건" — <code>1,284건</code></td></tr>
+          <tr><td>용량</td><td>소수 한 자리 · 띄어쓰기 — <code>2.1 MB</code></td></tr>
+          <tr><td>절대 시각</td><td><code>2026-07-31 09:14</code> (고정폭 글꼴)</td></tr>
+          <tr><td>상대 시각</td><td>7일 이내면 "2시간 전", 그 이상은 절대 시각</td></tr>
+          <tr><td>소요 시간</td><td><code>12.4초</code> · <code>1분 20초</code></td></tr>
+          <tr><td>범위</td><td>물결표 — <code>10~30초</code></td></tr>
+        </tbody>
+      </table>
+    </div>`
+}
+
 export const FD_RENDERERS = {
   overview: fdOverview, tokens: fdTokens, color: fdColor, typography: fdTypography,
   spacing: fdSpacing, shape: fdShape, elevation: fdElevation, density: fdDensity,
   iconography: fdIconography, motion: fdMotion, state: fdState, a11y: fdA11y,
-  writing: fdWriting, i18n: fdI18n,
+  writing: fdWriting, wordlist: fdWordlist, i18n: fdI18n,
 }
