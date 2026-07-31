@@ -1,4 +1,5 @@
 import { CATEGORIES, COMPONENTS, TEMPLATES, VUETIFY_COVERAGE, WHERE } from './data.js'
+import { FOUNDATION_PAGES, FD_RENDERERS } from './foundation.js'
 
 /* ═══════════ 유틸 ═══════════ */
 const $ = (s) => document.querySelector(s)
@@ -41,12 +42,14 @@ function render() {
   const [section, id] = parts
 
   let navKey = 'components'
-  if (section === 'docs') navKey = id === 'tokens' ? 'tokens' : 'docs'
+  if (section === 'docs') navKey = 'docs'
+  else if (section === 'foundation') navKey = 'foundation'
   else if (section === 'templates') navKey = 'templates'
   document.querySelectorAll('.topnav-links a').forEach((a) =>
     a.classList.toggle('on', a.dataset.nav === navKey))
 
-  if (section === 'docs') renderDocsPage(id || 'start')
+  if (section === 'foundation') renderFoundation(id || 'overview')
+  else if (section === 'docs') renderDocsPage(id || 'start')
   else if (section === 'templates') renderTemplates()
   else if (id) renderComponent(id, tab)
   else renderCatalog()
@@ -60,9 +63,21 @@ window.addEventListener('hashchange', render)
 function renderSidebar(section, activeId) {
   const docsLinks = [
     ['start', '시작하기'], ['install', '설치 · 사용법'], ['vuetify', 'Vuetify와의 관계'],
-    ['coverage', 'Vuetify 커버리지'], ['principles', '디자인 원칙'], ['tokens', '토큰'],
+    ['coverage', 'Vuetify 커버리지'], ['principles', '디자인 원칙'],
   ]
-  let html = `<div class="nav-title">Docs</div>` +
+
+  // Foundation 화면에서는 Foundation 목록을 먼저 보여줍니다
+  let html = ''
+  if (section === 'foundation') {
+    html += `<div class="nav-title">Foundation</div>` +
+      FOUNDATION_PAGES.map(([id, ko, en]) =>
+        `<a href="#/foundation/${id}" class="${activeId === id ? 'on' : ''}">${ko}<span class="nav-en">${en}</span></a>`).join('')
+  } else {
+    html += `<div class="nav-title">Foundation</div>` +
+      `<a href="#/foundation/overview">전체 보기</a>`
+  }
+
+  html += `<div class="nav-title">Docs</div>` +
     docsLinks.map(([id, ko]) =>
       `<a href="#/docs/${id}" class="${section === 'docs' && activeId === id ? 'on' : ''}">${ko}</a>`).join('')
 
@@ -286,6 +301,23 @@ function renderTemplates() {
         <div class="covers">${t.covers.map((x) => `<span>${x}</span>`).join('')}</div>
         <div class="go">열어보기 →</div>
       </a>`).join('') + `</div>`
+}
+
+/* ═══════════ Foundation ═══════════ */
+function renderFoundation(id) {
+  const fn = FD_RENDERERS[id] || FD_RENDERERS.overview
+  const idx = FOUNDATION_PAGES.findIndex((p) => p[0] === id)
+  const prev = idx > 0 ? FOUNDATION_PAGES[idx - 1] : null
+  const next = idx >= 0 && idx < FOUNDATION_PAGES.length - 1 ? FOUNDATION_PAGES[idx + 1] : null
+
+  const nav = (prev || next) ? `
+    <div class="pagenav">
+      ${prev ? `<a href="#/foundation/${prev[0]}"><span>← 이전</span><b>${prev[1]}</b></a>` : '<span></span>'}
+      ${next ? `<a class="nx" href="#/foundation/${next[0]}"><span>다음 →</span><b>${next[1]}</b></a>` : '<span></span>'}
+    </div>` : ''
+
+  $('#content').innerHTML = fn() + nav
+  wireCodeTabs()
 }
 
 /* ═══════════ Docs 페이지 ═══════════ */

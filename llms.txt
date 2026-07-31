@@ -92,3 +92,32 @@ ProgressBar         — only when the percentage is known; otherwise ThinkingInd
 examples/vuetify-app renders every component on real Vuetify 3.11.6:
   #        → component gallery (each entry states WHY it exists and WHERE to use it)
   #audit   → audit log screen (table, filters, dialog, loading/empty states)
+
+## Foundation (docs site: #/foundation/*)
+Decisions made before components. 14 pages, modeled on seed-design.io (Karrot) and
+atlassian.design, with density/grid from IBM Carbon and writing from Shopify Polaris.
+
+overview, tokens, color, typography, spacing, shape (radius+border), elevation,
+density, iconography, motion, state, a11y, writing, i18n
+
+Key foundation rules an AI must follow when generating screens:
+- Color: brand ONLY for actions/selection/focus/links. Gray does 95% of the work.
+  Gray roles: 1-2 bg, 3 hover, 4-5 soft border, 6 default border, 8 hover border,
+  9 faint text, 11 secondary text, 12 body text.
+- Type: Pretendard, 5 sizes (12/13/14/16/20), weights 400/500/600 only (never 700+).
+  Hierarchy comes from weight and color, not size. No uppercase (breaks Korean).
+  No positive letter-spacing. word-break: keep-all.
+- Spacing: 4px multiples only (0,4,8,12,16,24,32,48,64). Grouping = proximity.
+  Reading width max 720px; data screens 1080-1280px.
+- Shape: radius 2/4/6/full. Border always 1px. Nested radius <= parent radius.
+- Elevation: NO elevation scale. Shadow only on Menu/Dialog/Tooltip/Snackbar.
+- Density: compact 32px / comfortable 40px (default) / spacious 48px row heights.
+  Never mix densities within one screen.
+- Motion: 120ms default, 240ms max, ease only, fade only for overlays, no ripple.
+  Respect prefers-reduced-motion.
+- State: every list/table needs default, loading, empty, error, partial.
+  Every interactive element needs hover, focus-visible, active, disabled, selected.
+  Never remove focus outline.
+- A11y: WCAG 2.2 AA. Never rely on color alone. aria-label on icon-only buttons.
+- Writing: errors never apologize. Formula = what happened + why + what you can do.
+  Buttons start with a verb; dialog buttons repeat the action ("Delete", not "OK").

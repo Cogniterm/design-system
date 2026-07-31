@@ -338,3 +338,99 @@
 .ds-acc-demo .h span { color: var(--gray-9); }
 .ds-acc-demo .b { padding: 10px 14px; font-family: var(--mono); font-size: 12px;
   color: var(--gray-11); background: var(--gray-2); border-bottom: 1px solid var(--gray-3); }
+
+/* ============================================
+   Foundation 페이지 전용
+   ============================================ */
+.sidebar a .nav-en { margin-left: auto; font-size: 10.5px; color: var(--gray-8); font-weight: 400; }
+.sidebar a.on .nav-en { color: var(--brand); opacity: .7; }
+
+/* 토큰 흐름도 */
+.flowbox { display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
+  border: 1px solid var(--gray-4); border-radius: var(--r-lg); padding: 16px; background: var(--gray-1);
+  margin-bottom: 18px; }
+.flowbox span { font-family: var(--mono); font-size: 12.5px; padding: 6px 12px;
+  border: 1px solid var(--gray-5); border-radius: var(--r-md); background: var(--surface); color: var(--gray-12); }
+.flowbox i { color: var(--gray-8); font-style: normal; }
+
+/* Do / Don't 2열 */
+.dodont { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 16px 0 20px; }
+.dd { border: 1px solid var(--gray-4); border-radius: var(--r-lg); padding: 14px 16px; }
+.dd.do { border-color: color-mix(in srgb, var(--success) 30%, var(--gray-4)); }
+.dd.dont { border-color: color-mix(in srgb, var(--danger) 25%, var(--gray-4)); }
+.dd-tag { display: inline-flex; align-items: center; height: 20px; padding: 0 9px;
+  border-radius: var(--r-full); font-size: 11px; font-weight: 700; margin-bottom: 10px;
+  text-transform: uppercase; letter-spacing: .04em; }
+.dd.do .dd-tag { background: #e7f5ec; color: var(--success); }
+.dd.dont .dd-tag { background: var(--danger-subtle); color: var(--danger); }
+[data-theme="dark"] .dd.do .dd-tag { background: #14291b; }
+.dd ul { margin: 0 0 0 16px; }
+.dd li { font-size: 13px; color: var(--gray-11); line-height: 1.65; margin-bottom: 4px; }
+.dd li:last-child { margin-bottom: 0; }
+
+/* 상태 색 목록 */
+.statusrow { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 10px; margin: 14px 0 18px; }
+.statusrow > div { display: flex; align-items: center; gap: 9px; border: 1px solid var(--gray-4);
+  border-radius: var(--r-lg); padding: 11px 14px; }
+.statusrow i { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+.statusrow b { font-family: var(--mono); font-size: 12.5px; color: var(--gray-12); font-weight: 600; }
+.statusrow span { font-size: 12px; color: var(--gray-10); }
+
+/* 타입 스케일 */
+.typescale { border: 1px solid var(--gray-4); border-radius: var(--r-lg); overflow: hidden; margin-bottom: 20px; }
+.ts-row { display: grid; grid-template-columns: 118px 1fr 160px; gap: 16px; align-items: center;
+  padding: 16px 18px; border-bottom: 1px solid var(--gray-3); }
+.ts-row:last-child { border-bottom: none; }
+.ts-meta code { font-family: var(--mono); font-size: 12px; color: var(--brand);
+  background: var(--gray-3); padding: 1px 5px; border-radius: 3px; }
+.ts-meta span { display: block; font-size: 11px; color: var(--gray-9); margin-top: 4px; font-family: var(--mono); }
+.ts-sample { color: var(--gray-12); }
+.ts-use { font-size: 12px; color: var(--gray-10); text-align: right; }
+
+/* 여백 스케일 */
+.spacescale { border: 1px solid var(--gray-4); border-radius: var(--r-lg); overflow: hidden; margin-bottom: 18px; }
+.sp-row { display: grid; grid-template-columns: 48px 80px 1fr; gap: 16px; align-items: center;
+  padding: 9px 18px; border-bottom: 1px solid var(--gray-3); }
+.sp-row:last-child { border-bottom: none; }
+.sp-row code { font-family: var(--mono); font-size: 12.5px; color: var(--gray-12); }
+.sp-bar { height: 14px; background: var(--brand-subtle); border-left: 2px solid var(--brand); }
+.sp-row span { font-size: 12.5px; color: var(--gray-10); }
+
+/* 모서리 */
+.radiusrow { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px; margin: 14px 0 20px; }
+.radiusrow > div { border: 1px solid var(--gray-4); border-radius: var(--r-lg); padding: 16px; text-align: center; }
+.radiusrow .rd { width: 52px; height: 52px; margin: 0 auto 12px;
+  background: var(--brand-subtle); border: 1px solid var(--brand); }
+.radiusrow code { font-family: var(--mono); font-size: 12px; color: var(--brand); display: block; }
+.radiusrow span { font-family: var(--mono); font-size: 11.5px; color: var(--gray-10); }
+.radiusrow em { display: block; font-style: normal; font-size: 11.5px; color: var(--gray-9); margin-top: 6px; line-height: 1.5; }
+
+/* 글쓰기 비교 */
+.writecmp { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 14px 0 18px; }
+.wc { border: 1px solid var(--gray-4); border-radius: var(--r-lg); padding: 14px 16px; }
+.wc.bad { border-color: color-mix(in srgb, var(--danger) 25%, var(--gray-4)); }
+.wc.good { border-color: color-mix(in srgb, var(--success) 30%, var(--gray-4)); }
+.wc-tag { display: inline-flex; height: 20px; align-items: center; padding: 0 9px; border-radius: var(--r-full);
+  font-size: 11px; font-weight: 700; margin-bottom: 10px; }
+.wc.bad .wc-tag { background: var(--danger-subtle); color: var(--danger); }
+.wc.good .wc-tag { background: #e7f5ec; color: var(--success); }
+[data-theme="dark"] .wc.good .wc-tag { background: #14291b; }
+.wc ul { margin: 0 0 0 16px; }
+.wc li { font-size: 12.5px; color: var(--gray-11); line-height: 1.7; margin-bottom: 6px; }
+.wc.bad li { text-decoration: line-through; text-decoration-color: var(--gray-7); }
+
+/* 이전 / 다음 */
+.pagenav { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 56px;
+  padding-top: 24px; border-top: 1px solid var(--gray-4); }
+.pagenav a { border: 1px solid var(--gray-4); border-radius: var(--r-lg); padding: 12px 16px;
+  text-decoration: none; display: block; transition: border-color .12s, background .12s; }
+.pagenav a:hover { border-color: var(--gray-8); background: var(--gray-2); }
+.pagenav a.nx { text-align: right; }
+.pagenav span { font-size: 11.5px; color: var(--gray-9); display: block; }
+.pagenav b { font-size: 13.5px; color: var(--gray-12); font-weight: 500; display: block; margin-top: 3px; }
+
+@media (max-width: 760px) {
+  .dodont, .writecmp, .pagenav { grid-template-columns: 1fr; }
+  .ts-row { grid-template-columns: 100px 1fr; }
+  .ts-use { display: none; }
+}
