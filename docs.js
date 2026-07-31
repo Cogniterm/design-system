@@ -402,26 +402,45 @@ function pageInstall() {
   ds-vuetify.css      →  app/src/design/ds-vuetify.css   (Vuetify 기반 컴포넌트를 쓸 때만)
   vue/                →  app/src/design/</code></pre>
 
-      <h2>2. 스타일 등록</h2>
+      <h2>2. 폰트 · 아이콘 설치</h2>
+      <pre><code>npm install pretendard lucide-vue-next</code></pre>
+      <table>
+        <thead><tr><th>패키지</th><th>용도</th><th>라이선스</th></tr></thead>
+        <tbody>
+          <tr><td><code>pretendard</code></td><td>본문 글꼴</td><td>SIL OFL 1.1</td></tr>
+          <tr><td><code>lucide-vue-next</code></td><td>아이콘</td><td>ISC</td></tr>
+        </tbody>
+      </table>
+      <p>이 둘이 전부입니다. 다른 의존성은 없습니다.</p>
+
+      <h2>3. 스타일 등록</h2>
       <pre><code>// nuxt.config.ts
 export default defineNuxtConfig({
   css: [
+    // Pretendard — dynamic-subset은 필요한 글자만 내려받습니다
+    'pretendard/dist/web/variable/pretendardvariable-dynamic-subset.css',
     '~/src/design/ds.css',
     '~/src/design/ds-vuetify.css',   // Vuetify 기반 컴포넌트를 쓸 때만
   ],
 })</code></pre>
+      <div class="callout warn">
+        <b>폰트를 안 넣으면 조용히 시스템 글꼴로 렌더됩니다.</b>
+        에러가 나지 않아 놓치기 쉬운 부분입니다.
+        화면이 어딘가 다르게 보이면 이것부터 확인하세요.
+      </div>
 
-      <h2>3. Vuetify defaults 연결 (선택)</h2>
+      <h2>4. Vuetify defaults · theme 연결</h2>
       <p>
         직접 쓰는 <code>&lt;v-menu&gt;</code>·<code>&lt;v-dialog&gt;</code>에도 우리 기본값이 적용되게 합니다.
         이 시스템의 컴포넌트를 안 쓰는 화면에서도 스타일이 유지되는 <b>강제 층</b>입니다.
       </p>
       <pre><code>import { createVuetify } from 'vuetify'
+import { dsTheme } from '~/src/design/theme'
 import { dsDefaults } from '~/src/design/defaults'
 
-createVuetify({ defaults: dsDefaults })</code></pre>
+createVuetify({ theme: dsTheme, defaults: dsDefaults })</code></pre>
 
-      <h2>4. 사용</h2>
+      <h2>5. 사용</h2>
       <pre><code>&lt;script setup&gt;
 // Vuetify 불필요한 컴포넌트
 import { DsButton, DsChatMessage, DsToolCallStep } from '~/src/design'

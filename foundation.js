@@ -291,11 +291,17 @@ export function fdTypography() {
       </p>
 
       <h2>글꼴</h2>
+      <div class="callout">
+        <b>설치가 필요합니다.</b> <code>npm install pretendard</code> 후
+        <code>pretendard/dist/web/variable/pretendardvariable-dynamic-subset.css</code>를 등록하세요.
+        빠뜨리면 에러 없이 조용히 시스템 글꼴로 렌더됩니다.
+        <br><span style="color:var(--gray-9);font-size:12.5px">라이선스 SIL OFL 1.1 — 재배포 가능, 판매 금지</span>
+      </div>
       <table>
         <thead><tr><th>토큰</th><th>글꼴</th><th>용도</th></tr></thead>
         <tbody>
           <tr><td><code>--font</code></td><td>Pretendard Variable</td><td>UI 전부. 한글·영문·숫자가 한 벌로 어울립니다.</td></tr>
-          <tr><td><code>--mono</code></td><td>SF Mono 계열</td><td>코드, 툴콜, 시각, IP, 파일 크기</td></tr>
+          <tr><td><code>--mono</code></td><td>시스템 고정폭 (SF Mono · Consolas)</td><td>코드, 툴콜, 시각, IP, 파일 크기</td></tr>
         </tbody>
       </table>
       <div class="callout">

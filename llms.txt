@@ -48,7 +48,9 @@ data.js             component registry powering the docs site
 templates/          golden screens: chat.html, search.html
 
 ## Installation
-No npm install. Copy ds.css, ds-vuetify.css and vue/ into app/src/design/,
+Two npm packages only: `pretendard` (SIL OFL) and `lucide-vue-next` (ISC).
+Register the Pretendard CSS BEFORE ds.css — omitting it silently falls back to the
+system font with no error. Then copy ds.css, ds-vuetify.css and vue/ into app/src/design/,
 register the CSS in nuxt.config, optionally wire dsDefaults into createVuetify.
 Vuetify stays at 3.11 — no migration, existing screens unchanged.
 

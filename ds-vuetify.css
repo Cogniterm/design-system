@@ -76,14 +76,23 @@
    전역 — Vuetify 컴포넌트 96종 공통 (테마로 덮이지 않는 것들)
    폰트·모서리·보더는 Vuetify 테마가 제어하지 않으므로 여기서 맞춥니다.
    ============================================================ */
-.v-application,
-.v-application .v-btn,
-.v-application .v-field,
-.v-application .v-list,
-.v-application .v-table,
-.v-application .v-chip,
-.v-application .v-alert,
-.v-application .v-tab { font-family: var(--font); }
+.v-application { font-family: var(--font); }
+
+/* Vuetify 타이포 유틸 클래스 81종이 Roboto를 강제합니다.
+   앱 코드에서 <div class="text-h6">를 쓰더라도 Pretendard가 나오게 덮습니다. */
+.text-h1, .text-h2, .text-h3, .text-h4, .text-h5, .text-h6,
+.text-subtitle-1, .text-subtitle-2, .text-body-1, .text-body-2,
+.text-button, .text-caption, .text-overline,
+[class*="text-sm-"], [class*="text-md-"], [class*="text-lg-"], [class*="text-xl-"] {
+  font-family: var(--font);
+  letter-spacing: 0;
+}
+/* 대문자 변환도 해제 — 한글에는 대문자가 없어 영문만 튑니다 */
+.text-button, .text-overline { text-transform: none; }
+
+/* 고정폭이 필요한 곳은 다시 mono로 (위 규칙보다 뒤에 와야 합니다) */
+.v-application code, .v-application kbd, .v-application samp,
+.v-application pre, .v-code, .v-kbd { font-family: var(--mono); }
 
 /* 모서리 — Vuetify의 rounded 스케일을 우리 값으로 재정의 */
 .v-application .rounded-sm { border-radius: var(--r-sm) !important; }

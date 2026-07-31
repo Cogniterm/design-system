@@ -15,7 +15,7 @@ Vue 3 · Vuetify 3.11 환경에서 그대로 사용합니다.
 |---|---|
 | 브랜드 | `#1F7FF0` (다크 `#4593F5`) |
 | 회색 | Radix Slate 1–12 (라이트/다크 쌍) |
-| 폰트 | Pretendard |
+| 폰트 | Pretendard Variable (SIL OFL) |
 | 모서리 | 2 / 4 / 6px |
 | 그림자 | 없음 (떠 있는 요소만 예외) |
 | 아이콘 | Lucide — 의미 이름 59개 등록 |
@@ -42,12 +42,16 @@ Vuetify 컴포넌트 96종 전부가 `theme.ts` + `defaults.ts`로 우리 스타
 cp -r vue/ <app>/src/design/
 cp ds.css ds-vuetify.css <app>/src/design/
 
-npm install lucide-vue-next   # 아이콘 — 유일한 외부 의존성
+npm install pretendard lucide-vue-next   # 글꼴 + 아이콘 — 외부 의존성은 이 둘뿐
 ```
 
 ```ts
 // nuxt.config.ts
-css: ['~/src/design/ds.css', '~/src/design/ds-vuetify.css']
+css: [
+  'pretendard/dist/web/variable/pretendardvariable-dynamic-subset.css',
+  '~/src/design/ds.css',
+  '~/src/design/ds-vuetify.css',
+]
 
 // vuetify 설정
 import { dsTheme } from '~/src/design/theme'
