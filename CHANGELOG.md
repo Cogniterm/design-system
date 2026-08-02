@@ -9,6 +9,8 @@
 ## [Unreleased]
 
 ### Added
+- **감사 로그 템플릿** (`templates/audit.html`) — 컴포넌트만으로 조립한 관리자 화면.
+  LNB 셸 · 요약 카드 · 필터 바 · 정렬/선택 테이블 · 상세 패널 · 상태 5종
 - **섹션별 llms.txt** — `/components` `/patterns` `/foundation` `/vuetify` `/a11y`.
   AI가 필요한 부분만 읽습니다. 루트 `llms.txt`는 2.4KB 색인으로 축소
 - **접근성 문서 50종 전체 완료** — 키보드 표 + 역할 분담

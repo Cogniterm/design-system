@@ -36,6 +36,12 @@ For a whole screen you usually need **Foundation + Components + Patterns**.
 ## Component names are English, UI copy is Korean
 `DsChatMessage`, `variant`, `@send` stay English. User-facing text is Korean.
 
+## Templates — clone these to start a screen
+https://kimjiyong995-coder.github.io/design-system/templates/audit.html   admin audit log: LNB shell, stat cards, filter bar,
+                               sortable table with selection, detail panel, all 5 states
+https://kimjiyong995-coder.github.io/design-system/templates/chat.html    agent chat: message stream, tool calls, citations, composer
+https://kimjiyong995-coder.github.io/design-system/templates/search.html  search: query bar, filter chips, highlighted results
+
 ## Live examples
 https://kimjiyong995-coder.github.io/design-system/live/        every component rendered on real Vuetify 3.11.6
-https://kimjiyong995-coder.github.io/design-system/live/#audit  an audit-log screen: table, filters, dialog, loading/empty states
+https://kimjiyong995-coder.github.io/design-system/live/#audit  the audit-log screen as a working Vue app

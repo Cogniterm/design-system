@@ -96,7 +96,7 @@ const filtering = P('filtering', 'Filtering', '필터', 'core',
         <span class="chip brand">수행자: Jiyong Kim<button class="x">${ic('close', 12)}</button></span>
         <button class="btn btn-ghost btn-sm">모두 해제</button>
       </div>
-      <div style="font-size:12.5px;color:var(--gray-9)">3 results · 0.4s</div>
+      <div style="font-size:var(--text-xs);color:var(--gray-9)">3건 · 0.4초</div>
     </div>
 
     <h2>규칙</h2>
@@ -462,7 +462,10 @@ const tplIndex = P('t-index', 'Index Page', '목록 화면', 'template',
       </tbody>
     </table>
     <p><b>밀도는 compact.</b> 훑어보는 화면이기 때문입니다.</p>
-    <p class="tpl-link"><a href="live/#audit" target="_blank" rel="noopener">감사 로그 예시 열기 ${ic('externalLink', 'sm')}</a></p>
+    <p class="tpl-link">
+      <a href="templates/audit.html" target="_blank" rel="noopener">감사 로그 템플릿 (HTML) ${ic('externalLink', 'sm')}</a>
+      <a href="live/#audit" target="_blank" rel="noopener">라이브 버전 (Vue) ${ic('externalLink', 'sm')}</a>
+    </p>
   </div>`)
 
 const tplDetail = P('t-detail', 'Detail Page', '상세 화면', 'template',

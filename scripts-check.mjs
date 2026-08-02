@@ -120,17 +120,21 @@ for (const f of readdirSync('vue/components').filter((f) => f.endsWith('.vue')))
 }
 ok('Standalone 컴포넌트 — 외부 의존 없음')
 
-/* ── 9. 문서 사이트가 타입 스케일을 지키는가 ── */
-const docsCss = readFileSync('docs.css', 'utf8')
-const rawSizes = [...docsCss.matchAll(/font-size:\s*(\d+(?:\.\d+)?)px/g)]
-  .map((m) => m[1])
-  .filter((v) => !['10', '11', '12', '13', '14', '15', '16', '20', '24', '30'].includes(v))
-if (rawSizes.length) {
-  errors.push(`docs.css에 스케일 밖 글자 크기: ${[...new Set(rawSizes)].join(', ')}px — var(--text-*)를 쓰세요`)
-} else {
-  const varUse = (docsCss.match(/font-size:\s*var\(--text-/g) || []).length
-  const pxUse = rawSizes.length + (docsCss.match(/font-size:\s*\d/g) || []).length
-  ok(`docs.css 타입 스케일 준수 (토큰 ${varUse}회)`)
+/* ── 9. 타입 스케일 준수 (문서 사이트 + 템플릿) ── */
+const ALLOWED_PX = ['10', '11', '12', '13', '14', '15', '16', '20', '24', '30']
+let scaleOk = true
+for (const f of ['docs.css', 'templates/audit.html', 'templates/chat.html', 'templates/search.html']) {
+  const src = readFileSync(f, 'utf8')
+  const bad = [...src.matchAll(/font-size:\s*(\d+(?:\.\d+)?)px/g)]
+    .map((m) => m[1]).filter((v) => !ALLOWED_PX.includes(v))
+  if (bad.length) {
+    scaleOk = false
+    errors.push(`${f}에 스케일 밖 글자 크기: ${[...new Set(bad)].join(', ')}px — var(--text-*)를 쓰세요`)
+  }
+}
+if (scaleOk) {
+  const varUse = (readFileSync('docs.css', 'utf8').match(/font-size:\s*var\(--text-/g) || []).length
+  ok(`타입 스케일 준수 — docs.css + 템플릿 3종 (토큰 ${varUse}회)`)
 }
 
 /* ── 결과 ── */

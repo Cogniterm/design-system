@@ -1290,6 +1290,9 @@ export const COMPONENTS = [
 ]
 
 export const TEMPLATES = [
+  { id: 'audit',  name: 'Audit Log',      ko: '감사 로그',     file: 'templates/audit.html',
+    desc: '관리자 셸 · 테이블 · 필터 · 상세 패널 · 상태 5종',
+    covers: ['NavList', 'DataTable', 'Badge', 'Avatar', 'Chip', 'Pagination', 'ArtifactPanel', 'Skeleton', 'EmptyState'] },
   { id: 'chat',   name: 'Chat / Agent',   ko: '챗 · 에이전트', file: 'templates/chat.html',
     desc: '메시지 스트림 · 툴콜 · 인용 · 입력창', covers: ['ChatMessage', 'ToolCallStep', 'CitationChip', 'AgentInput'] },
   { id: 'search', name: 'Search Results', ko: '검색 결과',     file: 'templates/search.html',
