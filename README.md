@@ -1,4 +1,4 @@
-# Design System
+# Cogniterm Design System
 
 AI SaaS Agent 제품군을 위한 극한 미니멀 디자인 시스템.
 Vue 3 · Vuetify 3.11 환경에서 그대로 사용합니다.

@@ -26,7 +26,7 @@ ${c.vue.split('\n').map((l) => '    ' + l).join('\n')}`
   }).join('\n')
 }).join('')
 
-writeFileSync('components/llms.txt', `# Components — Design System
+writeFileSync('components/llms.txt', `# Components — Cogniterm Design System
 
 > ${COMPONENTS.length} components. ${COMPONENTS.filter((c) => c.origin === 'custom').length} standalone
 > (no Vuetify needed, import from \`~/design\`) and
@@ -45,7 +45,7 @@ ${byCat}
 `)
 
 /* ── /patterns/llms.txt ── */
-writeFileSync('patterns/llms.txt', `# Patterns — Design System
+writeFileSync('patterns/llms.txt', `# Patterns — Cogniterm Design System
 
 > How to COMBINE components. Solving the same problem differently on each screen
 > makes the product inconsistent even when the components match.
@@ -62,7 +62,7 @@ ${PATTERN_GROUPS.map((g) => {
 /* ── /foundation/llms.txt ── */
 const ds = readFileSync('ds.css', 'utf8')
 const tokens = ds.slice(ds.indexOf(':root'), ds.indexOf('* { box-sizing'))
-writeFileSync('foundation/llms.txt', `# Foundation — Design System
+writeFileSync('foundation/llms.txt', `# Foundation — Cogniterm Design System
 
 > Decisions made before components: tokens, color, type, spacing, shape, elevation,
 > density, icons, motion, state, accessibility, writing, i18n.
@@ -123,7 +123,7 @@ ${ICON_NAMES.join(' ')}
 
 /* ── /vuetify/llms.txt ── */
 const byStatus = (s) => VUETIFY_COVERAGE.filter((r) => r[1] === s)
-writeFileSync('vuetify/llms.txt', `# Vuetify integration — Design System
+writeFileSync('vuetify/llms.txt', `# Vuetify integration — Cogniterm Design System
 
 > This system lives ALONGSIDE Vuetify 3.11, it does not replace it.
 > No migration. Existing screens are unchanged. Vuetify stays at 3.11 — v4 is not planned.
@@ -168,7 +168,7 @@ ${byStatus('structural').map((r) => r[0]).join(', ')}
 `)
 
 /* ── /a11y/llms.txt ── */
-writeFileSync('a11y/llms.txt', `# Accessibility — Design System
+writeFileSync('a11y/llms.txt', `# Accessibility — Cogniterm Design System
 
 > Target: WCAG 2.2 AA. Docs: ${SITE}/#/foundation/a11y
 
@@ -193,7 +193,7 @@ YOU must handle: ${a.yours.join('; ')}`
 `)
 
 /* ── /llms.txt — 색인 ── */
-writeFileSync('llms.txt', `# Design System (AI SaaS Agent)
+writeFileSync('llms.txt', `# Cogniterm Design System
 
 > Extreme-minimal design system for AI agent products, built for Vue 3 + Vuetify 3.11.
 > No shadows, 1px borders, radius 4/6/8/12, Pretendard, brand blue #1F7FF0

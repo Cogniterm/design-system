@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Template — Audit Log</title>
+<title>Cogniterm — Audit Log</title>
 <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
 <link rel="stylesheet" href="../ds.css">
@@ -217,8 +217,10 @@
 .kv code { font-family: var(--mono); font-size: var(--text-xs); color: var(--gray-11); }
 .detail-note {
   font-size: var(--text-sm); line-height: var(--leading-prose);
-  padding: 13px 15px; border-radius: var(--r-lg); background: var(--gray-2);
-  border-left: 3px solid var(--danger); color: var(--gray-11); margin-top: 6px;
+  padding: 13px 15px; border-radius: var(--r-lg);
+  background: color-mix(in srgb, var(--danger) 5%, var(--bg));
+  border: 1px solid color-mix(in srgb, var(--danger) 28%, var(--gray-4));
+  color: var(--gray-11); margin-top: 6px;
 }
 .detail-foot { border-top: 1px solid var(--gray-4); padding: 14px 18px; display: flex; gap: 8px; }
 .sec-label {
@@ -266,7 +268,7 @@
 
   <!-- ══════════ LNB ══════════ -->
   <aside class="lnb">
-    <div class="lnb-brand">DS<em>.</em> Admin</div>
+    <div class="lnb-brand">Cogniterm<em>.</em></div>
     <div class="lnb-body">
       <div class="lnb-sec">워크스페이스</div>
       <a class="lnb-item" href="#"><svg class="lic" viewBox="0 0 24 24"><path d="M12 8V4H8"/><rect width="16" height="12" x="4" y="8" rx="2"/><path d="M2 14h2M20 14h2M15 13v2M9 13v2"/></svg>에이전트<span class="cnt">17</span></a>
@@ -576,7 +578,7 @@
             <div class="state-box">
               <div class="h">error</div>
               <div class="b">
-                <div style="border-left:3px solid var(--danger);background:var(--danger-subtle);border-radius:var(--r-lg);padding:14px 16px">
+                <div style="background:color-mix(in srgb, var(--danger) 5%, var(--bg));border:1px solid color-mix(in srgb, var(--danger) 28%, var(--gray-4));border-radius:var(--r-lg);padding:14px 16px">
                   <div style="font-size:var(--text-sm);font-weight:var(--weight-semibold);color:var(--danger)">로그를 불러오지 못했습니다</div>
                   <div style="font-size:var(--text-sm);color:var(--danger);margin-top:4px;line-height:var(--leading-prose)">
                     감사 로그 서비스가 응답하지 않습니다. 잠시 후 다시 시도하세요.
@@ -592,7 +594,7 @@
             <div class="state-box">
               <div class="h">partial — 일부만 불러옴</div>
               <div class="b">
-                <div style="border-left:3px solid var(--warning);background:#fff8e6;border-radius:var(--r-lg);padding:14px 16px" id="partial-box">
+                <div style="background:color-mix(in srgb, var(--warning) 6%, var(--bg));border:1px solid color-mix(in srgb, var(--warning) 30%, var(--gray-4));border-radius:var(--r-lg);padding:14px 16px" id="partial-box">
                   <div style="font-size:var(--text-sm);font-weight:var(--weight-semibold);color:var(--warning)">최근 24시간만 표시하고 있습니다</div>
                   <div style="font-size:var(--text-sm);color:var(--warning);margin-top:4px;line-height:var(--leading-prose)">
                     그 이전 기록은 보관 저장소에 있어 불러오는 데 시간이 걸립니다.
@@ -669,7 +671,6 @@ function toggleTheme() {
   const dark = root.getAttribute('data-theme') !== 'dark'
   root.setAttribute('data-theme', dark ? 'dark' : 'light')
   document.getElementById('theme-icon').innerHTML = dark ? SUN : MOON
-  document.getElementById('partial-box').style.background = dark ? '#251c08' : '#fff8e6'
   localStorage.setItem('theme', dark ? 'dark' : 'light')
 }
 if (localStorage.getItem('theme') === 'dark') toggleTheme()

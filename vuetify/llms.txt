@@ -1,4 +1,4 @@
-# Vuetify integration — Design System
+# Vuetify integration — Cogniterm Design System
 
 > This system lives ALONGSIDE Vuetify 3.11, it does not replace it.
 > No migration. Existing screens are unchanged. Vuetify stays at 3.11 — v4 is not planned.

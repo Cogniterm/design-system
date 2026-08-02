@@ -13,7 +13,7 @@ const emit = defineEmits<{ close: [] }>()
 <template>
   <VAlert
     class="ds-alert" :type="variant" :title="title" :closable="closable"
-    variant="tonal" border="start" density="comfortable" rounded="md"
+    variant="tonal" density="comfortable" rounded="lg"
     @click:close="emit('close')"
   >
     <slot />

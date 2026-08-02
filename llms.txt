@@ -1,4 +1,4 @@
-# Design System (AI SaaS Agent)
+# Cogniterm Design System
 
 > Extreme-minimal design system for AI agent products, built for Vue 3 + Vuetify 3.11.
 > No shadows, 1px borders, radius 4/6/8/12, Pretendard, brand blue #1F7FF0

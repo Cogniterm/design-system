@@ -1,4 +1,4 @@
-# Patterns — Design System
+# Patterns — Cogniterm Design System
 
 > How to COMBINE components. Solving the same problem differently on each screen
 > makes the product inconsistent even when the components match.

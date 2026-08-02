@@ -1,4 +1,4 @@
-# Accessibility — Design System
+# Accessibility — Cogniterm Design System
 
 > Target: WCAG 2.2 AA. Docs: https://kimjiyong995-coder.github.io/design-system/#/foundation/a11y
 

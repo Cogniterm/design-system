@@ -1,8 +1,8 @@
 {
-  "name": "@ds/design-system",
+  "name": "@cogniterm/design-system",
   "version": "0.3.0",
   "private": true,
-  "description": "AI SaaS Agent 제품군을 위한 극한 미니멀 디자인 시스템 (Vue 3 · Vuetify 3.11)",
+  "description": "Cogniterm Design System — AI SaaS Agent 제품군을 위한 극한 미니멀 디자인 시스템 (Vue 3 · Vuetify 3.11)",
   "license": "MIT",
   "type": "module",
   "scripts": {

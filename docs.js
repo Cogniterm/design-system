@@ -170,9 +170,7 @@ function renderCatalog() {
   let html = crumb({ label: 'Components' }) + `
     <div class="page-head"><h1>Components</h1><span class="page-ko">컴포넌트</span></div>
     <p class="page-lead">
-      ${total}종. <b>${total - wrapped}종은 Vuetify 없이</b> 동작하고
-      (<code>~/design</code>), <b>${wrapped}종은 Vuetify를 감싼 것</b>입니다
-      (<code>~/design/vuetify</code>). 카드의 <b>VUETIFY</b> 표시가 후자입니다.
+      ${total}종 — Standalone ${total - wrapped} · Vuetify 기반 ${wrapped}.
     </p>`
 
   for (const cat of CATEGORIES) {
@@ -401,10 +399,7 @@ function wireCodeTabs() {
 function renderTemplates() {
   $('#content').innerHTML = crumb({ label: 'Templates' }) + `
     <div class="page-head"><h1>Templates</h1><span class="page-ko">골든 스크린</span></div>
-    <p class="page-lead">
-      컴포넌트를 조합한 완성 화면입니다. 새 화면은 여기서 복제해 시작하고,
-      AI에게는 "이 템플릿처럼 만들어줘"라고 넘깁니다.
-    </p>
+    <p class="page-lead">완성 화면. 새 화면은 여기서 복제해 시작합니다.</p>
     <div class="tpl-grid">
       <a class="tpl-card live" href="live/" target="_blank" rel="noopener">
         <h3>Live Gallery ${ic('externalLink', 'sm')}</h3>
@@ -431,10 +426,7 @@ function renderTemplates() {
 function renderPatternIndex() {
   let html = crumb({ label: 'Patterns' }) + `
     <div class="page-head"><h1>Patterns</h1><span class="page-ko">패턴</span></div>
-    <p class="page-lead">
-      컴포넌트가 "무엇"이라면 패턴은 <b>"어떻게 조합하나"</b>입니다.
-      같은 문제를 화면마다 다르게 풀면 컴포넌트가 같아도 제품은 일관되지 않습니다.
-    </p>`
+    <p class="page-lead">컴포넌트를 조합하는 법.</p>`
   for (const g of PATTERN_GROUPS) {
     const items = PATTERNS.filter((p) => p.group === g.id)
     if (!items.length) continue
@@ -512,12 +504,8 @@ function pageStart() {
 
   return `
     <div class="hero">
-      <h1>AI 에이전트 제품을 위한<br>극한 미니멀 디자인 시스템</h1>
-      <p>
-        그림자 없이 1px 보더와 여백만으로 위계를 만듭니다.
-        Vue 3 · Vuetify 3.11 환경에 <b>설치가 아니라 복사</b>로 들어가고,
-        기존 화면은 바뀌지 않습니다.
-      </p>
+      <h1>Cogniterm Design System</h1>
+      <p>AI 에이전트 제품을 위한 미니멀 디자인 시스템. Vue 3 · Vuetify 3.11.</p>
       <div class="hero-actions">
         <a class="btn btn-primary" href="#/docs/install">${ic('forward', 'sm')} 설치하기</a>
         <a class="btn btn-secondary" href="#/components">컴포넌트 ${total}종 보기</a>
@@ -545,25 +533,7 @@ function pageStart() {
     </div>
 
     <div class="prose">
-      <h2>무엇으로 만들어졌나</h2>
-      <table>
-        <thead><tr><th>항목</th><th>값</th></tr></thead>
-        <tbody>
-          <tr><td>브랜드</td><td><code>#1F7FF0</code> · 다크 <code>#4593F5</code></td></tr>
-          <tr><td>회색</td><td>Radix Slate 1–12 (라이트/다크 쌍)</td></tr>
-          <tr><td>폰트</td><td>Pretendard Variable</td></tr>
-          <tr><td>아이콘</td><td>Lucide — 의미 이름 59개</td></tr>
-          <tr><td>모서리</td><td>4 / 6 / 8 / 12px</td></tr>
-          <tr><td>그림자</td><td>없음 (Menu · Dialog · Tooltip · Snackbar만 예외)</td></tr>
-          <tr><td>외부 의존성</td><td><code>pretendard</code> · <code>lucide-vue-next</code> 둘뿐</td></tr>
-        </tbody>
-      </table>
-
       <h2>AI에게 시킬 때</h2>
-      <p>
-        <code>llms.txt</code>를 컨텍스트로 넣으면 이 시스템의 규칙을 따라 코드를 생성합니다.
-        섹션별로 나뉘어 있어 <b>필요한 것만</b> 읽히면 됩니다.
-      </p>
       <table>
         <thead><tr><th>파일</th><th>언제 쓰나</th><th>크기</th></tr></thead>
         <tbody>
@@ -575,7 +545,7 @@ function pageStart() {
           <tr><td><a href="a11y/llms.txt" target="_blank"><code>/a11y/</code></a></td><td>접근성 — 키보드 표</td><td>15 KB</td></tr>
         </tbody>
       </table>
-      <p>화면 하나를 만들 때는 보통 <b>Foundation + Components + Patterns</b> 세 개면 충분합니다.</p>
+      <p>화면 하나에는 보통 Foundation + Components + Patterns 세 개면 충분합니다.</p>
     </div>`
 }
 

@@ -1,4 +1,4 @@
-# Components — Design System
+# Components — Cogniterm Design System
 
 > 50 components. 20 standalone
 > (no Vuetify needed, import from `~/design`) and

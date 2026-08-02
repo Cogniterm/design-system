@@ -74,7 +74,7 @@ export const dsDefaults = {
   VConfirmEdit: { color: 'primary' },
 
   /* ── Feedback & Status ── */
-  VAlert: { variant: 'tonal', rounded: 'lg', border: 'start', density: 'comfortable' },
+  VAlert: { variant: 'tonal', rounded: 'lg', density: 'comfortable' },
   VBanner: { rounded: 'md', density: 'comfortable', lines: 'one' },
   VChip: { variant: 'outlined', rounded: 'pill', size: 'small', ripple: false },
   VBadge: { color: 'primary' },
