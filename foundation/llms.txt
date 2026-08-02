@@ -25,10 +25,14 @@
 - Color: brand ONLY for actions, selection, focus, links. Gray does 95% of the work.
   Gray roles — 1-2 background, 3 hover, 4-5 soft border, 6 default border,
   8 hover border, 9 faint text, 11 secondary text, 12 body text.
-- Type: Pretendard. Sizes 12/13/14/16/20 only. Weights 400/500/600 — never 700+.
+- Type: Pretendard, 9 steps only — 11/12/13/14/15/16/20/24/30 via var(--text-*).
+  UI surfaces (buttons, tables, sidebars) use 13-14px; reading surfaces (explanations,
+  agent responses) use 15px with line-height 1.8. Using one size for both makes both
+  mediocre. Weights 400/500/600 — never 700+.
   Hierarchy comes from weight and color, not size.
   No uppercase and no positive letter-spacing (both break Korean). word-break: keep-all.
-  Line-height 1.62 base, 1.7 for prose and agent responses.
+  Line-height tokens: tight 1.3 (headings), ui 1.5 (dense), normal 1.62, prose 1.8.
+  Reading measure max 68ch (var(--measure)).
 - Spacing: multiples of 4 only (0 4 8 12 16 24 32 48 64). Grouping is proximity.
   Reading width max 720px; data screens 1080-1280px.
 - Shape: radius sm=4 md=6 lg=8 xl=12. Controls use lg, large surfaces use xl.
@@ -73,6 +77,30 @@
 
   --font: "Pretendard Variable", Pretendard, system-ui, sans-serif;
   --mono: ui-monospace, SFMono-Regular, monospace;
+
+  /* ── Type scale ──────────────────────
+     UI(조작면)와 Prose(읽는 면)를 구분합니다.
+     UI는 조밀하게, Prose는 넉넉하게. 같은 크기를 쓰면 둘 다 어중간해집니다. */
+  --text-2xs:  11px;   /* 마이크로 라벨 — 배지 안, 스와치 캡션 */
+  --text-xs:   12px;   /* 라벨 · 메타 · 표 헤더 */
+  --text-sm:   13px;   /* 조밀한 UI — 테이블 셀, 사이드바 */
+  --text-base: 14px;   /* UI 기본 — 버튼, 입력, 본문 UI */
+  --text-md:   15px;   /* Prose 본문 — 읽는 글 */
+  --text-lg:   16px;   /* 작은 제목 */
+  --text-xl:   20px;   /* 섹션 제목 */
+  --text-2xl:  24px;   /* 페이지 제목 */
+  --text-3xl:  30px;   /* 대표 제목 (문서 사이트 랜딩) */
+
+  --leading-tight:  1.3;    /* 제목 */
+  --leading-ui:     1.5;    /* UI 텍스트 */
+  --leading-normal: 1.62;   /* 기본 */
+  --leading-prose:  1.8;    /* 읽는 글 */
+
+  --measure: 68ch;          /* 읽는 글의 최대 줄 길이 */
+
+  --weight-normal: 400;
+  --weight-medium: 500;
+  --weight-semibold: 600;
 
   --bg: #ffffff;
   --surface: #ffffff;

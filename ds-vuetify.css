@@ -340,3 +340,174 @@
 .ds-snack-body { font-size: 13.5px; }
 .ds-banner-icon { display: inline-flex; align-items: center; color: var(--gray-10); margin-right: 4px; }
 .ds-nav-icon { display: inline-flex; align-items: center; }
+
+/* ============================================================
+   Geist 정합 — Vuetify 기본 인상을 우리 쪽으로 더 당깁니다.
+   ============================================================
+   Vuetify는 머티리얼 기조라 그림자·리플·둥근 모서리·큰 여백이
+   기본값입니다. 아래는 그중 "동작에 영향 없이" 바꿀 수 있는 것만
+   조정합니다. 동작을 건드리는 오버라이드는 하지 않습니다.
+*/
+
+/* ── 오버레이 그림자 통일 (머티리얼 elevation 제거) ── */
+.v-overlay__content { box-shadow: none; }
+.v-overlay__content > .v-card,
+.v-overlay__content > .v-list,
+.v-overlay__content > .v-sheet,
+.v-overlay__content > .ds-menu-panel,
+.v-overlay__content > .ds-dialog-panel {
+  box-shadow: 0 6px 20px rgba(0, 0, 0, .09);
+}
+[data-theme="dark"] .v-overlay__content > .v-card,
+[data-theme="dark"] .v-overlay__content > .v-list,
+[data-theme="dark"] .v-overlay__content > .v-sheet,
+[data-theme="dark"] .v-overlay__content > .ds-menu-panel,
+[data-theme="dark"] .v-overlay__content > .ds-dialog-panel {
+  box-shadow: 0 6px 20px rgba(0, 0, 0, .45);
+}
+.v-overlay__scrim { backdrop-filter: none; }
+
+/* ── 머티리얼 오버레이(리플 잔상) 제거 ── */
+.v-btn__overlay,
+.v-list-item__overlay,
+.v-selection-control__wrapper .v-ripple__container,
+.v-tab__slider ~ .v-btn__overlay { opacity: 0 !important; }
+.v-btn:hover > .v-btn__overlay,
+.v-list-item:hover > .v-list-item__overlay { opacity: 0 !important; }
+.v-ripple__container { display: none !important; }
+
+/* ── VBtn — Geist 버튼 치수에 맞춤 ── */
+.v-btn { min-width: 0; }
+.v-btn--size-default { height: 38px; padding: 0 16px; font-size: var(--text-base); }
+.v-btn--size-small { height: 32px; padding: 0 12px; font-size: var(--text-sm); }
+.v-btn--size-large { height: 44px; padding: 0 20px; font-size: var(--text-base); }
+.v-btn--variant-flat.bg-primary,
+.v-btn--variant-flat.text-primary { color: var(--on-brand); }
+.v-btn--variant-elevated { box-shadow: none; }
+
+/* ── VField — 입력 필드를 DsInput과 같은 인상으로 ── */
+.v-field--variant-outlined .v-field__outline__start { border-radius: var(--r-lg) 0 0 var(--r-lg); }
+.v-field--variant-outlined .v-field__outline__end { border-radius: 0 var(--r-lg) var(--r-lg) 0; }
+.v-field--variant-outlined.v-field--focused .v-field__outline { --v-field-border-width: 1px; }
+.v-input--density-comfortable .v-field__input { min-height: 38px; padding-top: 0; padding-bottom: 0; }
+.v-field__field { align-items: center; }
+.v-field__prepend-inner, .v-field__append-inner { align-items: center; padding-top: 0; }
+.v-input__details { padding-inline: 2px; min-height: 0; padding-top: 6px; }
+.v-messages { opacity: 1; }
+.v-field--focused { box-shadow: 0 0 0 3.5px var(--brand-subtle); border-radius: var(--r-lg); }
+
+/* 포커스 링이 두 번 그려지지 않도록 */
+.v-field--focused .v-field__outline { opacity: 1; }
+
+/* ── VSelect · VAutocomplete 드롭다운 ── */
+.v-menu > .v-overlay__content > .v-list {
+  padding: 5px; border: 1px solid var(--gray-4); border-radius: var(--r-lg);
+  background: var(--surface);
+}
+.v-list-item--density-default.v-list-item--one-line { min-height: 36px; padding-inline: 11px; }
+.v-list-item--active > .v-list-item__overlay { opacity: 0 !important; }
+.v-list-item--active { background: var(--brand-subtle); color: var(--brand); }
+.v-list-item--active .v-list-item-title { font-weight: var(--weight-medium); }
+
+/* ── 선택 컨트롤 — 체크박스·라디오·스위치 ── */
+.v-selection-control--density-comfortable { --v-selection-control-size: 34px; }
+.v-selection-control__input { width: 34px; height: 34px; }
+.v-selection-control__input > .v-icon { font-size: 20px; }
+.v-switch .v-switch__track { opacity: 1; background: var(--gray-6); }
+.v-switch--inset .v-switch__track { height: 20px; min-width: 36px; }
+.v-switch .v-switch__thumb { box-shadow: none; background: var(--surface); width: 16px; height: 16px; }
+.v-switch.v-input--is-dirty .v-switch__track,
+.v-switch .v-selection-control--dirty .v-switch__track { background: var(--brand); }
+
+/* ── VTable / VDataTable — 테이블 인상 ── */
+.v-table > .v-table__wrapper > table > thead > tr > th {
+  height: 38px; white-space: nowrap;
+}
+.v-table--density-compact > .v-table__wrapper > table > tbody > tr > td { font-size: var(--text-sm); }
+.v-data-table__td--select-row,
+.v-data-table__th--select-row { width: 44px; }
+.v-data-table-footer__items-per-page,
+.v-data-table-footer__info { font-size: var(--text-xs); color: var(--gray-10); }
+.v-data-table-footer__items-per-page .v-field { min-height: 30px; }
+.v-data-table__th .v-data-table-header__content { gap: 5px; }
+
+/* ── VTabs ── */
+.v-tabs--density-comfortable { --v-tabs-height: 40px; }
+.v-tab.v-btn { border-radius: 0; }
+.v-slide-group__prev, .v-slide-group__next { min-width: 28px; }
+
+/* ── VAlert ── */
+.v-alert--variant-tonal .v-alert__underlay { opacity: .07; }
+.v-alert__prepend { margin-inline-end: 12px; align-self: flex-start; margin-top: 1px; }
+.v-alert-title { line-height: var(--leading-tight); }
+.v-alert__content { font-size: var(--text-sm); line-height: var(--leading-prose); }
+
+/* ── VChip ── */
+.v-chip--size-small { height: 24px; font-size: var(--text-xs); padding: 0 10px; }
+.v-chip__overlay { opacity: 0; }
+.v-chip--variant-tonal .v-chip__underlay { opacity: .1; }
+
+/* ── VExpansionPanel ── */
+.v-expansion-panel-title__overlay { opacity: 0; }
+.v-expansion-panel--active > .v-expansion-panel-title { min-height: 42px; }
+.v-expansion-panels--variant-accordion > :first-child { border-radius: var(--r-xl) var(--r-xl) 0 0; }
+.v-expansion-panels--variant-accordion > :last-child { border-radius: 0 0 var(--r-xl) var(--r-xl); }
+
+/* ── VStepper ── */
+.v-stepper-header { box-shadow: none; border-bottom: 1px solid var(--gray-4); height: auto; padding: 8px; }
+.v-stepper-item { padding: 10px 14px; opacity: 1; }
+.v-stepper-item__avatar.v-avatar { width: 22px; height: 22px; }
+.v-stepper-item--selected .v-stepper-item__title { color: var(--gray-12); }
+.v-stepper-item__title { color: var(--gray-10); }
+.v-divider--vertical { border-color: var(--gray-4); }
+
+/* ── VTimeline ── */
+.v-timeline--vertical.v-timeline--density-comfortable { --v-timeline-line-thickness: 1px; }
+.v-timeline-divider__dot--size-x-small { width: 10px; height: 10px; }
+.v-timeline-divider__inner-dot { box-shadow: none; }
+.v-timeline .v-timeline-divider__line { background: var(--gray-5); }
+
+/* ── VPagination ── */
+.v-pagination__item .v-btn--size-default { min-width: 30px; height: 30px; padding: 0 6px; }
+.v-pagination__prev .v-btn, .v-pagination__next .v-btn { min-width: 30px; height: 30px; }
+
+/* ── VProgressLinear ── */
+.v-progress-linear__determinate { transition: width .24s ease; }
+
+/* ── VDatePicker ── */
+.v-date-picker-controls { padding: 10px 12px; min-height: 0; }
+.v-date-picker-month__day .v-btn { width: 32px; height: 32px; font-size: var(--text-sm); }
+.v-date-picker-month__weekday { font-size: var(--text-2xs); color: var(--gray-9); }
+.v-date-picker-header { display: none; }
+
+/* ── VSnackbar ── */
+.v-snackbar__content { padding: 13px 15px; font-size: var(--text-sm); }
+.v-snackbar__actions { margin-inline-end: 6px; }
+
+/* ── VTooltip ── */
+.v-tooltip > .v-overlay__content {
+  font-size: var(--text-xs); padding: 6px 10px;
+  border-radius: var(--r-md); box-shadow: none;
+}
+
+/* ── VAvatar ── */
+.v-avatar { font-size: var(--text-sm); font-weight: var(--weight-semibold); }
+
+/* ── VSlider ── */
+.v-slider-thumb__surface { box-shadow: none; }
+.v-slider-thumb__ripple { display: none; }
+.v-slider-track__background { background: var(--gray-5); opacity: 1; }
+
+/* ── 스크롤바 — 앱 전체 얇게 ── */
+.v-application *::-webkit-scrollbar { width: 10px; height: 10px; }
+/* 스크롤바 thumb의 3px는 보더가 아니라 안쪽 여백입니다.
+   background-clip: content-box와 함께 써서 얇은 막대를 만듭니다. */
+.v-application *::-webkit-scrollbar-thumb {
+  background: var(--gray-6);
+  border-radius: var(--r-full);
+  /* stylelint-disable-next-line declaration-property-value-disallowed-list */
+  border: 3px solid transparent;
+  background-clip: content-box;
+}
+.v-application *::-webkit-scrollbar-thumb:hover { background: var(--gray-8); background-clip: content-box; }
+.v-application *::-webkit-scrollbar-track { background: transparent; }

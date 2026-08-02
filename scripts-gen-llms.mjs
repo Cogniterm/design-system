@@ -75,10 +75,14 @@ ${FOUNDATION_PAGES.map(([id, ko, en]) => `- ${en} (${ko}) — ${SITE}/#/foundati
 - Color: brand ONLY for actions, selection, focus, links. Gray does 95% of the work.
   Gray roles — 1-2 background, 3 hover, 4-5 soft border, 6 default border,
   8 hover border, 9 faint text, 11 secondary text, 12 body text.
-- Type: Pretendard. Sizes 12/13/14/16/20 only. Weights 400/500/600 — never 700+.
+- Type: Pretendard, 9 steps only — 11/12/13/14/15/16/20/24/30 via var(--text-*).
+  UI surfaces (buttons, tables, sidebars) use 13-14px; reading surfaces (explanations,
+  agent responses) use 15px with line-height 1.8. Using one size for both makes both
+  mediocre. Weights 400/500/600 — never 700+.
   Hierarchy comes from weight and color, not size.
   No uppercase and no positive letter-spacing (both break Korean). word-break: keep-all.
-  Line-height 1.62 base, 1.7 for prose and agent responses.
+  Line-height tokens: tight 1.3 (headings), ui 1.5 (dense), normal 1.62, prose 1.8.
+  Reading measure max 68ch (var(--measure)).
 - Spacing: multiples of 4 only (0 4 8 12 16 24 32 48 64). Grouping is proximity.
   Reading width max 720px; data screens 1080-1280px.
 - Shape: radius sm=4 md=6 lg=8 xl=12. Controls use lg, large surfaces use xl.

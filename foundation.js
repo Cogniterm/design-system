@@ -254,41 +254,71 @@ export function fdColor() {
 /* ════════════════════════════════════════ */
 export function fdTypography() {
   const rows = [
-    ['xl', '20px', '600', '페이지 제목', 'font-size:20px;font-weight:600;letter-spacing:-.02em'],
-    ['lg', '16px', '600', '섹션 제목', 'font-size:16px;font-weight:600;letter-spacing:-.01em'],
-    ['base', '14px', '400', '본문 · 버튼 · 입력', 'font-size:14px'],
-    ['sm', '13px', '400', '보조 설명 · 테이블 셀', 'font-size:13px'],
-    ['xs', '12px', '500', '라벨 · 메타 · 배지', 'font-size:12px;font-weight:500'],
+    ['3xl', '30px', '600', '문서 랜딩 대표 제목', 'font-size:30px;font-weight:600;letter-spacing:-.03em'],
+    ['2xl', '24px', '600', '페이지 제목', 'font-size:24px;font-weight:600;letter-spacing:-.025em'],
+    ['xl', '20px', '600', '섹션 제목', 'font-size:20px;font-weight:600;letter-spacing:-.015em'],
+    ['lg', '16px', '600', '작은 제목 · 카드 제목', 'font-size:16px;font-weight:600;letter-spacing:-.01em'],
+    ['md', '15px', '400', '읽는 글 본문', 'font-size:15px'],
+    ['base', '14px', '400', 'UI 기본 — 버튼 · 입력 · 탭', 'font-size:14px'],
+    ['sm', '13px', '400', '조밀한 UI — 표 셀 · 사이드바', 'font-size:13px'],
+    ['xs', '12px', '500', '라벨 · 메타 · 표 헤더', 'font-size:12px;font-weight:500'],
+    ['2xs', '11px', '600', '마이크로 라벨 · 배지', 'font-size:11px;font-weight:600'],
   ]
   return `
     <div class="page-head"><h1>Typography</h1><span class="page-ko">타이포그래피</span></div>
     <p class="page-lead">
-      Pretendard 5단계. <b>위계는 크기보다 굵기와 색으로 만듭니다</b> —
+      Pretendard 9단계. <b>위계는 크기보다 굵기와 색으로</b> 만듭니다 —
       크기를 키우면 화면이 커 보이고, 굵기를 바꾸면 위계만 생깁니다.
     </p>
     <div class="prose">
+      <div class="callout">
+        <b>UI와 Prose를 구분합니다.</b>
+        조작하는 면(버튼·표·사이드바)은 13~14px로 조밀하게,
+        읽는 면(설명·에이전트 응답)은 15px에 줄 간격 1.8로 넉넉하게.
+        둘을 같은 크기로 두면 <b>양쪽 다 어중간해집니다</b>.
+      </div>
+
       <h2>스케일</h2>
       <div class="typescale">
         ${rows.map(([n, s, w, use, css]) => `
           <div class="ts-row">
-            <div class="ts-meta"><code>${n}</code><span>${s} · ${w}</span></div>
+            <div class="ts-meta"><code>--text-${n}</code><span>${s} · ${w}</span></div>
             <div class="ts-sample" style="${css}">문서를 중앙에서 관리하세요</div>
             <div class="ts-use">${use}</div>
           </div>`).join('')}
       </div>
+      <p>이 아홉 개 밖의 값은 쓰지 않습니다. CI가 <code>docs.css</code>를 검사해 막습니다.</p>
 
       <h2>굵기</h2>
       <table>
-        <thead><tr><th>값</th><th>이름</th><th>용도</th></tr></thead>
+        <thead><tr><th>토큰</th><th>값</th><th>용도</th></tr></thead>
         <tbody>
-          <tr><td><code>400</code></td><td>Regular</td><td>본문 전부</td></tr>
-          <tr><td><code>500</code></td><td>Medium</td><td>라벨, 버튼, 강조된 셀</td></tr>
-          <tr><td><code>600</code></td><td>SemiBold</td><td>제목</td></tr>
+          <tr><td><code>--weight-normal</code></td><td>400</td><td>본문 전부</td></tr>
+          <tr><td><code>--weight-medium</code></td><td>500</td><td>라벨, 버튼, 강조된 셀, 활성 항목</td></tr>
+          <tr><td><code>--weight-semibold</code></td><td>600</td><td>제목</td></tr>
         </tbody>
       </table>
       <p>
         <b>700 이상은 쓰지 않습니다.</b> Pretendard의 600으로 충분히 위계가 생기고,
-        더 굵어지면 미니멀한 인상이 깨집니다.
+        더 굵어지면 미니멀한 인상이 깨집니다. Stylelint가 막습니다.
+      </p>
+
+      <h2>줄 간격</h2>
+      <table>
+        <thead><tr><th>토큰</th><th>값</th><th>용도</th></tr></thead>
+        <tbody>
+          <tr><td><code>--leading-tight</code></td><td>1.3</td><td>제목</td></tr>
+          <tr><td><code>--leading-ui</code></td><td>1.5</td><td>표 셀, 사이드바, 카드 설명</td></tr>
+          <tr><td><code>--leading-normal</code></td><td>1.62</td><td>기본</td></tr>
+          <tr><td><code>--leading-prose</code></td><td>1.8</td><td>읽는 글, 에이전트 응답</td></tr>
+        </tbody>
+      </table>
+
+      <h2>줄 길이</h2>
+      <p>
+        읽는 글은 <code>--measure</code>(68ch)를 넘기지 않습니다.
+        한 줄이 너무 길면 다음 줄 첫 글자를 찾기 어려워집니다.
+        표와 데이터 화면은 예외입니다 — 넓을수록 좋습니다.
       </p>
 
       <h2>글꼴</h2>
@@ -296,7 +326,7 @@ export function fdTypography() {
         <b>설치가 필요합니다.</b> <code>npm install pretendard</code> 후
         <code>pretendard/dist/web/variable/pretendardvariable-dynamic-subset.css</code>를 등록하세요.
         빠뜨리면 에러 없이 조용히 시스템 글꼴로 렌더됩니다.
-        <br><span style="color:var(--gray-9);font-size:12.5px">라이선스 SIL OFL 1.1 — 재배포 가능, 판매 금지</span>
+        <br><span style="color:var(--gray-9);font-size:var(--text-xs)">라이선스 SIL OFL 1.1 — 재배포 가능, 판매 금지</span>
       </div>
       <table>
         <thead><tr><th>토큰</th><th>글꼴</th><th>용도</th></tr></thead>
@@ -310,20 +340,10 @@ export function fdTypography() {
         시각·용량·ID·코드가 여기 해당합니다. 사람 이름이나 문서 제목은 아닙니다.
       </div>
 
-      <h2>줄 간격</h2>
-      <table>
-        <thead><tr><th>값</th><th>용도</th></tr></thead>
-        <tbody>
-          <tr><td><code>1.62</code></td><td>기본. UI 전반</td></tr>
-          <tr><td><code>1.7</code></td><td>긴 문단, 에이전트 응답 본문</td></tr>
-          <tr><td><code>1.2</code></td><td>제목, 한 줄로 끝나는 라벨</td></tr>
-        </tbody>
-      </table>
-
       <h2>한글에서 주의할 것</h2>
       <ul>
-        <li><b>letter-spacing을 양수로 주지 않습니다.</b> 한글은 자간이 벌어지면 단어 경계가 무너집니다. 제목에만 <code>-0.01~-0.02em</code>을 씁니다.</li>
-        <li><b>대문자 변환(uppercase)을 쓰지 않습니다.</b> 한글에는 대문자가 없어 영문만 튀어 보입니다. Vuetify 기본값을 <code>defaults.ts</code>에서 해제한 이유입니다.</li>
+        <li><b>letter-spacing을 양수로 주지 않습니다.</b> 한글은 자간이 벌어지면 단어 경계가 무너집니다. 제목에만 <code>-0.01~-0.03em</code>을 씁니다.</li>
+        <li><b>대문자 변환(uppercase)을 쓰지 않습니다.</b> 한글에는 대문자가 없어 영문만 튀어 보입니다. Vuetify 기본값을 <code>defaults.ts</code>에서 해제했고, Stylelint가 막습니다.</li>
         <li><b>줄바꿈은 <code>word-break: keep-all</code></b>을 기본으로 합니다. 단어 중간에서 끊기지 않습니다.</li>
       </ul>
     </div>`
