@@ -80,7 +80,14 @@ ${FOUNDATION_PAGES.map(([id, ko, en]) => `- ${en} (${ko}) — ${SITE}/#/foundati
   agent responses) use 15px with line-height 1.8. Using one size for both makes both
   mediocre. Weights 400/500/600 — never 700+.
   Hierarchy comes from weight and color, not size.
-  No uppercase and no positive letter-spacing (both break Korean). word-break: keep-all.
+  No uppercase and no positive letter-spacing (both break Korean; the uppercase+
+  tracking combo also reads as generic admin-template). Micro labels are 12px /
+  weight 500 / gray instead. word-break: keep-all.
+  Tabular numerals (font-variant-numeric) on timestamps, sizes and counts.
+  Icons: Lucide at stroke-width 1.5 (2 looks chunky at 16-20px).
+  Focus ring: box-shadow 0 0 0 2px bg, 0 0 0 4px brand (var(--focus-ring)) — same
+  ring on every interactive element. Overlay shadow: var(--shadow-overlay), a
+  3-layer stack (1px outline + near + far), never a single blurry drop shadow.
   Line-height tokens: tight 1.3 (headings), ui 1.5 (dense), normal 1.62, prose 1.8.
   Reading measure max 68ch (var(--measure)).
 - Spacing: multiples of 4 only (0 4 8 12 16 24 32 48 64). Grouping is proximity.

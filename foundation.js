@@ -346,6 +346,30 @@ export function fdTypography() {
         <li><b>대문자 변환(uppercase)을 쓰지 않습니다.</b> 한글에는 대문자가 없어 영문만 튀어 보입니다. Vuetify 기본값을 <code>defaults.ts</code>에서 해제했고, Stylelint가 막습니다.</li>
         <li><b>줄바꿈은 <code>word-break: keep-all</code></b>을 기본으로 합니다. 단어 중간에서 끊기지 않습니다.</li>
       </ul>
+
+      <h2>마이크로 라벨 — 대문자 대신</h2>
+      <p>
+        표 헤더·섹션 라벨 같은 작은 라벨에 <b>대문자 + 벌어진 자간</b>을 쓰면
+        전형적인 "관리자 템플릿" 인상이 됩니다. Geist 계열은 쓰지 않습니다.
+        대신 <b>한 단계 작은 크기(12px) + medium 굵기 + 회색</b>으로 위계를 만듭니다.
+      </p>
+      <div class="dodont">
+        <div class="dd do"><span class="dd-tag">이렇게</span><ul>
+          <li>표 헤더: 12px · 500 · <code>gray-10</code> · 소문자 그대로</li>
+          <li>섹션 라벨: 12px · 500 · <code>gray-9</code></li>
+        </ul></div>
+        <div class="dd dont"><span class="dd-tag">이렇지 않게</span><ul>
+          <li><span style="font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.07em">Section Title</span> — 템플릿 인상</li>
+          <li>11px 미만 + 양수 자간 조합</li>
+        </ul></div>
+      </div>
+
+      <h2>숫자 — tabular-nums</h2>
+      <p>
+        시각·용량·건수처럼 <b>세로로 놓이는 숫자</b>는 자리 폭이 같아야 흔들리지 않습니다.
+        <code>.mono</code>·<code>code</code>·통계 숫자에는
+        <code>font-variant-numeric: tabular-nums</code>가 자동 적용됩니다.
+      </p>
     </div>`
 }
 

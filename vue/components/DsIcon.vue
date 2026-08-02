@@ -25,7 +25,7 @@ const cmp = computed(() => icons[props.name])
     class="ds-icon"
     :class="{ 'is-spin': spin }"
     :size="px"
-    :stroke-width="2"
+    :stroke-width="1.5"
     :aria-label="label"
     :aria-hidden="label ? undefined : 'true'"
     :role="label ? 'img' : undefined"

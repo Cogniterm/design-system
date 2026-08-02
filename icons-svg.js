@@ -77,7 +77,7 @@ export function ic(name, size = 'md', cls = '') {
   const d = ICON_PATHS[name]
   if (!d) return ''
   return '<svg class="lic ' + cls + '" width="' + px + '" height="' + px + '" viewBox="0 0 24 24" ' +
-    'fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" ' +
+    'fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" ' +
     'stroke-linejoin="round" aria-hidden="true">' + d + '</svg>'
 }
 

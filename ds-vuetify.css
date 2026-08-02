@@ -40,9 +40,9 @@
 .ds-menu-panel {
   background: var(--surface); border: 1px solid var(--gray-4);
   border-radius: var(--r-lg); padding: 5px; min-width: 180px;
-  font-family: var(--font); box-shadow: 0 6px 20px rgba(0,0,0,.09);
+  font-family: var(--font); box-shadow: var(--shadow-overlay);
 }
-[data-theme="dark"] .ds-menu-panel { box-shadow: 0 4px 16px rgba(0,0,0,.4); }
+
 .ds-menu-item {
   display: flex; align-items: center; gap: 9px; height: 34px; padding: 0 11px;
   border-radius: var(--r-md); font-size: 13.5px; color: var(--gray-12); cursor: pointer;
@@ -186,16 +186,14 @@
 
 /* ── VSnackbar ── */
 .v-snackbar__wrapper { border: 1px solid var(--gray-4); background: var(--surface);
-  color: var(--gray-12); font-size: 13.5px; box-shadow: 0 6px 20px rgba(0,0,0,.09); }
-[data-theme="dark"] .v-snackbar__wrapper { box-shadow: 0 4px 16px rgba(0,0,0,.4); }
+  color: var(--gray-12); font-size: 13.5px; box-shadow: var(--shadow-overlay); }
+
 
 /* ── VOverlay 계열 공통 (VMenu·VDialog 내부 면) ── */
 .v-overlay__content > .v-card,
 .v-overlay__content > .v-list,
-.v-overlay__content > .v-sheet { border: 1px solid var(--gray-4); box-shadow: 0 6px 20px rgba(0,0,0,.09); }
-[data-theme="dark"] .v-overlay__content > .v-card,
-[data-theme="dark"] .v-overlay__content > .v-list,
-[data-theme="dark"] .v-overlay__content > .v-sheet { box-shadow: 0 4px 16px rgba(0,0,0,.4); }
+.v-overlay__content > .v-sheet { border: 1px solid var(--gray-4); box-shadow: var(--shadow-overlay); }
+
 
 /* ── VSelectionControl (체크박스·라디오·스위치 공통) ── */
 .v-selection-control__input > .v-icon { font-size: 19px; }
@@ -356,15 +354,9 @@
 .v-overlay__content > .v-sheet,
 .v-overlay__content > .ds-menu-panel,
 .v-overlay__content > .ds-dialog-panel {
-  box-shadow: 0 6px 20px rgba(0, 0, 0, .09);
+  box-shadow: var(--shadow-overlay);
 }
-[data-theme="dark"] .v-overlay__content > .v-card,
-[data-theme="dark"] .v-overlay__content > .v-list,
-[data-theme="dark"] .v-overlay__content > .v-sheet,
-[data-theme="dark"] .v-overlay__content > .ds-menu-panel,
-[data-theme="dark"] .v-overlay__content > .ds-dialog-panel {
-  box-shadow: 0 6px 20px rgba(0, 0, 0, .45);
-}
+
 .v-overlay__scrim { backdrop-filter: none; }
 
 /* ── 머티리얼 오버레이(리플 잔상) 제거 ── */

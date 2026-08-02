@@ -54,6 +54,7 @@
 }
 .searchbox::placeholder { color: var(--gray-9); }
 .searchbox:focus { border-color: var(--brand); box-shadow: 0 0 0 3.5px var(--brand-subtle); }
+.icon-btn:focus-visible, .topnav-links a:focus-visible, .sidebar a:focus-visible { outline: none; box-shadow: var(--focus-ring); }
 .icon-btn {
   all: unset; box-sizing: border-box; cursor: pointer;
   width: 34px; height: 34px;
@@ -91,8 +92,8 @@
   margin-bottom: 8px;
 }
 .lnb-eyebrow {
-  font-size: var(--text-2xs); font-weight: var(--weight-semibold);
-  color: var(--brand); letter-spacing: .08em; text-transform: uppercase;
+  font-size: var(--text-xs); font-weight: var(--weight-semibold);
+  color: var(--brand);
 }
 .lnb-title {
   display: block; margin-top: 5px;
@@ -103,8 +104,8 @@
 
 .sidebar-body { padding: 0 12px; }
 .nav-title {
-  font-size: var(--text-2xs); font-weight: var(--weight-semibold);
-  color: var(--gray-9); text-transform: uppercase; letter-spacing: .07em;
+  font-size: var(--text-xs); font-weight: var(--weight-medium);
+  color: var(--gray-9);
   padding: 0 9px; margin: 20px 0 6px;
 }
 .nav-title:first-child { margin-top: 4px; }
@@ -127,7 +128,7 @@
 .sidebar a.on .nav-en { color: var(--brand); opacity: .75; }
 .sidebar a .vtag {
   margin-left: auto; flex-shrink: 0;
-  font-size: 10px; font-weight: var(--weight-semibold); letter-spacing: .03em;
+  font-size: 10px; font-weight: var(--weight-semibold);
   padding: 1px 5px; border-radius: var(--r-sm);
   background: var(--gray-4); color: var(--gray-10);
 }
@@ -240,9 +241,8 @@
   margin-bottom: 18px; overflow: hidden;
 }
 .prose table th, .ptable th, .wl th {
-  text-align: left; font-size: var(--text-2xs);
-  font-weight: var(--weight-semibold); color: var(--gray-10);
-  text-transform: uppercase; letter-spacing: .05em;
+  text-align: left; font-size: var(--text-xs);
+  font-weight: var(--weight-medium); color: var(--gray-10);
   padding: 10px 15px; background: var(--gray-2);
   border-bottom: 1px solid var(--gray-4);
 }
@@ -261,8 +261,8 @@
 .ptable td.pdesc { color: var(--gray-11); }
 
 .tbl-title {
-  font-size: var(--text-2xs); font-weight: var(--weight-semibold);
-  color: var(--gray-10); text-transform: uppercase; letter-spacing: .06em;
+  font-size: var(--text-xs); font-weight: var(--weight-semibold);
+  color: var(--gray-10);
   margin: 34px 0 12px;
 }
 .tbl-title:first-child { margin-top: 0; }
@@ -345,7 +345,7 @@
   flex-shrink: 0; width: 86px; height: 21px;
   display: inline-flex; align-items: center; justify-content: center;
   font-size: var(--text-2xs); font-weight: var(--weight-semibold);
-  text-transform: uppercase; letter-spacing: .04em; border-radius: var(--r-full);
+  border-radius: var(--r-full);
 }
 .wb-tag.why { background: var(--gray-3); color: var(--gray-10); }
 .wb-tag.where { background: var(--brand-subtle); color: var(--brand); }
@@ -354,8 +354,8 @@
 .vs-head {
   display: flex; align-items: center; gap: 7px; padding: 12px 17px;
   background: var(--gray-2); border-bottom: 1px solid var(--gray-4);
-  font-size: var(--text-2xs); font-weight: var(--weight-semibold);
-  color: var(--gray-10); text-transform: uppercase; letter-spacing: .05em;
+  font-size: var(--text-xs); font-weight: var(--weight-medium);
+  color: var(--gray-10);
 }
 .vs-row {
   display: flex; gap: 15px; padding: 13px 17px;
@@ -395,7 +395,6 @@
   display: inline-flex; align-items: center; height: 21px; padding: 0 10px;
   border-radius: var(--r-full); font-size: var(--text-2xs);
   font-weight: var(--weight-semibold); margin-bottom: 11px;
-  text-transform: uppercase; letter-spacing: .04em;
 }
 .dd.do .dd-tag { background: #e7f5ec; color: var(--success); }
 .dd.dont .dd-tag { background: var(--danger-subtle); color: var(--danger); }
@@ -471,7 +470,7 @@
 }
 .mini-badge {
   margin-left: auto; flex-shrink: 0;
-  font-size: 10px; font-weight: var(--weight-semibold); letter-spacing: .03em;
+  font-size: 10px; font-weight: var(--weight-semibold);
   padding: 2px 6px; border-radius: var(--r-sm);
 }
 .mini-badge.custom { background: var(--brand-subtle); color: var(--brand); }
@@ -733,8 +732,8 @@
 
 .ds-nav-demo { max-width: 228px; }
 .ds-nav-demo .sub {
-  font-size: var(--text-2xs); font-weight: var(--weight-semibold); color: var(--gray-9);
-  text-transform: uppercase; letter-spacing: .07em; padding: 5px 9px;
+  font-size: var(--text-xs); font-weight: var(--weight-medium); color: var(--gray-9);
+  padding: 5px 9px;
 }
 .ds-nav-demo > div:not(.sub) {
   display: flex; align-items: center; gap: 9px; padding: 7px 9px;

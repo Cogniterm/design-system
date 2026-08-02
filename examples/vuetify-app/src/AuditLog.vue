@@ -393,8 +393,7 @@ function exportCsv() { toast.value = { msg: '내보내기에 실패했습니다 
 .lvl-dot[data-lvl="error"]   { background: var(--danger); }
 
 .active-filters { display: flex; align-items: center; gap: 8px; margin-top: 14px; flex-wrap: wrap; }
-.af-label { font-size: 12px; font-weight: 600; color: var(--gray-9);
-  text-transform: uppercase; letter-spacing: .05em; }
+.af-label { font-size: 12px; font-weight: 600; color: var(--gray-9); }
 
 .tbl { margin-top: 18px; }
 .mono-cell { font-family: var(--mono); font-size: 12.5px; color: var(--gray-11); white-space: nowrap; }

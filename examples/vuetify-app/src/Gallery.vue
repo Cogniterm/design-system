@@ -701,8 +701,8 @@ const SECTIONS = [
 .lg.wrapped { background: #ab6400; }
 [data-theme="dark"] .lg.wrapped { background: #f0b429; }
 
-.g-sec { font-size: 12px; font-weight: 700; color: var(--gray-9); text-transform: uppercase;
-  letter-spacing: .08em; margin: 44px 0 14px; padding-bottom: 8px; border-bottom: 1px solid var(--gray-4); }
+.g-sec { font-size: 12px; font-weight: 700; color: var(--gray-9);
+  margin: 44px 0 14px; padding-bottom: 8px; border-bottom: 1px solid var(--gray-4); }
 .g-sec span { text-transform: none; letter-spacing: 0; font-weight: 500; color: var(--gray-8); margin-left: 8px; }
 
 .g-item { display: grid; grid-template-columns: 300px 1fr; gap: 24px;
@@ -714,7 +714,7 @@ const SECTIONS = [
   background: var(--gray-4); color: var(--gray-10); padding: 1px 5px; border-radius: 3px; }
 .g-why, .g-where { font-size: 12.5px; color: var(--gray-11); line-height: 1.6; margin-top: 10px; }
 .g-why b, .g-where b { display: inline-block; min-width: 42px; font-size: 10.5px; font-weight: 700;
-  color: var(--gray-9); text-transform: uppercase; letter-spacing: .05em; }
+  color: var(--gray-9); }
 .g-demo { padding: 24px; display: flex; flex-wrap: wrap; gap: 12px; align-items: center;
   background: var(--surface); }
 .g-val { font-family: var(--mono); font-size: 12px; color: var(--gray-9); }

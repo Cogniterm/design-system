@@ -52,6 +52,16 @@
   --surface: #ffffff;
   --danger-subtle: #fef2f2;
   --danger-border: #f5c6c8;
+
+  /* 떠 있는 요소의 그림자 — 1px 윤곽 + 근거리 + 원거리 3겹.
+     단층 그림자는 뿌옇게 보입니다. */
+  --shadow-overlay:
+    0 0 0 1px var(--gray-4),
+    0 1px 2px rgba(0, 0, 0, .04),
+    0 8px 24px rgba(0, 0, 0, .08);
+
+  /* 포커스 링 — 배경색 2px + 브랜드 2px 이중 링. 모든 조작 요소가 같은 링을 씁니다. */
+  --focus-ring: 0 0 0 2px var(--bg), 0 0 0 4px var(--brand);
 }
 
 [data-theme="dark"] {
@@ -73,13 +83,30 @@
   --surface: #18191b;
   --danger-subtle: #2b1517;
   --danger-border: #642026;
+
+  --shadow-overlay:
+    0 0 0 1px var(--gray-5),
+    0 1px 2px rgba(0, 0, 0, .3),
+    0 8px 24px rgba(0, 0, 0, .5);
+  --focus-ring: 0 0 0 2px var(--bg), 0 0 0 4px var(--brand);
 }
 
 * { box-sizing: border-box; margin: 0; }
 body {
   font-family: var(--font); font-size: 14px; color: var(--gray-12);
   background: var(--bg); -webkit-font-smoothing: antialiased; line-height: 1.62;
-  transition: background .2s, color .2s;
+  font-feature-settings: 'kern' 1, 'liga' 1, 'calt' 1;
+  text-rendering: optimizeLegibility;
+  transition: background .16s ease, color .16s ease;
+}
+
+/* 선택 영역도 브랜드로 */
+::selection { background: var(--brand-subtle); color: var(--brand-active); }
+[data-theme="dark"] ::selection { background: var(--brand-subtle); color: var(--brand); }
+
+/* 숫자가 세로로 흔들리지 않게 — 시각·용량·건수는 모두 tabular */
+.mono, .tabular, td.mono, code, kbd, pre {
+  font-variant-numeric: tabular-nums;
 }
 
 /* ── ds-button ── */
@@ -89,7 +116,7 @@ body {
   border-radius: var(--r-lg); font-size: 14px; font-weight: 500;
   transition: background .16s ease, border-color .16s ease, color .16s ease; font-family: var(--font);
 }
-.btn:focus-visible { outline: 2px solid var(--brand); outline-offset: 2px; }
+.btn:focus-visible { outline: none; box-shadow: var(--focus-ring); }
 .btn-primary { background: var(--brand); color: var(--on-brand); }
 .btn-primary:hover { background: var(--brand-hover); }
 .btn-primary:active { background: var(--brand-active); }
@@ -247,7 +274,7 @@ td.mono { font-family: var(--mono); font-size: 12.5px; color: var(--gray-11); }
   border: 1px solid var(--gray-4); border-radius: var(--r-lg); background: var(--surface);
   padding: 12px 14px; font-size: 13.5px;
   box-shadow: 0 4px 16px rgba(0,0,0,.06); }
-[data-theme="dark"] .toast { box-shadow: 0 4px 16px rgba(0,0,0,.4); }
+
 .toast .t-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
 .toast.success .t-dot { background: var(--success); }
 .toast.danger .t-dot { background: var(--danger); }
@@ -319,6 +346,7 @@ td.mono { font-family: var(--mono); font-size: 12.5px; color: var(--gray-11); }
 .ds-icon { flex-shrink: 0; vertical-align: -0.125em; }
 .ds-icon.is-spin { animation: spin .8s linear infinite; }
 
-/* ── 인라인 Lucide SVG (문서·템플릿용) ── */
+/* ── 인라인 Lucide SVG (문서·템플릿용) ──
+   stroke 1.5 — 16~20px 크기에서 2는 뭉툭해 보입니다. */
 .lic { flex-shrink: 0; vertical-align: -0.15em; fill: none; stroke: currentColor;
-  stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+  stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
