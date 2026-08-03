@@ -555,7 +555,7 @@ export const COMPONENTS = [
     ['selected', 'string[]', '—', '선택된 파일 id 목록.'],
   ],
   events: [['select', 'DsFile', '카드 클릭.']],
-  slots: [['icon', '파일 아이콘. <DsIcon>을 넣습니다. 생략하면 file.icon 문자열이 그대로 표시됩니다.']],
+  slots: [['icon', '파일 아이콘. <DsIcon>을 넣습니다. 생략하면 아이콘 자리 자체가 비어 있습니다.']],
   demo: `<div class="file-grid">
     <div class="file-card"><div class="f-icon">${ic('folder','lg')}</div><div class="f-name">법무</div><div class="f-meta">12 files</div></div>
     <div class="file-card selected"><div class="f-icon">${ic('document','lg')}</div><div class="f-name">계약서_최종.pdf</div><div class="f-meta">2.1 MB</div></div>
@@ -583,7 +583,7 @@ export const COMPONENTS = [
   props: [
     ['name', 'string', '필수', '파일 이름.'],
     ['meta', 'string', '—', '크기·날짜 등.'],
-    ['icon', 'string', '—', '텍스트 아이콘. 보통은 #icon 슬롯에 <DsIcon>을 넣습니다.'],
+    ['icon', 'IconName', '—', '어떤 아이콘인지 알려주는 값. 실제 그림은 #icon 슬롯이 그립니다.'],
     ['selected', 'boolean', 'false', '선택 상태.'],
   ],
   events: [['select', '—', '행 클릭.']],
@@ -913,17 +913,15 @@ export const COMPONENTS = [
             en: 'Sidebars appear everywhere and drift; fix icon, badge and active styling.' },
   props: [
     ['modelValue', 'any', '—', '선택된 항목.'],
-    ['items', 'NavItem[]', '필수', '{ value, title, icon?, badge?, subheader? }'],
+    ['items', 'NavItem[]', '필수', '{ value, title, icon?, badge?, subheader? } — icon은 이름만 주면 그려집니다.'],
   ],
-  slots: [],
+  slots: [['icon', '아이콘을 직접 그릴 때만. 기본은 item.icon으로 자동입니다.']],
   demo: `<div class="ds-nav-demo"><div class="sub">워크스페이스</div><div>${ic('agent','sm')} 에이전트 <b>17</b></div><div class="on">${ic('tableView','sm')} 감사 로그 <b>3</b></div></div>`,
   vue: `<DsNavList v-model="nav" :items="[
   { subheader: '워크스페이스' },
   { value: 'agents', title: '에이전트', icon: 'agent', badge: 17 },
   { value: 'logs', title: '감사 로그', icon: 'tableView', badge: 3 },
-]">
-  <template #icon="{ item }"><DsIcon :name="item.icon" size="sm" /></template>
-</DsNavList>`,
+]" />`,
   html: null,
   guidelines: [['해야 할 것', '항목이 7개를 넘으면 subheader로 묶습니다.']],
 },
@@ -1136,7 +1134,7 @@ export const COMPONENTS = [
   summary: '페이지 전체에 해당하는 공지.',
   reason: { ko: 'Alert는 영역 단위, Banner는 페이지 전체 단위입니다. 이 구분이 없으면 둘 다 남발됩니다.',
             en: 'Alert is regional, Banner is page-wide; without the distinction both get overused.' },
-  props: [['icon', 'string', '—', '앞에 붙는 아이콘.']],
+  props: [['icon', 'IconName', '—', '앞에 붙는 아이콘. 이름만 주면 알아서 그립니다.']],
   slots: [['default', '공지 문구.'], ['actions', '액션 버튼.']],
   demo: `<div class="ds-banner-demo">${ic('notification','sm')} 8월 3일 02:00~04:00 서비스 점검이 예정되어 있습니다.</div>`,
   vue: `<DsBanner icon="◈">
@@ -1214,16 +1212,14 @@ export const COMPONENTS = [
   reason: { ko: '열이 고정되지 않은 목록에 테이블은 과합니다. 그 중간 단계가 필요합니다.',
             en: 'A table is overkill when columns are not fixed; this is the middle ground.' },
   props: [
-    ['items', 'ListItem[]', '필수', '{ value?, title, subtitle?, icon?, meta? }'],
+    ['items', 'ListItem[]', '필수', '{ value?, title, subtitle?, icon?, meta? } — icon은 이름만 주면 그려집니다.'],
     ['selectable', 'boolean', 'false', '선택 가능 여부.'],
   ],
-  slots: [],
+  slots: [['icon', '아이콘을 직접 그릴 때만. 기본은 item.icon으로 자동입니다.']],
   demo: `<div class="ds-list-demo"><div><span>${ic('run','sm')}</span><b>자동 분류</b><i>수신 문서를 규칙에 따라 분류</i><em>켜짐</em></div><div><span>${ic('tableView','sm')}</span><b>주간 리포트</b><i>매주 월요일 09:00</i><em>켜짐</em></div></div>`,
   vue: `<DsList :items="[
   { value: 'a', title: '자동 분류', subtitle: '규칙에 따라 분류', icon: 'run', meta: '켜짐' },
-]" selectable>
-  <template #icon="{ item }"><DsIcon :name="item.icon" size="sm" /></template>
-</DsList>`,
+]" selectable />`,
   html: null,
   guidelines: [['해야 할 것', '정렬·필터가 필요해지면 DataTable로 바꿉니다.']],
 },

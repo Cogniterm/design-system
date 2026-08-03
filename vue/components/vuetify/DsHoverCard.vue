@@ -1,9 +1,10 @@
 <script setup lang="ts">
 // origin: wrapped — VMenu(hover) 기반. 올리면 뜨는 미리보기 카드
 // 어디에: 사용자·문서 이름 위 미리보기. 터치 기기에선 뜨지 않으므로 필수 정보 금지
+import type { Anchor } from 'vuetify'
 import { VMenu } from 'vuetify/components'
 withDefaults(defineProps<{
-  location?: string
+  location?: Anchor
   openDelay?: number
 }>(), { location: 'bottom start', openDelay: 350 })
 </script>

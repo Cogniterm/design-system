@@ -6,7 +6,7 @@ import { DsBanner } from '~/design/vuetify'   // Vuetify 필요 · ds.css + ds-v
 화면 최상단 전역 공지 — 점검 예정, 요금제 만료.
 
 ## Props
-- icon: string — 앞에 붙는 아이콘.
+- icon: IconName — 앞에 붙는 아이콘. 이름만 주면 알아서 그립니다.
 
 ## Slots
 - #default — 공지 문구.

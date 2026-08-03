@@ -4,7 +4,8 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "vite build"
+    "build": "vite build",
+    "typecheck": "vue-tsc --noEmit"
   },
   "dependencies": {
     "lucide-vue-next": "^1.0.0",
@@ -15,6 +16,8 @@
   "devDependencies": {
     "@vitejs/plugin-vue": "^5.2.1",
     "vite": "^6.0.7",
-    "vite-plugin-vuetify": "^2.1.0"
+    "vite-plugin-vuetify": "^2.1.0",
+    "vue-tsc": "^2.2.0",
+    "typescript": "^5.7.0"
   }
 }

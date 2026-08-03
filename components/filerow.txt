@@ -8,7 +8,7 @@ import { DsFileRow } from '~/design'   // Vuetify 불필요 · ds.css만
 ## Props
 - name: string = 필수 — 파일 이름.
 - meta: string — 크기·날짜 등.
-- icon: string — 텍스트 아이콘. 보통은 #icon 슬롯에 을 넣습니다.
+- icon: IconName — 어떤 아이콘인지 알려주는 값. 실제 그림은 #icon 슬롯이 그립니다.
 - selected: boolean = false — 선택 상태.
 
 ## Events

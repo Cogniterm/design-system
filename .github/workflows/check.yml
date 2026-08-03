@@ -57,3 +57,8 @@ jobs:
           cd examples/vuetify-app
           npm install
           npx vite build --base=/design-system/live/
+      # 소비자가 vue-tsc를 돌렸을 때 우리 컴포넌트에서 오류가 나면 실패시킵니다.
+      - name: 타입 검사
+        run: |
+          cd examples/vuetify-app
+          npm run typecheck

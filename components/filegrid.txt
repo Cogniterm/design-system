@@ -12,7 +12,7 @@ import { DsFileGrid } from '~/design'   // Vuetify 불필요 · ds.css만
 ## Events
 - @select (DsFile) — 카드 클릭.
 ## Slots
-- #icon — 파일 아이콘. 을 넣습니다. 생략하면 file.icon 문자열이 그대로 표시됩니다.
+- #icon — 파일 아이콘. 을 넣습니다. 생략하면 아이콘 자리 자체가 비어 있습니다.
 
 ## 사용 예
 ```vue

@@ -89,9 +89,7 @@ Each component has a standalone prompt at https://kimjiyong995-coder.github.io/d
       { subheader: '워크스페이스' },
       { value: 'agents', title: '에이전트', icon: 'agent', badge: 17 },
       { value: 'logs', title: '감사 로그', icon: 'tableView', badge: 3 },
-    ]">
-      <template #icon="{ item }"><DsIcon :name="item.icon" size="sm" /></template>
-    </DsNavList>
+    ]" />
 - **DsStepper** (단계 표시) — 여러 단계로 나뉜 흐름.
   import: ~/design/vuetify | origin: wrapped (VStepper)
   where: 에이전트 생성 마법사, 온보딩, 다단계 폼.
@@ -519,9 +517,7 @@ Each component has a standalone prompt at https://kimjiyong995-coder.github.io/d
   usage:
     <DsList :items="[
       { value: 'a', title: '자동 분류', subtitle: '규칙에 따라 분류', icon: 'run', meta: '켜짐' },
-    ]" selectable>
-      <template #icon="{ item }"><DsIcon :name="item.icon" size="sm" /></template>
-    </DsList>
+    ]" selectable />
 - **DsTreeview** (트리) — 계층 구조를 펼쳐서 봅니다.
   import: ~/design/vuetify | origin: wrapped (VTreeview)
   where: 드라이브 폴더 트리, 문서 목차, 조직도.

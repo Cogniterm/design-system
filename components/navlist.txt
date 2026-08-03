@@ -7,8 +7,10 @@ import { DsNavList } from '~/design/vuetify'   // Vuetify 필요 · ds.css + ds-
 
 ## Props
 - modelValue: any — 선택된 항목.
-- items: NavItem[] = 필수 — { value, title, icon?, badge?, subheader? }
+- items: NavItem[] = 필수 — { value, title, icon?, badge?, subheader? } — icon은 이름만 주면 그려집니다.
 
+## Slots
+- #icon — 아이콘을 직접 그릴 때만. 기본은 item.icon으로 자동입니다.
 
 ## 사용 예
 ```vue
@@ -16,9 +18,7 @@ import { DsNavList } from '~/design/vuetify'   // Vuetify 필요 · ds.css + ds-
   { subheader: '워크스페이스' },
   { value: 'agents', title: '에이전트', icon: 'agent', badge: 17 },
   { value: 'logs', title: '감사 로그', icon: 'tableView', badge: 3 },
-]">
-  <template #icon="{ item }"><DsIcon :name="item.icon" size="sm" /></template>
-</DsNavList>
+]" />
 ```
 
 

@@ -1,6 +1,8 @@
 <script setup lang="ts">
 // origin: custom — 드라이브 그리드 보기. FileRow와 같은 데이터로 보기 전환 가능해야 함
-export interface DsFile { id: string; name: string; meta?: string; icon?: string }
+import type { IconName } from '../icons'
+// icon: 실제 그림은 #icon 슬롯이 그립니다 (Standalone 계층 — Lucide 직접 의존 없음)
+export interface DsFile { id: string; name: string; meta?: string; icon?: IconName }
 defineProps<{ files: DsFile[]; selected?: string[] }>()
 const emit = defineEmits<{ select: [file: DsFile] }>()
 </script>
@@ -13,7 +15,7 @@ const emit = defineEmits<{ select: [file: DsFile] }>()
       :class="{ selected: selected?.includes(f.id) }"
       @click="emit('select', f)"
     >
-      <div class="f-icon"><slot name="icon" :file="f">{{ f.icon }}</slot></div>
+      <div v-if="f.icon || $slots.icon" class="f-icon"><slot name="icon" :file="f" /></div>
       <div class="f-name">{{ f.name }}</div>
       <div v-if="f.meta" class="f-meta">{{ f.meta }}</div>
     </div>

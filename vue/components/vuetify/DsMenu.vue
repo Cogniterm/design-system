@@ -1,10 +1,11 @@
 <script setup lang="ts">
 // origin: wrapped — VMenu 기반
 // 포지셔닝(뷰포트 충돌 회피)·키보드 네비게이션이 어려움 → Vuetify 유지
+import type { Anchor } from 'vuetify'
 import { VMenu } from 'vuetify/components'
 
 withDefaults(defineProps<{
-  location?: string
+  location?: Anchor
 }>(), { location: 'bottom start' })
 </script>
 

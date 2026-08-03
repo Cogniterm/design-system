@@ -21,6 +21,9 @@ import {
   Loader2, Square, CheckSquare, MinusSquare, Circle, CircleDot,
   ArrowUp, ArrowDown, Menu, Pencil, Star, StarHalf,
   Paperclip, Plus, Minus, Calendar, Pipette, Upload, EllipsisVertical,
+  Palette, Command, ArrowBigUp, Option, CornerDownLeft,
+  ArrowUp as ArrowUpKey, ArrowDown as ArrowDownKey,
+  ArrowLeft as ArrowLeftKey, ArrowRight as ArrowRightKey, Delete, Space,
 } from 'lucide-vue-next'
 import { icons as semantic } from './icons'
 
@@ -72,6 +75,20 @@ export const lucideAliases: IconAliases = {
   eyeDropper: wrap(Pipette),
   upload: wrap(Upload),
   vertical: wrap(EllipsisVertical),
+
+  /* 키보드 힌트 — Vuetify의 IconAliases 타입이 요구합니다 (VHotkey 등에서 사용) */
+  color: wrap(Palette),
+  command: wrap(Command),
+  ctrl: wrap(ChevronUp),
+  space: wrap(Space),
+  shift: wrap(ArrowBigUp),
+  alt: wrap(Option),
+  enter: wrap(CornerDownLeft),
+  arrowup: wrap(ArrowUpKey),
+  arrowdown: wrap(ArrowDownKey),
+  arrowleft: wrap(ArrowLeftKey),
+  arrowright: wrap(ArrowRightKey),
+  backspace: wrap(Delete),
 }
 
 /* 문자열 아이콘 — 우리 의미 이름을 그대로 씁니다: <v-icon icon="agent" /> */

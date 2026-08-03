@@ -251,6 +251,26 @@ if (scaleOk) {
   else ok('색 대비 WCAG 2.2 AA — 라이트·다크 14조합 통과')
 }
 
+/* ── 18. 아이콘 이름이 글자로 새는 폴백 ──
+   <slot name="icon">{{ icon }}</slot> 처럼 두면, 슬롯을 안 넘긴 화면에서
+   아이콘 대신 "agent" 같은 이름이 그대로 찍힙니다. 실제로 한 번 났던 버그입니다. */
+{
+  const leaky = []
+  const scan = (dir, prefix) => {
+    for (const f of readdirSync(dir).filter((f) => f.endsWith('.vue'))) {
+      const src = readFileSync(`${dir}/${f}`, 'utf8')
+      // 슬롯 이름이 icon이고 폴백이 {{ … }} 하나로만 이뤄진 경우
+      if (/<slot[^>]*name="icon"[^>]*>\s*\{\{[^}]*\}\}\s*<\/slot>/.test(src))
+        leaky.push(`${prefix}${f}`)
+    }
+  }
+  scan('vue/components', 'vue/components/')
+  scan('vue/components/vuetify', 'vue/components/vuetify/')
+  if (leaky.length)
+    errors.push(`아이콘 이름이 글자로 렌더됩니다 — ${leaky.join(', ')} (폴백을 비우거나 <DsIcon>을 쓰세요)`)
+  else ok('아이콘 슬롯 — 이름이 글자로 새지 않음')
+}
+
 /* ── 결과 ── */
 console.log()
 if (warn.length) {

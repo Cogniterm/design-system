@@ -57,6 +57,12 @@ const actorFilter = ref<string>('전체')
 const density = ref<'compact' | 'comfortable' | 'spacious'>('compact')
 const loading = ref(false)
 const selected = ref<Log | null>(null)
+/* 다이얼로그는 열림/닫힘(boolean)을 받습니다.
+   "어떤 행이 열려 있나"(Log|null)와 분리해서 이어 붙입니다. */
+const detailOpen = computed({
+  get: () => selected.value !== null,
+  set: (v: boolean) => { if (!v) selected.value = null },
+})
 const toast = ref<{ msg: string; variant: 'success' | 'danger' } | null>(null)
 
 const actors = ['전체', ...new Set(RAW.map((r) => r.actor))]
@@ -212,7 +218,7 @@ function exportCsv() { toast.value = { msg: '내보내기에 실패했습니다 
                 <template #activator="props">
                   <button class="row-more" v-bind="props" aria-label="More"><DsIcon name="more" size="sm" /></button>
                 </template>
-                <div class="ds-menu-item" @click="selected = item as any">상세 보기</div>
+                <div class="ds-menu-item" @click="selected = item as Log">상세 보기</div>
                 <div class="ds-menu-item">이 수행자로 필터</div>
                 <div class="ds-menu-item">이벤트 ID 복사</div>
               </DsMenu>
@@ -221,7 +227,7 @@ function exportCsv() { toast.value = { msg: '내보내기에 실패했습니다 
         </div>
 
         <!-- ═══ 상세 다이얼로그 ═══ -->
-        <DsDialog v-model="selected" :title="selected ? `이벤트 #${selected.id}` : ''" :width="560">
+        <DsDialog v-model="detailOpen" :title="selected ? `이벤트 #${selected.id}` : ''" :width="560">
           <template v-if="selected">
             <div class="kv"><span>시각</span><code>{{ selected.time }}</code></div>
             <div class="kv"><span>수준</span>
