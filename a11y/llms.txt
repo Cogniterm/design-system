@@ -258,6 +258,81 @@ Keyboard: n/a
 Component handles: 텍스트로 현재 작업을 표현 — 스크린리더가 읽을 내용이 있음
 YOU must handle: aria-live="polite"로 단계 변경을 알리기; 점 애니메이션은 aria-hidden; prefers-reduced-motion에서 애니메이션 정지
 
+### DsLink (링크)
+Keyboard: Tab = 링크로 이동 | Enter = 이동
+Component handles: 포커스 링; external 시 rel=noopener
+YOU must handle: 링크 텍스트에 목적지를 — "여기" 금지
+
+### DsKbd (키 표기)
+Keyboard: n/a
+Component handles: <kbd> 시맨틱
+YOU must handle: 어떤 기능의 키인지 주변 텍스트로
+
+### DsCode (코드)
+Keyboard: Tab = 복사 버튼으로 (블록)
+Component handles: 블록 복사 버튼; 고정폭·tabular
+YOU must handle: 긴 페이로드는 접기(Accordion)와 조합
+
+### DsStatusDot (상태 점)
+Keyboard: n/a
+Component handles: role="img" + aria-label 강제
+YOU must handle: label에 의미를 — "성공"이 아니라 "온라인"처럼 구체적으로
+
+### DsTimestamp (시각)
+Keyboard: n/a
+Component handles: <time datetime> · title에 ISO
+YOU must handle: 감사 기록은 absolute 고정
+
+### DsMetaList (메타 목록)
+Keyboard: n/a
+Component handles: <dl> 시맨틱
+YOU must handle: 라벨을 짧게 — 88px 폭
+
+### DsSearchField (검색 입력)
+Keyboard: Enter = 검색 실행 | Esc = 브라우저 기본 — 값 지움
+Component handles: type=search; 지우기 버튼 aria-label
+YOU must handle: 결과 수를 aria-live로 알리기
+
+### DsSystemMessage (시스템 메시지)
+Keyboard: n/a
+Component handles: role="status"
+YOU must handle: 에러는 여기 말고 Alert로
+
+### DsToolbar (툴바)
+Keyboard: Tab = 컨트롤 순회
+Component handles: role="toolbar"
+YOU must handle: 컨트롤은 전부 sm — 높이 혼재 금지
+
+### DsVisuallyHidden (시각 숨김)
+Keyboard: n/a
+Component handles: 표준 sr-only 클립
+YOU must handle: aria-label로 충분한 경우엔 쓰지 않기
+
+### DsNumberInput (숫자 입력)
+Keyboard: ↑ ↓ = 스텝 | Home/End = 최소·최대
+Component handles: Vuetify가 role=spinbutton·클램프 처리
+YOU must handle: label 필수 · 단위는 hint에
+
+### DsCombobox (자유 태그 입력)
+Keyboard: 글자 = 입력·검색 | Enter = 칩 확정 | Backspace = 마지막 칩 제거 | ↑ ↓ = 제안 이동
+Component handles: IME 조합·칩 관리·combobox 시맨틱
+YOU must handle: 허용 형식 안내 (이메일 등)
+
+### DsPopover (팝오버)
+Keyboard: Enter/Space = 열기 | Esc = 닫기 | Tab = 내용 순회
+Component handles: 포지셔닝·바깥 클릭 닫기·포커스 복귀
+YOU must handle: activator에 뜻 있는 라벨
+
+### DsHoverCard (호버 카드)
+Keyboard: Tab 포커스 = 호버와 동일하게 열림
+Component handles: 지연·유지 판정
+YOU must handle: 필수 정보 넣지 않기 — 터치에서 안 뜸
+
+### DsCommandPalette (명령 팔레트)
+Keyboard: ⌘K = 열기 (앱에서 바인딩) | ↑ ↓ = 이동 | Enter = 실행 | Esc = 닫기
+Component handles: 포커스 트랩·listbox 시맨틱·활성 항목 추적
+YOU must handle: 전역 단축키 등록은 앱 몫; 최근 사용 상단 정렬
+
 ### DsIcon (아이콘)
 Keyboard: n/a
 Component handles: label이 없으면 aria-hidden="true" 자동 부여; label이 있으면 role="img"

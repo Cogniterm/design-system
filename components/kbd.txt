@@ -1,0 +1,32 @@
+# DsKbd — Cogniterm Design System
+
+import { DsKbd } from '~/design'   // Vuetify 불필요 · ds.css만
+
+## 용도
+단축키 안내 — 팔레트 항목, 툴팁, 문서.
+
+## Props
+- keys: string[] — 여러 키 조합. 없으면 슬롯 하나.
+
+## Slots
+- #default — 키 하나.
+
+## 사용 예
+```vue
+<DsKbd :keys="['⌘', 'K']" />
+<DsKbd>Esc</DsKbd>
+```
+
+
+## 지침
+- [해야 할 것] 기능 이름과 함께 씁니다 — "⌘K로 어디서든 검색".
+
+## 접근성
+직접 처리: 어떤 기능의 키인지 주변 텍스트로
+
+## 시스템 규칙 (요약)
+- 색·간격·모서리는 CSS 변수만 (var(--gray-6), var(--brand)) — hex 금지
+- primary 버튼은 화면당 하나. 선택·활성 상태는 중립(--sel-bg/--sel-fg)
+- 컨트롤 높이 32(sm)/40/48 — 필터 바·툴바는 sm
+- 목록·테이블은 default/loading/empty/error/partial 5상태
+- 전체 규칙: https://kimjiyong995-coder.github.io/design-system/llms.txt

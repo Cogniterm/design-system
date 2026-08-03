@@ -1,0 +1,38 @@
+# DsCommandPalette — Cogniterm Design System
+
+import { DsCommandPalette } from '~/design/vuetify'   // Vuetify 필요 · ds.css + ds-vuetify.css
+
+## 용도
+전역 ⌘K — 문서·에이전트·명령으로 점프.
+
+## Props
+- modelValue: boolean = false — 열림.
+- items: PaletteItem[] = 필수 — { id, title, group?, hint? }
+- placeholder: string — 입력 안내.
+
+## Events
+- @select (PaletteItem) — 선택 시. 팔레트는 자동으로 닫힘.
+
+## 사용 예
+```vue
+<DsCommandPalette v-model="open" :items="commands" @select="run" />
+<!-- 전역: keydown ⌘K → open = true -->
+```
+
+## 구분
+- vs SearchField: 한 목록 안 검색은 SearchField
+
+## 지침
+- [해야 할 것] ⌘K 하나로 통일 — SearchField의 shortcut과 연결.
+- [해야 할 것] 최근 사용을 상단에.
+
+## 접근성
+키보드: ⌘K=열기 (앱에서 바인딩) · ↑ ↓=이동 · Enter=실행 · Esc=닫기
+직접 처리: 전역 단축키 등록은 앱 몫 / 최근 사용 상단 정렬
+
+## 시스템 규칙 (요약)
+- 색·간격·모서리는 CSS 변수만 (var(--gray-6), var(--brand)) — hex 금지
+- primary 버튼은 화면당 하나. 선택·활성 상태는 중립(--sel-bg/--sel-fg)
+- 컨트롤 높이 32(sm)/40/48 — 필터 바·툴바는 sm
+- 목록·테이블은 default/loading/empty/error/partial 5상태
+- 전체 규칙: https://kimjiyong995-coder.github.io/design-system/llms.txt

@@ -42,6 +42,13 @@ export { default as DsTreeview } from './components/vuetify/DsTreeview.vue'
 export { default as DsTimeline } from './components/vuetify/DsTimeline.vue'
 export { default as DsAccordion } from './components/vuetify/DsAccordion.vue'
 
+/* ── 추가 (Astryx 격차 보완) ── */
+export { default as DsNumberInput } from './components/vuetify/DsNumberInput.vue'
+export { default as DsCombobox } from './components/vuetify/DsCombobox.vue'
+export { default as DsPopover } from './components/vuetify/DsPopover.vue'
+export { default as DsHoverCard } from './components/vuetify/DsHoverCard.vue'
+export { default as DsCommandPalette } from './components/vuetify/DsCommandPalette.vue'
+
 /* ── 설정 ── */
 export { dsDefaults } from './defaults'
 export { dsTheme, dsLight, dsDark } from './theme'

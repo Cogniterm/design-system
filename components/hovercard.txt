@@ -1,0 +1,41 @@
+# DsHoverCard — Cogniterm Design System
+
+import { DsHoverCard } from '~/design/vuetify'   // Vuetify 필요 · ds.css + ds-vuetify.css
+
+## 용도
+사용자·문서 이름 위 미리보기 — 부가 정보만.
+
+## Props
+- location: string = 'bottom start' — 방향.
+- openDelay: number = 350 — 뜨기까지 ms.
+
+## Slots
+- #activator — 대상 요소.
+- #default — 미리보기 내용.
+
+## 사용 예
+```vue
+<DsHoverCard>
+  <template #activator="props">
+    <span v-bind="props" class="ds-link">Jiyong Kim</span>
+  </template>
+  <DsAvatar>JK</DsAvatar> 편집자 · 법무팀
+</DsHoverCard>
+```
+
+## 구분
+- vs Popover: 클릭으로 여는 건 Popover
+
+## 지침
+- [하지 말 것] 필수 정보를 넣지 않습니다 — 터치 기기에서 뜨지 않습니다.
+
+## 접근성
+키보드: Tab 포커스=호버와 동일하게 열림
+직접 처리: 필수 정보 넣지 않기 — 터치에서 안 뜸
+
+## 시스템 규칙 (요약)
+- 색·간격·모서리는 CSS 변수만 (var(--gray-6), var(--brand)) — hex 금지
+- primary 버튼은 화면당 하나. 선택·활성 상태는 중립(--sel-bg/--sel-fg)
+- 컨트롤 높이 32(sm)/40/48 — 필터 바·툴바는 sm
+- 목록·테이블은 default/loading/empty/error/partial 5상태
+- 전체 규칙: https://kimjiyong995-coder.github.io/design-system/llms.txt

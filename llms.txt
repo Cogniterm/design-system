@@ -3,7 +3,7 @@
 > Extreme-minimal design system for AI agent products, built for Vue 3 + Vuetify 3.11.
 > No shadows, 1px borders, radius 4/6/8/12, Pretendard, brand blue #1F7FF0
 > (#4593F5 in dark), Radix Slate gray 1-12. Light + dark via [data-theme="dark"].
-> 50 components, 17 patterns, 15 foundation pages.
+> 65 components, 17 patterns, 15 foundation pages.
 > Docs: https://kimjiyong995-coder.github.io/design-system
 
 ## Read the section you need — not everything

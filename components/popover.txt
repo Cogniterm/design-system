@@ -1,0 +1,42 @@
+# DsPopover — Cogniterm Design System
+
+import { DsPopover } from '~/design/vuetify'   // Vuetify 필요 · ds.css + ds-vuetify.css
+
+## 용도
+아이콘 옆 부가 설명, 짧은 미리보기 — 클릭으로 엶.
+
+## Props
+- location: string = 'bottom start' — 열리는 방향.
+- width: number | string = 280 — 패널 폭.
+
+## Slots
+- #activator — 여는 요소. v-bind 필수.
+- #default — 패널 내용.
+
+## 사용 예
+```vue
+<DsPopover :width="260">
+  <template #activator="props">
+    <DsIconButton label="설명" v-bind="props"><DsIcon name="info" /></DsIconButton>
+  </template>
+  180일이 지난 기록은 보관 저장소로 이동합니다.
+</DsPopover>
+```
+
+## 구분
+- vs Tooltip: 한 줄이면 Tooltip
+- vs Dialog: 확인·입력이 필요하면 Dialog
+
+## 지침
+- [하지 말 것] 확인이 필요한 입력은 Popover가 아니라 Dialog.
+
+## 접근성
+키보드: Enter/Space=열기 · Esc=닫기 · Tab=내용 순회
+직접 처리: activator에 뜻 있는 라벨
+
+## 시스템 규칙 (요약)
+- 색·간격·모서리는 CSS 변수만 (var(--gray-6), var(--brand)) — hex 금지
+- primary 버튼은 화면당 하나. 선택·활성 상태는 중립(--sel-bg/--sel-fg)
+- 컨트롤 높이 32(sm)/40/48 — 필터 바·툴바는 sm
+- 목록·테이블은 default/loading/empty/error/partial 5상태
+- 전체 규칙: https://kimjiyong995-coder.github.io/design-system/llms.txt

@@ -1,0 +1,32 @@
+# DsNumberInput — Cogniterm Design System
+
+import { DsNumberInput } from '~/design/vuetify'   // Vuetify 필요 · ds.css + ds-vuetify.css
+
+## 용도
+재시도 횟수·한도·개수 — 스텝이 필요한 숫자.
+
+## Props
+- modelValue: number — v-model.
+- min / max / step: number = — / — / 1 — 범위.
+- label / hint / error: string — 필드 공통.
+
+
+## 사용 예
+```vue
+<DsNumberInput v-model="retries" label="재시도 횟수" :min="0" :max="10" />
+```
+
+
+## 지침
+- [해야 할 것] 단위가 있으면 hint에 — "초", "건".
+
+## 접근성
+키보드: ↑ ↓=스텝 · Home/End=최소·최대
+직접 처리: label 필수 · 단위는 hint에
+
+## 시스템 규칙 (요약)
+- 색·간격·모서리는 CSS 변수만 (var(--gray-6), var(--brand)) — hex 금지
+- primary 버튼은 화면당 하나. 선택·활성 상태는 중립(--sel-bg/--sel-fg)
+- 컨트롤 높이 32(sm)/40/48 — 필터 바·툴바는 sm
+- 목록·테이블은 default/loading/empty/error/partial 5상태
+- 전체 규칙: https://kimjiyong995-coder.github.io/design-system/llms.txt

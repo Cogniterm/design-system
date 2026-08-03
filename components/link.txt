@@ -1,0 +1,38 @@
+# DsLink — Cogniterm Design System
+
+import { DsLink } from '~/design'   // Vuetify 불필요 · ds.css만
+
+## 용도
+본문·설명 속 이동. 동작 실행은 Button.
+
+## Props
+- href: string = 필수 — 이동 주소.
+- external: boolean = false — 새 탭. rel=noopener 자동.
+
+## Slots
+- #default — 링크 텍스트.
+- #icon — 뒤에 붙는 아이콘 (외부 표시 등).
+
+## 사용 예
+```vue
+<DsLink href="/docs/audit">감사 로그 문서</DsLink>
+<DsLink href="https://…" external>외부 문서<template #icon>​</template></DsLink>
+```
+
+## 구분
+- vs Button: 이동이면 Link, 실행이면 Button
+
+## 지침
+- [해야 할 것] 링크는 이동, 버튼은 실행 — 동작을 실행하면 Button을 씁니다.
+- [하지 말 것] "여기"를 링크 텍스트로 쓰지 않습니다. 목적지를 씁니다.
+
+## 접근성
+키보드: Tab=링크로 이동 · Enter=이동
+직접 처리: 링크 텍스트에 목적지를 — "여기" 금지
+
+## 시스템 규칙 (요약)
+- 색·간격·모서리는 CSS 변수만 (var(--gray-6), var(--brand)) — hex 금지
+- primary 버튼은 화면당 하나. 선택·활성 상태는 중립(--sel-bg/--sel-fg)
+- 컨트롤 높이 32(sm)/40/48 — 필터 바·툴바는 sm
+- 목록·테이블은 default/loading/empty/error/partial 5상태
+- 전체 규칙: https://kimjiyong995-coder.github.io/design-system/llms.txt

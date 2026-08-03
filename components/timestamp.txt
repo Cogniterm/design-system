@@ -1,0 +1,31 @@
+# DsTimestamp — Cogniterm Design System
+
+import { DsTimestamp } from '~/design'   // Vuetify 불필요 · ds.css만
+
+## 용도
+테이블 시각 열, 메시지 시각, 실행 기록.
+
+## Props
+- value: Date | string | number = 필수 — 시각.
+- mode: 'auto'|'absolute'|'relative' = 'auto' — auto = 7일 기준 자동.
+
+
+## 사용 예
+```vue
+<DsTimestamp :value="log.createdAt" />
+<DsTimestamp :value="log.createdAt" mode="absolute" />
+```
+
+
+## 지침
+- [해야 할 것] 감사·법적 기록은 mode="absolute"로 고정합니다.
+
+## 접근성
+직접 처리: 감사 기록은 absolute 고정
+
+## 시스템 규칙 (요약)
+- 색·간격·모서리는 CSS 변수만 (var(--gray-6), var(--brand)) — hex 금지
+- primary 버튼은 화면당 하나. 선택·활성 상태는 중립(--sel-bg/--sel-fg)
+- 컨트롤 높이 32(sm)/40/48 — 필터 바·툴바는 sm
+- 목록·테이블은 default/loading/empty/error/partial 5상태
+- 전체 규칙: https://kimjiyong995-coder.github.io/design-system/llms.txt
