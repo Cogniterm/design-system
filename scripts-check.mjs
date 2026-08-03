@@ -121,7 +121,7 @@ for (const f of readdirSync('vue/components').filter((f) => f.endsWith('.vue')))
 ok('Standalone 컴포넌트 — 외부 의존 없음')
 
 /* ── 9. 타입 스케일 준수 (문서 사이트 + 템플릿) ── */
-const ALLOWED_PX = ['10', '11', '12', '13', '14', '15', '16', '20', '24', '30']
+const ALLOWED_PX = ['10', '11', '12', '13', '14', '15', '16', '20', '24', '30', '36']
 let scaleOk = true
 for (const f of ['docs.css', 'templates/audit.html', 'templates/chat.html', 'templates/search.html']) {
   const src = readFileSync(f, 'utf8')

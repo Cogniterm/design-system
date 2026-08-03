@@ -150,7 +150,7 @@
   justify-content: center;
   padding: 40px 56px 160px;
 }
-.page-main { flex: 0 1 900px; min-width: 0; }
+.page-main { flex: 0 1 960px; min-width: 0; }
 
 /* "이 페이지" 목차 — 긴 페이지의 조감도 (≥1280px) */
 /* 목차 — Notion 방식.
@@ -210,7 +210,7 @@
 .page-head { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
 .page-head .ai-copy { margin-left: auto; }
 .page-head h1 {
-  font-size: clamp(20px, 1.4vw + 15px, 24px); font-weight: var(--weight-semibold);
+  font-size: clamp(26px, 1.5vw + 18px, 32px); font-weight: var(--weight-semibold);
   letter-spacing: -0.025em; line-height: var(--leading-tight); color: var(--gray-12);
 }
 .page-ko {
@@ -265,7 +265,7 @@
 .prose { max-width: var(--measure); }
 /* 섹션 구분 — 선이 아니라 여백(위 64px)과 굵기가 그룹을 만듭니다 */
 .prose h2 {
-  font-size: var(--text-xl); font-weight: var(--weight-semibold);
+  font-size: clamp(20px, 1vw + 14px, 24px); font-weight: var(--weight-semibold);
   letter-spacing: -0.015em; line-height: var(--leading-tight);
   color: var(--gray-12); margin: 64px 0 14px;
 }
@@ -564,7 +564,7 @@
    ══════════════════════════════════════ */
 .hero { padding: 4px 0; }
 .hero h1 {
-  font-size: clamp(24px, 2.2vw + 16px, 30px); font-weight: var(--weight-semibold);
+  font-size: clamp(30px, 2.4vw + 20px, 40px); font-weight: var(--weight-semibold);
   letter-spacing: -0.03em; line-height: var(--leading-tight); color: var(--gray-12);
 }
 .hero p {

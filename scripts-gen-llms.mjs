@@ -92,7 +92,8 @@ ${FOUNDATION_PAGES.map(([id, ko, en]) => `- ${en} (${ko}) — ${SITE}/#/foundati
   (gray-a scale), so strokes sit lighter on any background.
   Status tints use tokens too: --success-subtle/-border, --warning-*, --danger-*,
   --info-* — never inline color-mix.
-- Type: Pretendard, 9 steps only — 11/12/13/14/15/16/20/24/30 via var(--text-*).
+- Type: Pretendard, 10 steps only — 11/12/13/14/15/16/20/24/30/36 via var(--text-*).
+  Page titles are fluid: h1 clamp 26-32px, landing hero 30-40px.
   UI surfaces (buttons, tables, sidebars) use 13-14px; reading surfaces (explanations,
   agent responses) use 15px with line-height 1.8. Using one size for both makes both
   mediocre. Weights 400/500/600 — never 700+.
@@ -106,11 +107,11 @@ ${FOUNDATION_PAGES.map(([id, ko, en]) => `- ${en} (${ko}) — ${SITE}/#/foundati
   ring on every interactive element. Overlay shadow: var(--shadow-overlay), a
   3-layer stack (1px outline + near + far), never a single blurry drop shadow.
   Line-height tokens: tight 1.3 (headings), ui 1.5 (dense), normal 1.62, prose 1.8.
-  Reading measure max 68ch (var(--measure)).
+  Reading measure max 720px (var(--measure)) — px, not ch (Korean is full-width).
 - Spacing: multiples of 4 only (0 4 8 12 16 24 32 48 64). Grouping is proximity.
   Reading width max 720px (68ch); data screens 1080-1280px.
 - Layout grid: role columns, not a forced 12-col — docs shell is LNB 264px /
-  main minmax(0,68ch) / TOC rail 192px, gap 48px. Card lists use
+  main minmax(0,720px) / TOC rail 192px, gap 48px. Card lists use
   repeat(auto-fill, minmax(232px,1fr)). Breakpoints 1280/1080/900/640; at 900 the
   LNB becomes a drawer (never just disappears); tables scroll horizontally
   instead of dropping columns; long pages get an on-this-page TOC rail.

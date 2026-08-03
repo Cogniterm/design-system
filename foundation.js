@@ -316,7 +316,8 @@ export function fdColor() {
 /* ════════════════════════════════════════ */
 export function fdTypography() {
   const rows = [
-    ['3xl', '30px', '600', '문서 랜딩 대표 제목', 'font-size:30px;font-weight:600;letter-spacing:-.03em'],
+    ['4xl', '36px', '600', '랜딩 대표 제목', 'font-size:36px;font-weight:600;letter-spacing:-.03em'],
+    ['3xl', '30px', '600', '페이지 제목 (26~32 유동)', 'font-size:30px;font-weight:600;letter-spacing:-.025em'],
     ['2xl', '24px', '600', '페이지 제목', 'font-size:24px;font-weight:600;letter-spacing:-.025em'],
     ['xl', '20px', '600', '섹션 제목', 'font-size:20px;font-weight:600;letter-spacing:-.015em'],
     ['lg', '16px', '600', '작은 제목 · 카드 제목', 'font-size:16px;font-weight:600;letter-spacing:-.01em'],
@@ -378,7 +379,7 @@ export function fdTypography() {
 
       <h2>줄 길이</h2>
       <p>
-        읽는 글은 <code>--measure</code>(68ch)를 넘기지 않습니다.
+        읽는 글은 <code>--measure</code>(720px)를 넘기지 않습니다. ch 단위는 한글(전각)에서 좁게 잡혀 px로 고정합니다.
         한 줄이 너무 길면 다음 줄 첫 글자를 찾기 어려워집니다.
         표와 데이터 화면은 예외입니다 — 넓을수록 좋습니다.
       </p>
@@ -486,7 +487,7 @@ export function fdSpacing() {
       <table>
         <thead><tr><th>영역</th><th>값</th></tr></thead>
         <tbody>
-          <tr><td>본문 최대 너비 (읽는 화면)</td><td><code>720px</code></td></tr>
+          <tr><td>본문 최대 너비 (읽는 화면)</td><td><code>720px</code> (<code>--measure</code>)</td></tr>
           <tr><td>본문 최대 너비 (문서·설정)</td><td><code>900px</code></td></tr>
           <tr><td>본문 최대 너비 (데이터 화면)</td><td><code>1080~1280px</code></td></tr>
           <tr><td>사이드바 너비</td><td><code>232px</code></td></tr>
@@ -504,7 +505,7 @@ export function fdSpacing() {
       <h2>그리드</h2>
       <p>
         12열 그리드를 강제하지 않습니다. 대신 화면을 <b>역할 열</b>로 나눕니다 —
-        문서 화면 기준: LNB <code>264px</code> · 본문 <code>minmax(0, 68ch)</code> ·
+        문서 화면 기준: LNB <code>264px</code> · 본문 <code>minmax(0, 720px)</code> ·
         목차 레일 <code>192px</code>, 열 간격 <code>48px</code>.
         카드 나열은 <code>repeat(auto-fill, minmax(232px, 1fr))</code>처럼
         내용이 스스로 줄 바꾸게 두어 브레이크포인트를 늘리지 않습니다.
