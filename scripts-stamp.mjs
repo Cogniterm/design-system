@@ -49,7 +49,22 @@ if (missing.length) {
   process.exit(1)
 }
 
+/* 복사해 간 앱에서 "이건 언제 것인가"를 알 수 있게 남깁니다.
+   내용 지문(stamp)이 곧 버전입니다 — 한 글자만 달라도 값이 바뀝니다.
+   ※ version.ts는 지문 계산에 넣지 않습니다 (넣으면 서로 물고 돕니다). */
+const version = `export const DS_VERSION = '${stamp}'          // 내용 지문
+export const DS_BUILT_AT = '${new Date().toISOString().slice(0, 10)}'   // 생성일
+`
+const versionPath = 'vue/version.ts'
+const currentVersion = (() => { try { return readFileSync(versionPath, 'utf8') } catch { return '' } })()
+// 날짜까지 비교하면 내용이 그대로여도 다음 날 CI가 실패합니다 — 지문만 봅니다
+const stampOf = (t) => t.match(/DS_VERSION = '([^']*)'/)?.[1] ?? ''
+
 if (check) {
+  if (stampOf(currentVersion) !== stamp) {
+    console.error(`실패 — vue/version.ts가 낡았습니다 (있어야 할 값: ${stamp}). node scripts-stamp.mjs 를 돌리세요.`)
+    process.exit(1)
+  }
   if (stamped !== html) {
     console.error(`실패 — 캐시 스탬프가 낡았습니다 (있어야 할 값: ${stamp})`)
     console.error('  node scripts-stamp.mjs 를 돌리고 커밋하세요.')
@@ -57,6 +72,7 @@ if (check) {
   }
   console.log(`통과 — 캐시 스탬프 최신 (${stamp})`)
 } else {
+  if (stampOf(currentVersion) !== stamp) writeFileSync(versionPath, version)
   if (stamped === html) console.log(`변경 없음 — 스탬프 그대로 (${stamp})`)
   else {
     writeFileSync('index.html', stamped)

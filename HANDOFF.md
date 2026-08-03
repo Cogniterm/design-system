@@ -119,6 +119,9 @@ import { DsButton, DsChatMessage, DsToolCallStep } from '~/design'
 import { DsDataTable, DsDialog, DsAlert } from '~/design/vuetify'
 // 아이콘 — Lucide가 필요해 배럴이 또 다릅니다
 import { DsIcon } from '~/design/icon'
+
+// 이 앱이 어느 시점 것인지 — 문의할 때 이 값을 알려주면 됩니다
+import { DS_VERSION, DS_BUILT_AT } from '~/design'
 </script>
 ```
 
@@ -250,7 +253,12 @@ function toggle(dark: boolean) {
 
 ## 6. 아직 안 된 것 (정직하게)
 
+이번에 전수 점검하면서 고친 것과 남긴 것을 나눠 적습니다.
+고친 것은 CI 게이트로 막아 뒀고, 남긴 것은 함께 결정할 일입니다.
+
+
 - **시각적 회귀 테스트 없음** — 레이아웃이 미묘하게 깨지는 건 아직 눈으로 봐야 합니다.
+  코드·타입·대비·링크는 CI가 보지만, "보기에 이상한지"는 못 봅니다.
   Playwright 스크린샷 diff가 다음 과제입니다.
 - **`live/` 자동 빌드 없음** — CI가 갤러리를 대신 빌드하게 만들 수 있습니다 (반나절).
 - **기존 컴포넌트와의 대응표 없음** — 앱의 기존 컴포넌트 → `Ds*` 매핑을 만들면
@@ -261,7 +269,6 @@ function toggle(dark: boolean) {
 - **API 어휘가 완전히 통일되지 않음** — 실패 상태를 `danger`로 쓰는 곳과 `error`로
   쓰는 곳이 섞여 있고, 크기는 `size`/`dense`/`density` 세 가지로 표현됩니다.
   쓰는 데 지장은 없지만 다음 정리 대상입니다.
-- **버전 표시 없음** — 복사해 간 뒤 "이 앱은 어느 시점 것인가"를 알 방법이 없습니다.
 
 ---
 

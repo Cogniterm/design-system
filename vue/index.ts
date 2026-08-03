@@ -29,3 +29,6 @@ export { default as DsSearchField } from './components/DsSearchField.vue'
 export { default as DsSystemMessage } from './components/DsSystemMessage.vue'
 export { default as DsToolbar } from './components/DsToolbar.vue'
 export { default as DsVisuallyHidden } from './components/DsVisuallyHidden.vue'
+
+// 이 앱이 어느 시점의 디자인 시스템을 쓰는지 — 내용 지문 + 생성일
+export { DS_VERSION, DS_BUILT_AT } from './version'
