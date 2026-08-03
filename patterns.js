@@ -92,8 +92,8 @@ const filtering = P('filtering', 'Filtering', '필터', 'core',
     <div class="demo" style="border-radius:var(--r-xl)">
       <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-bottom:14px">
         <div class="field" style="width:200px"><input class="input" placeholder="검색…" /></div>
-        <span class="chip brand">수준: 실패<button class="x">${ic('close', 12)}</button></span>
-        <span class="chip brand">수행자: Jiyong Kim<button class="x">${ic('close', 12)}</button></span>
+        <span class="chip">수준: 실패<button class="x">${ic('close', 12)}</button></span>
+        <span class="chip">수행자: Jiyong Kim<button class="x">${ic('close', 12)}</button></span>
         <button class="btn btn-ghost btn-sm">모두 해제</button>
       </div>
       <div style="font-size:var(--text-xs);color:var(--gray-9)">3건 · 0.4초</div>

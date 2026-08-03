@@ -118,6 +118,8 @@ export function fdTokens() {
           <tr><td><code>--success/warning/danger/info</code></td><td>상태 색</td><td><code>--danger</code></td></tr>
           <tr><td><code>--r-*</code></td><td>모서리 반경 (sm·md·lg·xl·full)</td><td><code>--r-xl</code></td></tr>
           <tr><td><code>--bg</code> / <code>--surface</code></td><td>페이지 배경 / 요소 면</td><td>—</td></tr>
+          <tr><td><code>--sel-bg</code> / <code>--sel-fg</code></td><td>선택 · 활성 상태 (중립)</td><td>활성 내비, 선택 행</td></tr>
+          <tr><td><code>--focus-ring</code> / <code>--shadow-overlay</code></td><td>포커스 링 / 떠 있는 요소 그림자</td><td>—</td></tr>
           <tr><td><code>--font</code> / <code>--mono</code></td><td>글꼴</td><td>—</td></tr>
         </tbody>
       </table>
@@ -172,22 +174,27 @@ export function fdColor() {
           <span class="dd-tag">이럴 때만</span>
           <ul>
             <li>기본 액션 버튼</li>
-            <li>선택된 항목 · 활성 탭</li>
-            <li>포커스 링</li>
             <li>링크</li>
+            <li>포커스 링</li>
             <li>인용 칩 · 진행 중 상태</li>
+            <li>폼 컨트롤의 켜짐 (체크박스 · 스위치)</li>
           </ul>
         </div>
         <div class="dd dont">
           <span class="dd-tag">쓰지 않습니다</span>
           <ul>
-            <li>페이지 배경</li>
-            <li>카드·패널 보더</li>
-            <li>제목 텍스트</li>
-            <li>장식</li>
+            <li><b>선택 · 활성 상태</b> — 내비 · 탭 · 목록의 "지금 여기"는 회색입니다</li>
+            <li>페이지 배경 · 카드 보더</li>
+            <li>제목 텍스트 · 장식</li>
             <li>차트의 모든 계열 색</li>
           </ul>
         </div>
+      </div>
+      <div class="callout">
+        <b>선택 상태가 회색인 이유</b> — 파란 활성 표시가 사방에 있으면
+        정작 primary 버튼이 눈에 들어오지 않습니다. 중립 시스템에서 브랜드는
+        희소해야 힘이 있습니다. 선택 · 활성은 <code>--sel-bg</code>(gray-4) ·
+        <code>--sel-fg</code>(gray-12) 토큰을 씁니다.
       </div>
 
       <h2>Gray — Radix Slate 1–12</h2>
@@ -203,7 +210,7 @@ export function fdColor() {
           <tr><td><code>1</code></td><td>가장 낮은 배경</td><td>데모 영역, 코드 블록 바깥</td></tr>
           <tr><td><code>2</code></td><td>보조 배경</td><td>테이블 헤더, 툴콜 박스, 호버된 행</td></tr>
           <tr><td><code>3</code></td><td>호버 배경</td><td>메뉴 항목 호버, ghost 버튼 호버</td></tr>
-          <tr><td><code>4</code></td><td>연한 보더 · 비활성 배경</td><td>카드 보더, disabled 버튼</td></tr>
+          <tr><td><code>4</code></td><td>연한 보더 · 비활성 배경 · <b>선택 배경</b></td><td>카드 보더, disabled, 활성 내비 항목</td></tr>
           <tr><td><code>5</code></td><td>연한 보더</td><td>배지 보더</td></tr>
           <tr><td><code>6</code></td><td><b>기본 보더</b></td><td>버튼·입력 필드 보더</td></tr>
           <tr><td><code>7</code></td><td>중간 보더</td><td>구분자</td></tr>
@@ -882,7 +889,7 @@ export function fdState() {
           <tr><td><code>focus</code></td><td>브랜드 보더 + <code>3px</code> 브랜드 subtle 링. <b>절대 없애지 않습니다</b></td></tr>
           <tr><td><code>active</code></td><td>한 단계 더 진한 배경</td></tr>
           <tr><td><code>disabled</code></td><td>배경 <code>gray-3</code>, 글자 <code>gray-8</code>, <code>cursor: not-allowed</code></td></tr>
-          <tr><td><code>selected</code></td><td>브랜드 subtle 배경 + 브랜드 글자</td></tr>
+          <tr><td><code>selected</code></td><td>중립 — <code>--sel-bg</code>(gray-4) + <code>--sel-fg</code>(gray-12). 브랜드가 아닙니다</td></tr>
         </tbody>
       </table>
       <div class="demo" style="border-radius:var(--r-lg)">

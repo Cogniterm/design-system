@@ -22,7 +22,9 @@
 - Internationalization (다국어) — https://kimjiyong995-coder.github.io/design-system/#/foundation/i18n
 
 ## Hard rules for generating screens
-- Color: brand ONLY for actions, selection, focus, links. Gray does 95% of the work.
+- Color: brand ONLY for primary actions, links, focus and progress. Gray does 95%.
+  SELECTION/ACTIVE states are NEUTRAL: var(--sel-bg) (gray-4) + var(--sel-fg)
+  (gray-12) — never brand. Blue active states everywhere dilute the primary button.
   Gray roles — 1-2 background, 3 hover, 4-5 soft border, 6 default border,
   8 hover border, 9 faint text, 11 secondary text, 12 body text.
 - Type: Pretendard, 9 steps only — 11/12/13/14/15/16/20/24/30 via var(--text-*).
@@ -123,6 +125,13 @@
 
   /* 포커스 링 — 배경색 2px + 브랜드 2px 이중 링. 모든 조작 요소가 같은 링을 씁니다. */
   --focus-ring: 0 0 0 2px var(--bg), 0 0 0 4px var(--brand);
+
+  /* ── 선택 · 활성 상태 — 중립입니다 ──
+     내비게이션·목록·탭의 "지금 여기" 표시는 회색으로 합니다.
+     파란 활성 상태가 사방에 있으면 정작 primary 버튼이 묻힙니다.
+     브랜드는 액션 · 링크 · 포커스 · 진행 상태에만 씁니다. */
+  --sel-bg: var(--gray-4);
+  --sel-fg: var(--gray-12);
 }
 
 [data-theme="dark"] {

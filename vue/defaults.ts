@@ -45,10 +45,10 @@ export const dsDefaults = {
   /* ── Navigation ── */
   VNavigationDrawer: { elevation: 0, border: 'e' },
   VBottomNavigation: { elevation: 0, border: 't', grow: true },
-  VTabs: { density: 'comfortable', sliderColor: 'primary' },
+  VTabs: { density: 'comfortable' },
   VTab: { ripple: false, style: 'text-transform:none;letter-spacing:0;font-weight:500;' },
   VBreadcrumbs: { density: 'comfortable' },
-  VPagination: { variant: 'text', rounded: 'md', activeColor: 'primary', totalVisible: 7 },
+  VPagination: { variant: 'text', rounded: 'md', totalVisible: 7 },
   VStepper: { flat: true, elevation: 0, rounded: 'xl' },
 
   /* ── Data Input ── */

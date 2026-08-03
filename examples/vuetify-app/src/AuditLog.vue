@@ -385,7 +385,7 @@ function exportCsv() { toast.value = { msg: '내보내기에 실패했습니다 
   transition: background .16s ease, border-color .16s ease, color .16s ease;
 }
 .lvl-chip:hover { background: var(--gray-2); border-color: var(--gray-8); }
-.lvl-chip.on { background: var(--brand-subtle); color: var(--brand); border-color: transparent; }
+.lvl-chip.on { background: var(--sel-bg); color: var(--sel-fg); border-color: var(--gray-6); }
 .lvl-dot { width: 6px; height: 6px; border-radius: 50%; }
 .lvl-dot[data-lvl="info"]    { background: var(--gray-8); }
 .lvl-dot[data-lvl="success"] { background: var(--success); }

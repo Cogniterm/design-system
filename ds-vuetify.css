@@ -121,7 +121,7 @@
 .v-list-item { min-height: 36px; border-radius: var(--r-md); font-size: 13.5px; }
 .v-list-item__overlay { opacity: 0; }
 .v-list-item:hover { background: var(--gray-3); }
-.v-list-item--active { background: var(--brand-subtle); color: var(--brand); }
+.v-list-item--active { background: var(--sel-bg); color: var(--sel-fg); }
 .v-list-item-title { font-size: 13.5px; font-weight: 400; }
 .v-list-subheader { font-size: 11px; font-weight: 600; color: var(--gray-9);
   letter-spacing: .04em; min-height: 28px; }
@@ -146,8 +146,8 @@
 .v-tab { text-transform: none; letter-spacing: 0; font-size: 13.5px; font-weight: 500;
   color: var(--gray-10); min-width: 0; padding: 0 12px; }
 .v-tab:hover { color: var(--gray-12); }
-.v-tab--selected { color: var(--brand); }
-.v-tabs .v-tab__slider { height: 2px; }
+.v-tab--selected { color: var(--sel-fg); }
+.v-tabs .v-tab__slider { height: 2px; background: var(--sel-fg); }
 
 /* ── VField (VTextField·VSelect 등 입력 공통) ── */
 .v-field { border-radius: var(--r-lg); font-size: 14px; background: var(--surface); }
@@ -171,7 +171,7 @@
 .v-breadcrumbs-item { color: var(--gray-10); }
 .v-breadcrumbs-item--disabled { color: var(--gray-12); opacity: 1; }
 .v-pagination__item .v-btn { font-size: 13px; }
-.v-pagination__item--is-active .v-btn { background: var(--brand-subtle); color: var(--brand); }
+.v-pagination__item--is-active .v-btn { background: var(--sel-bg); color: var(--sel-fg); }
 
 /* ── VExpansionPanels / VStepper / VTimeline ── */
 .v-expansion-panel { background: var(--surface); border: 1px solid var(--gray-4); }
@@ -230,7 +230,7 @@
 .ds-btn-group .v-btn { height: 30px; font-size: 12.5px; font-weight: 500; color: var(--gray-11);
   border-radius: 0; border: none; min-width: 0; padding: 0 12px; }
 .ds-btn-group .v-btn:hover { background: var(--gray-2); }
-.ds-btn-group .v-btn--active { background: var(--brand-subtle); color: var(--brand); }
+.ds-btn-group .v-btn--active { background: var(--sel-bg); color: var(--sel-fg); }
 .ds-btn-group .v-btn__overlay { display: none; }
 
 /* ── DsTabs ── */
@@ -238,7 +238,7 @@
   margin-left: 6px; font-size: 11px; font-weight: 600; padding: 1px 6px;
   border-radius: var(--r-full); background: var(--gray-3); color: var(--gray-10);
 }
-.ds-tabs .v-tab--selected .ds-tab-count { background: var(--brand-subtle); color: var(--brand); }
+.ds-tabs .v-tab--selected .ds-tab-count { background: var(--sel-bg); color: var(--sel-fg); }
 
 /* ── DsBreadcrumbs ── */
 .ds-breadcrumbs.v-breadcrumbs { padding: 0; font-size: 12.5px; }
@@ -250,7 +250,7 @@
 /* ── DsPagination ── */
 .ds-pagination .v-btn { font-size: 12.5px; min-width: 28px; height: 28px; color: var(--gray-11); }
 .ds-pagination .v-btn:hover { background: var(--gray-3); }
-.ds-pagination .v-pagination__item--is-active .v-btn { background: var(--brand-subtle); color: var(--brand); }
+.ds-pagination .v-pagination__item--is-active .v-btn { background: var(--sel-bg); color: var(--sel-fg); }
 
 /* ── DsNavList ── */
 .ds-navlist.v-list { padding: 4px; background: transparent; }
@@ -260,7 +260,7 @@
   font-size: 11px; font-weight: 600; padding: 1px 6px; border-radius: var(--r-full);
   background: var(--gray-3); color: var(--gray-10);
 }
-.ds-navlist .v-list-item--active .ds-nav-badge { background: var(--brand); color: var(--on-brand); }
+.ds-navlist .v-list-item--active .ds-nav-badge { background: var(--gray-12); color: var(--bg); }
 
 /* ── 입력 래퍼 공통 (DsTextarea·DsAutocomplete·DsFileInput 등) ── */
 .ds-vfield .v-field { border-radius: var(--r-lg); }
@@ -309,7 +309,7 @@
 /* ── DsTreeview ── */
 .ds-treeview.v-treeview { background: transparent; }
 .ds-treeview .v-list-item { min-height: 30px; font-size: 13.5px; border-radius: var(--r-md); }
-.ds-treeview .v-list-item--active { background: var(--brand-subtle); color: var(--brand); }
+.ds-treeview .v-list-item--active { background: var(--sel-bg); color: var(--sel-fg); }
 
 /* ── DsTimeline ── */
 .ds-timeline .v-timeline-divider__dot { box-shadow: none; }
@@ -326,7 +326,7 @@
 /* ── DsStepper ── */
 .ds-stepper.v-stepper { background: var(--surface); border: 1px solid var(--gray-4); border-radius: var(--r-lg); }
 .ds-stepper .v-stepper-item__avatar.v-avatar { background: var(--gray-4); color: var(--gray-11); font-size: 12px; }
-.ds-stepper .v-stepper-item--selected .v-stepper-item__avatar.v-avatar { background: var(--brand); color: var(--on-brand); }
+.ds-stepper .v-stepper-item--selected .v-stepper-item__avatar.v-avatar { background: var(--gray-12); color: var(--bg); }
 .ds-stepper .v-stepper-item__title { font-size: 13px; font-weight: 500; }
 
 /* ── DsSnackbar ── */
@@ -398,7 +398,7 @@
 }
 .v-list-item--density-default.v-list-item--one-line { min-height: 36px; padding-inline: 11px; }
 .v-list-item--active > .v-list-item__overlay { opacity: 0 !important; }
-.v-list-item--active { background: var(--brand-subtle); color: var(--brand); }
+.v-list-item--active { background: var(--sel-bg); color: var(--sel-fg); }
 .v-list-item--active .v-list-item-title { font-weight: var(--weight-medium); }
 
 /* ── 선택 컨트롤 — 체크박스·라디오·스위치 ── */

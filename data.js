@@ -295,7 +295,7 @@ export const COMPONENTS = [
   summary: '선택된 항목을 표시하고 제거합니다.',
   reason: { ko: 'VChip보다 훨씬 단순한 형태만 필요합니다.', en: 'We need a far simpler shape than VChip.' },
   props: [
-    ['variant', `'default' | 'brand'`, `'default'`, 'brand는 활성 필터를 뜻합니다.'],
+    ['variant', `'default' | 'brand'`, `'default'`, '거의 default를 씁니다. 활성 필터도 중립 칩입니다.'],
     ['removable', 'boolean', 'true', '✕ 버튼 표시.'],
   ],
   events: [['remove', '—', '✕ 클릭 시 발생.']],

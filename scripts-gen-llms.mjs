@@ -72,7 +72,9 @@ writeFileSync('foundation/llms.txt', `# Foundation — Cogniterm Design System
 ${FOUNDATION_PAGES.map(([id, ko, en]) => `- ${en} (${ko}) — ${SITE}/#/foundation/${id}`).join('\n')}
 
 ## Hard rules for generating screens
-- Color: brand ONLY for actions, selection, focus, links. Gray does 95% of the work.
+- Color: brand ONLY for primary actions, links, focus and progress. Gray does 95%.
+  SELECTION/ACTIVE states are NEUTRAL: var(--sel-bg) (gray-4) + var(--sel-fg)
+  (gray-12) — never brand. Blue active states everywhere dilute the primary button.
   Gray roles — 1-2 background, 3 hover, 4-5 soft border, 6 default border,
   8 hover border, 9 faint text, 11 secondary text, 12 body text.
 - Type: Pretendard, 9 steps only — 11/12/13/14/15/16/20/24/30 via var(--text-*).
