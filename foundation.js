@@ -9,17 +9,17 @@ import { ic, ICON_NAMES } from './icons-svg.js'
 export const FOUNDATION_PAGES = [
   ['overview', '개요', 'Overview'],
   ['tokens', '토큰', 'Design Tokens'],
-  ['color', '색', 'Color'],
+  ['color', '컬러', 'Color'],
   ['typography', '타이포그래피', 'Typography'],
-  ['spacing', '여백 · 레이아웃', 'Spacing & Layout'],
-  ['shape', '모서리 · 보더', 'Radius & Border'],
-  ['elevation', '높낮이', 'Elevation'],
+  ['spacing', '스페이싱 · 레이아웃', 'Spacing & Layout'],
+  ['shape', '라디우스 · 보더', 'Radius & Border'],
+  ['elevation', '엘리베이션', 'Elevation'],
   ['density', '밀도', 'Density'],
   ['iconography', '아이콘', 'Iconography'],
   ['motion', '모션', 'Motion'],
   ['state', '상태', 'State'],
   ['a11y', '접근성', 'Accessibility'],
-  ['writing', '글쓰기', 'Writing'],
+  ['writing', 'UX 라이팅', 'Writing'],
   ['wordlist', '용어집', 'Word List'],
   ['i18n', '다국어', 'Internationalization'],
 ]
@@ -109,7 +109,7 @@ export function fdOverview() {
     </a>`).join('')
 
   return `
-    <div class="page-head"><h1>Foundation</h1><span class="page-ko">기초</span></div>
+    <div class="page-head"><h1>Foundation</h1><span class="page-ko">파운데이션</span></div>
     <p class="page-lead">컴포넌트 이전의 결정들.</p>
     <div class="cat-grid" style="margin-top:30px">${cards}</div>`
 }
@@ -175,7 +175,7 @@ export function fdTokens() {
 /* ════════════════════════════════════════ */
 export function fdColor() {
   return `
-    <div class="page-head"><h1>Color</h1><span class="page-ko">색</span></div>
+    <div class="page-head"><h1>Color</h1><span class="page-ko">컬러</span></div>
     <p class="page-lead">
       브랜드 1개, 회색 12단계, 상태 4개. 그 이상은 쓰지 않습니다.
       <b>색은 마지막에 씁니다</b> — 위계는 여백과 굵기로 먼저 만듭니다.
@@ -440,7 +440,7 @@ export function fdTypography() {
 export function fdSpacing() {
   const scale = [0, 4, 8, 12, 16, 24, 32, 48, 64]
   return `
-    <div class="page-head"><h1>Spacing &amp; Layout</h1><span class="page-ko">여백 · 레이아웃</span></div>
+    <div class="page-head"><h1>Spacing &amp; Layout</h1><span class="page-ko">스페이싱 · 레이아웃</span></div>
     <p class="page-lead">
       4px 배수 9단계. 그림자가 없는 시스템에서는 <b>여백이 구조를 만듭니다</b> —
       가까이 있으면 한 덩어리, 멀면 다른 덩어리입니다.
@@ -531,7 +531,7 @@ export function fdSpacing() {
 /* ════════════════════════════════════════ */
 export function fdShape() {
   return `
-    <div class="page-head"><h1>Radius &amp; Border</h1><span class="page-ko">모서리 · 보더</span></div>
+    <div class="page-head"><h1>Radius &amp; Border</h1><span class="page-ko">라디우스 · 보더</span></div>
     <p class="page-lead">
       <b>1px 보더가 이 시스템의 유일한 구분 장치입니다.</b>
       그림자를 안 쓰기로 한 순간, 보더가 그 역할을 전부 떠맡습니다.
@@ -598,7 +598,7 @@ export function fdShape() {
 /* ════════════════════════════════════════ */
 export function fdElevation() {
   return `
-    <div class="page-head"><h1>Elevation</h1><span class="page-ko">높낮이</span></div>
+    <div class="page-head"><h1>Elevation</h1><span class="page-ko">엘리베이션</span></div>
     <p class="page-lead">
       <b>이 시스템에는 elevation 단계가 없습니다.</b>
       그림자는 "떠 있는 것"에만, 그것도 한 종류만 씁니다.
@@ -933,7 +933,7 @@ export function fdState() {
       <p>네 가지를 같은 문구로 처리하면 사용자는 무엇을 해야 할지 알 수 없습니다.</p>
 
       <h2>인터랙션 상태 5종</h2>
-      <p>조작 가능한 모든 요소는 이 다섯을 가집니다. 극한 미니멀에서는 <b>특히 중요합니다</b> — 보더와 그림자를 걷어내면 무엇이 눌리는지 안 보이기 때문입니다.</p>
+      <p>조작 가능한 모든 요소는 이 다섯을 가집니다. 시각 요소를 절제한 화면에서는 <b>특히 중요합니다</b> — 보더와 그림자를 걷어내면 무엇이 눌리는지 안 보이기 때문입니다.</p>
       <table>
         <thead><tr><th>상태</th><th>표현</th></tr></thead>
         <tbody>
@@ -982,7 +982,7 @@ export function fdA11y() {
     <div class="page-head"><h1>Accessibility</h1><span class="page-ko">접근성</span></div>
     <p class="page-lead">
       기준은 <b>WCAG 2.2 AA</b>입니다.
-      극한 미니멀은 대비가 낮아지기 쉬워서, 이 시스템에서는 특히 지켜야 합니다.
+      미니멀은 대비가 낮아지기 쉬워서, 이 시스템에서는 특히 지켜야 합니다.
     </p>
     <div class="prose">
       <h2>색 대비</h2>
@@ -1060,7 +1060,7 @@ export function fdA11y() {
 /* ════════════════════════════════════════ */
 export function fdWriting() {
   return `
-    <div class="page-head"><h1>Writing</h1><span class="page-ko">글쓰기</span></div>
+    <div class="page-head"><h1>Writing</h1><span class="page-ko">UX 라이팅</span></div>
     <p class="page-lead">에러는 사과하지 않습니다 — 무엇이 + 왜 + 무엇을 할 수 있나.</p>
     <div class="prose">
       <h2>목소리</h2>
@@ -1308,7 +1308,7 @@ export function fdWordlist() {
       </table>
       <p>
         <b>"~하시겠습니까?"를 쓰지 않습니다.</b> 딱딱하고 깁니다. "~할까요?"가 같은 뜻이면서 짧습니다.<br>
-        <b>"죄송합니다"를 쓰지 않습니다.</b> 사과는 정보가 아닙니다 (<a href="#/foundation/writing">글쓰기 →</a>).
+        <b>"죄송합니다"를 쓰지 않습니다.</b> 사과는 정보가 아닙니다 (<a href="#/foundation/writing">UX 라이팅 →</a>).
       </p>
 
       <h2>한글과 영문이 섞일 때</h2>

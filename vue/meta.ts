@@ -88,7 +88,7 @@ export const meta: ComponentMeta[] = [
     vuetifyBase: null,
     summary: { ko: '내용을 나누는 1px 선.', en: '' },
     reason: {
-      ko: '극한 미니멀에서는 그림자 대신 이것으로 영역을 나눕니다.',
+      ko: '시각 요소를 절제한 화면에서는 그림자 대신 이것으로 영역을 나눕니다.',
       en: 'Our primary separation device in a shadowless system.',
     },
     where: '설정 그룹 사이, 대화의 날짜 구분.',
@@ -116,7 +116,7 @@ export const meta: ComponentMeta[] = [
     vuetifyBase: null,
     summary: { ko: '데이터가 없을 때 보여주는 화면.', en: '' },
     reason: {
-      ko: 'Vuetify에 없습니다. 극한 미니멀에서는 빈 화면이 "미완성"처럼 보이기 쉬워 특히 중요합니다.',
+      ko: 'Vuetify에 없습니다. 시각 요소를 절제한 화면에서는 빈 화면이 "미완성"처럼 보이기 쉬워 특히 중요합니다.',
       en: 'Not in Vuetify; critical in a minimal system where blank reads as broken.',
     },
     where: '모든 목록·테이블·검색의 빈 상태. 다음 행동을 반드시 제안.',

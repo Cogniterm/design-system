@@ -139,9 +139,9 @@ const DOCS_LINKS = [
 /* 섹션 머리표 — 지금 어느 섹션에 있는지 LNB 최상단에 고정합니다 */
 const LNB_HEAD = {
   docs:       ['Docs', '문서', '설치부터 Vuetify 연동까지'],
-  foundation: ['Foundation', '기초', '컴포넌트 이전의 결정들'],
+  foundation: ['Foundation', '파운데이션', '컴포넌트 이전의 결정들'],
   components: ['Components', '컴포넌트', `${COMPONENTS.length}종 · Standalone ${COMPONENTS.filter((c) => c.origin === 'custom').length} · Vuetify ${COMPONENTS.filter((c) => c.origin === 'wrapped').length}`],
-  templates:  ['Templates', '템플릿', '골든 스크린과 라이브 예제'],
+  templates:  ['Templates', '템플릿', '페이지 템플릿과 라이브 예제'],
 }
 
 function renderSidebar(section, activeId) {
@@ -415,7 +415,7 @@ function wireCodeTabs() {
 /* ═══════════ 템플릿 ═══════════ */
 function renderTemplates() {
   $('#content').innerHTML = crumb({ label: 'Templates' }) + `
-    <div class="page-head"><h1>Templates</h1><span class="page-ko">골든 스크린</span></div>
+    <div class="page-head"><h1>Templates</h1><span class="page-ko">페이지 템플릿</span></div>
     <p class="page-lead">완성 화면. 새 화면은 여기서 복제해 시작합니다.</p>
     <div class="tpl-grid">
       <a class="tpl-card live" href="live/" target="_blank" rel="noopener">

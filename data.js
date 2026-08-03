@@ -166,7 +166,7 @@ export const COMPONENTS = [
   id: 'divider', name: 'Divider', ko: '구분선', category: 'content',
   origin: 'custom', vuetifyBase: null,
   summary: '내용을 나누는 1px 선.',
-  reason: { ko: '극한 미니멀에서는 그림자 대신 이것으로 영역을 나눕니다.', en: 'Our primary separation device in a shadowless system.' },
+  reason: { ko: '시각 요소를 절제한 화면에서는 그림자 대신 이것으로 영역을 나눕니다.', en: 'Our primary separation device in a shadowless system.' },
   props: [['label', 'string', '—', '있으면 선 가운데에 라벨을 넣습니다. "오늘 / 어제" 같은 구분에 사용.']],
   slots: [],
   demo: `<div style="font-size:13px;color:var(--gray-11)">위 내용</div>
@@ -201,7 +201,7 @@ export const COMPONENTS = [
   id: 'empty', name: 'EmptyState', ko: '빈 상태', category: 'content',
   origin: 'custom', vuetifyBase: null,
   summary: '데이터가 없을 때 보여주는 화면.',
-  reason: { ko: 'Vuetify에 없습니다. 극한 미니멀에서는 빈 화면이 "미완성"처럼 보이기 쉬워 특히 중요합니다.',
+  reason: { ko: 'Vuetify에 없습니다. 시각 요소를 절제한 화면에서는 빈 화면이 "미완성"처럼 보이기 쉬워 특히 중요합니다.',
             en: 'Not in Vuetify; critical in a minimal system where blank reads as broken.' },
   props: [['title', 'string', '필수', '무엇이 없는지.'], ['description', 'string', '—', '왜 없는지, 무엇을 할 수 있는지.']],
   slots: [['default', '다음 행동 버튼(CTA).']],

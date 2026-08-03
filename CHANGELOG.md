@@ -63,5 +63,5 @@
 ### Added
 - 토큰 (브랜드 #1F7FF0, Radix Slate 12단계, 라이트/다크)
 - Standalone 컴포넌트 20종
-- 골든 스크린 — Chat, Search
+- 페이지 템플릿 — Chat, Search
 - 문서 사이트, `llms.txt`

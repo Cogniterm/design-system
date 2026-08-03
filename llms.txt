@@ -1,6 +1,7 @@
 # Cogniterm Design System
 
-> Extreme-minimal design system for AI agent products, built for Vue 3 + Vuetify 3.11.
+> Minimal design system for AI agent products, built for Vue 3 + Vuetify 3.11.
+> Hierarchy comes from spacing, type weight and 1px borders — not shadows or decoration.
 > No shadows, 1px borders, radius 4/6/8/12, Pretendard, brand blue #1F7FF0
 > (#4593F5 in dark), Radix Slate gray 1-12. Light + dark via [data-theme="dark"].
 > 65 components, 17 patterns, 15 foundation pages.

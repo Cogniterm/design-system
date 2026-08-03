@@ -7,17 +7,17 @@
 ## Pages
 - Overview (개요) — https://kimjiyong995-coder.github.io/design-system/#/foundation/overview
 - Design Tokens (토큰) — https://kimjiyong995-coder.github.io/design-system/#/foundation/tokens
-- Color (색) — https://kimjiyong995-coder.github.io/design-system/#/foundation/color
+- Color (컬러) — https://kimjiyong995-coder.github.io/design-system/#/foundation/color
 - Typography (타이포그래피) — https://kimjiyong995-coder.github.io/design-system/#/foundation/typography
-- Spacing & Layout (여백 · 레이아웃) — https://kimjiyong995-coder.github.io/design-system/#/foundation/spacing
-- Radius & Border (모서리 · 보더) — https://kimjiyong995-coder.github.io/design-system/#/foundation/shape
-- Elevation (높낮이) — https://kimjiyong995-coder.github.io/design-system/#/foundation/elevation
+- Spacing & Layout (스페이싱 · 레이아웃) — https://kimjiyong995-coder.github.io/design-system/#/foundation/spacing
+- Radius & Border (라디우스 · 보더) — https://kimjiyong995-coder.github.io/design-system/#/foundation/shape
+- Elevation (엘리베이션) — https://kimjiyong995-coder.github.io/design-system/#/foundation/elevation
 - Density (밀도) — https://kimjiyong995-coder.github.io/design-system/#/foundation/density
 - Iconography (아이콘) — https://kimjiyong995-coder.github.io/design-system/#/foundation/iconography
 - Motion (모션) — https://kimjiyong995-coder.github.io/design-system/#/foundation/motion
 - State (상태) — https://kimjiyong995-coder.github.io/design-system/#/foundation/state
 - Accessibility (접근성) — https://kimjiyong995-coder.github.io/design-system/#/foundation/a11y
-- Writing (글쓰기) — https://kimjiyong995-coder.github.io/design-system/#/foundation/writing
+- Writing (UX 라이팅) — https://kimjiyong995-coder.github.io/design-system/#/foundation/writing
 - Word List (용어집) — https://kimjiyong995-coder.github.io/design-system/#/foundation/wordlist
 - Internationalization (다국어) — https://kimjiyong995-coder.github.io/design-system/#/foundation/i18n
 

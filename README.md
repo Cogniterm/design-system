@@ -1,6 +1,6 @@
 # Cogniterm Design System
 
-AI SaaS Agent 제품군을 위한 극한 미니멀 디자인 시스템.
+AI SaaS Agent 제품군을 위한 미니멀 디자인 시스템.
 Vue 3 · Vuetify 3.11 환경에서 그대로 사용합니다.
 
 **문서 사이트** → https://kimjiyong995-coder.github.io/design-system/
@@ -92,7 +92,7 @@ vue/
   meta.ts             컴포넌트별 origin·이유 (en/ko)
   icon.ts / icons.ts  DsIcon 배럴 + 아이콘 레지스트리 (Lucide)
   components/         Ds*.vue
-templates/            골든 스크린 (HTML)
+templates/            페이지 템플릿 (HTML)
 examples/vuetify-app/ 실제 Vuetify 앱 예제 (소스)
 live/                 위 예제의 빌드 결과 — 공개 사이트에서 바로 열림
 llms.txt              AI용 색인
