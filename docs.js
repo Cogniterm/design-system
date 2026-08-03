@@ -69,10 +69,6 @@ function render() {
   else renderCatalog()
 
   renderSidebar(section, id)
-  // 산문 중심 섹션은 컨테이너를 측정폭에 맞춥니다 —
-  // 안 그러면 720px 본문이 960px 상자의 왼쪽에 붙어 보입니다
-  $('#content').classList.toggle('narrow',
-    section === 'foundation' && id !== 'overview' || section === 'docs')
   enhance()
   document.body.classList.remove('drawer-open')
   window.scrollTo(0, 0)
