@@ -142,18 +142,21 @@
 /* ══════════════════════════════════════
    본문
    ══════════════════════════════════════ */
-/* 본문 그리드 — LNB를 제외한 남은 공간의 "가운데"에 본문 컬럼이 옵니다.
-   flex:1 + max-width 조합은 상자를 왼쪽에 붙입니다 — justify-content로 중앙 정렬. */
+/* 본문 그리드 — 대칭 3열: [여백 1fr | 본문 | 여백 1fr].
+   본문이 "진짜" 중앙에 옵니다. 목차는 오른쪽 여백 레일에 얹혀
+   중앙 계산에 끼지 않습니다 (끼면 본문이 목차 폭의 절반만큼 왼쪽으로 밀립니다). */
 .content {
   flex: 1; min-width: 0;
-  display: flex; gap: 48px; align-items: flex-start;
-  justify-content: center;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, var(--main-w, 960px)) minmax(0, 1fr);
+  column-gap: 48px;
+  align-items: start;
   padding: 40px 56px 160px;
 }
-.page-main { flex: 0 1 960px; min-width: 0; }
+.page-main { grid-column: 2; min-width: 0; }
 
-/* 산문 중심 페이지 — 컨테이너 = 측정폭. 헤더·본문·표가 같은 폭으로 정렬됩니다 */
-.content.narrow .page-main { flex-basis: var(--measure); }
+/* 산문 중심 페이지 — 본문 폭 = 측정폭. 헤더·본문·표·하단 내비가 같은 폭 */
+.content.narrow { --main-w: var(--measure); }
 .content.narrow .prose { max-width: none; }
 
 /* "이 페이지" 목차 — 긴 페이지의 조감도 (≥1280px) */
@@ -161,7 +164,9 @@
    연한 세로 스트로크 트랙 위에서, 현재 읽는 구간의 세그먼트만 진해집니다.
    구분선이 아니라 "지금 어디" 표시기입니다. */
 .toc {
-  width: 192px; flex-shrink: 0;
+  grid-column: 3; grid-row: 1;
+  justify-self: start;
+  width: 192px;
   position: sticky; top: 80px;
   max-height: calc(100vh - 120px); overflow-y: auto;
 }
