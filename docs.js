@@ -247,7 +247,7 @@ function renderComponent(id, tab) {
   if (!c) return renderCatalog()
 
   const tabs = [['overview', 'Overview'], ['properties', 'Properties'],
-                ['guidelines', 'Guidelines'], ['a11y', 'Accessibility'], ['code', 'Code']]
+                ['guidelines', 'Guidelines'], ['a11y', 'Accessibility']]
   const tabsHtml = tabs.map(([t, label]) =>
     `<a href="#/components/${id}?tab=${t}" class="${tab === t ? 'on' : ''}">${label}</a>`).join('')
 
@@ -255,7 +255,6 @@ function renderComponent(id, tab) {
   if (tab === 'properties') pane = propsPane(c)
   else if (tab === 'a11y') pane = a11yPane(c)
   else if (tab === 'guidelines') pane = guidelinesPane(c)
-  else if (tab === 'code') pane = codePane(c, true)
   else pane = overviewPane(c)
 
   const cat = CATEGORIES.find((x) => x.id === c.category)
@@ -274,34 +273,8 @@ function renderComponent(id, tab) {
 
 function overviewPane(c) {
   const imp = c.origin === 'wrapped' ? '~/design/vuetify' : '~/design'
-  const need = `<div class="imp"><code>import { Ds${c.name.replace(/^Ds/, '')} } from '${imp}'</code></div>`
-
-  const wherebox = WHERE[c.id] ? `
-    <div class="whybox">
-      <div class="wb-row"><span class="wb-tag why">왜 필요한가</span><span>${c.reason.ko}</span></div>
-      <div class="wb-row"><span class="wb-tag where">어디에 쓰나</span><span>${WHERE[c.id]}</span></div>
-    </div>` : ''
-
-  const vs = VERSUS[c.id] ? `
-    <div class="vsbox">
-      <div class="vs-head">${ic('filter', 'sm')} 비슷한 것과의 구분</div>
-      ${VERSUS[c.id].map(([other, rule]) => {
-        const t = COMPONENTS.find((x) => x.name === other)
-        const link = t ? `<a href="#/components/${t.id}">${other}</a>` : `<b>${other}</b>`
-        return `<div class="vs-row"><span class="vs-name">vs ${link}</span><span>${rule}</span></div>`
-      }).join('')}
-    </div>` : ''
-
-  return need + wherebox + vs + `<div class="demo">${c.demo}</div>` + codeBlock(c)
-}
-
-function codePane(c) {
-  const imp = c.origin === 'wrapped'
-    ? `import { Ds${c.name.replace(/^Ds/, '')} } from '~/design/vuetify'`
-    : `import { Ds${c.name.replace(/^Ds/, '')} } from '~/design'`
-  return `<div class="tbl-title">Import</div>
-     <div class="codewrap"><div class="codebody"><pre><code>${esc(imp)}</code></pre></div></div>
-     <div class="tbl-title">Usage</div>` + codeBlock(c, true)
+  return `<div class="demo">${c.demo}</div>` + codeBlock(c) +
+    `<div class="imp" style="margin:20px 0 0"><code>import { Ds${c.name.replace(/^Ds/, '')} } from '${imp}'</code></div>`
 }
 
 function codeBlock(c, standalone) {
@@ -395,16 +368,22 @@ function guidelinesPane(c) {
     `<div class="gl-item"><span class="gl-tag ${tagClass(tag)}">${tag}</span><span class="gl-text">${text}</span></div>`).join('')
 
   const why = `
-    <div class="tbl-title">왜 이렇게 만들었나</div>
-    <div class="callout" style="margin-bottom:28px">
-      ${c.origin === 'wrapped'
-        ? `<b>origin: wrapped</b> — Vuetify의 <code>${c.vuetifyBase}</code>를 감쌉니다.<br>`
-        : `<b>origin: custom</b> — Vuetify 없이 직접 만들었습니다.<br>`}
-      ${c.reason.ko}
-      <div style="margin-top:8px;color:var(--gray-9);font-size:12.5px">${c.reason.en}</div>
+    <div class="whybox">
+      <div class="wb-row"><span class="wb-tag why">왜 필요한가</span><span>${c.reason.ko}${c.vuetifyAlt ? ` (Vuetify의 <code>${c.vuetifyAlt}</code> 대신)` : ''}</span></div>
+      <div class="wb-row"><span class="wb-tag where">어디에 쓰나</span><span>${WHERE[c.id] || ''}</span></div>
     </div>`
 
-  return why + (items ? `<div class="tbl-title">사용 지침</div><div class="gl">${items}</div>` : '')
+  const vs = VERSUS[c.id] ? `
+    <div class="vsbox">
+      <div class="vs-head">비슷한 것과의 구분</div>
+      ${VERSUS[c.id].map(([other, rule]) => {
+        const t = COMPONENTS.find((x) => x.name === other)
+        const link = t ? `<a href="#/components/${t.id}">${other}</a>` : `<b>${other}</b>`
+        return `<div class="vs-row"><span class="vs-name">vs ${link}</span><span>${rule}</span></div>`
+      }).join('')}
+    </div>` : ''
+
+  return why + vs + (items ? `<div class="tbl-title">사용 지침</div><div class="gl">${items}</div>` : '')
 }
 
 function wireCodeTabs() {
