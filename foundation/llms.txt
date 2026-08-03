@@ -19,7 +19,6 @@
 - Accessibility (접근성) — https://kimjiyong995-coder.github.io/design-system/#/foundation/a11y
 - Writing (UX 라이팅) — https://kimjiyong995-coder.github.io/design-system/#/foundation/writing
 - Word List (용어집) — https://kimjiyong995-coder.github.io/design-system/#/foundation/wordlist
-- Internationalization (다국어) — https://kimjiyong995-coder.github.io/design-system/#/foundation/i18n
 
 ## Hard rules for generating screens
 - Color: brand ONLY for primary actions, links, focus and progress. Gray does 95%.
