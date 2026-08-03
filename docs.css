@@ -157,7 +157,6 @@
 
 /* 산문 중심 페이지 — 본문 폭 = 측정폭. 헤더·본문·표·하단 내비가 같은 폭 */
 .content.narrow { --main-w: var(--measure); }
-.content.narrow .prose { max-width: none; }
 
 /* "이 페이지" 목차 — 긴 페이지의 조감도 (≥1280px) */
 /* 목차 — Notion 방식.
@@ -229,7 +228,6 @@
 .page-lead {
   color: var(--gray-11); margin-top: 12px;
   font-size: var(--text-md); line-height: var(--leading-prose);
-  max-width: var(--measure);
 }
 
 .origin-badge {
@@ -271,7 +269,9 @@
 /* ══════════════════════════════════════
    Prose — 읽는 면. UI보다 크고 넉넉하게.
    ══════════════════════════════════════ */
-.prose { max-width: var(--measure); }
+/* prose는 자체 폭을 갖지 않습니다 — 폭은 컨테이너(--main-w)가 유일하게 결정.
+   두 군데서 폭을 정하면 하나만 어긋나도 요소별 폭이 갈라집니다. */
+.prose { max-width: none; }
 /* 섹션 구분 — 선이 아니라 여백(위 64px)과 굵기가 그룹을 만듭니다 */
 .prose h2 {
   font-size: clamp(20px, 1vw + 14px, 24px); font-weight: var(--weight-semibold);
@@ -578,7 +578,7 @@
 }
 .hero p {
   margin-top: 14px; font-size: var(--text-lg); color: var(--gray-11);
-  line-height: var(--leading-prose); max-width: var(--measure);
+  line-height: var(--leading-prose);
 }
 .hero-actions { display: flex; gap: 10px; margin-top: 26px; flex-wrap: wrap; }
 .hero-stats {
