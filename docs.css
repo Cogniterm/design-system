@@ -138,15 +138,15 @@
 /* ══════════════════════════════════════
    본문
    ══════════════════════════════════════ */
-/* 본문 그리드 — LNB 264px / 본문(측정폭 68ch) / 목차 레일 208px.
-   목차가 없는 페이지는 본문이 자연히 전체 폭을 씁니다. */
+/* 본문 그리드 — LNB를 제외한 남은 공간의 "가운데"에 본문 컬럼이 옵니다.
+   flex:1 + max-width 조합은 상자를 왼쪽에 붙입니다 — justify-content로 중앙 정렬. */
 .content {
   flex: 1; min-width: 0;
   display: flex; gap: 48px; align-items: flex-start;
+  justify-content: center;
   padding: 40px 56px 160px;
-  max-width: 1240px;
 }
-.page-main { flex: 1 1 auto; min-width: 0; }
+.page-main { flex: 0 1 900px; min-width: 0; }
 
 /* "이 페이지" 목차 — 긴 페이지의 조감도 (≥1280px) */
 .toc {
@@ -917,7 +917,6 @@
    ══════════════════════════════════════ */
 @media (max-width: 1280px) {
   .toc { display: none; }
-  .content { max-width: 1000px; }
 }
 @media (max-width: 1080px) {
   .content { padding: 36px 32px 140px; }
