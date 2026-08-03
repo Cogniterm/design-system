@@ -26,6 +26,8 @@ jobs:
         with: { node-version: '20' }
       - run: node scripts-check.mjs
       - run: node scripts-stamp.mjs --check
+      # 브라우저 없이 docs.js를 실행해, 화면이 실제로 그려지는지 봅니다
+      - run: node scripts-render.mjs
 
   deploy:
     needs: verify
