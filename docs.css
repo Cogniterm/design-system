@@ -86,7 +86,7 @@
   width: 264px; flex-shrink: 0;
   padding: 0 0 80px;
   position: sticky; top: 56px;
-  max-height: calc(100vh - 56px); overflow-y: auto;
+  height: calc(100vh - 56px); overflow-y: auto;
   background: var(--bg);
   border-right: 1px solid var(--border);
 }

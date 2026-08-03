@@ -190,6 +190,7 @@ function renderSidebar(section, activeId) {
 
 /* 빵부스러기 — 본문 상단에서 위치를 한 번 더 알립니다 */
 function crumb(...parts) {
+  if (parts.length < 3) return ''   // 3뎁스 미만에서는 경로가 정보를 더하지 않습니다
   return `<div class="crumb">` + parts.map((p, i) =>
     (i ? `<span class="sep">/</span>` : '') +
     (p.href ? `<a href="${p.href}">${p.label}</a>` : `<span>${p.label}</span>`)).join('') + `</div>`
