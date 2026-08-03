@@ -30,17 +30,8 @@ const swatchRow = (n) => `<div class="swatch" style="background:var(--gray-${n})
 export function fdOverview() {
   return `
     <div class="page-head"><h1>Foundation</h1><span class="page-ko">기초</span></div>
-    <p class="page-lead">
-      컴포넌트를 만들기 <b>전에</b> 내린 결정들입니다.
-      버튼이 어떻게 생겼는지보다, 왜 그 회색이고 왜 그 여백인지가 여기 있습니다.
-    </p>
+    <p class="page-lead">컴포넌트 이전의 결정들.</p>
     <div class="prose">
-      <div class="callout">
-        <b>Foundation이 없으면 컴포넌트는 취향의 모음이 됩니다.</b><br>
-        새 컴포넌트를 만들 때 "이 값을 얼마로 할까"를 매번 고민하지 않도록,
-        미리 정해둔 답이 Foundation입니다.
-      </div>
-
       <h2>구성</h2>
       <table>
         <thead><tr><th>주제</th><th>무엇을 정하나</th></tr></thead>
@@ -61,22 +52,11 @@ export function fdOverview() {
         </tbody>
       </table>
 
-      <h2>이 시스템의 성격</h2>
-      <p>
-        일반적인 디자인 시스템과 다른 점이 두 가지 있습니다.
-      </p>
-      <ol>
-        <li>
-          <b>극한 미니멀</b> — 그림자·그라디언트·일러스트를 쓰지 않습니다.
-          그래서 Foundation에 <code>Gradient</code>·<code>Illustration</code> 페이지가 없습니다.
-          대신 <b>보더와 여백</b>에 훨씬 많은 규칙이 있습니다.
-        </li>
-        <li>
-          <b>에이전트 제품</b> — 화면이 10~30초씩 "일하는" 상태로 있습니다.
-          그래서 <a href="#/foundation/state">상태</a>가 다른 시스템보다 훨씬 중요하고,
-          로딩이 아니라 <b>진행</b>을 표현하는 규칙이 따로 있습니다.
-        </li>
-      </ol>
+      <h2>다른 시스템과 다른 점</h2>
+      <ul>
+        <li><b>극한 미니멀</b> — 그림자·그라디언트·일러스트 없음. 보더와 여백이 위계를 만듭니다.</li>
+        <li><b>에이전트 제품</b> — 로딩이 아니라 <a href="#/foundation/state">진행</a>을 표현합니다.</li>
+      </ul>
 
       <h2>참고한 시스템</h2>
       <table>
@@ -199,11 +179,7 @@ export function fdColor() {
 
       <h2>Gray — Radix Slate 1–12</h2>
       <div class="swatch-wrap"><div class="swatches">${[1,2,3,4,5,6,7,8,9,10,11,12].map(swatchRow).join('')}</div></div>
-      <p>
-        <b>이 시스템의 실질적인 색은 회색입니다.</b> 화면의 95%가 이 12단계로 그려집니다.
-        직접 만들지 않고 검증된 Radix Slate를 씁니다 — 브랜드 블루와 온도가 맞는 차가운 회색이고,
-        라이트/다크 쌍의 대비가 이미 검증돼 있습니다.
-      </p>
+      <p>화면의 95%는 이 12단계입니다. Radix Slate — 라이트/다크 대비가 검증된 차가운 회색.</p>
       <table>
         <thead><tr><th>단계</th><th>역할</th><th>예</th></tr></thead>
         <tbody>
@@ -547,14 +523,6 @@ export function fdElevation() {
       그림자는 "떠 있는 것"에만, 그것도 한 종류만 씁니다.
     </p>
     <div class="prose">
-      <div class="callout">
-        <b>왜 그림자를 버렸나</b><br>
-        그림자는 깊이를 만들지만 동시에 화면을 탁하게 합니다.
-        머티리얼 계열 시스템은 elevation 0~24단계를 두는데,
-        실무에서는 "이건 몇 단계지?"가 매번 취향 문제가 됩니다.
-        보더로 통일하면 그 논쟁이 사라집니다.
-      </div>
-
       <h2>규칙</h2>
       <table>
         <thead><tr><th>상황</th><th>처리</th></tr></thead>
@@ -607,13 +575,6 @@ export function fdDensity() {
       <b>밀도는 토큰으로 제어하고 컴포넌트에 하드코딩하지 않습니다.</b>
     </p>
     <div class="prose">
-      <div class="callout">
-        <b>B2B 제품의 핵심 결정입니다.</b>
-        소비자 앱은 밀도가 하나여도 되지만, 업무 도구는 같은 사용자가
-        "훑어보는 화면"과 "읽는 화면"을 오갑니다.
-        밀도를 고정하면 둘 중 하나는 반드시 불편해집니다.
-      </div>
-
       <h2>3단계</h2>
       <table>
         <thead><tr><th>이름</th><th>행 높이</th><th>세로 여백</th><th>쓰는 곳</th></tr></thead>
@@ -677,9 +638,7 @@ export function fdDensity() {
 export function fdIconography() {
   return `
     <div class="page-head"><h1>Iconography</h1><span class="page-ko">아이콘</span></div>
-    <p class="page-lead">
-      세트 하나, 크기 3개, 굵기 하나. 아이콘은 <b>글자를 대체하지 않고 보조합니다</b>.
-    </p>
+    <p class="page-lead">Lucide 하나, 크기 3개, stroke 1.5.</p>
     <div class="prose">
       <div class="callout">
         <b>적용 완료</b> — <code>lucide-vue-next</code>를 등록하고
@@ -860,10 +819,7 @@ export function fdMotion() {
 export function fdState() {
   return `
     <div class="page-head"><h1>State</h1><span class="page-ko">상태</span></div>
-    <p class="page-lead">
-      화면 상태 5종과 인터랙션 상태 5종. <b>처음부터 전부 만듭니다</b> —
-      나중에 추가하는 비용이 훨씬 큽니다.
-    </p>
+    <p class="page-lead">화면 상태 5종 + 인터랙션 상태 6종. 처음부터 전부.</p>
     <div class="prose">
       <h2>화면 상태 5종</h2>
       <p>모든 목록·테이블·검색 화면은 이 다섯을 전부 가집니다.</p>
@@ -1024,10 +980,7 @@ export function fdA11y() {
 export function fdWriting() {
   return `
     <div class="page-head"><h1>Writing</h1><span class="page-ko">글쓰기</span></div>
-    <p class="page-lead">
-      문구도 디자인입니다. 특히 <b>에러 메시지</b>가 제품의 인상을 만듭니다.
-      원칙 2 — 실패는 예외가 아니라 기본 상태 중 하나입니다.
-    </p>
+    <p class="page-lead">에러는 사과하지 않습니다 — 무엇이 + 왜 + 무엇을 할 수 있나.</p>
     <div class="prose">
       <h2>목소리</h2>
       <table>

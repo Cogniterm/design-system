@@ -223,6 +223,16 @@
 .origin-badge.wrapped { background: #fff3e0; color: #ab6400; }
 [data-theme="dark"] .origin-badge.wrapped { background: #2a2011; color: #f0b429; }
 
+/* import 한 줄 — 컴포넌트 페이지 상단 */
+.imp { margin-bottom: 20px; }
+.imp code {
+  font-family: var(--mono); font-size: var(--text-xs); color: var(--gray-11);
+  background: var(--gray-2); border: 1px solid var(--gray-4);
+  padding: 7px 12px; border-radius: var(--r-md); display: inline-block;
+}
+.a11y-std { font-size: var(--text-xs); color: var(--gray-9); margin-bottom: 22px; }
+.a11y-std a { color: var(--gray-10); }
+
 /* ── 탭 ── */
 .tabs {
   display: flex; gap: 2px; margin-top: 26px;

@@ -273,15 +273,8 @@ function renderComponent(id, tab) {
 }
 
 function overviewPane(c) {
-  const need = c.origin === 'wrapped'
-    ? `<div class="callout warn" style="margin-bottom:20px">
-         <b>Vuetify 기반</b> — 내부적으로 <code>${c.vuetifyBase}</code>를 사용합니다.
-         <code>~/design/vuetify</code>에서 import 하세요.
-       </div>`
-    : `<div class="callout" style="margin-bottom:20px">
-         <b>Standalone</b> — Vuetify 없이 동작합니다. <code>~/design</code>에서 import 하세요.
-         ${c.vuetifyAlt ? `<br>Vuetify에 <code>${c.vuetifyAlt}</code>가 있지만 쓰지 않았습니다 — 이유는 아래.` : ''}
-       </div>`
+  const imp = c.origin === 'wrapped' ? '~/design/vuetify' : '~/design'
+  const need = `<div class="imp"><code>import { Ds${c.name.replace(/^Ds/, '')} } from '${imp}'</code></div>`
 
   const wherebox = WHERE[c.id] ? `
     <div class="whybox">
@@ -299,28 +292,14 @@ function overviewPane(c) {
       }).join('')}
     </div>` : ''
 
-  return need + wherebox + vs + `<div class="demo">${c.demo}</div>` + codeBlock(c) + `
-    <div class="livehint">
-      위 예시는 문서용 정적 렌더입니다.
-      실제 Vuetify 위에서 동작하는 화면은 <b>examples/vuetify-app</b>의 라이브 갤러리에서 확인하세요.
-    </div>`
+  return need + wherebox + vs + `<div class="demo">${c.demo}</div>` + codeBlock(c)
 }
 
 function codePane(c) {
-  const install = c.origin === 'wrapped'
-    ? `<div class="callout warn" style="margin-bottom:22px">
-         <b>import 경로:</b> <code>~/design/vuetify</code> (Vuetify 의존 배럴)<br>
-         <b>필요한 CSS:</b> <code>ds.css</code> + <code>ds-vuetify.css</code>
-       </div>`
-    : `<div class="callout" style="margin-bottom:22px">
-         <b>import 경로:</b> <code>~/design</code><br>
-         <b>필요한 CSS:</b> <code>ds.css</code> 하나
-       </div>`
   const imp = c.origin === 'wrapped'
     ? `import { Ds${c.name.replace(/^Ds/, '')} } from '~/design/vuetify'`
     : `import { Ds${c.name.replace(/^Ds/, '')} } from '~/design'`
-  return install +
-    `<div class="tbl-title">Import</div>
+  return `<div class="tbl-title">Import</div>
      <div class="codewrap"><div class="codebody"><pre><code>${esc(imp)}</code></pre></div></div>
      <div class="tbl-title">Usage</div>` + codeBlock(c, true)
 }
@@ -375,12 +354,7 @@ function propsPane(c) {
 
 function a11yPane(c) {
   const a = A11Y[c.id]
-  const level = `
-    <div class="callout" style="margin-bottom:24px">
-      <b>기준: WCAG 2.2 AA</b> — 대비 4.5:1(본문) · 3:1(보더·아이콘),
-      포커스 표시 필수, 색만으로 의미를 전달하지 않음.
-      <a href="#/foundation/a11y">접근성 Foundation →</a>
-    </div>`
+  const level = `<p class="a11y-std">WCAG 2.2 AA · <a href="#/foundation/a11y">전체 기준</a></p>`
 
   if (!a) {
     return level + `<div class="callout warn">
@@ -602,20 +576,14 @@ function pageStart() {
           <tr><td><a href="a11y/llms.txt" target="_blank"><code>/a11y/</code></a></td><td>접근성 — 키보드 표</td><td>15 KB</td></tr>
         </tbody>
       </table>
-      <p>화면 하나에는 보통 Foundation + Components + Patterns 세 개면 충분합니다.</p>
     </div>`
 }
 
 function pageInstall() {
   return `
     <div class="page-head"><h1>설치 · 사용법</h1></div>
-    <p class="page-lead">개발자 기준 10분. npm 설치가 필요 없습니다.</p>
+    <p class="page-lead">파일 복사 방식 — 개발자 기준 10분.</p>
     <div class="prose">
-      <div class="callout">
-        <b>새로 설치할 패키지는 없습니다.</b> Vuetify는 이미 앱에 있고, 이 디자인 시스템은
-        <b>파일을 복사해 넣는 방식</b>입니다. 버전 충돌이 생길 수 없습니다.
-      </div>
-
       <h2>1. 파일 복사</h2>
       <pre><code>design-system/
   ds.css              →  app/src/design/ds.css
@@ -631,7 +599,7 @@ function pageInstall() {
           <tr><td><code>lucide-vue-next</code></td><td>아이콘</td><td>ISC</td></tr>
         </tbody>
       </table>
-      <p>이 둘이 전부입니다. 다른 의존성은 없습니다.</p>
+
 
       <h2>3. 스타일 등록</h2>
       <pre><code>// nuxt.config.ts
@@ -643,11 +611,7 @@ export default defineNuxtConfig({
     '~/src/design/ds-vuetify.css',   // Vuetify 기반 컴포넌트를 쓸 때만
   ],
 })</code></pre>
-      <div class="callout warn">
-        <b>폰트를 안 넣으면 조용히 시스템 글꼴로 렌더됩니다.</b>
-        에러가 나지 않아 놓치기 쉬운 부분입니다.
-        화면이 어딘가 다르게 보이면 이것부터 확인하세요.
-      </div>
+      <div class="callout warn"><b>폰트를 빠뜨리면 에러 없이 시스템 글꼴로 렌더됩니다.</b></div>
 
       <h2>4. Vuetify defaults · theme 연결</h2>
       <p>
@@ -664,11 +628,7 @@ createVuetify({
   defaults: dsDefaults,
   icons: lucideIconSet,   // 내부 아이콘도 Lucide로 — @mdi/font 불필요
 })</code></pre>
-      <div class="callout warn">
-        <b><code>icons</code>를 빠뜨리면 Vuetify 내부 아이콘이 전부 깨집니다.</b>
-        체크박스 체크, 셀렉트 화살표, 정렬 화살표, 알림 아이콘이 빈 글자로 나옵니다 —
-        Vuetify 기본값이 설치하지 않은 @mdi 웹폰트이기 때문입니다.
-      </div>
+      <div class="callout warn"><b><code>icons</code>를 빠뜨리면 체크박스·화살표 등 내부 아이콘이 전부 빈 글자로 나옵니다.</b></div>
 
       <h2>5. 사용</h2>
       <pre><code>&lt;script setup&gt;
@@ -693,11 +653,8 @@ import { DsDataTable, DsDialog } from '~/src/design/vuetify'
       <h2>다크 모드</h2>
       <p><code>&lt;html data-theme="dark"&gt;</code> 하나로 전환됩니다. Vuetify 테마와 독립적으로 동작합니다.</p>
 
-      <h2>기존 화면은 어떻게 되나</h2>
-      <p>
-        아무것도 바뀌지 않습니다. 이 시스템은 <code>src/design/</code> 안에만 존재하고
-        앱 파일을 건드리지 않습니다. 폴더째 지워도 앱은 그대로 돌아갑니다.
-      </p>
+      <h2>기존 화면</h2>
+      <p>바뀌지 않습니다. <code>src/design/</code> 밖은 건드리지 않습니다.</p>
     </div>`
 }
 
@@ -715,18 +672,8 @@ function pageVuetify() {
       무엇이 Vuetify 기반이고 무엇이 아닌지, 그리고 왜 그렇게 나눴는지.
     </p>
     <div class="prose">
-      <div class="callout">
-        <b>Vuetify를 대체하지 않습니다. 옆에 함께 삽니다.</b><br>
-        Vuetify 3.11은 그대로 두고, 그 옆에 <code>src/design/</code>을 짓습니다.
-        마이그레이션은 없고 기존 화면은 바뀌지 않습니다.
-      </div>
-
       <h2>"Vuetify 없이 동작한다"의 뜻</h2>
-      <p>
-        오해하기 쉬운 표현입니다. <b>"Vuetify와 호환되지 않는다"는 뜻이 전혀 아닙니다.</b>
-        정확히는 <b>"Vuetify를 필요로 하지 않는다"</b>는 뜻이고, 이건 호환성을 <u>낮추는</u> 게 아니라
-        <u>높이는</u> 성질입니다.
-      </p>
+      <p>"필요로 하지 않는다"는 뜻입니다. Vuetify 앱 안에서도 그대로 동작합니다.</p>
       <table>
         <thead><tr><th></th><th>Standalone 컴포넌트</th><th>Vuetify 기반 컴포넌트</th></tr></thead>
         <tbody>
@@ -735,18 +682,8 @@ function pageVuetify() {
           <tr><td><b>Vuetify 버전 올릴 때</b></td><td>영향 없음</td><td>확인 필요</td></tr>
         </tbody>
       </table>
-      <p>
-        Standalone은 Vuetify가 <b>있어도 없어도</b> 동작합니다.
-        의존이 없다는 것은 Vuetify 버전이 바뀌어도 깨질 일이 없다는 뜻이기도 합니다 —
-        오히려 가장 안전한 쪽입니다.
-      </p>
-
-      <h2>실제로 검증했습니다</h2>
-      <div class="callout">
-        <b>Vuetify 3.11.6 실제 앱에서 컴포넌트 25종 전부 렌더 확인 (2026-07-31)</b><br>
-        <code>examples/vuetify-app</code>에 검증용 최소 앱이 들어 있습니다.
-        <code>npm run dev</code>로 직접 돌려볼 수 있습니다.
-      </div>
+      <h2>검증</h2>
+      <p><code>examples/vuetify-app</code> — Vuetify 3.11.6 실제 앱에서 전 컴포넌트 렌더 확인.</p>
       <table>
         <thead><tr><th>검증 항목</th><th>결과</th></tr></thead>
         <tbody>
