@@ -71,7 +71,6 @@
 }
 .icon-btn:hover { background: var(--gray-3); color: var(--gray-12); border-color: var(--border-hover); }
 .icon-btn svg { display: block; }
-.nav-ext { display: inline-flex; align-items: center; color: var(--gray-9); }
 
 /* ══════════════════════════════════════
    레이아웃
@@ -972,6 +971,9 @@
   }
 }
 /* stylelint-enable declaration-no-important */
+
+/* 복사 실패 표시 — 사내 IP로 열면 브라우저가 클립보드를 막습니다 */
+[data-tok].copy-failed { outline: 1px solid var(--danger); }
 
 /* ── 라이브 플레이그라운드 ── */
 .play-wrap {

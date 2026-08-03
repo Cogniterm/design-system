@@ -4,7 +4,7 @@
 const V = new URL(import.meta.url).search
 const { CATEGORIES, COMPONENTS, TEMPLATES, VUETIFY_COVERAGE, WHERE, A11Y, VERSUS } = await import('./data.js' + V)
 const { FOUNDATION_PAGES, FD_RENDERERS } = await import('./foundation.js' + V)
-const { ic, ICON_NAMES } = await import('./icons-svg.js' + V)
+const { ic } = await import('./icons-svg.js' + V)
 const { componentPrompt, importPath } = await import('./ai-prompt.js' + V)
 
 /* ═══════════ 유틸 ═══════════ */
@@ -12,12 +12,11 @@ const $ = (s) => document.querySelector(s)
 const esc = (s) => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
 const byId = (id) => COMPONENTS.find((c) => c.id === id)
 
-const ORIGIN_LABEL = {
-  custom:  { tag: 'STANDALONE', badge: 'Standalone — Vuetify 불필요' },
-  wrapped: { tag: 'VUETIFY',    badge: 'Vuetify 기반 — VDataTable 등을 감쌈' },
-}
+/* 짧은 배지 문구의 단일 원본 — 카탈로그·검색이 같이 씁니다.
+   전에는 같은 상태를 BASE / STANDALONE / Standalone 세 가지로 부르고 있었습니다. */
+const ORIGIN_TAG = { custom: 'BASE', wrapped: 'VUETIFY' }
+
 function originBadge(c) {
-  const o = ORIGIN_LABEL[c.origin]
   const text = c.origin === 'wrapped'
     ? `Vuetify 기반 · <code style="font-family:var(--mono)">${c.vuetifyBase}</code>`
     : c.importFrom
@@ -39,7 +38,6 @@ function applyTheme(dark) {
   const gh = $('#ghBtn')
   if (gh) gh.innerHTML = '<svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27s1.36.09 2 .27c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8"/></svg>'
   const si = $('#searchIcon'); if (si) si.innerHTML = ic('search', 'sm')
-  document.querySelectorAll('.nav-ext').forEach((e) => { e.innerHTML = ic('externalLink', 12) })
 }
 
 applyTheme(localStorage.getItem('theme') === 'dark')
@@ -48,7 +46,9 @@ $('#themeBtn').addEventListener('click', () =>
 
 /* ═══════════ 라우터 ═══════════ */
 function parseHash() {
-  const raw = location.hash.slice(1) || '/docs/start'
+  // '#/' 도 빈 것으로 봅니다 — 로고를 누르면 Components가 뜨는데
+  // 좌측 메뉴는 Docs가 켜져 있던 문제가 여기서 났습니다.
+  const raw = location.hash.slice(1).replace(/^\/+$/, '') || '/docs/start'
   const [path, query] = raw.split('?')
   const parts = path.split('/').filter(Boolean)
   const params = new URLSearchParams(query || '')
@@ -69,6 +69,8 @@ function render() {
 
   if (section === 'foundation') renderFoundation(id || 'overview')
   else if (section === 'patterns') { location.replace('#/templates'); return }
+  // Foundation의 토큰 페이지와 같은 내용이라 그쪽으로 보냅니다
+  else if (section === 'docs' && id === 'tokens') { location.replace('#/foundation/tokens'); return }
   else if (section === 'docs') renderDocsPage(id || 'start')
   else if (section === 'templates') renderTemplates()
   else if (id) renderComponent(id, tab)
@@ -82,16 +84,33 @@ function render() {
 
 /* ═══════════ 시인성 보강 — 렌더 후 공통 처리 ═══════════
    ① 표를 가로 스크롤 래퍼에 넣습니다 (좁은 화면에서 표가 터지지 않게)
-   ② h2가 3개 이상인 페이지에 "이 페이지" 목차 레일을 답니다 (≥1280px)     */
+   ② h2가 3개 이상인 페이지에 목차 레일을 답니다.
+      본문 컬럼 오른쪽에 56px 간격이 확보되는 폭(≥1700px)에서만 보입니다. */
+/* navigator.clipboard는 https나 localhost에서만 있습니다.
+   사내 IP로 열어 시연하면 undefined라 버튼이 아무 반응 없이 죽습니다.
+   구형 execCommand로 한 번 더 시도하고, 그것도 안 되면 실패를 표시합니다. */
+async function copyText(text) {
+  try {
+    if (navigator.clipboard?.writeText) { await navigator.clipboard.writeText(text); return true }
+  } catch { /* 아래 대체 경로로 */ }
+  try {
+    const ta = document.createElement('textarea')
+    ta.value = text; ta.style.position = 'fixed'; ta.style.opacity = '0'
+    document.body.appendChild(ta); ta.select()
+    const ok = document.execCommand('copy')
+    ta.remove(); return ok
+  } catch { return false }
+}
+
 function enhance() {
   const content = $('#content')
 
   // 토큰 견본 — 클릭하면 이름 복사
   content.querySelectorAll('[data-tok]').forEach((b) => {
     b.addEventListener('click', () => {
-      navigator.clipboard.writeText(b.dataset.tok).then(() => {
-        b.classList.add('copied')
-        setTimeout(() => b.classList.remove('copied'), 1200)
+      copyText(b.dataset.tok).then((ok) => {
+        b.classList.add(ok ? 'copied' : 'copy-failed')
+        setTimeout(() => b.classList.remove('copied', 'copy-failed'), 1200)
       })
     })
   })
@@ -230,7 +249,7 @@ function catCard(c) {
       <div class="cat-body">
         <div class="cc-top">
           <h3>${c.name}</h3><span class="cc-ko">${c.ko}</span>
-          <span class="mini-badge ${c.origin}">${c.origin === 'wrapped' ? 'VUETIFY' : 'BASE'}</span>
+          <span class="mini-badge ${c.origin}">${ORIGIN_TAG[c.origin]}</span>
         </div>
         <p>${c.summary}</p>
       </div>
@@ -289,8 +308,8 @@ function renderComponent(id, tab) {
   // AI 프롬프트 — 이 페이지 전체를 프롬프트 하나로 (components/<id>.txt와 동일)
   $('#aiCopy')?.addEventListener('click', function () {
     const SITE = location.origin + location.pathname.replace(/index\.html$/, '').replace(/\/$/, '')
-    navigator.clipboard.writeText(componentPrompt(c, { WHERE, VERSUS, A11Y, SITE })).then(() => {
-      this.innerHTML = `${ic('confirm', 'sm')} 복사됨`
+    copyText(componentPrompt(c, { WHERE, VERSUS, A11Y, SITE })).then((ok) => {
+      this.innerHTML = ok ? `${ic('confirm', 'sm')} 복사됨` : `${ic('warning', 'sm')} 복사 실패 — 직접 선택하세요`
       setTimeout(() => { this.innerHTML = `${ic('ai', 'sm')} AI 프롬프트 복사` }, 1600)
     })
   })
@@ -315,11 +334,10 @@ window.addEventListener('message', (e) => {
   })
 })
 
-function codeBlock(c, standalone) {
+function codeBlock(c) {
   const hasHtml = !!c.html
-  const cls = standalone ? 'codewrap' : 'codewrap'
   return `
-    <div class="${cls}">
+    <div class="codewrap">
       <div class="codetabs">
         <button data-code="vue" class="on">Vue</button>
         ${hasHtml ? `<button data-code="html">HTML</button>` : ''}
@@ -429,8 +447,8 @@ function wireCodeTabs() {
     const copy = wrap.querySelector('.copy')
     if (copy) copy.addEventListener('click', () => {
       const visible = [...wrap.querySelectorAll('[data-pane]')].find((p) => !p.hidden)
-      navigator.clipboard.writeText(visible.innerText).then(() => {
-        copy.textContent = 'Copied ✓'
+      copyText(visible.innerText).then((ok) => {
+        copy.textContent = ok ? 'Copied ✓' : '복사 실패'
         setTimeout(() => { copy.textContent = 'Copy' }, 1500)
       })
     })
@@ -792,12 +810,12 @@ function pageCoverage() {
     <div class="page-head"><h1>Vuetify 커버리지</h1></div>
     <p class="page-lead">
       Vuetify 3.11이 제공하는 컴포넌트 <b>${total}종 전부</b>가 이 디자인 시스템의 스타일을 받습니다.
-      우리가 감싼 것은 5종뿐이지만, 나머지도 <code>theme.ts</code>와 <code>defaults.ts</code>를 통해
+      우리가 <code>Ds*</code>로 감싼 것은 ${COMPONENTS.filter((c) => c.origin === 'wrapped').length}종이고, 나머지도 <code>theme.ts</code>와 <code>defaults.ts</code>를 통해
       자동으로 우리 색·모서리·밀도로 렌더됩니다.
     </p>
     <div class="prose">
       <div class="callout">
-        <b>핵심 — 96종을 전부 감쌀 필요가 없습니다.</b><br>
+        <b>핵심 — ${total}종을 전부 감쌀 필요가 없습니다.</b><br>
         Vuetify의 모든 컴포넌트는 <b>테마 색</b>과 <b>defaults</b>를 참조합니다.
         <code>theme.ts</code>에 우리 토큰을 한 번 주입하면
         <code>&lt;v-alert&gt;</code>·<code>&lt;v-stepper&gt;</code>·<code>&lt;v-timeline&gt;</code>처럼
@@ -818,8 +836,8 @@ function pageCoverage() {
       <h2>연결 방법</h2>
       <p>이 한 번의 설정이 ${total}종 전부에 적용됩니다.</p>
       <pre><code>import { createVuetify } from 'vuetify'
-import { dsTheme } from '~/design/theme'       // 색 — 96종 전부에 적용
-import { dsDefaults } from '~/design/defaults' // 기본값 — 77종에 지정
+import { dsTheme } from '~/design/theme'       // 색 — ${total}종 전부에 적용
+import { dsDefaults } from '~/design/defaults' // 기본값이 지정된 컴포넌트에 적용
 
 createVuetify({
   theme: dsTheme,
@@ -943,16 +961,18 @@ $('#search').addEventListener('input', (e) => {
   if (!q) { render(); return }
   const hits = COMPONENTS.filter((c) =>
     c.name.toLowerCase().includes(q) || c.ko.includes(q) || c.summary.toLowerCase().includes(q))
-  $('#content').innerHTML = `
+  /* .content는 3단 그리드입니다. page-main으로 감싸지 않으면 제목·설명·결과가
+     각각 다른 단으로 흩어집니다 (다른 페이지는 enhance()가 감싸줍니다). */
+  $('#content').innerHTML = `<div class="page-main">
     <div class="page-head"><h1>Search</h1></div>
     <p class="page-lead">"${esc(e.target.value)}" — ${hits.length}개</p>
     <div class="cat-grid" style="margin-top:24px">` +
     (hits.length ? hits.map((c) => `
       <a class="cat-card" href="#/components/${c.id}">
         <div class="cc-top"><h3>${c.name}</h3><span class="cc-ko">${c.ko}</span>
-          <span class="mini-badge ${c.origin}">${c.origin === 'wrapped' ? 'VUETIFY' : 'STANDALONE'}</span></div>
+          <span class="mini-badge ${c.origin}">${ORIGIN_TAG[c.origin]}</span></div>
         <p>${c.summary}</p></a>`).join('')
-      : `<div class="callout">일치하는 컴포넌트가 없습니다.</div>`) + `</div>`
+      : `<div class="callout">일치하는 컴포넌트가 없습니다.</div>`) + `</div></div>`
 })
 
 render()

@@ -59,7 +59,9 @@ jobs:
         run: |
           cd examples/vuetify-app
           npm install
-          npx vite build --base=/design-system/live/
+          # --base=./ — 상대 경로여야 배포 주소(/design-system/live/)와
+          # 로컬(/live/) 양쪽에서 모두 뜹니다
+          npx vite build --base=./
       # 소비자가 vue-tsc를 돌렸을 때 우리 컴포넌트에서 오류가 나면 실패시킵니다.
       - name: 타입 검사
         run: |

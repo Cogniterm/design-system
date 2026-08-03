@@ -215,7 +215,7 @@ Vuetify는 CSS 변수를 못 받으므로 `vue/theme.ts`에 같은 값이 한 �
    cd examples/vuetify-app
    rm -rf src/design && cp -r ../../vue src/design
    cp ../../ds.css ../../ds-vuetify.css src/design/
-   npm install && npx vite build --base=/design-system/live/
+   npm install && npx vite build --base=./
    rm -rf ../../live && cp -r dist ../../live
    ```
 
