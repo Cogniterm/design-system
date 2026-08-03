@@ -45,3 +45,4 @@ export { default as DsAccordion } from './components/vuetify/DsAccordion.vue'
 /* ── 설정 ── */
 export { dsDefaults } from './defaults'
 export { dsTheme, dsLight, dsDark } from './theme'
+export { lucideIconSet, lucideAliases } from './vuetify-icons'

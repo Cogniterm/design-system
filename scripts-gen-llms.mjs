@@ -137,7 +137,12 @@ import { createVuetify } from 'vuetify'
 import { dsTheme } from '~/design/theme'       // colors — applies to ALL Vuetify components
 import { dsDefaults } from '~/design/defaults' // per-component defaults (77 components)
 
-createVuetify({ theme: dsTheme, defaults: dsDefaults })
+createVuetify({ theme: dsTheme, defaults: dsDefaults, icons: lucideIconSet })
+// icons is REQUIRED: import { lucideIconSet } from '~/design/vuetify-icons'.
+// It maps every internal Vuetify alias (checkbox glyphs, select chevrons, sort
+// arrows, alert icons...) to Lucide. Without it they render as blank glyphs,
+// since the default is the uninstalled @mdi webfont. String icons resolve via
+// the semantic registry: <v-icon icon="agent" />.
 \`\`\`
 Load \`ds.css\` and \`ds-vuetify.css\`. Install \`pretendard\` and \`lucide-vue-next\`.
 Omitting the Pretendard CSS silently falls back to the system font with no error.

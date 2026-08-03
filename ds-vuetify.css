@@ -105,6 +105,22 @@
 .v-application .v-card--variant-outlined,
 .v-application .v-sheet--variant-outlined { border-color: var(--gray-4); }
 
+/* ── VIcon — Lucide 컴포넌트 아이콘 ── */
+.v-icon svg { width: 1em; height: 1em; display: block; }
+.v-icon { opacity: 1; }
+/* 셀렉트 화살표 — 열리면 뒤집기 (mdi 폰트 회전 규칙을 svg에도) */
+.v-select--active-menu .v-select__menu-icon,
+.v-autocomplete--active-menu .v-autocomplete__menu-icon { transform: rotate(180deg); }
+.v-select__menu-icon, .v-autocomplete__menu-icon { transition: transform .16s ease; color: var(--gray-9); }
+/* clear 버튼 아이콘 색 */
+.v-field__clearable .v-icon { color: var(--gray-9); }
+.v-field__clearable .v-icon:hover { color: var(--gray-12); }
+/* 체크박스·라디오 svg — 칠해진 상태는 브랜드 */
+.v-selection-control--dirty .v-icon { color: var(--brand); }
+/* 테이블 정렬 아이콘 크기 */
+.v-data-table__th .v-icon { font-size: 14px; color: var(--gray-8); }
+.v-data-table__th--sorted .v-icon { color: var(--sel-fg); }
+
 /* ── VBtn ── */
 .v-btn { letter-spacing: 0; text-transform: none; font-weight: 500; }
 .v-btn--variant-outlined { border-color: var(--gray-6); }
@@ -476,6 +492,8 @@
 .v-date-picker-month__day .v-btn { width: 32px; height: 32px; font-size: var(--text-sm); }
 .v-date-picker-month__weekday { font-size: var(--text-2xs); color: var(--gray-9); }
 .v-date-picker-header { display: none; }
+.v-date-picker-controls .v-btn { height: 30px; min-width: 30px; padding: 0 6px; }
+.v-date-picker-controls .v-icon { font-size: 16px; }
 
 /* ── VSnackbar ── */
 .v-snackbar__content { padding: 13px 15px; font-size: var(--text-sm); }

@@ -153,6 +153,18 @@ if (scaleOk) {
   else ok('아이콘 기준선 -0.125em 통일')
 }
 
+/* ── 11. Vuetify 아이콘 별칭 — 필수 별칭 누락 검사 ── */
+{
+  const src = readFileSync('vue/vuetify-icons.ts', 'utf8')
+  const REQUIRED = ['checkboxOn', 'checkboxOff', 'checkboxIndeterminate', 'radioOn',
+    'radioOff', 'dropdown', 'sortAsc', 'sortDesc', 'expand', 'collapse', 'clear',
+    'prev', 'next', 'first', 'last', 'success', 'info', 'warning', 'error',
+    'loading', 'calendar', 'close', 'complete', 'menu', 'unfold']
+  const missing = REQUIRED.filter((a) => !new RegExp(`^\\s*${a}:`, 'm').test(src))
+  if (missing.length) errors.push(`vuetify-icons.ts 별칭 누락: ${missing.join(', ')}`)
+  else ok(`Vuetify 아이콘 별칭 ${REQUIRED.length}종 확인`)
+}
+
 /* ── 결과 ── */
 console.log()
 if (warn.length) {

@@ -600,8 +600,18 @@ export default defineNuxtConfig({
       <pre><code>import { createVuetify } from 'vuetify'
 import { dsTheme } from '~/src/design/theme'
 import { dsDefaults } from '~/src/design/defaults'
+import { lucideIconSet } from '~/src/design/vuetify-icons'
 
-createVuetify({ theme: dsTheme, defaults: dsDefaults })</code></pre>
+createVuetify({
+  theme: dsTheme,
+  defaults: dsDefaults,
+  icons: lucideIconSet,   // 내부 아이콘도 Lucide로 — @mdi/font 불필요
+})</code></pre>
+      <div class="callout warn">
+        <b><code>icons</code>를 빠뜨리면 Vuetify 내부 아이콘이 전부 깨집니다.</b>
+        체크박스 체크, 셀렉트 화살표, 정렬 화살표, 알림 아이콘이 빈 글자로 나옵니다 —
+        Vuetify 기본값이 설치하지 않은 @mdi 웹폰트이기 때문입니다.
+      </div>
 
       <h2>5. 사용</h2>
       <pre><code>&lt;script setup&gt;
