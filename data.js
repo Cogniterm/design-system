@@ -35,6 +35,7 @@ export const COMPONENTS = [
     ['variant', `'primary' | 'secondary' | 'ghost' | 'danger'`, `'primary'`, '시각 강도. primary는 한 화면에 하나만.'],
     ['size', `'default' | 'sm'`, `'default'`, 'Geist 스케일 32/40. 필터 바·테이블 주변 같은 밀한 맥락은 sm.'],
     ['disabled', 'boolean', 'false', '비활성화. 이유를 Tooltip으로 알려주는 것을 권장.'],
+    ['type', `'button' | 'submit' | 'reset'`, `'button'`, '폼 안에서도 기본은 button — 누른다고 제출되지 않습니다.'],
   ],
   events: [['click', 'MouseEvent', '클릭 시 발생.']],
   slots: [['default', '버튼 라벨. 아이콘만 넣을 경우 aria-label 필수.']],
@@ -588,7 +589,7 @@ export const COMPONENTS = [
     ['selected', 'boolean', 'false', '선택 상태.'],
   ],
   events: [['select', '—', '행 클릭.']],
-  slots: [],
+  slots: [['icon', '파일 아이콘. <DsIcon>을 넣습니다. 생략하면 아이콘 자리가 비어 있습니다.']],
   demo: `<div class="file-row"><span class="f-icon">${ic('folder','sm')}</span><span class="f-name">법무</span><span class="f-meta">Jun 28</span></div>
   <div class="file-row selected"><span class="f-icon">${ic('document','sm')}</span><span class="f-name">계약서_최종.pdf</span><span class="f-meta">2.1 MB · Jun 28</span></div>
   <div class="file-row"><span class="f-icon">${ic('spreadsheet','sm')}</span><span class="f-name">Q3_실적.xlsx</span><span class="f-meta">1.4 MB · Jul 12</span></div>`,
@@ -915,7 +916,8 @@ export const COMPONENTS = [
             en: 'Sidebars appear everywhere and drift; fix icon, badge and active styling.' },
   props: [
     ['modelValue', 'any', '—', '선택된 항목.'],
-    ['items', 'NavItem[]', '필수', '{ value, title, icon?, badge?, subheader? } — icon은 이름만 주면 그려집니다.'],
+    ['modelValue', 'any', '—', 'v-model — 선택된 항목의 value 하나.'],
+    ['items', 'NavItem[]', '필수', '{ value, title, icon?, badge?, subheader? } — icon은 이름만 주면 그려집니다. { subheader }만 주면 구분 제목.'],
   ],
   slots: [['icon', '아이콘을 직접 그릴 때만. 기본은 item.icon으로 자동입니다.']],
   demo: `<div class="ds-nav-demo"><div class="sub">워크스페이스</div><div>${ic('agent','sm')} 에이전트 <b>17</b></div><div class="on">${ic('tableView','sm')} 감사 로그 <b>3</b></div></div>`,
@@ -1137,9 +1139,9 @@ export const COMPONENTS = [
   reason: { ko: 'Alert는 영역 단위, Banner는 페이지 전체 단위입니다. 이 구분이 없으면 둘 다 남발됩니다.',
             en: 'Alert is regional, Banner is page-wide; without the distinction both get overused.' },
   props: [['icon', 'IconName', '—', '앞에 붙는 아이콘. 이름만 주면 알아서 그립니다.']],
-  slots: [['default', '공지 문구.'], ['actions', '액션 버튼.']],
+  slots: [['default', '공지 문구.'], ['actions', '액션 버튼.'], ['icon', '아이콘을 직접 그릴 때만. 기본은 icon prop으로 자동입니다.']],
   demo: `<div class="ds-banner-demo">${ic('notification','sm')} 8월 3일 02:00~04:00 서비스 점검이 예정되어 있습니다.</div>`,
-  vue: `<DsBanner icon="◈">
+  vue: `<DsBanner icon="notification">
   8월 3일 02:00~04:00 서비스 점검이 예정되어 있습니다.
   <template #actions><DsButton variant="ghost" size="sm">자세히</DsButton></template>
 </DsBanner>`,
@@ -1214,8 +1216,9 @@ export const COMPONENTS = [
   reason: { ko: '열이 고정되지 않은 목록에 테이블은 과합니다. 그 중간 단계가 필요합니다.',
             en: 'A table is overkill when columns are not fixed; this is the middle ground.' },
   props: [
+    ['modelValue', 'any', '—', 'v-model — 선택된 항목의 value 하나.'],
     ['items', 'ListItem[]', '필수', '{ value?, title, subtitle?, icon?, meta? } — icon은 이름만 주면 그려집니다.'],
-    ['selectable', 'boolean', 'false', '선택 가능 여부.'],
+    ['selectable', 'boolean', 'false', '선택 가능 여부 (시각 표시).'],
   ],
   slots: [['icon', '아이콘을 직접 그릴 때만. 기본은 item.icon으로 자동입니다.']],
   demo: `<div class="ds-list-demo"><div><span>${ic('run','sm')}</span><b>자동 분류</b><i>수신 문서를 규칙에 따라 분류</i><em>켜짐</em></div><div><span>${ic('tableView','sm')}</span><b>주간 리포트</b><i>매주 월요일 09:00</i><em>켜짐</em></div></div>`,
@@ -1397,7 +1400,10 @@ export const COMPONENTS = [
   origin: 'custom', vuetifyBase: null,
   summary: '컨트롤 줄 정렬 규약.',
   reason: { ko: '컨트롤 줄의 높이·간격·구분이 화면마다 달라지는 것을 막습니다. 밀한 맥락 = sm 규칙의 집.', en: 'One control-row convention.' },
-  props: [['dense','boolean','false','40px 줄 (기본 48).']],
+  props: [
+    ['dense','boolean','false','40px 줄 (기본 48).'],
+    ['label','string','—','화면에 툴바가 둘 이상이면 구분할 이름.'],
+  ],
   slots: [['default','컨트롤들. .sep(구분) · .spacer(밀기) 사용 가능.']],
   demo: `<div class="ds-toolbar" style="width:100%"><button class="btn btn-secondary btn-sm">필터</button><button class="btn btn-ghost btn-sm">내보내기</button><span class="sep"></span><span style="font-size:var(--text-xs);color:var(--gray-9)">12건</span><span class="spacer"></span><button class="btn btn-primary btn-sm">새로 만들기</button></div>`,
   vue: `<DsToolbar dense>

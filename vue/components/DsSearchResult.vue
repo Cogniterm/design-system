@@ -5,7 +5,7 @@ defineProps<{ title: string; path?: string; href?: string }>()
 
 <template>
   <div class="sresult">
-    <h4><a :href="href || '#'">{{ title }}</a></h4>
+    <h4><a v-if="href" :href="href">{{ title }}</a><span v-else>{{ title }}</span></h4>
     <div v-if="path" class="s-path">{{ path }}</div>
     <p><slot /></p>
     <slot name="footer" />

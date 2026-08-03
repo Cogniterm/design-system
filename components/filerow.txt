@@ -13,6 +13,8 @@ import { DsFileRow } from '~/design'   // Vuetify 불필요 · ds.css만
 
 ## Events
 - @select — 행 클릭.
+## Slots
+- #icon — 파일 아이콘. 을 넣습니다. 생략하면 아이콘 자리가 비어 있습니다.
 
 ## 사용 예
 ```vue

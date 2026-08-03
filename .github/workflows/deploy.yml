@@ -15,7 +15,20 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
+  # 검사를 다시 돌려서, 통과할 때만 사이트가 나갑니다.
+  # (전에는 검사가 빨개도 배포가 그대로 나갔습니다.)
+  verify:
+    name: 배포 전 검사
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: '20' }
+      - run: node scripts-check.mjs
+      - run: node scripts-stamp.mjs --check
+
   deploy:
+    needs: verify
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}

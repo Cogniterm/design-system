@@ -11,10 +11,11 @@ import { DsBanner } from '~/design/vuetify'   // Vuetify 필요 · ds.css + ds-v
 ## Slots
 - #default — 공지 문구.
 - #actions — 액션 버튼.
+- #icon — 아이콘을 직접 그릴 때만. 기본은 icon prop으로 자동입니다.
 
 ## 사용 예
 ```vue
-<DsBanner icon="◈">
+<DsBanner icon="notification">
   8월 3일 02:00~04:00 서비스 점검이 예정되어 있습니다.
   <template #actions><DsButton variant="ghost" size="sm">자세히</DsButton></template>
 </DsBanner>

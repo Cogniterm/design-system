@@ -7,6 +7,7 @@ import { DsToolbar } from '~/design'   // Vuetify 불필요 · ds.css만
 
 ## Props
 - dense: boolean = false — 40px 줄 (기본 48).
+- label: string — 화면에 툴바가 둘 이상이면 구분할 이름.
 
 ## Slots
 - #default — 컨트롤들. .sep(구분) · .spacer(밀기) 사용 가능.

@@ -22,7 +22,7 @@ Each component has a standalone prompt at https://kimjiyong995-coder.github.io/d
 - **DsButton** (버튼) — 액션을 실행하는 기본 버튼.
   import: ~/design | origin: custom
   where: 모든 화면의 액션. primary는 화면당 하나만.
-  props: variant='primary', size='default', disabled=false
+  props: variant='primary', size='default', disabled=false, type='button'
   usage:
     <DsButton variant="primary" @click="run">New agent</DsButton>
     <DsButton variant="secondary">Cancel</DsButton>
@@ -83,7 +83,7 @@ Each component has a standalone prompt at https://kimjiyong995-coder.github.io/d
 - **DsNavList** (내비게이션 목록) — 좌측 사이드바 메뉴.
   import: ~/design/vuetify | origin: wrapped (VList)
   where: 앱 좌측 사이드바, 설정 좌측 메뉴.
-  props: modelValue, items
+  props: modelValue, modelValue, items
   usage:
     <DsNavList v-model="nav" :items="[
       { subheader: '워크스페이스' },
@@ -109,7 +109,7 @@ Each component has a standalone prompt at https://kimjiyong995-coder.github.io/d
 - **DsToolbar** (툴바) — 컨트롤 줄 정렬 규약.
   import: ~/design | origin: custom
   where: 테이블 위 컨트롤 줄, 상세 헤더 액션 줄.
-  props: dense=false
+  props: dense=false, label
   usage:
     <DsToolbar dense>
       <DsButton variant="secondary" size="sm">필터</DsButton>
@@ -370,7 +370,7 @@ Each component has a standalone prompt at https://kimjiyong995-coder.github.io/d
   props: icon
   vs: Alert — 페이지 전체에 해당하면 Banner, 특정 영역이면 Alert
   usage:
-    <DsBanner icon="◈">
+    <DsBanner icon="notification">
       8월 3일 02:00~04:00 서비스 점검이 예정되어 있습니다.
       <template #actions><DsButton variant="ghost" size="sm">자세히</DsButton></template>
     </DsBanner>
@@ -512,7 +512,7 @@ Each component has a standalone prompt at https://kimjiyong995-coder.github.io/d
 - **DsList** (목록) — 열이 고정되지 않은 항목 목록.
   import: ~/design/vuetify | origin: wrapped (VList)
   where: 설정 항목, 선택 가능한 항목 나열. (파일은 FileRow, 고정 열은 DataTable)
-  props: items, selectable=false
+  props: modelValue, items, selectable=false
   vs: DataTable — 정렬·필터가 필요해지면 DataTable로 바꿉니다
   usage:
     <DsList :items="[

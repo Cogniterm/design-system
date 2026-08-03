@@ -4,6 +4,6 @@ defineProps<{ label?: string }>()
 </script>
 
 <template>
-  <div v-if="label" class="divider-label">{{ label }}</div>
+  <div v-if="label" class="divider-label" role="separator" :aria-label="label">{{ label }}</div>
   <hr v-else class="divider" />
 </template>

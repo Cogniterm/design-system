@@ -6,8 +6,9 @@ import { DsList } from '~/design/vuetify'   // Vuetify 필요 · ds.css + ds-vue
 설정 항목, 선택 가능한 항목 나열. (파일은 FileRow, 고정 열은 DataTable)
 
 ## Props
+- modelValue: any — v-model — 선택된 항목의 value 하나.
 - items: ListItem[] = 필수 — { value?, title, subtitle?, icon?, meta? } — icon은 이름만 주면 그려집니다.
-- selectable: boolean = false — 선택 가능 여부.
+- selectable: boolean = false — 선택 가능 여부 (시각 표시).
 
 ## Slots
 - #icon — 아이콘을 직접 그릴 때만. 기본은 item.icon으로 자동입니다.
