@@ -4,7 +4,8 @@
         polaris.shopify.com, paste.twilio.design
    ============================================ */
 
-import { ic, ICON_NAMES } from './icons-svg.js'
+const V = new URL(import.meta.url).search
+const { ic, ICON_NAMES } = await import('./icons-svg.js' + V)
 
 export const FOUNDATION_PAGES = [
   ['overview', '개요', 'Overview'],

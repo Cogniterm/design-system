@@ -10,6 +10,9 @@ withDefaults(defineProps<{
   density?: 'compact' | 'comfortable' | 'spacious'
   loading?: boolean
 }>(), { density: 'comfortable' })
+/* 소비자가 준 속성(disabled·required·name·error-messages 등)이 바깥 <div>가 아니라
+   진짜 Vuetify 컴포넌트에 붙게 합니다. 이게 없으면 조용히 무시됩니다. */
+defineOptions({ inheritAttrs: false })
 </script>
 
 <template>
@@ -20,6 +23,8 @@ withDefaults(defineProps<{
       :loading="loading"
       hover
       :items-per-page="20"
+    
+      v-bind="$attrs"
     >
       <template v-for="(_, name) in $slots" #[name]="slotProps">
         <slot :name="name" v-bind="slotProps ?? {}" />

@@ -8,8 +8,8 @@ const emit = defineEmits<{ copy: []; download: [] }>()
   <div class="artifact">
     <div class="a-head">
       <span class="a-title">{{ title }}</span>
-      <button v-if="copyable" class="btn btn-ghost btn-sm" @click="emit('copy')">Copy</button>
-      <button v-if="downloadable" class="btn btn-secondary btn-sm" @click="emit('download')">Download</button>
+      <button type="button" v-if="copyable" class="btn btn-ghost btn-sm" @click="emit('copy')">Copy</button>
+      <button type="button" v-if="downloadable" class="btn btn-secondary btn-sm" @click="emit('download')">Download</button>
     </div>
     <div class="a-body"><slot /></div>
   </div>

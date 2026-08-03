@@ -4,11 +4,15 @@ withDefaults(defineProps<{
   variant?: 'primary' | 'secondary' | 'ghost' | 'danger'
   size?: 'default' | 'sm'
   disabled?: boolean
-}>(), { variant: 'primary', size: 'default' })
+  // 폼 안의 <button>은 기본이 submit이라 누르면 폼이 제출됩니다.
+  // 대부분은 그걸 원하지 않으므로 button을 기본으로 두고, 필요할 때 바꿉니다.
+  type?: 'button' | 'submit' | 'reset'
+}>(), { variant: 'primary', size: 'default', type: 'button' })
 </script>
 
 <template>
   <button
+    :type="type"
     class="btn"
     :class="[`btn-${variant}`, size === 'sm' && 'btn-sm']"
     :disabled="disabled"

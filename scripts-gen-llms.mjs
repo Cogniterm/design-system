@@ -234,7 +234,7 @@ writeFileSync('llms.txt', `# Cogniterm Design System
 
 > Minimal design system for AI agent products, built for Vue 3 + Vuetify 3.11.
 > Hierarchy comes from spacing, type weight and 1px borders — not shadows or decoration.
-> No shadows, 1px borders, radius 4/6/8/12, Pretendard, brand blue #1F7FF0
+> No shadows, 1px borders, radius 4/6/8/12, Pretendard, brand blue #1B72D9
 > (#4593F5 in dark), Radix Slate gray 1-12. Light + dark via [data-theme="dark"].
 > ${COMPONENTS.length} components, ${PATTERNS.length} patterns, ${FOUNDATION_PAGES.length} foundation pages.
 > Docs: ${SITE}

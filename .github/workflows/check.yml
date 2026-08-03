@@ -16,6 +16,9 @@ jobs:
       # 컴포넌트 필수 항목, 배럴/문서/meta 동기화, 아이콘·토큰 일치,
       # Standalone 컴포넌트의 외부 의존 여부를 검사합니다.
       - run: node scripts-check.mjs
+      # 문서 사이트 파일이 바뀌었는데 ?v= 스탬프를 안 올리면
+      # 방문자가 옛 파일을 계속 봅니다 (JS끼리 어긋나면 화면이 빕니다).
+      - run: node scripts-stamp.mjs --check
       # 자동 생성물이 최신인지 — 생성기를 돌리고 diff가 나오면 실패
       - name: 생성물 최신 여부
         run: |

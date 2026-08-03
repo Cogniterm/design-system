@@ -10,6 +10,6 @@ const emit = defineEmits<{ remove: [] }>()
 <template>
   <span class="chip" :class="variant === 'brand' && 'brand'">
     <slot />
-    <button v-if="removable" class="x" aria-label="Remove" @click="emit('remove')">✕</button>
+    <button type="button" v-if="removable" class="x" aria-label="Remove" @click="emit('remove')">✕</button>
   </span>
 </template>

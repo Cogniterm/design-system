@@ -6,11 +6,18 @@
 */
 const strip = (h) => String(h).replace(/<[^>]+>/g, '').replace(/\s+/g, ' ').trim()
 
+/* 이 컴포넌트를 어느 배럴에서 가져오는가 — 문서·프롬프트·생성물이 모두 여기를 씁니다.
+   대부분은 origin으로 갈리지만, Icon처럼 배럴이 따로인 것은 importFrom으로 못박습니다. */
+export const importPath = (c) =>
+  c.importFrom ?? (c.origin === 'wrapped' ? '~/design/vuetify' : '~/design')
+
 export function componentPrompt(c, { WHERE, VERSUS, A11Y, SITE }) {
-  const imp = c.origin === 'wrapped' ? '~/design/vuetify' : '~/design'
+  const imp = importPath(c)
   const needs = c.origin === 'wrapped'
     ? 'Vuetify 필요 · ds.css + ds-vuetify.css'
-    : 'Vuetify 불필요 · ds.css만'
+    : c.importFrom
+      ? 'Vuetify 불필요 · ds.css만 · lucide-vue-next 필요'
+      : 'Vuetify 불필요 · ds.css만'
 
   const props = (c.props || []).map((p) =>
     `- ${p[0]}: ${strip(p[1])}${p[2] && p[2] !== '—' ? ` = ${strip(p[2])}` : ''} — ${strip(p[3])}`).join('\n')

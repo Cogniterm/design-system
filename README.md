@@ -15,13 +15,13 @@ Vue 3 · Vuetify 3.11 환경에서 그대로 사용합니다.
 
 | 항목 | 값 |
 |---|---|
-| 브랜드 | `#1F7FF0` (다크 `#4593F5`) |
+| 브랜드 | `#1B72D9` — 면 (다크 `#4593F5`) · `#0F62C4` — 글자·링크 |
 | 회색 | Radix Slate 1–12 (라이트/다크 쌍) |
 | 폰트 | Pretendard Variable (SIL OFL) |
-| 모서리 | 2 / 4 / 6px |
+| 모서리 | 4 / 6 / 8 / 12px |
 | 그림자 | 없음 (떠 있는 요소만 예외) |
 | 아이콘 | Lucide — 의미 이름 59개 등록 |
-| 컴포넌트 | 49종 — Standalone 20 · Vuetify 기반 29 |
+| 컴포넌트 | 65종 — Standalone 30 · Vuetify 기반 34 · 아이콘 1 |
 
 ## 두 종류의 컴포넌트
 
@@ -41,23 +41,23 @@ Vuetify 컴포넌트 96종 전부가 `theme.ts` + `defaults.ts`로 우리 스타
 ## 설치
 
 ```bash
-cp -r vue/ <app>/src/design/
-cp ds.css ds-vuetify.css <app>/src/design/
+cp -r vue/ <소스루트>/design/
+cp ds.css ds-vuetify.css <소스루트>/design/
 
-npm install pretendard lucide-vue-next   # 글꼴 + 아이콘 — 외부 의존성은 이 둘뿐
+npm install pretendard lucide-vue-next   # 새로 설치할 것은 둘뿐 (Vuetify는 이미 있다고 봅니다)
 ```
 
 ```ts
 // nuxt.config.ts
 css: [
   'pretendard/dist/web/variable/pretendardvariable-dynamic-subset.css',
-  '~/src/design/ds.css',
-  '~/src/design/ds-vuetify.css',
+  '~/design/ds.css',
+  '~/design/ds-vuetify.css',
 ]
 
 // vuetify 설정
-import { dsTheme } from '~/src/design/theme'
-import { dsDefaults } from '~/src/design/defaults'
+import { dsTheme } from '~/design/theme'
+import { dsDefaults } from '~/design/defaults'
 createVuetify({ theme: dsTheme, defaults: dsDefaults })
 ```
 

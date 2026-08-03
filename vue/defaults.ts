@@ -81,7 +81,7 @@ export const dsDefaults = {
   VProgressLinear: { color: 'primary', height: 2, rounded: false },
   VProgressCircular: { color: 'primary', width: 2, size: 20 },
   VSkeletonLoader: { elevation: 0, color: 'surface' },
-  VSnackbar: { elevation: 0, rounded: 'xl', location: 'bottom right', timeout: 4000 },
+  VSnackbar: { rounded: 'xl', location: 'bottom right', timeout: 4000 },
   VSnackbarQueue: { elevation: 0, rounded: 'xl', location: 'bottom right' },
   VEmptyState: { size: 48 },
 

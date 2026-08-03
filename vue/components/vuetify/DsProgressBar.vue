@@ -6,6 +6,9 @@ import { VProgressLinear } from 'vuetify/components'
 withDefaults(defineProps<{
   value?: number; label?: string; indeterminate?: boolean
 }>(), { value: 0 })
+/* 소비자가 준 속성(disabled·required·name·error-messages 등)이 바깥 <div>가 아니라
+   진짜 Vuetify 컴포넌트에 붙게 합니다. 이게 없으면 조용히 무시됩니다. */
+defineOptions({ inheritAttrs: false })
 </script>
 <template>
   <div class="ds-progress">
@@ -14,6 +17,6 @@ withDefaults(defineProps<{
       <span v-if="!indeterminate" class="ds-progress-val">{{ Math.round(value) }}%</span>
     </div>
     <VProgressLinear :model-value="value" :indeterminate="indeterminate"
-      color="primary" :height="2" rounded="0" />
+      color="primary" :height="2" rounded="0" v-bind="$attrs" />
   </div>
 </template>

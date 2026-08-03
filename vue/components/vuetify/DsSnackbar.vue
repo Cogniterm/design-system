@@ -10,7 +10,7 @@ const emit = defineEmits<{ action: [] }>()
 </script>
 <template>
   <VSnackbar v-model="open" :timeout="timeout" class="ds-snackbar"
-    location="bottom right" :elevation="0" rounded="lg">
+    location="bottom right" rounded="lg">
     <span class="t-dot" :class="variant"></span>
     <span class="ds-snack-body"><slot /></span>
     <template v-if="action" #actions>

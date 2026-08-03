@@ -1,4 +1,5 @@
-import { ic } from './icons-svg.js'
+const V = new URL(import.meta.url).search
+const { ic } = await import('./icons-svg.js' + V)
 
 /* ============================================
    컴포넌트 레지스트리 — 문서 사이트의 단일 원본
@@ -775,7 +776,8 @@ export const COMPONENTS = [
 },
 {
   id: 'icon', name: 'Icon', ko: '아이콘', category: 'content',
-  origin: 'wrapped', vuetifyBase: 'Lucide',
+  // Vuetify를 쓰지 않지만 Lucide가 필요해서 배럴이 따로입니다 (~/design/icon).
+  origin: 'custom', vuetifyBase: null, importFrom: '~/design/icon',
   summary: '아이콘 하나를 그립니다.',
   reason: { ko: '아이콘 세트가 섞이면 굵기와 광학 크기가 달라 같은 줄에서 어긋나 보입니다. Lucide 하나로 고정하고, Lucide 이름이 아니라 우리 어휘(의미 이름)로 부릅니다 — 나중에 세트를 바꿔도 화면 코드는 그대로입니다.',
             en: 'Mixed icon sets misalign due to differing stroke and optical size. Fixed to Lucide, addressed by semantic name so the set can be swapped without touching screens.' },

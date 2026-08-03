@@ -17,7 +17,7 @@ function copy(e: Event) {
 </script>
 <template>
   <div v-if="block" class="ds-codeblock">
-    <button v-if="copyable" class="ds-code-copy" @click="copy">{{ copied ? '복사됨' : '복사' }}</button>
+    <button type="button" v-if="copyable" class="ds-code-copy" @click="copy">{{ copied ? '복사됨' : '복사' }}</button>
     <pre><code><slot /></code></pre>
   </div>
   <code v-else class="ds-code"><slot /></code>

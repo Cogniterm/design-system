@@ -8,12 +8,15 @@ const emit = defineEmits<{ select: [file: DsFile] }>()
 </script>
 
 <template>
-  <div class="file-grid">
+  <div class="file-grid" role="listbox" aria-label="파일">
     <div
       v-for="f in files" :key="f.id"
       class="file-card"
       :class="{ selected: selected?.includes(f.id) }"
+      role="option" :aria-selected="!!selected?.includes(f.id)" tabindex="0"
       @click="emit('select', f)"
+      @keydown.enter.prevent="emit('select', f)"
+      @keydown.space.prevent="emit('select', f)"
     >
       <div v-if="f.icon || $slots.icon" class="f-icon"><slot name="icon" :file="f" /></div>
       <div class="f-name">{{ f.name }}</div>

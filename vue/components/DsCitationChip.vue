@@ -5,5 +5,5 @@ const emit = defineEmits<{ open: [] }>()
 </script>
 
 <template>
-  <span class="cite" role="button" tabindex="0" @click="emit('open')" @keydown.enter="emit('open')">{{ index }}</span>
+  <span class="cite" role="button" tabindex="0" @click="emit('open')" @keydown.enter.prevent="emit('open')" @keydown.space.prevent="emit('open')">{{ index }}</span>
 </template>

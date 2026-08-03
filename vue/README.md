@@ -13,25 +13,25 @@
 
 ```bash
 # 1. 이 폴더를 앱에 복사
-cp -r vue/ <app>/src/design/
+cp -r vue/ <소스루트>/design/
 cp ds.css <app>/src/design/ds.css
 ```
 
 ```ts
 // 2. nuxt.config.ts — 스타일 등록
 export default defineNuxtConfig({
-  css: ['~/src/design/ds.css'],
+  css: ['~/design/ds.css'],
 })
 
 // 3. Vuetify defaults 연결 (A그룹 스타일 강제)
-import { dsDefaults } from '~/src/design/defaults'
+import { dsDefaults } from '~/design/defaults'
 createVuetify({ defaults: dsDefaults })
 ```
 
 ```vue
 <!-- 4. 사용 -->
 <script setup>
-import { DsButton, DsChatMessage, DsToolCallStep } from '~/src/design'
+import { DsButton, DsChatMessage, DsToolCallStep } from '~/design'
 </script>
 
 <template>
@@ -53,7 +53,7 @@ import { DsButton, DsChatMessage, DsToolCallStep } from '~/src/design'
 
 | 파일 | 역할 |
 |---|---|
-| `components/*.vue` | 컴포넌트 20종 (의존성 0, TypeScript props) |
+| `components/*.vue` | 컴포넌트 30종 (의존성 0, TypeScript props) |
 | `index.ts` | 배럴 — 한 줄 import |
 | `meta.ts` | 컴포넌트별 origin·이유 (en/ko) — 문서 배지 자동 생성용 |
 | `defaults.ts` | Vuetify A그룹(VMenu·VDialog·VDataTable 등) 기본값 |

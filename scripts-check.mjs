@@ -242,13 +242,39 @@ if (scaleOk) {
     for (const [label, fg, bg, min] of PAIRS) {
       const a = hex(fg, theme) || hex(fg, 'light')
       const b = hex(bg, theme) || hex(bg, 'light')
-      if (!a || !b) continue
+      // 토큰 이름이 바뀌면 조용히 건너뛰지 않고 실패시킵니다 — 검사가 사라지는 게 더 위험합니다
+      if (!a || !b) { fails.push(`${theme} ${label}: 토큰을 찾을 수 없음 (${!a ? fg : bg})`); continue }
       const r = ratio(a, b)
       if (r < min) fails.push(`${theme} ${label}: ${r.toFixed(2)}:1 (최소 ${min})`)
     }
   }
-  if (fails.length) errors.push(`대비 미달 — ${fails.join(' · ')}`)
-  else ok('색 대비 WCAG 2.2 AA — 라이트·다크 14조합 통과')
+  /* 위는 "토큰끼리" 검사입니다. 실제로 화면에 나오는 건 스타일시트가 어느 회색을
+     글자에 썼는가입니다 — 정의는 멀쩡한데 쓰는 쪽이 틀린 경우를 여기서 잡습니다. */
+  const usageFails = []
+  for (const f of ['ds.css', 'ds-vuetify.css']) {
+    const src = readFileSync(f, 'utf8').split('\n')
+    let sel = ''
+    src.forEach((l, i) => {
+      if (l.includes('{')) sel = l.split('{')[0].trim() || sel
+      // border-color·background-color가 아니라 글자색만 — 앞에 다른 글자가 붙으면 제외합니다
+      const m = l.match(/(?:^|[;{}\s])color:\s*var\(--(gray-\d+)\)/)
+      if (!m) return
+      const ctx = (sel + ' ' + l).toLowerCase()
+      if (ctx.includes('disabled')) return              // WCAG 1.4.3 예외
+      // 아이콘·구분 기호·점은 글자가 아니라 UI 요소 — 3:1 기준
+      const min = /icon|sep|divider|dot/.test(ctx) ? 3 : 4.5
+      for (const theme of ['light', 'dark']) {
+        const a = hex(`--${m[1]}`, theme) || hex(`--${m[1]}`, 'light')
+        const b = hex('--bg', theme) || hex('--bg', 'light')
+        if (!a || !b) return
+        const r = ratio(a, b)
+        if (r < min) usageFails.push(`${f}:${i + 1} ${theme} ${sel.slice(0, 28)} ${m[1]} ${r.toFixed(2)}:1 (최소 ${min})`)
+      }
+    })
+  }
+  if (fails.length) errors.push(`대비 미달 (토큰) — ${fails.join(' · ')}`)
+  if (usageFails.length) errors.push(`대비 미달 (실제 사용) — ${usageFails.slice(0, 6).join(' · ')}${usageFails.length > 6 ? ` 외 ${usageFails.length - 6}건` : ''}`)
+  if (!fails.length && !usageFails.length) ok('색 대비 WCAG 2.2 AA — 토큰 14조합 + 스타일시트 실사용 전수')
 }
 
 /* ── 18. 아이콘 이름이 글자로 새는 폴백 ──
@@ -269,6 +295,32 @@ if (scaleOk) {
   if (leaky.length)
     errors.push(`아이콘 이름이 글자로 렌더됩니다 — ${leaky.join(', ')} (폴백을 비우거나 <DsIcon>을 쓰세요)`)
   else ok('아이콘 슬롯 — 이름이 글자로 새지 않음')
+}
+
+/* ── 19. 토큰 블록 밖의 hex ──
+   Stylelint의 color-no-hex는 세 파일 모두 override로 꺼져 있었습니다 (즉 아무 데도
+   안 걸려 있었습니다). 색 정의(:root · [data-theme])에는 hex가 있어야 하고,
+   그 밖에서는 토큰만 써야 합니다 — 그 구분은 Stylelint가 못 하므로 여기서 봅니다. */
+{
+  const offenders = []
+  for (const f of ['ds.css', 'ds-vuetify.css', 'docs.css']) {
+    const css = readFileSync(f, 'utf8')
+    let depth = 0, inToken = false, line = 1, sel = ''
+    for (let i = 0; i < css.length; i++) {
+      const ch = css[i]
+      if (ch === '\n') { line++; if (depth === 0) sel = '' }
+      if (depth === 0 && ch !== '{') sel += ch
+      if (ch === '{') { depth++; if (depth === 1) { inToken = /:root|\[data-theme/.test(sel); sel = '' } }
+      else if (ch === '}') { depth--; if (depth === 0) inToken = false }
+      else if (ch === '#' && !inToken) {
+        const m = css.slice(i + 1, i + 9).match(/^[0-9a-fA-F]{3,8}\b/)
+        if (m) offenders.push(`${f}:${line} #${m[0]}`)
+      }
+    }
+  }
+  if (offenders.length)
+    errors.push(`색 정의 블록 밖에서 hex를 직접 씁니다 — ${offenders.join(', ')} (토큰을 쓰세요)`)
+  else ok('hex 직접 사용 — 색 정의 블록 안에서만')
 }
 
 /* ── 결과 ── */

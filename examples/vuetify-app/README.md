@@ -33,7 +33,7 @@ npm run dev
 
 - `vite build` 통과 — 603 모듈, 에러 0
 - Vuetify 3.11.6 정확히 설치 확인
-- Standalone 컴포넌트 20종 중 `vuetify`를 import 하는 것: **0개**
+- Standalone 컴포넌트 30종 중 `vuetify`를 import 하는 것: **0개**
 - `ds.css`의 `!important`: **0개** / `.v-*` 정의: **0개**
 - Vuetify 컴포넌트 96종 중 `defaults.ts` 지정: **77종**, 나머지는 CSS 또는 스타일 불필요
 

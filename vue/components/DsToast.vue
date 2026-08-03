@@ -8,9 +8,17 @@ const emit = defineEmits<{ action: [] }>()
 </script>
 
 <template>
-  <div class="toast" :class="variant">
+  <!-- role/aria-live: 화면을 보지 않는 사용자에게도 결과가 전달되게 합니다.
+       실패는 즉시(assertive), 성공은 하던 일을 끊지 않고(polite) 읽힙니다. -->
+  <div
+    class="toast" :class="variant"
+    :role="variant === 'danger' ? 'alert' : 'status'"
+    :aria-live="variant === 'danger' ? 'assertive' : 'polite'"
+  >
     <span class="t-dot"></span>
+    <!-- 색맹인 경우 점 색만으로는 성공/실패를 구분할 수 없어 글자로도 알립니다 -->
+    <span class="sr-only">{{ variant === 'danger' ? '실패' : '완료' }}</span>
     <span class="t-body"><slot /></span>
-    <button v-if="action" class="t-action" @click="emit('action')">{{ action }}</button>
+    <button type="button" v-if="action" class="t-action" @click="emit('action')">{{ action }}</button>
   </div>
 </template>

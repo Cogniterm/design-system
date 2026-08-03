@@ -378,8 +378,8 @@ export const meta: ComponentMeta[] = [
     name: 'DsIcon',
     ko: '아이콘',
     category: 'content',
-    origin: 'wrapped',
-    vuetifyBase: 'Lucide',
+    origin: 'custom',
+    vuetifyBase: null,
     summary: { ko: '아이콘 하나를 그립니다.', en: '' },
     reason: {
       ko: '아이콘 세트가 섞이면 굵기와 광학 크기가 달라 같은 줄에서 어긋나 보입니다. Lucide 하나로 고정하고, Lucide 이름이 아니라 우리 어휘(의미 이름)로 부릅니다 — 나중에 세트를 바꿔도 화면 코드는 그대로입니다.',

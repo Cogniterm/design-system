@@ -10,6 +10,7 @@ withDefaults(defineProps<{
 <template>
   <div
     class="skeleton"
+    aria-hidden="true"
     :class="variant !== 'rect' && variant"
     :style="{ width, height }"
   ></div>

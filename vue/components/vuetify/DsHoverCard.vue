@@ -9,7 +9,7 @@ withDefaults(defineProps<{
 }>(), { location: 'bottom start', openDelay: 350 })
 </script>
 <template>
-  <VMenu :location="location" open-on-hover :open-delay="openDelay" :close-on-content-click="false">
+  <VMenu :location="location" open-on-hover open-on-focus :open-delay="openDelay" :close-on-content-click="false">
     <template #activator="{ props }">
       <slot name="activator" v-bind="props" />
     </template>

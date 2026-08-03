@@ -8,7 +8,13 @@ const emit = defineEmits<{ select: [] }>()
 </script>
 
 <template>
-  <div class="file-row" :class="{ selected }" @click="emit('select')">
+  <div
+    class="file-row" :class="{ selected }"
+    role="option" :aria-selected="!!selected" tabindex="0"
+    @click="emit('select')"
+    @keydown.enter.prevent="emit('select')"
+    @keydown.space.prevent="emit('select')"
+  >
     <span v-if="icon || $slots.icon" class="f-icon"><slot name="icon" :name="icon" /></span>
     <span class="f-name">{{ name }}</span>
     <span v-if="meta" class="f-meta">{{ meta }}</span>

@@ -4,7 +4,7 @@ defineProps<{ label?: string }>()
 </script>
 
 <template>
-  <div class="thinking">
+  <div class="thinking" role="status" aria-live="polite">
     <span class="dots"><i></i><i></i><i></i></span>
     <slot>{{ label || '생각하는 중…' }}</slot>
   </div>

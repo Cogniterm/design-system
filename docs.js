@@ -1,7 +1,11 @@
-import { CATEGORIES, COMPONENTS, TEMPLATES, VUETIFY_COVERAGE, WHERE, A11Y, VERSUS } from './data.js'
-import { FOUNDATION_PAGES, FD_RENDERERS } from './foundation.js'
-import { ic, ICON_NAMES } from './icons-svg.js'
-import { componentPrompt } from './ai-prompt.js'
+/* 캐시 무효화 — index.html이 docs.js에 붙인 ?v=를 아래 모듈에도 그대로 넘깁니다.
+   넘기지 않으면 docs.js만 새것이고 data.js는 브라우저가 캐시해 둔 옛것이 와서,
+   새 코드가 없는 데이터를 찾다가 화면이 통째로 비어버립니다. */
+const V = new URL(import.meta.url).search
+const { CATEGORIES, COMPONENTS, TEMPLATES, VUETIFY_COVERAGE, WHERE, A11Y, VERSUS } = await import('./data.js' + V)
+const { FOUNDATION_PAGES, FD_RENDERERS } = await import('./foundation.js' + V)
+const { ic, ICON_NAMES } = await import('./icons-svg.js' + V)
+const { componentPrompt, importPath } = await import('./ai-prompt.js' + V)
 
 /* ═══════════ 유틸 ═══════════ */
 const $ = (s) => document.querySelector(s)
@@ -16,7 +20,9 @@ function originBadge(c) {
   const o = ORIGIN_LABEL[c.origin]
   const text = c.origin === 'wrapped'
     ? `Vuetify 기반 · <code style="font-family:var(--mono)">${c.vuetifyBase}</code>`
-    : 'Standalone · Vuetify 불필요'
+    : c.importFrom
+      ? `Standalone · Vuetify 불필요 · <code style="font-family:var(--mono)">${c.importFrom}</code>`
+      : 'Standalone · Vuetify 불필요'
   return `<span class="origin-badge ${c.origin}">${text}</span>`
 }
 
@@ -208,10 +214,19 @@ function crumb(...parts) {
 }
 
 /* ═══════════ 카탈로그 ═══════════ */
+
+/* 썸네일 안의 링크를 span으로 바꿉니다.
+   카드 전체가 이미 <a>인데 그 안에 또 <a>가 들어가면 HTML 규칙상 중첩이 안 돼서,
+   브라우저가 카드 링크를 그 자리에서 끊어버립니다 — 카드 절반이 클릭이 안 되고
+   데모를 누르면 빈 "#"으로 튀어 홈으로 돌아갑니다. 클래스는 그대로 두어 모양은 유지합니다. */
+const unlinkDemo = (html) => String(html)
+  .replace(/<a\b([^>]*)>/gi, (_, attrs) => `<span${attrs.replace(/\s*href="[^"]*"/gi, '')}>`)
+  .replace(/<\/a>/gi, '</span>')
+
 function catCard(c) {
   return `
     <a class="cat-card" href="#/components/${c.id}">
-      <div class="thumb"><div class="thumb-inner">${c.demo}</div></div>
+      <div class="thumb" inert><div class="thumb-inner">${unlinkDemo(c.demo)}</div></div>
       <div class="cat-body">
         <div class="cc-top">
           <h3>${c.name}</h3><span class="cc-ko">${c.ko}</span>
@@ -229,6 +244,7 @@ function renderCatalog() {
     <div class="page-head"><h1>Components</h1><span class="page-ko">컴포넌트</span></div>
     <p class="page-lead">
       ${total}종 — Standalone ${total - wrapped} · Vuetify 기반 ${wrapped}.
+      Standalone은 Vuetify 없이 돕니다.
     </p>`
 
   for (const cat of CATEGORIES) {
@@ -283,7 +299,7 @@ function renderComponent(id, tab) {
 }
 
 function overviewPane(c) {
-  const imp = c.origin === 'wrapped' ? '~/design/vuetify' : '~/design'
+  const imp = importPath(c)
   // 실제 Vue + Vuetify로 도는 데모 — 같은 오리진의 라이브 앱을 임베드합니다
   return `<div class="play-wrap">
       <iframe class="play-frame" src="live/#play/${c.id}" title="${c.name} 라이브 데모" loading="lazy"></iframe>
@@ -429,7 +445,7 @@ function renderTemplates() {
     <div class="tpl-grid">
       <a class="tpl-card live" href="live/" target="_blank" rel="noopener">
         <h3>Live Gallery ${ic('externalLink', 'sm')}</h3>
-        <p>실제 Vuetify 3.11.6 위에서 렌더된 컴포넌트 49종 전부</p>
+        <p>실제 Vuetify 3.11.6 위에서 렌더된 컴포넌트 ${COMPONENTS.length}종 전부</p>
         <div class="covers"><span>왜 필요한가</span><span>어디에 쓰나</span><span>실제 동작</span><span>다크 모드</span></div>
         <div class="go">새 탭에서 열기 ${ic('forward','sm')}</div>
       </a>
@@ -516,14 +532,14 @@ function pageStart() {
     <div class="prose">
       <h2>AI에게 시킬 때</h2>
       <table>
-        <thead><tr><th>파일</th><th>언제 쓰나</th><th>크기</th></tr></thead>
+        <thead><tr><th>파일</th><th>언제 쓰나</th></tr></thead>
         <tbody>
-          <tr><td><a href="llms.txt" target="_blank"><code>/llms.txt</code></a></td><td>색인 — 항상 먼저</td><td>2 KB</td></tr>
-          <tr><td><a href="components/llms.txt" target="_blank"><code>/components/</code></a></td><td>UI를 만들 때</td><td>24 KB</td></tr>
-          <tr><td><a href="patterns/llms.txt" target="_blank"><code>/patterns/</code></a></td><td>화면 전체 · 에이전트 흐름</td><td>19 KB</td></tr>
-          <tr><td><a href="foundation/llms.txt" target="_blank"><code>/foundation/</code></a></td><td>색 · 여백 · 타이포 · 토큰</td><td>6 KB</td></tr>
-          <tr><td><a href="vuetify/llms.txt" target="_blank"><code>/vuetify/</code></a></td><td>설치와 연동</td><td>3 KB</td></tr>
-          <tr><td><a href="a11y/llms.txt" target="_blank"><code>/a11y/</code></a></td><td>접근성 — 키보드 표</td><td>15 KB</td></tr>
+          <tr><td><a href="llms.txt" target="_blank"><code>/llms.txt</code></a></td><td>색인 — 항상 먼저</td></tr>
+          <tr><td><a href="components/llms.txt" target="_blank"><code>/components/llms.txt</code></a></td><td>UI를 만들 때</td></tr>
+          <tr><td><a href="patterns/llms.txt" target="_blank"><code>/patterns/llms.txt</code></a></td><td>화면 전체 · 에이전트 흐름</td></tr>
+          <tr><td><a href="foundation/llms.txt" target="_blank"><code>/foundation/llms.txt</code></a></td><td>색 · 여백 · 타이포 · 토큰</td></tr>
+          <tr><td><a href="vuetify/llms.txt" target="_blank"><code>/vuetify/llms.txt</code></a></td><td>설치와 연동</td></tr>
+          <tr><td><a href="a11y/llms.txt" target="_blank"><code>/a11y/llms.txt</code></a></td><td>접근성 — 키보드 표</td></tr>
         </tbody>
       </table>
     </div>`
@@ -535,10 +551,34 @@ function pageInstall() {
     <p class="page-lead">파일 복사 방식 — 개발자 기준 10분.</p>
     <div class="prose">
       <h2>1. 파일 복사</h2>
-      <pre><code>design-system/
-  ds.css              →  app/src/design/ds.css
-  ds-vuetify.css      →  app/src/design/ds-vuetify.css   (Vuetify 기반 컴포넌트를 쓸 때만)
-  vue/                →  app/src/design/</code></pre>
+      <p>
+        프로젝트의 <b>소스 루트</b> 아래 <code>design/</code>에 넣습니다.
+        Vite는 <code>src/</code>, Nuxt 3는 프로젝트 루트, Nuxt 4는 <code>app/</code>가 소스 루트입니다.
+      </p>
+      <pre><code># &lt;소스루트&gt; = src/ (Vite) · ./ (Nuxt 3) · app/ (Nuxt 4)
+cp -r design-system/vue/          &lt;소스루트&gt;/design/
+cp    design-system/ds.css        &lt;소스루트&gt;/design/
+cp    design-system/ds-vuetify.css &lt;소스루트&gt;/design/   # Vuetify 기반을 쓸 때만
+
+# vue 뒤의 슬래시가 중요합니다 — 빼면 design/vue/ 로 한 단계 더 들어갑니다.</code></pre>
+      <p>
+        이렇게 두면 어느 프레임워크든 <code>~/design</code> 하나로 부를 수 있습니다.
+        Nuxt는 <code>~</code>가 소스 루트를 가리키므로 그대로 되고, Vite는 한 줄을 더합니다.
+      </p>
+      <pre><code>// ① vite.config.ts — 실행할 때 쓰는 별칭 (Nuxt는 필요 없습니다)
+import { fileURLToPath, URL } from 'node:url'
+
+export default defineConfig({
+  resolve: { alias: { '~': fileURLToPath(new URL('./src', import.meta.url)) } },
+})</code></pre>
+      <pre><code>// ② tsconfig.app.json — 타입 검사·에디터가 쓰는 별칭
+{ "compilerOptions": { "paths": { "~/*": ["./src/*"] } } }</code></pre>
+      <div class="callout warn">
+        <b>둘 다 넣어야 합니다.</b> Vite와 TypeScript는 서로의 설정을 읽지 않아서
+        한쪽만 넣으면 <code>npm run build</code>가
+        <code>Cannot find module '~/design'</code>으로 멈춥니다.
+        <code>baseUrl</code>은 넣지 마세요 — TypeScript 6에서 막힙니다.
+      </div>
 
       <h2>2. 폰트 · 아이콘 설치</h2>
       <pre><code>npm install pretendard lucide-vue-next</code></pre>
@@ -557,8 +597,8 @@ export default defineNuxtConfig({
   css: [
     // Pretendard — dynamic-subset은 필요한 글자만 내려받습니다
     'pretendard/dist/web/variable/pretendardvariable-dynamic-subset.css',
-    '~/src/design/ds.css',
-    '~/src/design/ds-vuetify.css',   // Vuetify 기반 컴포넌트를 쓸 때만
+    '~/design/ds.css',
+    '~/design/ds-vuetify.css',   // Vuetify 기반 컴포넌트를 쓸 때만
   ],
 })</code></pre>
       <div class="callout warn"><b>폰트를 빠뜨리면 에러 없이 시스템 글꼴로 렌더됩니다.</b></div>
@@ -568,10 +608,17 @@ export default defineNuxtConfig({
         직접 쓰는 <code>&lt;v-menu&gt;</code>·<code>&lt;v-dialog&gt;</code>에도 우리 기본값이 적용되게 합니다.
         이 시스템의 컴포넌트를 안 쓰는 화면에서도 스타일이 유지되는 <b>강제 층</b>입니다.
       </p>
+      <div class="callout warn">
+        <b><code>createVuetify</code>는 컴포넌트를 등록하지 않습니다.</b>
+        손으로 쓴 <code>&lt;v-btn&gt;</code>이 <code>Failed to resolve component</code>로 비어 나온다면
+        <code>vite-plugin-vuetify</code>(<code>autoImport: true</code>)를 넣거나
+        <code>createVuetify({ components, directives })</code>로 직접 등록해야 합니다.
+        우리 <code>Ds*</code> 컴포넌트는 각자 필요한 것을 직접 import하므로 이 설정 없이도 돕니다.
+      </div>
       <pre><code>import { createVuetify } from 'vuetify'
-import { dsTheme } from '~/src/design/theme'
-import { dsDefaults } from '~/src/design/defaults'
-import { lucideIconSet } from '~/src/design/vuetify-icons'
+import { dsTheme } from '~/design/theme'
+import { dsDefaults } from '~/design/defaults'
+import { lucideIconSet } from '~/design/vuetify-icons'
 
 import { ko } from 'vuetify/locale'
 
@@ -586,10 +633,13 @@ createVuetify({
       <h2>5. 사용</h2>
       <pre><code>&lt;script setup&gt;
 // Vuetify 불필요한 컴포넌트
-import { DsButton, DsChatMessage, DsToolCallStep } from '~/src/design'
+import { DsButton, DsChatMessage, DsToolCallStep } from '~/design'
 
 // Vuetify 기반 컴포넌트 — 배럴이 다릅니다
-import { DsDataTable, DsDialog } from '~/src/design/vuetify'
+import { DsDataTable, DsDialog } from '~/design/vuetify'
+
+// 아이콘 — Lucide가 필요해 배럴이 또 다릅니다
+import { DsIcon } from '~/design/icon'
 &lt;/script&gt;
 
 &lt;template&gt;
@@ -604,7 +654,17 @@ import { DsDataTable, DsDialog } from '~/src/design/vuetify'
 &lt;/template&gt;</code></pre>
 
       <h2>다크 모드</h2>
-      <p><code>&lt;html data-theme="dark"&gt;</code> 하나로 전환됩니다. Vuetify 테마와 독립적으로 동작합니다.</p>
+      <p>
+        <b>두 곳을 함께 전환해야 합니다.</b> <code>data-theme</code>는 우리 CSS 변수만 바꾸고,
+        Vuetify가 자기 테마로 칠하는 부분(데이터 테이블 하단, 알림 색 등)은 그대로 남습니다.
+      </p>
+      <pre><code>import { useTheme } from 'vuetify'
+const theme = useTheme()
+
+function setDark(dark: boolean) {
+  theme.change(dark ? 'dsDark' : 'dsLight')                                  // Vuetify 쪽
+  document.documentElement.setAttribute('data-theme', dark ? 'dark' : 'light')  // 우리 쪽
+}</code></pre>
 
       <h2>기존 화면</h2>
       <p>바뀌지 않습니다. <code>src/design/</code> 밖은 건드리지 않습니다.</p>
@@ -640,10 +700,10 @@ function pageVuetify() {
       <table>
         <thead><tr><th>검증 항목</th><th>결과</th></tr></thead>
         <tbody>
-          <tr><td><code>vite build</code> (602 모듈)</td><td>통과 · 에러 0</td></tr>
+          <tr><td><code>vite build</code> · <code>vue-tsc --noEmit</code></td><td>통과 · 에러 0</td></tr>
           <tr><td>Vuetify 원본(<code>VBtn</code>·<code>VChip</code>)과 나란히 배치</td><td>상호 침범 없음</td></tr>
           <tr><td><code>VCard</code> 안에 우리 컴포넌트 중첩</td><td>스타일 유지됨</td></tr>
-          <tr><td>Standalone 20종 중 <code>vuetify</code> import</td><td>0개</td></tr>
+          <tr><td>Standalone ${COMPONENTS.filter((c) => c.origin === 'custom').length}종 중 <code>vuetify</code> import</td><td>0개</td></tr>
           <tr><td><code>ds.css</code>의 <code>!important</code></td><td>0개</td></tr>
           <tr><td><code>ds.css</code>가 정의하는 <code>.v-*</code> 클래스</td><td>0개</td></tr>
         </tbody>
@@ -680,10 +740,19 @@ function pageVuetify() {
       <h2 style="margin-top:36px">충돌하지 않는 이유</h2>
       <p>Vuetify 3에는 CSS 캐스케이드 레이어가 없어 특이도 싸움이 날 수 있습니다. 세 가지 규칙으로 회피합니다.</p>
       <ol>
-        <li><b>루트에 <code>all: unset</code></b> — Vuetify 전역 리셋의 영향을 차단합니다.</li>
-        <li><b><code>ds-</code> 프리픽스</b> — <code>.v-*</code> 클래스와 원천적으로 겹치지 않습니다.</li>
+        <li><b>버튼·입력 등 조작 요소에 <code>all: unset</code></b> — Vuetify와 브라우저 기본 스타일의 영향을 끊습니다.</li>
+        <li><b><code>.v-*</code>를 정의하지 않습니다</b> — <code>ds.css</code>에 Vuetify 클래스 정의가 0개라 Vuetify 쪽을 덮어쓰지 않습니다. Vuetify 조정은 <code>ds-vuetify.css</code>에만 있습니다.</li>
         <li><b><code>!important</code>는 Vuetify 기반 컴포넌트에서만</b> — Standalone 컴포넌트에 <code>!important</code>가 필요해지면 구조가 잘못됐다는 신호입니다.</li>
       </ol>
+      <div class="callout warn">
+        <b>알려진 한계 — 도입 전에 한 번 확인하세요.</b>
+        <code>ds.css</code>의 클래스 이름 상당수가 <code>ds-</code> 없이 짧습니다
+        (<code>.btn</code> <code>.card</code> <code>.input</code> <code>.chip</code> <code>.badge</code> 등).
+        Vuetify와는 겹치지 않지만, <b>기존 앱에 같은 이름이 있으면 서로 영향을 줍니다.</b>
+        넣기 전에 앱에서 같은 이름을 쓰는지 확인하세요.
+      </div>
+      <pre><code>grep -rEo 'class="[^"]*\b(btn|card|input|field|chip|badge|check|hint|empty|chat|msg|toast|spinner|skeleton|divider)\b' src/ | sort -u</code></pre>
+      <p>하나라도 나오면 그 화면부터 확인합니다. <code>ds-</code> 접두로 전면 개명하는 것이 근본 해결입니다.</p>
 
       <h2>Vuetify 4로 가야 하나</h2>
       <p>
@@ -821,8 +890,10 @@ function pageTokens() {
         <div class="brand-chip" style="background:var(--brand-subtle);color:var(--brand)">subtle</div>
       </div>
       <p>
-        라이트 <code>#1F7FF0</code> / 다크 <code>#4593F5</code>.
+        라이트 <code>#1B72D9</code> / 다크 <code>#4593F5</code>.
         어두운 배경에서는 원색이 가라앉아 보여 한 톤 밝은 변형을 씁니다.
+        글자·링크에는 한 단계 더 어두운 <code>--brand-text</code>(<code>#0F62C4</code>)를 씁니다 —
+        원색을 흰 배경 위 글자로 쓰면 대비가 AA에 못 미칩니다.
         테마 전환 시 자동으로 바뀌므로 컴포넌트는 <code>var(--brand)</code> 하나만 참조하면 됩니다.
       </p>
 
