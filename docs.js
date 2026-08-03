@@ -67,8 +67,65 @@ function render() {
   else renderCatalog()
 
   renderSidebar(section, id)
+  enhance()
+  document.body.classList.remove('drawer-open')
   window.scrollTo(0, 0)
 }
+
+/* ═══════════ 시인성 보강 — 렌더 후 공통 처리 ═══════════
+   ① 표를 가로 스크롤 래퍼에 넣습니다 (좁은 화면에서 표가 터지지 않게)
+   ② h2가 3개 이상인 페이지에 "이 페이지" 목차 레일을 답니다 (≥1280px)     */
+function enhance() {
+  const content = $('#content')
+
+  // 표 가로 스크롤
+  content.querySelectorAll('table').forEach((t) => {
+    if (t.closest('.table-scroll, .thumb, .demo, .table-wrap')) return
+    const w = document.createElement('div')
+    w.className = 'table-scroll'
+    t.parentNode.insertBefore(w, t)
+    w.appendChild(t)
+  })
+
+  // 목차
+  const hs = [...content.querySelectorAll('h2')]
+    .filter((h) => !h.closest('.cat-head, .demo, .thumb, .state-box'))
+  const main = document.createElement('div')
+  main.className = 'page-main'
+  while (content.firstChild) main.appendChild(content.firstChild)
+  content.appendChild(main)
+
+  if (hs.length >= 3) {
+    hs.forEach((h, i) => { if (!h.id) h.id = 'sec-' + i })
+    const toc = document.createElement('aside')
+    toc.className = 'toc'
+    toc.innerHTML = '<div class="toc-t">이 페이지</div>' +
+      hs.map((h) => `<a href="#${h.id}" data-toc="${h.id}">${h.textContent}</a>`).join('')
+    content.appendChild(toc)
+
+    // 해시 라우터와 충돌하지 않게 — 목차 링크는 scrollIntoView로 처리
+    toc.querySelectorAll('a').forEach((a) => {
+      a.addEventListener('click', (e) => {
+        e.preventDefault()
+        document.getElementById(a.dataset.toc)?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+      })
+    })
+
+    const links = toc.querySelectorAll('a')
+    const obs = new IntersectionObserver((es) => {
+      es.forEach((e) => {
+        if (e.isIntersecting) {
+          links.forEach((l) => l.classList.toggle('on', l.dataset.toc === e.target.id))
+        }
+      })
+    }, { rootMargin: '-10% 0px -80% 0px' })
+    hs.forEach((h) => obs.observe(h))
+  }
+}
+
+/* ═══════════ 모바일 드로어 ═══════════ */
+$('#menuBtn')?.addEventListener('click', () => document.body.classList.toggle('drawer-open'))
+$('#scrim')?.addEventListener('click', () => document.body.classList.remove('drawer-open'))
 window.addEventListener('hashchange', render)
 
 /* ═══════════ LNB — 섹션 내비게이션 ═══════════ */

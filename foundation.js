@@ -448,10 +448,26 @@ export function fdSpacing() {
 
       <h2>그리드</h2>
       <p>
-        12열 그리드를 강제하지 않습니다. 대신 <b>flex와 grid를 직접</b> 쓰되
-        간격은 위 스케일에서만 고릅니다. 카드 나열은
-        <code>repeat(auto-fill, minmax(212px, 1fr))</code>처럼 반응형으로 두어
-        브레이크포인트를 늘리지 않습니다.
+        12열 그리드를 강제하지 않습니다. 대신 화면을 <b>역할 열</b>로 나눕니다 —
+        문서 화면 기준: LNB <code>264px</code> · 본문 <code>minmax(0, 68ch)</code> ·
+        목차 레일 <code>192px</code>, 열 간격 <code>48px</code>.
+        카드 나열은 <code>repeat(auto-fill, minmax(232px, 1fr))</code>처럼
+        내용이 스스로 줄 바꾸게 두어 브레이크포인트를 늘리지 않습니다.
+      </p>
+
+      <h2>브레이크포인트</h2>
+      <table>
+        <thead><tr><th>지점</th><th>바뀌는 것</th></tr></thead>
+        <tbody>
+          <tr><td><code>1280px</code></td><td>목차 레일 숨김</td></tr>
+          <tr><td><code>1080px</code></td><td>본문 좌우 여백 축소 (56 → 32px)</td></tr>
+          <tr><td><code>900px</code></td><td><b>LNB → 드로어.</b> 사라지는 게 아니라 서랍으로 들어갑니다. 2열 카드가 1열로</td></tr>
+          <tr><td><code>640px</code></td><td>검색 숨김, 통계 2열, 버튼 전체 폭</td></tr>
+        </tbody>
+      </table>
+      <p>
+        표는 줄이지 않고 <b>가로 스크롤</b>로 둡니다 — 열을 빼면 정보가 사라집니다.
+        제목은 <code>clamp()</code>로 화면 폭에 따라 24~30px 사이를 흐릅니다.
       </p>
     </div>`
 }

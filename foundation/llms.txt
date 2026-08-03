@@ -43,7 +43,12 @@
   Line-height tokens: tight 1.3 (headings), ui 1.5 (dense), normal 1.62, prose 1.8.
   Reading measure max 68ch (var(--measure)).
 - Spacing: multiples of 4 only (0 4 8 12 16 24 32 48 64). Grouping is proximity.
-  Reading width max 720px; data screens 1080-1280px.
+  Reading width max 720px (68ch); data screens 1080-1280px.
+- Layout grid: role columns, not a forced 12-col — docs shell is LNB 264px /
+  main minmax(0,68ch) / TOC rail 192px, gap 48px. Card lists use
+  repeat(auto-fill, minmax(232px,1fr)). Breakpoints 1280/1080/900/640; at 900 the
+  LNB becomes a drawer (never just disappears); tables scroll horizontally
+  instead of dropping columns; long pages get an on-this-page TOC rail.
 - Shape: radius sm=4 md=6 lg=8 xl=12. Controls use lg, large surfaces use xl.
   Border always 1px. Nested radius must be <= parent radius.
 - Elevation: NO elevation scale. Shadow only on Menu, Dialog, Tooltip, Snackbar.

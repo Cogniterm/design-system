@@ -12,7 +12,12 @@
 </head>
 <body>
 
+<a class="skip-link" href="#content">본문으로 건너뛰기</a>
+
 <header class="topnav">
+  <button class="icon-btn menu-btn" id="menuBtn" aria-label="메뉴 열기">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+  </button>
   <a class="brandmark" href="#/">Cogniterm<span>.</span></a>
   <nav class="topnav-links">
     <a href="#/docs/start" data-nav="docs">Docs</a>
@@ -28,6 +33,7 @@
   </div>
 </header>
 
+<div class="scrim" id="scrim"></div>
 <div class="shell">
   <aside class="sidebar" id="sidebar"></aside>
   <main class="content" id="content"></main>
