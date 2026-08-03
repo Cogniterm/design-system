@@ -38,14 +38,32 @@
   --border-strong: var(--gray-a5);   /* 버튼·입력 — 조작 가능 표시 */
   --border-hover:  var(--gray-a7);   /* 위 요소의 호버 */
 
-  /* ── Status ── */
-  --success: #17803d; --warning: #ab6400; --danger: #d93036; --info: var(--brand);
-  --success-subtle: var(--success-subtle);
+  /* ── Status ──────────────────────────
+     각 상태는 3단: solid(글자·점) · subtle(면) · border(테두리).
+     면·테두리는 solid에서 파생하므로 다크에서도 자동으로 유효합니다. */
+  --success: #17803d;
+  --warning: #ab6400;
+  --danger:  #d93036;
+  --info:    var(--brand);
+
+  --success-subtle: color-mix(in srgb, var(--success) 6%, var(--bg));
   --success-border: color-mix(in srgb, var(--success) 28%, transparent);
-  --warning-subtle: var(--warning-subtle);
+  --warning-subtle: color-mix(in srgb, var(--warning) 6%, var(--bg));
   --warning-border: color-mix(in srgb, var(--warning) 30%, transparent);
-  --info-subtle: color-mix(in srgb, var(--info) 5%, var(--bg));
-  --info-border: color-mix(in srgb, var(--info) 24%, transparent);
+  --danger-subtle:  color-mix(in srgb, var(--danger) 6%, var(--bg));
+  --danger-border:  color-mix(in srgb, var(--danger) 28%, transparent);
+  --info-subtle:    color-mix(in srgb, var(--info) 5%, var(--bg));
+  --info-border:    color-mix(in srgb, var(--info) 24%, transparent);
+
+  /* ── Data Visualization ──────────────
+     차트 계열 색. 브랜드에서 시작해 색상환을 돌되 명도를 맞춰
+     인접 계열이 구분되게 했습니다. 상태색과 겹치지 않는 색만 씁니다. */
+  --chart-1: #1F7FF0;   /* 브랜드 블루 */
+  --chart-2: #16a3a3;   /* 틸 */
+  --chart-3: #8b5cf6;   /* 바이올렛 */
+  --chart-4: #e8963c;   /* 앰버 */
+  --chart-5: #d6539b;   /* 핑크 */
+  --chart-6: #4f9e4f;   /* 그린 */
 
   /* ── Shape ── */
   --r-sm: 4px; --r-md: 6px; --r-lg: 8px; --r-xl: 12px; --r-full: 9999px;
@@ -82,8 +100,6 @@
 
   --bg: #ffffff;
   --surface: #ffffff;
-  --danger-subtle: var(--danger-subtle);
-  --danger-border: color-mix(in srgb, var(--danger) 28%, transparent);
 
   /* 떠 있는 요소의 그림자 — 1px 윤곽 + 근거리 + 원거리 3겹.
      단층 그림자는 뿌옇게 보입니다. */
@@ -117,6 +133,14 @@
   --on-brand: #0b1220;
 
   --success: #46a758; --warning: #f0b429; --danger: #e5484d;
+
+  /* 차트 — 다크 배경에서 채도가 죽지 않게 한 톤 밝게 */
+  --chart-1: #4593F5;
+  --chart-2: #2ec4c4;
+  --chart-3: #a78bfa;
+  --chart-4: #f0a94e;
+  --chart-5: #ec6cb0;
+  --chart-6: #63b563;
 
   --bg: #111113;
   --surface: #18191b;

@@ -168,141 +168,172 @@ export function fdTokens() {
 
 /* ════════════════════════════════════════ */
 export function fdColor() {
+  /* 토큰 견본 — 클릭하면 이름이 복사됩니다 */
+  const sw = (name, note = '') => `
+    <button class="tok" data-tok="${name}" title="클릭하면 복사">
+      <span class="tok-chip" style="background:var(${name})"></span>
+      <span class="tok-name">${name}</span>
+      ${note ? `<span class="tok-note">${note}</span>` : ''}
+    </button>`
+
+  const scale = (nums, prefix) => `<div class="tok-scale">` +
+    nums.map((n) => `
+      <button class="tok-step" data-tok="${prefix}${n}" title="${prefix}${n} — 클릭하면 복사">
+        <span class="ts-chip" style="background:var(${prefix}${n})"></span>
+        <span class="ts-n">${n}</span>
+      </button>`).join('') + `</div>`
+
+  const N = [1,2,3,4,5,6,7,8,9,10,11,12]
+
   return `
     <div class="page-head"><h1>Color</h1><span class="page-ko">컬러</span></div>
     <p class="page-lead">
-      브랜드 1개, 회색 12단계, 상태 4개. 그 이상은 쓰지 않습니다.
-      <b>색은 마지막에 씁니다</b> — 위계는 여백과 굵기로 먼저 만듭니다.
+      브랜드 1 · 회색 12 · 알파 12 · 보더 4 · 상태 4×3 · 차트 6.
+      <b>모든 토큰을 클릭하면 이름이 복사됩니다.</b>
     </p>
     <div class="prose">
+
       <h2>Brand</h2>
-      <div class="brand-row" style="margin-bottom:16px">
-        <div class="brand-chip" style="background:var(--brand);color:var(--on-brand)">base</div>
-        <div class="brand-chip" style="background:var(--brand-hover);color:var(--on-brand)">hover</div>
-        <div class="brand-chip" style="background:var(--brand-active);color:var(--on-brand)">active</div>
-        <div class="brand-chip" style="background:var(--brand-subtle);color:var(--brand)">subtle</div>
+      <div class="tok-row">
+        ${sw('--brand', '기본 액션 · 링크')}
+        ${sw('--brand-hover', '호버')}
+        ${sw('--brand-active', '누름')}
+        ${sw('--brand-subtle', '연한 면')}
+        ${sw('--on-brand', '브랜드 위 글자')}
       </div>
       <p>
         라이트 <code>#1F7FF0</code> · 다크 <code>#4593F5</code>.
-        어두운 배경에서 원색은 가라앉아 보이므로 한 톤 밝은 변형을 씁니다.
+        어두운 배경에서 원색이 가라앉아 한 톤 밝은 변형을 씁니다.
       </p>
       <div class="dodont">
         <div class="dd do">
           <span class="dd-tag">이럴 때만</span>
           <ul>
-            <li>기본 액션 버튼</li>
-            <li>링크</li>
+            <li>기본 액션 버튼 · 링크</li>
             <li>포커스 링</li>
-            <li>인용 칩 · 진행 중 상태</li>
-            <li>폼 컨트롤의 켜짐 (체크박스 · 스위치)</li>
+            <li>진행 중 상태 · 인용 칩</li>
+            <li>폼 컨트롤의 켜짐</li>
           </ul>
         </div>
         <div class="dd dont">
           <span class="dd-tag">쓰지 않습니다</span>
           <ul>
-            <li><b>선택 · 활성 상태</b> — 내비 · 탭 · 목록의 "지금 여기"는 회색입니다</li>
+            <li><b>선택 · 활성 상태</b> — 내비 · 탭 · 목록은 중립</li>
             <li>페이지 배경 · 카드 보더</li>
             <li>제목 텍스트 · 장식</li>
-            <li>차트의 모든 계열 색</li>
           </ul>
         </div>
       </div>
       <div class="callout">
-        <b>선택 상태가 회색인 이유</b> — 파란 활성 표시가 사방에 있으면
-        정작 primary 버튼이 눈에 들어오지 않습니다. 중립 시스템에서 브랜드는
-        희소해야 힘이 있습니다. 선택 · 활성은 <code>--sel-bg</code>(gray-4) ·
-        <code>--sel-fg</code>(gray-12) 토큰을 씁니다.
+        선택 · 활성은 <code>--sel-bg</code>(gray-4) · <code>--sel-fg</code>(gray-12)를 씁니다.
+        브랜드가 흔해지면 정작 주요 버튼이 눈에 들어오지 않습니다.
       </div>
 
-      <h2>Gray — Radix Slate 1–12</h2>
-      <div class="swatch-wrap"><div class="swatches">${[1,2,3,4,5,6,7,8,9,10,11,12].map(swatchRow).join('')}</div></div>
+      <h2>Gray</h2>
+      ${scale(N, '--gray-')}
       <p>화면의 95%는 이 12단계입니다. Radix Slate — 라이트/다크 대비가 검증된 차가운 회색.</p>
       <table>
-        <thead><tr><th>단계</th><th>역할</th><th>예</th></tr></thead>
+        <thead><tr><th>단계</th><th>역할</th></tr></thead>
         <tbody>
-          <tr><td><code>1</code></td><td>가장 낮은 배경</td><td>데모 영역, 코드 블록 바깥</td></tr>
-          <tr><td><code>2</code></td><td>보조 배경</td><td>테이블 헤더, 툴콜 박스, 호버된 행</td></tr>
-          <tr><td><code>3</code></td><td>호버 배경</td><td>메뉴 항목 호버, ghost 버튼 호버</td></tr>
-          <tr><td><code>4</code></td><td>연한 보더 · 비활성 배경 · <b>선택 배경</b></td><td>카드 보더, disabled, 활성 내비 항목</td></tr>
-          <tr><td><code>5</code></td><td>연한 보더</td><td>배지 보더</td></tr>
-          <tr><td><code>6</code></td><td>(보더는 알파 토큰 사용)</td><td>스위치 트랙 등 면 요소만</td></tr>
-          <tr><td><code>7</code></td><td>중간 보더</td><td>구분자</td></tr>
-          <tr><td><code>8</code></td><td>비활성 텍스트 · 점</td><td>배지 기본 점</td></tr>
-          <tr><td><code>9</code></td><td>약한 텍스트</td><td>placeholder, 메타 정보</td></tr>
-          <tr><td><code>10</code></td><td>보조 텍스트</td><td>설명 문구</td></tr>
-          <tr><td><code>11</code></td><td><b>기본 보조 텍스트</b></td><td>본문 설명, 라벨</td></tr>
-          <tr><td><code>12</code></td><td><b>본문 텍스트</b></td><td>제목, 주요 내용</td></tr>
+          <tr><td><code>1–2</code></td><td>페이지 · 패널 배경</td></tr>
+          <tr><td><code>3</code></td><td>호버 배경</td></tr>
+          <tr><td><code>4</code></td><td>선택 배경 (<code>--sel-bg</code>) · 비활성</td></tr>
+          <tr><td><code>5–8</code></td><td>면 요소 (스위치 트랙 등) · 비활성 텍스트</td></tr>
+          <tr><td><code>9</code></td><td>약한 텍스트 · placeholder</td></tr>
+          <tr><td><code>10–11</code></td><td>보조 텍스트</td></tr>
+          <tr><td><code>12</code></td><td>본문 텍스트 · 제목</td></tr>
         </tbody>
       </table>
       <div class="callout">
-        <b>외우는 요령</b> — 배경은 1~3, 텍스트는 11과 12.
-        <b>보더는 번호가 아니라 토큰</b>(--border 계열)을 씁니다.
+        <b>보더는 이 스케일을 쓰지 않습니다</b> — 아래 알파 스케일의 시맨틱 토큰을 씁니다.
       </div>
 
-      <h2>Alpha Gray — 보더는 반투명으로</h2>
+      <h2>Gray Alpha</h2>
+      ${scale(N, '--gray-a')}
       <p>
-        보더·구분선은 불투명 회색 대신 <b>반투명 회색(--gray-a1~a12)</b>을 씁니다.
-        더 연하게 얹히고, 어떤 배경 위에서도 자연스럽습니다.
-        번호를 직접 고르지 않고 아래 네 토큰만 씁니다.
+        반투명 회색. 불투명보다 연하게 얹히고 어떤 배경 위에서도 자연스럽습니다.
+        보더·오버레이가 여기서 나옵니다.
       </p>
-      <table>
-        <thead><tr><th>토큰</th><th>값</th><th>쓰는 곳</th></tr></thead>
-        <tbody>
-          <tr><td><code>--border-subtle</code></td><td>gray-a2 (4%)</td><td>행 사이 구분선</td></tr>
-          <tr><td><code>--border</code></td><td>gray-a3 (6%)</td><td>카드 · 패널 · 테이블</td></tr>
-          <tr><td><code>--border-strong</code></td><td>gray-a5 (11%)</td><td>버튼 · 입력 — 조작 가능 표시</td></tr>
-          <tr><td><code>--border-hover</code></td><td>gray-a7 (18%)</td><td>위 요소의 호버</td></tr>
-        </tbody>
-      </table>
+
+      <h2>Border</h2>
+      <div class="tok-row">
+        ${sw('--border-subtle', '행 구분선')}
+        ${sw('--border', '카드 · 표')}
+        ${sw('--border-strong', '버튼 · 입력')}
+        ${sw('--border-hover', '호버')}
+      </div>
       <div class="demo" style="border-radius:var(--r-xl)">
-        <div style="display:flex;gap:14px;flex-wrap:wrap">
-          <div style="flex:1;min-width:150px;border:1px solid var(--border-subtle);border-radius:var(--r-lg);padding:12px;font-size:var(--text-xs);color:var(--gray-10)">border-subtle</div>
-          <div style="flex:1;min-width:150px;border:1px solid var(--border);border-radius:var(--r-lg);padding:12px;font-size:var(--text-xs);color:var(--gray-10)">border</div>
-          <div style="flex:1;min-width:150px;border:1px solid var(--border-strong);border-radius:var(--r-lg);padding:12px;font-size:var(--text-xs);color:var(--gray-10)">border-strong</div>
-          <div style="flex:1;min-width:150px;border:1px solid var(--border-hover);border-radius:var(--r-lg);padding:12px;font-size:var(--text-xs);color:var(--gray-10)">border-hover</div>
+        <div style="display:flex;gap:14px;flex-wrap:wrap;width:100%">
+          ${['subtle', '', 'strong', 'hover'].map((k) => {
+            const t = k ? `--border-${k}` : '--border'
+            return `<div style="flex:1;min-width:140px;border:1px solid var(${t});border-radius:var(--r-lg);padding:14px;font-size:var(--text-xs);color:var(--gray-10);font-family:var(--mono)">${t}</div>`
+          }).join('')}
         </div>
       </div>
-
-      <h2>상태 면 · 보더</h2>
-      <p>알림·틴트 박스는 인라인 계산 대신 토큰을 씁니다.</p>
-      <table>
-        <thead><tr><th>토큰</th><th>쓰는 곳</th></tr></thead>
-        <tbody>
-          <tr><td><code>--success-subtle</code> / <code>--success-border</code></td><td>성공 알림 면 · 테두리</td></tr>
-          <tr><td><code>--warning-subtle</code> / <code>--warning-border</code></td><td>경고</td></tr>
-          <tr><td><code>--danger-subtle</code> / <code>--danger-border</code></td><td>실패 · 파괴적</td></tr>
-          <tr><td><code>--info-subtle</code> / <code>--info-border</code></td><td>정보 (브랜드 톤)</td></tr>
-        </tbody>
-      </table>
+      <p>번호를 직접 고르지 않고 역할로 고릅니다. CI가 <code>1px solid var(--gray-N)</code>을 차단합니다.</p>
 
       <h2>Status</h2>
-      <div class="statusrow">
-        <div><i style="background:var(--success)"></i><b>success</b><span>완료된 작업</span></div>
-        <div><i style="background:var(--warning)"></i><b>warning</b><span>확인이 필요한 상태</span></div>
-        <div><i style="background:var(--danger)"></i><b>danger</b><span>실패 · 파괴적 액션</span></div>
-        <div><i style="background:var(--info)"></i><b>info</b><span>브랜드와 같은 색</span></div>
+      <div class="tok-grid">
+        ${[['success', '완료'], ['warning', '확인 필요'], ['danger', '실패 · 파괴적'], ['info', '정보']].map(([k, d]) => `
+          <div class="tok-status">
+            <div class="tok-status-h">
+              <span class="tok-chip" style="background:var(--${k})"></span>
+              <b>${k}</b><span>${d}</span>
+            </div>
+            <div class="tok-status-b">
+              <button class="tok-step" data-tok="--${k}"><span class="ts-chip" style="background:var(--${k})"></span><span class="ts-n">solid</span></button>
+              <button class="tok-step" data-tok="--${k}-subtle"><span class="ts-chip" style="background:var(--${k}-subtle);border:1px solid var(--border)"></span><span class="ts-n">subtle</span></button>
+              <button class="tok-step" data-tok="--${k}-border"><span class="ts-chip" style="background:var(--${k}-border)"></span><span class="ts-n">border</span></button>
+            </div>
+          </div>`).join('')}
       </div>
       <p>
-        상태 색은 <b>진짜 그 상태일 때만</b> 씁니다.
-        빨강이 화면에 늘 떠 있으면 진짜 에러가 났을 때 눈에 띄지 않습니다.
+        상태마다 3단입니다 — <b>solid</b>(글자·점) · <b>subtle</b>(면) · <b>border</b>(테두리).
+        면·테두리는 solid에서 파생하므로 다크에서도 자동으로 맞습니다.
       </p>
       <div class="dodont">
         <div class="dd dont">
           <span class="dd-tag">하지 말 것</span>
-          <ul><li>색만으로 상태를 구분 — 색맹 사용자는 읽을 수 없습니다. 항상 텍스트나 아이콘을 함께.</li></ul>
+          <ul><li>색만으로 상태 구분 — 색맹 사용자는 읽을 수 없습니다</li>
+              <li>빨강을 화면에 상시 노출 — 진짜 에러가 묻힙니다</li></ul>
         </div>
         <div class="dd do">
           <span class="dd-tag">해야 할 것</span>
-          <ul><li>배지처럼 <b>점 + 텍스트</b>를 함께 씁니다.</li></ul>
+          <ul><li>배지처럼 <b>점 + 텍스트</b>를 함께</li>
+              <li>진짜 그 상태일 때만</li></ul>
         </div>
       </div>
-      <div class="demo" style="border-radius:var(--r-lg)">
+      <div class="demo" style="border-radius:var(--r-xl)">
         <div class="row">
           <span class="badge"><span class="dot"></span>대기</span>
           <span class="badge brand"><span class="dot"></span>실행 중</span>
           <span class="badge success"><span class="dot"></span>완료</span>
           <span class="badge danger"><span class="dot"></span>실패</span>
         </div>
+      </div>
+
+      <h2>Chart</h2>
+      <div class="tok-row">
+        ${[1,2,3,4,5,6].map((n) => sw(`--chart-${n}`)).join('')}
+      </div>
+      <div class="demo" style="border-radius:var(--r-xl)">
+        <div style="display:flex;align-items:flex-end;gap:8px;height:120px;width:100%">
+          ${[68, 92, 45, 78, 34, 58].map((h, i) => `
+            <div style="flex:1;height:${h}%;background:var(--chart-${i + 1});border-radius:var(--r-sm) var(--r-sm) 0 0"></div>`).join('')}
+        </div>
+      </div>
+      <p>
+        계열 색은 <b>순서대로</b> 씁니다 — 1부터 채우고 필요한 만큼만.
+        상태색과 겹치지 않아 "빨강 = 실패"의 의미가 차트에서 흐려지지 않습니다.
+        7개를 넘으면 색이 아니라 그룹핑이나 하이라이트를 검토합니다.
+      </p>
+
+      <h2>Surface</h2>
+      <div class="tok-row">
+        ${sw('--bg', '페이지 배경')}
+        ${sw('--surface', '요소 면')}
+        ${sw('--sel-bg', '선택 배경')}
+        ${sw('--sel-fg', '선택 글자')}
       </div>
     </div>`
 }

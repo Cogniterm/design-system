@@ -80,6 +80,16 @@ function render() {
 function enhance() {
   const content = $('#content')
 
+  // 토큰 견본 — 클릭하면 이름 복사
+  content.querySelectorAll('[data-tok]').forEach((b) => {
+    b.addEventListener('click', () => {
+      navigator.clipboard.writeText(b.dataset.tok).then(() => {
+        b.classList.add('copied')
+        setTimeout(() => b.classList.remove('copied'), 1200)
+      })
+    })
+  })
+
   // 표 가로 스크롤
   content.querySelectorAll('table').forEach((t) => {
     if (t.closest('.table-scroll, .thumb, .demo, .table-wrap')) return

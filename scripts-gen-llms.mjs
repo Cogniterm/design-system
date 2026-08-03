@@ -91,7 +91,13 @@ ${FOUNDATION_PAGES.map(([id, ko, en]) => `- ${en} (${ko}) — ${SITE}/#/foundati
   --border-strong (buttons, inputs) / --border-hover. They are translucent
   (gray-a scale), so strokes sit lighter on any background.
   Status tints use tokens too: --success-subtle/-border, --warning-*, --danger-*,
-  --info-* — never inline color-mix.
+  --info-* — never inline color-mix. Each status has 3 tiers: solid (text/dot),
+  -subtle (surface), -border (outline).
+  Charts use --chart-1..6 in order (brand blue, teal, violet, amber, pink, green);
+  they deliberately avoid status hues so "red = failure" keeps its meaning.
+- Tables: NO background fills. Header is transparent with a --border-strong bottom
+  rule and gray-10 medium 12px labels; rows separate with --border-subtle only.
+  No zebra striping, no hover fill.
 - Type: Pretendard, 10 steps only — 11/12/13/14/15/16/20/24/30/36 via var(--text-*).
   Page titles are fluid: h1 clamp 26-32px, landing hero 30-40px.
   UI surfaces (buttons, tables, sidebars) use 13-14px; reading surfaces (explanations,
