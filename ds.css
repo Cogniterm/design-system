@@ -346,7 +346,7 @@ td.mono { font-family: var(--mono); font-size: var(--text-xs); color: var(--gray
 .toast { display: inline-flex; align-items: center; gap: 10px; min-width: 280px;
   border: 1px solid var(--border); border-radius: var(--r-lg); background: var(--surface);
   padding: 12px 14px; font-size: var(--text-sm);
-  box-shadow: 0 4px 16px rgba(0,0,0,.06); }
+  box-shadow: var(--shadow-overlay); }   /* 다크에서도 보이도록 토큰으로 */
 
 .toast .t-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
 .toast.success .t-dot { background: var(--success); }
