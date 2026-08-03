@@ -27,7 +27,11 @@
 }
 .brandmark span { color: var(--brand); }
 
-.topnav-links { display: flex; gap: 2px; flex: 1; }
+/* 메뉴는 화면 기준 정중앙 — 로고·우측 컨트롤과 무관하게 */
+.topnav-links {
+  display: flex; gap: 2px;
+  position: absolute; left: 50%; translate: -50% 0;
+}
 .topnav-links a {
   display: inline-flex; align-items: center; gap: 5px;
   height: 32px; padding: 0 11px; border-radius: var(--r-lg);
@@ -82,13 +86,13 @@
   padding: 0 0 80px;
   position: sticky; top: 56px;
   max-height: calc(100vh - 56px); overflow-y: auto;
-  background: var(--gray-1);
+  background: var(--bg);
   border-right: 1px solid var(--border);
 }
 .lnb-head {
   position: sticky; top: 0; z-index: 1;
   padding: 20px 20px 15px;
-  background: var(--gray-1);
+  background: var(--bg);
   border-bottom: 1px solid var(--border);
   margin-bottom: 8px;
 }
@@ -917,6 +921,11 @@
    ══════════════════════════════════════ */
 @media (max-width: 1280px) {
   .toc { display: none; }
+}
+@media (max-width: 1120px) {
+  .topnav-links { position: static; translate: none; }
+  .topnav { justify-content: flex-start; }
+  .topnav-right { margin-left: auto; }
 }
 @media (max-width: 1080px) {
   .content { padding: 36px 32px 140px; }
