@@ -218,6 +218,11 @@
    Ds* 래퍼 컴포넌트 전용 스타일
    ============================================================ */
 
+/* VBtn 안 아이콘 — 광학 여백 보정 (Standalone .btn과 같은 규칙) */
+.v-btn .ds-icon:first-child { margin-inline-start: -2px; }
+.v-btn .ds-icon:last-child:not(:first-child) { margin-inline-end: -2px; }
+.ds-icon-btn .ds-icon { margin: 0 !important; }
+
 /* ── DsIconButton ── */
 .ds-icon-btn.v-btn { width: 30px; height: 30px; min-width: 0; border-radius: var(--r-md); color: var(--gray-10); }
 .ds-icon-btn.v-btn:hover { background: var(--gray-3); color: var(--gray-12); }

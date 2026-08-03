@@ -401,7 +401,7 @@ function exportCsv() { toast.value = { msg: '내보내기에 실패했습니다 
   background: var(--gray-3); padding: 1px 6px; border-radius: 3px; }
 .actor { display: inline-flex; align-items: center; gap: 8px; white-space: nowrap; }
 .target { color: var(--gray-11); }
-.row-more {
+.row-more { display: inline-flex; align-items: center; justify-content: center;
   all: unset; box-sizing: border-box; cursor: pointer;
   width: 26px; height: 26px; display: flex; align-items: center; justify-content: center;
   border-radius: var(--r-md); color: var(--gray-9); font-size: 15px;

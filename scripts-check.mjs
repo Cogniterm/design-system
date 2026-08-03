@@ -137,6 +137,22 @@ if (scaleOk) {
   ok(`타입 스케일 준수 — docs.css + 템플릿 3종 (토큰 ${varUse}회)`)
 }
 
+/* ── 10. 아이콘 기준선 일관성 — -0.125em 하나만 ── */
+{
+  const files = ['ds.css', 'docs.css', 'ds-vuetify.css',
+    'templates/audit.html', 'templates/chat.html', 'templates/search.html']
+  const badVA = []
+  for (const f of files) {
+    const src = readFileSync(f, 'utf8')
+    for (const m of src.matchAll(/vertical-align:\s*(-?[\d.]+em)/g)) {
+      const v = m[1]
+      if (!['-0.125em', '-.125em'].includes(v) && v !== '1px') badVA.push(`${f}: ${v}`)
+    }
+  }
+  if (badVA.length) errors.push(`아이콘 기준선이 -0.125em이 아닌 곳: ${[...new Set(badVA)].join(' · ')}`)
+  else ok('아이콘 기준선 -0.125em 통일')
+}
+
 /* ── 결과 ── */
 console.log()
 if (warn.length) {

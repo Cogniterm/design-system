@@ -354,6 +354,24 @@ td.mono { font-family: var(--mono); font-size: 12.5px; color: var(--gray-11); }
 .ds-icon.is-spin { animation: spin .8s linear infinite; }
 
 /* ── 인라인 Lucide SVG (문서·템플릿용) ──
-   stroke 1.5 — 16~20px 크기에서 2는 뭉툭해 보입니다. */
-.lic { flex-shrink: 0; vertical-align: -0.15em; fill: none; stroke: currentColor;
+   stroke 1.5 — 16~20px 크기에서 2는 뭉툭해 보입니다.
+   기준선 보정 -0.125em — 시스템 전체에서 이 값 하나만 씁니다.
+   (아이콘+글자를 나란히 둘 때는 가급적 flex + align-items: center를 쓰고,
+    인라인 흐름에 섞일 때만 이 보정에 기댑니다.) */
+.lic { flex-shrink: 0; vertical-align: -0.125em; fill: none; stroke: currentColor;
   stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
+
+/* 버튼 안 아이콘 — 광학 여백 보정.
+   아이콘은 사각 캔버스 안에 여백을 갖고 있어, 글자와 같은 패딩이면
+   아이콘 쪽이 더 들여 보입니다. 바깥쪽으로 2px 당깁니다. */
+.btn > .lic:first-child, .btn > .ds-icon:first-child { margin-inline-start: -2px; }
+.btn > .lic:last-child:not(:first-child),
+.btn > .ds-icon:last-child:not(:first-child) { margin-inline-end: -2px; }
+
+/* 툴콜 상태 아이콘 — 스피너(12px)와 체크(14~16px)의 폭이 다르면
+   상태가 바뀔 때 뒤 텍스트가 밀립니다. 16px 슬롯에 고정합니다. */
+.toolcall > .check, .toolcall > .spinner {
+  width: 16px; height: 16px; flex-shrink: 0;
+  display: inline-flex; align-items: center; justify-content: center;
+}
+.toolcall > .check .lic, .toolcall > .check svg { display: block; }

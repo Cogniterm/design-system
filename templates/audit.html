@@ -52,7 +52,7 @@
   padding: 0 24px; border-bottom: 1px solid var(--gray-4); background: var(--surface);
 }
 .topbar .searchwrap { position: relative; display: inline-flex; align-items: center; }
-.topbar .searchwrap .lic { position: absolute; left: 11px; color: var(--gray-9); pointer-events: none; }
+.topbar .searchwrap .lic { position: absolute; left: 11px; top: 50%; translate: 0 -50%; color: var(--gray-9); pointer-events: none; }
 .topbar .input { width: 300px; padding-left: 34px; }
 .topbar .spacer { flex: 1; }
 .icon-act {
@@ -62,6 +62,7 @@
   transition: background .16s ease, color .16s ease;
 }
 .icon-act:hover { background: var(--gray-3); color: var(--gray-12); }
+.icon-act svg { display: block; }
 .icon-act .dot-badge {
   position: absolute; top: 6px; right: 6px; width: 6px; height: 6px;
   border-radius: 50%; background: var(--danger); border: 1.5px solid var(--surface);
@@ -122,7 +123,7 @@
   transition: border-color .16s ease;
 }
 .fake-select:hover { border-color: var(--gray-8); }
-.fake-select .lic { color: var(--gray-9); }
+.fake-select .lic { color: var(--gray-9); margin-right: -2px; }
 
 .active-filters { display: flex; align-items: center; gap: 8px; margin-top: 14px; flex-wrap: wrap; }
 .af-label {
@@ -150,7 +151,7 @@
 }
 .tbl th.sortable { cursor: pointer; }
 .tbl th.sortable:hover { color: var(--gray-12); }
-.tbl th .lic { vertical-align: -0.2em; margin-left: 3px; color: var(--gray-8); }
+.tbl th .lic { vertical-align: -3px; margin-left: 4px; color: var(--gray-8); }
 .tbl th.sorted .lic { color: var(--brand); }
 .tbl td {
   padding: 0 16px; height: 42px; font-size: var(--text-sm);
@@ -171,7 +172,7 @@
 }
 .chk {
   width: 16px; height: 16px; border-radius: var(--r-sm); border: 1px solid var(--gray-7);
-  display: inline-block; vertical-align: -3px; background: var(--surface); cursor: pointer;
+  display: inline-block; vertical-align: middle; background: var(--surface); cursor: pointer;
 }
 .chk.on { background: var(--brand); border-color: var(--brand); position: relative; }
 .chk.on::after {
@@ -253,7 +254,7 @@
 }
 .back-link:hover { color: var(--gray-12); }
 
-.lic { width: 16px; height: 16px; flex-shrink: 0; vertical-align: -0.15em;
+.lic { width: 16px; height: 16px; flex-shrink: 0; vertical-align: -0.125em;
   fill: none; stroke: currentColor; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
 .lic.sm { width: 14px; height: 14px; }
 .lic.lg { width: 20px; height: 20px; }
