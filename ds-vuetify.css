@@ -12,14 +12,14 @@
   border-bottom: 1px solid var(--border);
 }
 .ds-vtable .v-table__wrapper > table > tbody > tr > td {
-  font-size: 13.5px; color: var(--gray-12);
+  font-size: var(--text-sm); color: var(--gray-12);
   border-bottom: 1px solid var(--border-subtle);
 }
 .ds-vtable .v-table__wrapper > table > tbody > tr:hover > td { background: var(--gray-2); }
 .ds-vtable[data-density="compact"] .v-table__wrapper > table > tbody > tr > td { height: 34px; }
 .ds-vtable[data-density="comfortable"] .v-table__wrapper > table > tbody > tr > td { height: 42px; }
 .ds-vtable[data-density="spacious"] .v-table__wrapper > table > tbody > tr > td { height: 50px; }
-.ds-vtable .v-data-table-footer { border-top: 1px solid var(--border); font-size: 12.5px; }
+.ds-vtable .v-data-table-footer { border-top: 1px solid var(--border); font-size: var(--text-xs); }
 
 /* ── DsDialog — VDialog 내부 면 ── */
 .ds-dialog-panel {
@@ -45,7 +45,7 @@
 
 .ds-menu-item {
   display: flex; align-items: center; gap: 9px; height: 34px; padding: 0 11px;
-  border-radius: var(--r-md); font-size: 13.5px; color: var(--gray-12); cursor: pointer;
+  border-radius: var(--r-md); font-size: var(--text-sm); color: var(--gray-12); cursor: pointer;
   transition: background .16s ease;
 }
 .ds-menu-item:hover { background: var(--gray-3); }
@@ -54,7 +54,7 @@
 .v-tooltip > .v-overlay__content {
   background: var(--gray-12) !important;   /* A그룹 한정 — 브리프 2장 규칙 3 */
   color: var(--bg) !important;
-  font-family: var(--font); font-size: 12.5px;
+  font-family: var(--font); font-size: var(--text-xs);
   border-radius: var(--r-md); padding: 5px 9px;
 }
 
@@ -128,17 +128,17 @@
 .v-btn--variant-text:hover { background: var(--gray-3); }
 
 /* ── VAlert / VBanner ── */
-.v-alert { border-radius: var(--r-lg); font-size: 13.5px; line-height: 1.65; }
+.v-alert { border-radius: var(--r-lg); font-size: var(--text-sm); line-height: 1.65; }
 .v-alert--variant-tonal .v-alert__underlay { opacity: .08; }
-.v-banner { border-color: var(--border); font-size: 13.5px; }
+.v-banner { border-color: var(--border); font-size: var(--text-sm); }
 
 /* ── VList ── */
 .v-list { background: var(--surface); padding: 4px; }
-.v-list-item { min-height: 36px; border-radius: var(--r-md); font-size: 13.5px; }
+.v-list-item { min-height: 36px; border-radius: var(--r-md); font-size: var(--text-sm); }
 .v-list-item__overlay { opacity: 0; }
 .v-list-item:hover { background: var(--gray-3); }
 .v-list-item--active { background: var(--sel-bg); color: var(--sel-fg); }
-.v-list-item-title { font-size: 13.5px; font-weight: 400; }
+.v-list-item-title { font-size: var(--text-sm); font-weight: 400; }
 .v-list-subheader { font-size: 11px; font-weight: 600; color: var(--gray-9);
   letter-spacing: .04em; min-height: 28px; }
 
@@ -150,16 +150,16 @@
   border-bottom: 1px solid var(--border) !important;
 }
 .v-table > .v-table__wrapper > table > tbody > tr > td {
-  font-size: 13.5px; color: var(--gray-12);
+  font-size: var(--text-sm); color: var(--gray-12);
   border-bottom: 1px solid var(--border-subtle) !important;
 }
 .v-table--hover > .v-table__wrapper > table > tbody > tr:hover > td { background: var(--gray-2); }
-.v-data-table-footer { border-top: 1px solid var(--border); font-size: 12.5px; padding: 8px 12px; }
+.v-data-table-footer { border-top: 1px solid var(--border); font-size: var(--text-xs); padding: 8px 12px; }
 .v-data-table__td--select-row .v-selection-control { justify-content: flex-start; }
 
 /* ── VTabs ── */
 .v-tabs { border-bottom: 1px solid var(--border); }
-.v-tab { text-transform: none; letter-spacing: 0; font-size: 13.5px; font-weight: 500;
+.v-tab { text-transform: none; letter-spacing: 0; font-size: var(--text-sm); font-weight: 500;
   color: var(--gray-10); min-width: 0; padding: 0 12px; }
 .v-tab:hover { color: var(--gray-12); }
 .v-tab--selected { color: var(--sel-fg); }
@@ -175,11 +175,11 @@
   border-color: var(--brand); border-width: 1px;
 }
 .v-field__input { font-size: 14px; color: var(--gray-12); }
-.v-label { font-size: 13.5px; color: var(--gray-10); opacity: 1; }
+.v-label { font-size: var(--text-sm); color: var(--gray-10); opacity: 1; }
 .v-messages__message { font-size: 12px; }
 
 /* ── VChip ── */
-.v-chip { font-size: 12.5px; font-weight: 500; border-color: var(--gray-5); }
+.v-chip { font-size: var(--text-xs); font-weight: 500; border-color: var(--gray-5); }
 .v-chip--variant-outlined { background: var(--surface); }
 
 /* ── VBreadcrumbs / VPagination ── */
@@ -191,10 +191,10 @@
 
 /* ── VExpansionPanels / VStepper / VTimeline ── */
 .v-expansion-panel { background: var(--surface); border: 1px solid var(--border); }
-.v-expansion-panel-title { font-size: 13.5px; font-weight: 500; min-height: 42px; }
+.v-expansion-panel-title { font-size: var(--text-sm); font-weight: 500; min-height: 42px; }
 .v-stepper { background: var(--surface); border: 1px solid var(--border); }
-.v-stepper-item__title { font-size: 13.5px; font-weight: 500; }
-.v-timeline-item__body { font-size: 13.5px; }
+.v-stepper-item__title { font-size: var(--text-sm); font-weight: 500; }
+.v-timeline-item__body { font-size: var(--text-sm); }
 
 /* ── VProgress ── */
 .v-progress-linear { border-radius: 0; }
@@ -202,7 +202,7 @@
 
 /* ── VSnackbar ── */
 .v-snackbar__wrapper { border: 1px solid var(--border); background: var(--surface);
-  color: var(--gray-12); font-size: 13.5px; box-shadow: var(--shadow-overlay); }
+  color: var(--gray-12); font-size: var(--text-sm); box-shadow: var(--shadow-overlay); }
 
 
 /* ── VOverlay 계열 공통 (VMenu·VDialog 내부 면) ── */
@@ -216,11 +216,11 @@
 .v-selection-control--density-comfortable { --v-selection-control-size: 36px; }
 
 /* ── VTreeview / VVirtualScroll ── */
-.v-treeview-item { font-size: 13.5px; border-radius: var(--r-md); min-height: 32px; }
+.v-treeview-item { font-size: var(--text-sm); border-radius: var(--r-md); min-height: 32px; }
 .v-treeview-item:hover { background: var(--gray-3); }
 
 /* ── VCode / VKbd ── */
-.v-code { font-family: var(--mono); font-size: 12.5px; background: var(--gray-3);
+.v-code { font-family: var(--mono); font-size: var(--text-xs); background: var(--gray-3);
   color: var(--brand); padding: 1px 5px; border-radius: 3px; }
 .v-kbd { font-family: var(--mono); font-size: 11.5px; background: var(--gray-12);
   color: var(--bg); border-radius: 3px; box-shadow: none; padding: 2px 5px; }
@@ -248,7 +248,7 @@
 
 /* ── DsButtonGroup ── */
 .ds-btn-group.v-btn-toggle { height: 32px; border-radius: var(--r-lg); border: 1px solid var(--border-strong); overflow: hidden; }
-.ds-btn-group .v-btn { height: 30px; font-size: 12.5px; font-weight: 500; color: var(--gray-11);
+.ds-btn-group .v-btn { height: 30px; font-size: var(--text-xs); font-weight: 500; color: var(--gray-11);
   border-radius: 0; border: none; min-width: 0; padding: 0 12px; }
 .ds-btn-group .v-btn:hover { background: var(--gray-2); }
 .ds-btn-group .v-btn--active { background: var(--sel-bg); color: var(--sel-fg); }
@@ -262,20 +262,20 @@
 .ds-tabs .v-tab--selected .ds-tab-count { background: var(--sel-bg); color: var(--sel-fg); }
 
 /* ── DsBreadcrumbs ── */
-.ds-breadcrumbs.v-breadcrumbs { padding: 0; font-size: 12.5px; }
+.ds-breadcrumbs.v-breadcrumbs { padding: 0; font-size: var(--text-xs); }
 .ds-breadcrumbs .v-breadcrumbs-item { color: var(--gray-10); padding: 0; }
 .ds-breadcrumbs .v-breadcrumbs-item:hover { color: var(--gray-12); }
 .ds-breadcrumbs .v-breadcrumbs-item--disabled { color: var(--gray-12); opacity: 1; font-weight: 500; }
 .ds-bc-sep { color: var(--gray-7); margin: 0 6px; }
 
 /* ── DsPagination ── */
-.ds-pagination .v-btn { font-size: 12.5px; min-width: 28px; height: 28px; color: var(--gray-11); }
+.ds-pagination .v-btn { font-size: var(--text-xs); min-width: 28px; height: 28px; color: var(--gray-11); }
 .ds-pagination .v-btn:hover { background: var(--gray-3); }
 .ds-pagination .v-pagination__item--is-active .v-btn { background: var(--sel-bg); color: var(--sel-fg); }
 
 /* ── DsNavList ── */
 .ds-navlist.v-list { padding: 4px; background: transparent; }
-.ds-navlist .v-list-item { min-height: 34px; font-size: 13.5px; }
+.ds-navlist .v-list-item { min-height: 34px; font-size: var(--text-sm); }
 .ds-nav-icon { font-size: 15px; margin-right: 8px; opacity: .8; }
 .ds-nav-badge {
   font-size: 11px; font-weight: 600; padding: 1px 6px; border-radius: var(--r-full);
@@ -291,7 +291,7 @@
 .ds-vfield .v-field--focused .v-field__outline__notch::before, .ds-vfield .v-field--focused .v-field__outline__notch::after { border-color: var(--brand); }
 
 /* ── DsCheckbox · DsSwitch · DsRadioGroup ── */
-.ds-check .v-label, .ds-switch .v-label, .ds-radio .v-label { font-size: 13.5px; color: var(--gray-12); opacity: 1; }
+.ds-check .v-label, .ds-switch .v-label, .ds-radio .v-label { font-size: var(--text-sm); color: var(--gray-12); opacity: 1; }
 .ds-check-hint { margin-left: 32px; margin-top: -4px; }
 .ds-radio-label { display: flex; flex-direction: column; gap: 1px; }
 .ds-radio-hint { font-size: 12px; color: var(--gray-10); }
@@ -299,49 +299,49 @@
 
 /* ── DsSlider ── */
 .ds-slider-label { display: flex; justify-content: space-between; align-items: baseline; }
-.ds-slider-val { font-family: var(--mono); font-size: 12.5px; color: var(--gray-11); font-weight: 400; }
+.ds-slider-val { font-family: var(--mono); font-size: var(--text-xs); color: var(--gray-11); font-weight: 400; }
 .ds-slider .v-slider-track__background { background: var(--gray-5); }
 
 /* ── DsDatePicker ── */
 .ds-datepicker .v-date-picker { border: 1px solid var(--border); border-radius: var(--r-lg); background: var(--surface); }
 .ds-dp-label { display: block; font-size: 13px; font-weight: 500; margin-bottom: 6px; }
-.ds-datepicker .v-date-picker-month__day .v-btn { font-size: 12.5px; }
+.ds-datepicker .v-date-picker-month__day .v-btn { font-size: var(--text-xs); }
 
 /* ── DsAlert ── */
-.ds-alert.v-alert { font-size: 13.5px; border-radius: var(--r-md); }
-.ds-alert .v-alert-title { font-size: 13.5px; font-weight: 600; margin-bottom: 2px; }
+.ds-alert.v-alert { font-size: var(--text-sm); border-radius: var(--r-md); }
+.ds-alert .v-alert-title { font-size: var(--text-sm); font-weight: 600; margin-bottom: 2px; }
 .ds-alert-actions { display: flex; gap: 8px; margin-top: 10px; }
 
 /* ── DsBanner ── */
-.ds-banner.v-banner { border: 1px solid var(--border); background: var(--gray-2); font-size: 13.5px; }
+.ds-banner.v-banner { border: 1px solid var(--border); background: var(--gray-2); font-size: var(--text-sm); }
 
 /* ── DsProgressBar ── */
 .ds-progress-head { display: flex; justify-content: space-between; align-items: baseline;
-  font-size: 12.5px; color: var(--gray-11); margin-bottom: 6px; }
+  font-size: var(--text-xs); color: var(--gray-11); margin-bottom: 6px; }
 .ds-progress-val { font-family: var(--mono); color: var(--gray-10); }
 
 /* ── DsList ── */
 .ds-list.v-list { background: transparent; padding: 0; }
 .ds-list .v-list-item { border-radius: var(--r-md); min-height: 40px; }
-.ds-list .v-list-item-title { font-size: 13.5px; }
+.ds-list .v-list-item-title { font-size: var(--text-sm); }
 .ds-list .v-list-item-subtitle { font-size: 12px; color: var(--gray-10); }
 .ds-list-meta { font-family: var(--mono); font-size: 12px; color: var(--gray-9); }
 
 /* ── DsTreeview ── */
 .ds-treeview.v-treeview { background: transparent; }
-.ds-treeview .v-list-item { min-height: 30px; font-size: 13.5px; border-radius: var(--r-md); }
+.ds-treeview .v-list-item { min-height: 30px; font-size: var(--text-sm); border-radius: var(--r-md); }
 .ds-treeview .v-list-item--active { background: var(--sel-bg); color: var(--sel-fg); }
 
 /* ── DsTimeline ── */
 .ds-timeline .v-timeline-divider__dot { box-shadow: none; }
 .ds-tl-time { font-family: var(--mono); font-size: 11.5px; color: var(--gray-9); }
-.ds-tl-title { font-size: 13.5px; font-weight: 500; color: var(--gray-12); margin-top: 2px; }
-.ds-tl-body { font-size: 12.5px; color: var(--gray-11); margin-top: 2px; }
+.ds-tl-title { font-size: var(--text-sm); font-weight: 500; color: var(--gray-12); margin-top: 2px; }
+.ds-tl-body { font-size: var(--text-xs); color: var(--gray-11); margin-top: 2px; }
 
 /* ── DsAccordion ── */
 .ds-accordion .v-expansion-panel { background: var(--surface); border: 1px solid var(--border); }
 .ds-accordion .v-expansion-panel::after { display: none; }
-.ds-accordion .v-expansion-panel-title { font-size: 13.5px; font-weight: 500; min-height: 40px; padding: 0 14px; }
+.ds-accordion .v-expansion-panel-title { font-size: var(--text-sm); font-weight: 500; min-height: 40px; padding: 0 14px; }
 .ds-accordion .v-expansion-panel-text__wrapper { padding: 4px 14px 14px; font-size: 13px; color: var(--gray-11); }
 
 /* ── DsStepper ── */
@@ -356,7 +356,7 @@
 .ds-snackbar .t-dot { display: inline-block; width: 8px; height: 8px; border-radius: 50%; margin-right: 10px; }
 .ds-snackbar .t-dot.success { background: var(--success); }
 .ds-snackbar .t-dot.danger { background: var(--danger); }
-.ds-snack-body { font-size: 13.5px; }
+.ds-snack-body { font-size: var(--text-sm); }
 .ds-banner-icon { display: inline-flex; align-items: center; color: var(--gray-10); margin-right: 4px; }
 .ds-nav-icon { display: inline-flex; align-items: center; }
 
@@ -416,14 +416,37 @@
 .v-field--focused .v-field__outline { opacity: 1; }
 
 /* ── VSelect · VAutocomplete 드롭다운 ── */
+/* 드롭다운 — Select·Autocomplete·Combobox가 여는 목록.
+   우리 DsMenu 패널(.ds-menu-panel)과 완전히 같은 규격입니다.
+   같은 "떠 있는 목록"이 두 모습이면 시스템이 아닙니다. */
 .v-menu > .v-overlay__content > .v-list {
   padding: 5px; border: 1px solid var(--border); border-radius: var(--r-lg);
   background: var(--surface);
 }
-.v-list-item--density-default.v-list-item--one-line { min-height: 36px; padding-inline: 11px; }
+.v-overlay__content .v-list-item {
+  min-height: 34px; padding-inline: 11px;
+  border-radius: var(--r-md);
+  font-size: var(--text-sm); color: var(--gray-12);
+}
+.v-overlay__content .v-list-item-title {
+  font-size: var(--text-sm); line-height: var(--leading-ui);
+}
+.v-overlay__content .v-list-item:hover { background: var(--gray-3); }
 .v-list-item--active > .v-list-item__overlay { opacity: 0 !important; }
 .v-list-item--active { background: var(--sel-bg); color: var(--sel-fg); }
 .v-list-item--active .v-list-item-title { font-weight: var(--weight-medium); }
+
+/* 다중 선택의 체크박스 열 — 항목 높이에 맞게 축소 */
+.v-overlay__content .v-list-item .v-selection-control {
+  --v-selection-control-size: 24px; min-height: 0; margin-inline-end: 2px;
+}
+.v-overlay__content .v-list-item .v-selection-control .v-icon { font-size: 17px; }
+.v-overlay__content .v-list-item__prepend { margin-inline-end: 4px; }
+
+/* 결과 없음 문구 */
+.v-overlay__content .v-list .v-list-item--disabled .v-list-item-title {
+  color: var(--gray-9); font-size: var(--text-sm);
+}
 
 /* ── 선택 컨트롤 — 체크박스·라디오·스위치 ── */
 .v-selection-control--density-comfortable { --v-selection-control-size: 34px; }

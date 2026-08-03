@@ -87,7 +87,7 @@ export const dsDefaults = {
 
   /* ── Overlay ── */
   VDialog: { transition: 'fade-transition', scrim: 'rgba(0,0,0,.32)' },
-  VMenu: { transition: 'fade-transition', offset: 4 },
+  VMenu: { transition: 'fade-transition', offset: 6 },
   VOverlay: { transition: 'fade-transition', scrim: 'rgba(0,0,0,.32)' },
   VTooltip: { transition: 'fade-transition', location: 'top', openDelay: 300 },
   VBottomSheet: { transition: 'fade-transition' },
