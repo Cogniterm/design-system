@@ -44,7 +44,7 @@ export const dsLight = {
   variables: {
     // Vuetify 내부 계산에 쓰이는 값들 — 미니멀 기조에 맞게 낮춤
     'border-color':          '#1c2024',
-    'border-opacity':        0.12,
+    'border-opacity':        0.08,
     'high-emphasis-opacity': 1,
     'medium-emphasis-opacity': 0.72,
     'disabled-opacity':      0.38,
@@ -92,7 +92,7 @@ export const dsDark = {
   },
   variables: {
     'border-color':          '#edeef0',
-    'border-opacity':        0.14,
+    'border-opacity':        0.11,
     'high-emphasis-opacity': 1,
     'medium-emphasis-opacity': 0.72,
     'disabled-opacity':      0.38,

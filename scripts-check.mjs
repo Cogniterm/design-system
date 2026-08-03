@@ -165,6 +165,19 @@ if (scaleOk) {
   else ok(`Vuetify 아이콘 별칭 ${REQUIRED.length}종 확인`)
 }
 
+/* ── 12. 보더는 시맨틱 토큰만 — 불투명 회색 직접 사용 금지 ── */
+{
+  const files = ['ds.css', 'docs.css', 'ds-vuetify.css',
+    'templates/audit.html', 'templates/chat.html', 'templates/search.html']
+  const bad = []
+  for (const f of files) {
+    const src = readFileSync(f, 'utf8')
+    for (const m of src.matchAll(/1px (?:solid|dashed) var\(--gray-(\d+)\)/g)) bad.push(`${f}: gray-${m[1]}`)
+  }
+  if (bad.length) errors.push(`보더에 불투명 회색 직접 사용: ${[...new Set(bad)].join(' · ')} — var(--border*)를 쓰세요`)
+  else ok('보더 시맨틱 토큰 준수')
+}
+
 /* ── 결과 ── */
 console.log()
 if (warn.length) {

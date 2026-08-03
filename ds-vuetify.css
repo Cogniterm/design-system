@@ -9,36 +9,36 @@
 .ds-vtable .v-table__wrapper > table > thead > tr > th {
   background: var(--gray-2); color: var(--gray-11);
   font-size: 12px; font-weight: 500; letter-spacing: 0;
-  border-bottom: 1px solid var(--gray-4);
+  border-bottom: 1px solid var(--border);
 }
 .ds-vtable .v-table__wrapper > table > tbody > tr > td {
   font-size: 13.5px; color: var(--gray-12);
-  border-bottom: 1px solid var(--gray-3);
+  border-bottom: 1px solid var(--border-subtle);
 }
 .ds-vtable .v-table__wrapper > table > tbody > tr:hover > td { background: var(--gray-2); }
 .ds-vtable[data-density="compact"] .v-table__wrapper > table > tbody > tr > td { height: 34px; }
 .ds-vtable[data-density="comfortable"] .v-table__wrapper > table > tbody > tr > td { height: 42px; }
 .ds-vtable[data-density="spacious"] .v-table__wrapper > table > tbody > tr > td { height: 50px; }
-.ds-vtable .v-data-table-footer { border-top: 1px solid var(--gray-4); font-size: 12.5px; }
+.ds-vtable .v-data-table-footer { border-top: 1px solid var(--border); font-size: 12.5px; }
 
 /* ── DsDialog — VDialog 내부 면 ── */
 .ds-dialog-panel {
-  background: var(--surface); border: 1px solid var(--gray-4);
+  background: var(--surface); border: 1px solid var(--border);
   border-radius: var(--r-xl); overflow: hidden; font-family: var(--font);
 }
 .ds-dialog-head {
   padding: 18px 22px; font-size: 15px; font-weight: 600; color: var(--gray-12);
-  border-bottom: 1px solid var(--gray-3);
+  border-bottom: 1px solid var(--border-subtle);
 }
 .ds-dialog-body { padding: 20px 22px; font-size: 14px; color: var(--gray-11); line-height: 1.7; }
 .ds-dialog-foot {
-  padding: 14px 22px; border-top: 1px solid var(--gray-3);
+  padding: 14px 22px; border-top: 1px solid var(--border-subtle);
   display: flex; gap: 8px; justify-content: flex-end; background: var(--gray-2);
 }
 
 /* ── DsMenu — VMenu 내부 면 ── */
 .ds-menu-panel {
-  background: var(--surface); border: 1px solid var(--gray-4);
+  background: var(--surface); border: 1px solid var(--border);
   border-radius: var(--r-lg); padding: 5px; min-width: 180px;
   font-family: var(--font); box-shadow: var(--shadow-overlay);
 }
@@ -66,7 +66,7 @@
 .ds-vselect .v-field__outline__start,
 .ds-vselect .v-field__outline__end,
 .ds-vselect .v-field__outline__notch::before,
-.ds-vselect .v-field__outline__notch::after { border-color: var(--gray-6); }
+.ds-vselect .v-field__outline__notch::after { border-color: var(--border-strong); }
 .ds-vselect .v-field--focused .v-field__outline__start,
 .ds-vselect .v-field--focused .v-field__outline__end,
 .ds-vselect .v-field--focused .v-field__outline__notch::before,
@@ -103,7 +103,7 @@
 
 /* 보더 색 통일 */
 .v-application .v-card--variant-outlined,
-.v-application .v-sheet--variant-outlined { border-color: var(--gray-4); }
+.v-application .v-sheet--variant-outlined { border-color: var(--border); }
 
 /* ── VIcon — Lucide 컴포넌트 아이콘 ── */
 .v-icon svg { width: 1em; height: 1em; display: block; }
@@ -123,14 +123,14 @@
 
 /* ── VBtn ── */
 .v-btn { letter-spacing: 0; text-transform: none; font-weight: 500; }
-.v-btn--variant-outlined { border-color: var(--gray-6); }
-.v-btn--variant-outlined:hover { border-color: var(--gray-8); background: var(--gray-2); }
+.v-btn--variant-outlined { border-color: var(--border-strong); }
+.v-btn--variant-outlined:hover { border-color: var(--border-hover); background: var(--gray-2); }
 .v-btn--variant-text:hover { background: var(--gray-3); }
 
 /* ── VAlert / VBanner ── */
 .v-alert { border-radius: var(--r-lg); font-size: 13.5px; line-height: 1.65; }
 .v-alert--variant-tonal .v-alert__underlay { opacity: .08; }
-.v-banner { border-color: var(--gray-4); font-size: 13.5px; }
+.v-banner { border-color: var(--border); font-size: 13.5px; }
 
 /* ── VList ── */
 .v-list { background: var(--surface); padding: 4px; }
@@ -147,18 +147,18 @@
 .v-table > .v-table__wrapper > table > thead > tr > th {
   background: var(--gray-2); color: var(--gray-11);
   font-size: 12px; font-weight: 500; letter-spacing: 0;
-  border-bottom: 1px solid var(--gray-4) !important;
+  border-bottom: 1px solid var(--border) !important;
 }
 .v-table > .v-table__wrapper > table > tbody > tr > td {
   font-size: 13.5px; color: var(--gray-12);
-  border-bottom: 1px solid var(--gray-3) !important;
+  border-bottom: 1px solid var(--border-subtle) !important;
 }
 .v-table--hover > .v-table__wrapper > table > tbody > tr:hover > td { background: var(--gray-2); }
-.v-data-table-footer { border-top: 1px solid var(--gray-4); font-size: 12.5px; padding: 8px 12px; }
+.v-data-table-footer { border-top: 1px solid var(--border); font-size: 12.5px; padding: 8px 12px; }
 .v-data-table__td--select-row .v-selection-control { justify-content: flex-start; }
 
 /* ── VTabs ── */
-.v-tabs { border-bottom: 1px solid var(--gray-4); }
+.v-tabs { border-bottom: 1px solid var(--border); }
 .v-tab { text-transform: none; letter-spacing: 0; font-size: 13.5px; font-weight: 500;
   color: var(--gray-10); min-width: 0; padding: 0 12px; }
 .v-tab:hover { color: var(--gray-12); }
@@ -169,7 +169,7 @@
 .v-field { border-radius: var(--r-lg); font-size: 14px; background: var(--surface); }
 .v-field.v-field--variant-outlined { --v-field-padding-start: 13px; }
 .v-field__outline__start, .v-field__outline__end,
-.v-field__outline__notch::before, .v-field__outline__notch::after { border-color: var(--gray-6); }
+.v-field__outline__notch::before, .v-field__outline__notch::after { border-color: var(--border-strong); }
 .v-field--focused .v-field__outline__start, .v-field--focused .v-field__outline__end,
 .v-field--focused .v-field__outline__notch::before, .v-field--focused .v-field__outline__notch::after {
   border-color: var(--brand); border-width: 1px;
@@ -190,9 +190,9 @@
 .v-pagination__item--is-active .v-btn { background: var(--sel-bg); color: var(--sel-fg); }
 
 /* ── VExpansionPanels / VStepper / VTimeline ── */
-.v-expansion-panel { background: var(--surface); border: 1px solid var(--gray-4); }
+.v-expansion-panel { background: var(--surface); border: 1px solid var(--border); }
 .v-expansion-panel-title { font-size: 13.5px; font-weight: 500; min-height: 42px; }
-.v-stepper { background: var(--surface); border: 1px solid var(--gray-4); }
+.v-stepper { background: var(--surface); border: 1px solid var(--border); }
 .v-stepper-item__title { font-size: 13.5px; font-weight: 500; }
 .v-timeline-item__body { font-size: 13.5px; }
 
@@ -201,14 +201,14 @@
 .v-progress-linear__background { opacity: .12; }
 
 /* ── VSnackbar ── */
-.v-snackbar__wrapper { border: 1px solid var(--gray-4); background: var(--surface);
+.v-snackbar__wrapper { border: 1px solid var(--border); background: var(--surface);
   color: var(--gray-12); font-size: 13.5px; box-shadow: var(--shadow-overlay); }
 
 
 /* ── VOverlay 계열 공통 (VMenu·VDialog 내부 면) ── */
 .v-overlay__content > .v-card,
 .v-overlay__content > .v-list,
-.v-overlay__content > .v-sheet { border: 1px solid var(--gray-4); box-shadow: var(--shadow-overlay); }
+.v-overlay__content > .v-sheet { border: 1px solid var(--border); box-shadow: var(--shadow-overlay); }
 
 
 /* ── VSelectionControl (체크박스·라디오·스위치 공통) ── */
@@ -227,8 +227,8 @@
 
 /* ── VToolbar / VAppBar / VNavigationDrawer ── */
 .v-toolbar { background: var(--surface); }
-.v-app-bar { border-color: var(--gray-4) !important; background: var(--bg); }
-.v-navigation-drawer { border-color: var(--gray-4) !important; background: var(--bg); }
+.v-app-bar { border-color: var(--border) !important; background: var(--bg); }
+.v-navigation-drawer { border-color: var(--border) !important; background: var(--bg); }
 
 /* ============================================================
    Ds* 래퍼 컴포넌트 전용 스타일
@@ -242,12 +242,12 @@
 /* ── DsIconButton ── */
 .ds-icon-btn.v-btn { width: 32px; height: 32px; min-width: 0; border-radius: var(--r-md); color: var(--gray-10); }
 .ds-icon-btn.v-btn:hover { background: var(--gray-3); color: var(--gray-12); }
-.ds-icon-btn.is-secondary.v-btn { border: 1px solid var(--gray-6); background: var(--surface); }
-.ds-icon-btn.is-secondary.v-btn:hover { border-color: var(--gray-8); }
+.ds-icon-btn.is-secondary.v-btn { border: 1px solid var(--border-strong); background: var(--surface); }
+.ds-icon-btn.is-secondary.v-btn:hover { border-color: var(--border-hover); }
 .ds-icon-btn.is-sm.v-btn { width: 28px; height: 28px; font-size: 12px; }
 
 /* ── DsButtonGroup ── */
-.ds-btn-group.v-btn-toggle { height: 32px; border-radius: var(--r-lg); border: 1px solid var(--gray-6); overflow: hidden; }
+.ds-btn-group.v-btn-toggle { height: 32px; border-radius: var(--r-lg); border: 1px solid var(--border-strong); overflow: hidden; }
 .ds-btn-group .v-btn { height: 30px; font-size: 12.5px; font-weight: 500; color: var(--gray-11);
   border-radius: 0; border: none; min-width: 0; padding: 0 12px; }
 .ds-btn-group .v-btn:hover { background: var(--gray-2); }
@@ -286,7 +286,7 @@
 /* ── 입력 래퍼 공통 (DsTextarea·DsAutocomplete·DsFileInput 등) ── */
 .ds-vfield .v-field { border-radius: var(--r-lg); }
 .ds-vfield .v-field__outline__start, .ds-vfield .v-field__outline__end,
-.ds-vfield .v-field__outline__notch::before, .ds-vfield .v-field__outline__notch::after { border-color: var(--gray-6); }
+.ds-vfield .v-field__outline__notch::before, .ds-vfield .v-field__outline__notch::after { border-color: var(--border-strong); }
 .ds-vfield .v-field--focused .v-field__outline__start, .ds-vfield .v-field--focused .v-field__outline__end,
 .ds-vfield .v-field--focused .v-field__outline__notch::before, .ds-vfield .v-field--focused .v-field__outline__notch::after { border-color: var(--brand); }
 
@@ -303,7 +303,7 @@
 .ds-slider .v-slider-track__background { background: var(--gray-5); }
 
 /* ── DsDatePicker ── */
-.ds-datepicker .v-date-picker { border: 1px solid var(--gray-4); border-radius: var(--r-lg); background: var(--surface); }
+.ds-datepicker .v-date-picker { border: 1px solid var(--border); border-radius: var(--r-lg); background: var(--surface); }
 .ds-dp-label { display: block; font-size: 13px; font-weight: 500; margin-bottom: 6px; }
 .ds-datepicker .v-date-picker-month__day .v-btn { font-size: 12.5px; }
 
@@ -313,7 +313,7 @@
 .ds-alert-actions { display: flex; gap: 8px; margin-top: 10px; }
 
 /* ── DsBanner ── */
-.ds-banner.v-banner { border: 1px solid var(--gray-4); background: var(--gray-2); font-size: 13.5px; }
+.ds-banner.v-banner { border: 1px solid var(--border); background: var(--gray-2); font-size: 13.5px; }
 
 /* ── DsProgressBar ── */
 .ds-progress-head { display: flex; justify-content: space-between; align-items: baseline;
@@ -339,19 +339,19 @@
 .ds-tl-body { font-size: 12.5px; color: var(--gray-11); margin-top: 2px; }
 
 /* ── DsAccordion ── */
-.ds-accordion .v-expansion-panel { background: var(--surface); border: 1px solid var(--gray-4); }
+.ds-accordion .v-expansion-panel { background: var(--surface); border: 1px solid var(--border); }
 .ds-accordion .v-expansion-panel::after { display: none; }
 .ds-accordion .v-expansion-panel-title { font-size: 13.5px; font-weight: 500; min-height: 40px; padding: 0 14px; }
 .ds-accordion .v-expansion-panel-text__wrapper { padding: 4px 14px 14px; font-size: 13px; color: var(--gray-11); }
 
 /* ── DsStepper ── */
-.ds-stepper.v-stepper { background: var(--surface); border: 1px solid var(--gray-4); border-radius: var(--r-lg); }
+.ds-stepper.v-stepper { background: var(--surface); border: 1px solid var(--border); border-radius: var(--r-lg); }
 .ds-stepper .v-stepper-item__avatar.v-avatar { background: var(--gray-4); color: var(--gray-11); font-size: 12px; }
 .ds-stepper .v-stepper-item--selected .v-stepper-item__avatar.v-avatar { background: var(--gray-12); color: var(--bg); }
 .ds-stepper .v-stepper-item__title { font-size: 13px; font-weight: 500; }
 
 /* ── DsSnackbar ── */
-.ds-snackbar .v-snackbar__wrapper { min-width: 280px; border: 1px solid var(--gray-4);
+.ds-snackbar .v-snackbar__wrapper { min-width: 280px; border: 1px solid var(--border);
   background: var(--surface); color: var(--gray-12); }
 .ds-snackbar .t-dot { display: inline-block; width: 8px; height: 8px; border-radius: 50%; margin-right: 10px; }
 .ds-snackbar .t-dot.success { background: var(--success); }
@@ -417,7 +417,7 @@
 
 /* ── VSelect · VAutocomplete 드롭다운 ── */
 .v-menu > .v-overlay__content > .v-list {
-  padding: 5px; border: 1px solid var(--gray-4); border-radius: var(--r-lg);
+  padding: 5px; border: 1px solid var(--border); border-radius: var(--r-lg);
   background: var(--surface);
 }
 .v-list-item--density-default.v-list-item--one-line { min-height: 36px; padding-inline: 11px; }
@@ -471,12 +471,12 @@
 .v-expansion-panels--variant-accordion > :last-child { border-radius: 0 0 var(--r-xl) var(--r-xl); }
 
 /* ── VStepper ── */
-.v-stepper-header { box-shadow: none; border-bottom: 1px solid var(--gray-4); height: auto; padding: 8px; }
+.v-stepper-header { box-shadow: none; border-bottom: 1px solid var(--border); height: auto; padding: 8px; }
 .v-stepper-item { padding: 10px 14px; opacity: 1; }
 .v-stepper-item__avatar.v-avatar { width: 22px; height: 22px; }
 .v-stepper-item--selected .v-stepper-item__title { color: var(--gray-12); }
 .v-stepper-item__title { color: var(--gray-10); }
-.v-divider--vertical { border-color: var(--gray-4); }
+.v-divider--vertical { border-color: var(--border); }
 
 /* ── VTimeline ── */
 .v-timeline--vertical.v-timeline--density-comfortable { --v-timeline-line-thickness: 1px; }

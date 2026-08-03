@@ -380,13 +380,13 @@ function exportCsv() { toast.value = { msg: '내보내기에 실패했습니다 
 .lvl-chip {
   all: unset; box-sizing: border-box; cursor: pointer; height: 32px; padding: 0 12px;
   display: inline-flex; align-items: center; gap: 6px;
-  border: 1px solid var(--gray-6); border-radius: var(--r-lg);
+  border: 1px solid var(--border-strong); border-radius: var(--r-lg);
   font-size: 13px; font-weight: 500; color: var(--gray-11);
   font-family: var(--font); background: var(--surface);
   transition: background .16s ease, border-color .16s ease, color .16s ease;
 }
-.lvl-chip:hover { background: var(--gray-2); border-color: var(--gray-8); }
-.lvl-chip.on { background: var(--sel-bg); color: var(--sel-fg); border-color: var(--gray-6); }
+.lvl-chip:hover { background: var(--gray-2); border-color: var(--border-hover); }
+.lvl-chip.on { background: var(--sel-bg); color: var(--sel-fg); border-color: var(--border-strong); }
 .lvl-dot { width: 6px; height: 6px; border-radius: 50%; }
 .lvl-dot[data-lvl="info"]    { background: var(--gray-8); }
 .lvl-dot[data-lvl="success"] { background: var(--success); }
@@ -409,8 +409,8 @@ function exportCsv() { toast.value = { msg: '내보내기에 실패했습니다 
 }
 .row-more:hover { background: var(--gray-3); color: var(--gray-12); }
 
-.tbl-skel { margin-top: 18px; border: 1px solid var(--gray-4); border-radius: var(--r-xl); overflow: hidden; }
-.skel-row { display: flex; gap: 24px; align-items: center; padding: 12px 16px; border-bottom: 1px solid var(--gray-3); }
+.tbl-skel { margin-top: 18px; border: 1px solid var(--border); border-radius: var(--r-xl); overflow: hidden; }
+.skel-row { display: flex; gap: 24px; align-items: center; padding: 12px 16px; border-bottom: 1px solid var(--border-subtle); }
 .skel-row:last-child { border-bottom: none; }
 
 .kv { display: flex; gap: 12px; padding: 7px 0; font-size: 13.5px; color: var(--gray-12); align-items: center; }
@@ -427,7 +427,7 @@ function exportCsv() { toast.value = { msg: '내보내기에 실패했습니다 
 .sec { font-size: 15px; font-weight: 600; color: var(--gray-12); margin: 48px 0 8px; }
 .sec-note { font-size: 13px; color: var(--gray-10); margin-bottom: 14px; }
 .sec-note code { font-family: var(--mono); color: var(--brand); }
-.agent-box { border: 1px solid var(--gray-4); border-radius: var(--r-xl); padding: 22px; background: var(--gray-1); }
+.agent-box { border: 1px solid var(--border); border-radius: var(--r-xl); padding: 22px; background: var(--gray-1); }
 .vrow { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; }
 .mt-2 { margin-top: 8px; } .mt-4 { margin-top: 16px; } .mb-3 { margin-bottom: 12px; }
 

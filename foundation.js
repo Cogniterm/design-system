@@ -76,8 +76,10 @@ export function fdTokens() {
         <thead><tr><th>접두사</th><th>뜻</th><th>예</th></tr></thead>
         <tbody>
           <tr><td><code>--brand-*</code></td><td>브랜드 색과 그 변형</td><td><code>--brand-hover</code></td></tr>
-          <tr><td><code>--gray-1~12</code></td><td>중립 회색 12단계</td><td><code>--gray-6</code></td></tr>
-          <tr><td><code>--success/warning/danger/info</code></td><td>상태 색</td><td><code>--danger</code></td></tr>
+          <tr><td><code>--gray-1~12</code></td><td>불투명 회색 — 배경·텍스트</td><td><code>--gray-11</code></td></tr>
+          <tr><td><code>--gray-a1~a12</code></td><td>반투명 회색 — 보더·오버레이</td><td><code>--gray-a3</code></td></tr>
+          <tr><td><code>--border(-subtle/-strong/-hover)</code></td><td>보더 시맨틱</td><td><code>--border</code></td></tr>
+          <tr><td><code>--success/warning/danger/info</code></td><td>상태 색 (+ <code>-subtle</code>·<code>-border</code>)</td><td><code>--danger-subtle</code></td></tr>
           <tr><td><code>--r-*</code></td><td>모서리 반경 (sm·md·lg·xl·full)</td><td><code>--r-xl</code></td></tr>
           <tr><td><code>--bg</code> / <code>--surface</code></td><td>페이지 배경 / 요소 면</td><td>—</td></tr>
           <tr><td><code>--sel-bg</code> / <code>--sel-fg</code></td><td>선택 · 활성 상태 (중립)</td><td>활성 내비, 선택 행</td></tr>
@@ -170,9 +172,9 @@ export function fdColor() {
           <tr><td><code>3</code></td><td>호버 배경</td><td>메뉴 항목 호버, ghost 버튼 호버</td></tr>
           <tr><td><code>4</code></td><td>연한 보더 · 비활성 배경 · <b>선택 배경</b></td><td>카드 보더, disabled, 활성 내비 항목</td></tr>
           <tr><td><code>5</code></td><td>연한 보더</td><td>배지 보더</td></tr>
-          <tr><td><code>6</code></td><td><b>기본 보더</b></td><td>버튼·입력 필드 보더</td></tr>
+          <tr><td><code>6</code></td><td>(보더는 알파 토큰 사용)</td><td>스위치 트랙 등 면 요소만</td></tr>
           <tr><td><code>7</code></td><td>중간 보더</td><td>구분자</td></tr>
-          <tr><td><code>8</code></td><td><b>호버 보더</b> · 비활성 텍스트</td><td>입력 필드 호버</td></tr>
+          <tr><td><code>8</code></td><td>비활성 텍스트 · 점</td><td>배지 기본 점</td></tr>
           <tr><td><code>9</code></td><td>약한 텍스트</td><td>placeholder, 메타 정보</td></tr>
           <tr><td><code>10</code></td><td>보조 텍스트</td><td>설명 문구</td></tr>
           <tr><td><code>11</code></td><td><b>기본 보조 텍스트</b></td><td>본문 설명, 라벨</td></tr>
@@ -180,9 +182,45 @@ export function fdColor() {
         </tbody>
       </table>
       <div class="callout">
-        <b>외우는 요령</b> — 배경은 1~3, 보더는 6과 8, 텍스트는 11과 12.
-        나머지는 이 사이를 미세 조정할 때만 씁니다.
+        <b>외우는 요령</b> — 배경은 1~3, 텍스트는 11과 12.
+        <b>보더는 번호가 아니라 토큰</b>(--border 계열)을 씁니다.
       </div>
+
+      <h2>Alpha Gray — 보더는 반투명으로</h2>
+      <p>
+        보더·구분선은 불투명 회색 대신 <b>반투명 회색(--gray-a1~a12)</b>을 씁니다.
+        더 연하게 얹히고, 어떤 배경 위에서도 자연스럽습니다.
+        번호를 직접 고르지 않고 아래 네 토큰만 씁니다.
+      </p>
+      <table>
+        <thead><tr><th>토큰</th><th>값</th><th>쓰는 곳</th></tr></thead>
+        <tbody>
+          <tr><td><code>--border-subtle</code></td><td>gray-a2 (4%)</td><td>행 사이 구분선</td></tr>
+          <tr><td><code>--border</code></td><td>gray-a3 (6%)</td><td>카드 · 패널 · 테이블</td></tr>
+          <tr><td><code>--border-strong</code></td><td>gray-a5 (11%)</td><td>버튼 · 입력 — 조작 가능 표시</td></tr>
+          <tr><td><code>--border-hover</code></td><td>gray-a7 (18%)</td><td>위 요소의 호버</td></tr>
+        </tbody>
+      </table>
+      <div class="demo" style="border-radius:var(--r-xl)">
+        <div style="display:flex;gap:14px;flex-wrap:wrap">
+          <div style="flex:1;min-width:150px;border:1px solid var(--border-subtle);border-radius:var(--r-lg);padding:12px;font-size:var(--text-xs);color:var(--gray-10)">border-subtle</div>
+          <div style="flex:1;min-width:150px;border:1px solid var(--border);border-radius:var(--r-lg);padding:12px;font-size:var(--text-xs);color:var(--gray-10)">border</div>
+          <div style="flex:1;min-width:150px;border:1px solid var(--border-strong);border-radius:var(--r-lg);padding:12px;font-size:var(--text-xs);color:var(--gray-10)">border-strong</div>
+          <div style="flex:1;min-width:150px;border:1px solid var(--border-hover);border-radius:var(--r-lg);padding:12px;font-size:var(--text-xs);color:var(--gray-10)">border-hover</div>
+        </div>
+      </div>
+
+      <h2>상태 면 · 보더</h2>
+      <p>알림·틴트 박스는 인라인 계산 대신 토큰을 씁니다.</p>
+      <table>
+        <thead><tr><th>토큰</th><th>쓰는 곳</th></tr></thead>
+        <tbody>
+          <tr><td><code>--success-subtle</code> / <code>--success-border</code></td><td>성공 알림 면 · 테두리</td></tr>
+          <tr><td><code>--warning-subtle</code> / <code>--warning-border</code></td><td>경고</td></tr>
+          <tr><td><code>--danger-subtle</code> / <code>--danger-border</code></td><td>실패 · 파괴적</td></tr>
+          <tr><td><code>--info-subtle</code> / <code>--info-border</code></td><td>정보 (브랜드 톤)</td></tr>
+        </tbody>
+      </table>
 
       <h2>Status</h2>
       <div class="statusrow">
@@ -460,15 +498,16 @@ export function fdShape() {
 
       <h2>Border</h2>
       <table>
-        <thead><tr><th>색</th><th>쓰는 곳</th></tr></thead>
+        <thead><tr><th>토큰</th><th>쓰는 곳</th></tr></thead>
         <tbody>
-          <tr><td><code>--gray-4</code></td><td>카드·패널·테이블 바깥 테두리 (가장 조용함)</td></tr>
-          <tr><td><code>--gray-3</code></td><td>목록 항목 사이 구분선 (더 조용함)</td></tr>
-          <tr><td><code>--gray-6</code></td><td>버튼·입력 필드 (조작 가능함을 알림)</td></tr>
-          <tr><td><code>--gray-8</code></td><td>위 요소의 호버 상태</td></tr>
-          <tr><td><code>--brand</code></td><td>포커스, 선택된 항목</td></tr>
+          <tr><td><code>--border-subtle</code></td><td>행 사이 구분선</td></tr>
+          <tr><td><code>--border</code></td><td>카드 · 패널 · 테이블</td></tr>
+          <tr><td><code>--border-strong</code></td><td>버튼 · 입력 (조작 가능 표시)</td></tr>
+          <tr><td><code>--border-hover</code></td><td>위 요소의 호버</td></tr>
+          <tr><td><code>--brand</code></td><td>포커스</td></tr>
         </tbody>
       </table>
+      <p>반투명(알파)이라 불투명 회색보다 연하게 얹힙니다. 회색 번호를 직접 쓰지 않습니다.</p>
       <p>
         <b>두께는 항상 1px입니다.</b> 2px 보더는 강조가 아니라 소음이 됩니다.
         강조가 필요하면 보더 색을 진하게 하거나 배경을 바꿉니다.

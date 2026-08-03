@@ -25,8 +25,13 @@
 - Color: brand ONLY for primary actions, links, focus and progress. Gray does 95%.
   SELECTION/ACTIVE states are NEUTRAL: var(--sel-bg) (gray-4) + var(--sel-fg)
   (gray-12) — never brand. Blue active states everywhere dilute the primary button.
-  Gray roles — 1-2 background, 3 hover, 4-5 soft border, 6 default border,
-  8 hover border, 9 faint text, 11 secondary text, 12 body text.
+  Gray roles — 1-2 background, 3 hover bg, 9 faint text, 11 secondary, 12 body.
+  BORDERS never use solid gray numbers — use the semantic alpha tokens:
+  --border-subtle (row dividers) / --border (cards, tables) /
+  --border-strong (buttons, inputs) / --border-hover. They are translucent
+  (gray-a scale), so strokes sit lighter on any background.
+  Status tints use tokens too: --success-subtle/-border, --warning-*, --danger-*,
+  --info-* — never inline color-mix.
 - Type: Pretendard, 9 steps only — 11/12/13/14/15/16/20/24/30 via var(--text-*).
   UI surfaces (buttons, tables, sidebars) use 13-14px; reading surfaces (explanations,
   agent responses) use 15px with line-height 1.8. Using one size for both makes both
@@ -83,8 +88,37 @@
   --gray-5: #e0e1e6; --gray-6: #d9d9e0; --gray-7: #cdced6; --gray-8: #b9bbc6;
   --gray-9: #8b8d98; --gray-10: #80838d; --gray-11: #60646c; --gray-12: #1c2024;
 
+  /* ── Alpha Gray ──────────────────────
+     반투명 회색 — 보더·구분선용. 불투명 회색보다 연하게 얹히고
+     어떤 배경 위에서도 자연스럽습니다 (OpenAI·Radix·Geist 방식). */
+  --gray-a1: color-mix(in srgb, var(--gray-12) 2%, transparent);
+  --gray-a2: color-mix(in srgb, var(--gray-12) 4%, transparent);
+  --gray-a3: color-mix(in srgb, var(--gray-12) 6%, transparent);
+  --gray-a4: color-mix(in srgb, var(--gray-12) 8%, transparent);
+  --gray-a5: color-mix(in srgb, var(--gray-12) 11%, transparent);
+  --gray-a6: color-mix(in srgb, var(--gray-12) 14%, transparent);
+  --gray-a7: color-mix(in srgb, var(--gray-12) 18%, transparent);
+  --gray-a8: color-mix(in srgb, var(--gray-12) 24%, transparent);
+  --gray-a9: color-mix(in srgb, var(--gray-12) 36%, transparent);
+  --gray-a10: color-mix(in srgb, var(--gray-12) 46%, transparent);
+  --gray-a11: color-mix(in srgb, var(--gray-12) 62%, transparent);
+  --gray-a12: color-mix(in srgb, var(--gray-12) 92%, transparent);
+
+  /* ── Border ──────────────────────────
+     보더는 이 네 개만 씁니다. 회색 번호를 직접 고르지 않습니다. */
+  --border-subtle: var(--gray-a2);   /* 행 사이 구분선 */
+  --border:        var(--gray-a3);   /* 카드·패널·테이블 */
+  --border-strong: var(--gray-a5);   /* 버튼·입력 — 조작 가능 표시 */
+  --border-hover:  var(--gray-a7);   /* 위 요소의 호버 */
+
   /* ── Status ── */
   --success: #17803d; --warning: #ab6400; --danger: #d93036; --info: var(--brand);
+  --success-subtle: var(--success-subtle);
+  --success-border: color-mix(in srgb, var(--success) 28%, transparent);
+  --warning-subtle: var(--warning-subtle);
+  --warning-border: color-mix(in srgb, var(--warning) 30%, transparent);
+  --info-subtle: color-mix(in srgb, var(--info) 5%, var(--bg));
+  --info-border: color-mix(in srgb, var(--info) 24%, transparent);
 
   /* ── Shape ── */
   --r-sm: 4px; --r-md: 6px; --r-lg: 8px; --r-xl: 12px; --r-full: 9999px;
@@ -118,13 +152,13 @@
 
   --bg: #ffffff;
   --surface: #ffffff;
-  --danger-subtle: #fef2f2;
-  --danger-border: #f5c6c8;
+  --danger-subtle: var(--danger-subtle);
+  --danger-border: color-mix(in srgb, var(--danger) 28%, transparent);
 
   /* 떠 있는 요소의 그림자 — 1px 윤곽 + 근거리 + 원거리 3겹.
      단층 그림자는 뿌옇게 보입니다. */
   --shadow-overlay:
-    0 0 0 1px var(--gray-4),
+    0 0 0 1px var(--border),
     0 1px 2px rgba(0, 0, 0, .04),
     0 8px 24px rgba(0, 0, 0, .08);
 
@@ -156,11 +190,10 @@
 
   --bg: #111113;
   --surface: #18191b;
-  --danger-subtle: #2b1517;
-  --danger-border: #642026;
+  /* danger-subtle/border는 공식이 다크에서도 유효 — 재정의 불필요 */
 
   --shadow-overlay:
-    0 0 0 1px var(--gray-5),
+    0 0 0 1px var(--border-strong),
     0 1px 2px rgba(0, 0, 0, .3),
     0 8px 24px rgba(0, 0, 0, .5);
   --focus-ring: 0 0 0 2px var(--bg), 0 0 0 4px var(--brand);

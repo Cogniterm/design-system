@@ -85,8 +85,13 @@ ${FOUNDATION_PAGES.map(([id, ko, en]) => `- ${en} (${ko}) — ${SITE}/#/foundati
 - Color: brand ONLY for primary actions, links, focus and progress. Gray does 95%.
   SELECTION/ACTIVE states are NEUTRAL: var(--sel-bg) (gray-4) + var(--sel-fg)
   (gray-12) — never brand. Blue active states everywhere dilute the primary button.
-  Gray roles — 1-2 background, 3 hover, 4-5 soft border, 6 default border,
-  8 hover border, 9 faint text, 11 secondary text, 12 body text.
+  Gray roles — 1-2 background, 3 hover bg, 9 faint text, 11 secondary, 12 body.
+  BORDERS never use solid gray numbers — use the semantic alpha tokens:
+  --border-subtle (row dividers) / --border (cards, tables) /
+  --border-strong (buttons, inputs) / --border-hover. They are translucent
+  (gray-a scale), so strokes sit lighter on any background.
+  Status tints use tokens too: --success-subtle/-border, --warning-*, --danger-*,
+  --info-* — never inline color-mix.
 - Type: Pretendard, 9 steps only — 11/12/13/14/15/16/20/24/30 via var(--text-*).
   UI surfaces (buttons, tables, sidebars) use 13-14px; reading surfaces (explanations,
   agent responses) use 15px with line-height 1.8. Using one size for both makes both

@@ -612,7 +612,7 @@ const SECTIONS = [
 .g-head p { font-size: 13.5px; color: var(--gray-11); margin-top: 6px; }
 
 .g-legend { display: flex; gap: 18px; margin-top: 20px; padding: 12px 16px;
-  border: 1px solid var(--gray-4); border-radius: var(--r-xl); background: var(--gray-1); }
+  border: 1px solid var(--border); border-radius: var(--r-xl); background: var(--gray-1); }
 .g-legend span { display: inline-flex; align-items: center; gap: 6px; font-size: 12.5px; color: var(--gray-11); }
 .lg { width: 8px; height: 8px; border-radius: 2px; display: inline-block; }
 .lg.standalone { background: var(--brand); }
@@ -620,12 +620,12 @@ const SECTIONS = [
 [data-theme="dark"] .lg.wrapped { background: #f0b429; }
 
 .g-sec { font-size: 12px; font-weight: 700; color: var(--gray-9);
-  margin: 44px 0 14px; padding-bottom: 8px; border-bottom: 1px solid var(--gray-4); }
+  margin: 44px 0 14px; padding-bottom: 8px; border-bottom: 1px solid var(--border); }
 .g-sec span { text-transform: none; letter-spacing: 0; font-weight: 500; color: var(--gray-8); margin-left: 8px; }
 
 .g-item { display: grid; grid-template-columns: 210px 1fr; gap: 24px;
-  border: 1px solid var(--gray-4); border-radius: var(--r-xl); overflow: hidden; margin-bottom: 12px; }
-.g-meta { padding: 18px; background: var(--gray-2); border-right: 1px solid var(--gray-4); }
+  border: 1px solid var(--border); border-radius: var(--r-xl); overflow: hidden; margin-bottom: 12px; }
+.g-meta { padding: 18px; background: var(--gray-2); border-right: 1px solid var(--border); }
 .g-name { font-size: 13.5px; font-weight: 650; color: var(--gray-12);
   display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
 .g-name code { font-family: var(--mono); font-size: 11px; font-weight: 500;
@@ -638,7 +638,7 @@ const SECTIONS = [
 .g-val { font-family: var(--mono); font-size: 12px; color: var(--gray-9); }
 
 .g-foot { margin-top: 40px; padding: 18px; text-align: center; font-size: 13px; color: var(--gray-10);
-  border: 1px solid var(--gray-4); border-radius: var(--r-xl); background: var(--gray-1); }
+  border: 1px solid var(--border); border-radius: var(--r-xl); background: var(--gray-1); }
 
 .icon-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(104px, 1fr)); gap: 2px; }
 .ic { display: flex; flex-direction: column; align-items: center; gap: 7px;
@@ -650,6 +650,6 @@ const SECTIONS = [
 
 @media (max-width: 860px) {
   .g-item { grid-template-columns: 1fr; }
-  .g-meta { border-right: none; border-bottom: 1px solid var(--gray-4); }
+  .g-meta { border-right: none; border-bottom: 1px solid var(--border); }
 }
 </style>
