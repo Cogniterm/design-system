@@ -1,0 +1,36 @@
+# DsEmptyState — Cogniterm Design System
+
+import { DsEmptyState } from '~/design'   // Vuetify 불필요 · ds.css만
+
+## 용도
+모든 목록·테이블·검색의 빈 상태. 다음 행동을 반드시 제안.
+
+## Props
+- title: string = 필수 — 무엇이 없는지.
+- description: string — 왜 없는지, 무엇을 할 수 있는지.
+
+## Slots
+- #default — 다음 행동 버튼(CTA).
+
+## 사용 예
+```vue
+<DsEmptyState title="No agents yet" description="첫 에이전트를 만들어 업무 자동화를 시작하세요.">
+  <DsButton @click="create">New agent</DsButton>
+</DsEmptyState>
+```
+
+
+## 지침
+- [해야 할 것] 빈 상태는 반드시 다음 행동을 제안합니다. "결과 없음"만 쓰고 끝내지 않습니다.
+- [해야 할 것] 검색 결과가 없을 때는 필터를 해제하는 버튼을 제공합니다.
+
+## 접근성
+키보드: Tab=CTA로 이동
+직접 처리: 제목을 h2/h3 계층에 맞추기 / 다음 행동을 반드시 제공
+
+## 시스템 규칙 (요약)
+- 색·간격·모서리는 CSS 변수만 (var(--gray-6), var(--brand)) — hex 금지
+- primary 버튼은 화면당 하나. 선택·활성 상태는 중립(--sel-bg/--sel-fg)
+- 컨트롤 높이 32(sm)/40/48 — 필터 바·툴바는 sm
+- 목록·테이블은 default/loading/empty/error/partial 5상태
+- 전체 규칙: https://kimjiyong995-coder.github.io/design-system/llms.txt

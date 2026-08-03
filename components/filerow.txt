@@ -1,0 +1,41 @@
+# DsFileRow — Cogniterm Design System
+
+import { DsFileRow } from '~/design'   // Vuetify 불필요 · ds.css만
+
+## 용도
+드라이브 리스트 보기 — 세부 비교용.
+
+## Props
+- name: string = 필수 — 파일 이름.
+- meta: string — 크기·날짜 등.
+- icon: string — 텍스트 아이콘. 보통은 #icon 슬롯에 을 넣습니다.
+- selected: boolean = false — 선택 상태.
+
+## Events
+- @select — 행 클릭.
+
+## 사용 예
+```vue
+<DsFileRow v-for="f in files" :key="f.id"
+  :name="f.name" :meta="f.meta"
+  :selected="isSelected(f)" @select="toggle(f)"&gt;
+  <template #icon><DsIcon :name="f.icon" size="sm" /></template>
+</DsFileRow>
+```
+
+## 구분
+- vs FileGrid: 썸네일이 중요하면 그리드
+
+## 지침
+- [해야 할 것] compact 밀도(42px)를 유지해 많은 파일을 훑기 좋게 합니다.
+
+## 접근성
+키보드: Tab=행으로 이동 · Enter=열기 · Space=선택
+직접 처리: 행 전체가 클릭 가능하면 <a> 또는 <button>으로 / 선택 상태를 aria-selected로
+
+## 시스템 규칙 (요약)
+- 색·간격·모서리는 CSS 변수만 (var(--gray-6), var(--brand)) — hex 금지
+- primary 버튼은 화면당 하나. 선택·활성 상태는 중립(--sel-bg/--sel-fg)
+- 컨트롤 높이 32(sm)/40/48 — 필터 바·툴바는 sm
+- 목록·테이블은 default/loading/empty/error/partial 5상태
+- 전체 규칙: https://kimjiyong995-coder.github.io/design-system/llms.txt

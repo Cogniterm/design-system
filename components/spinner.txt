@@ -1,0 +1,34 @@
+# DsSpinner — Cogniterm Design System
+
+import { DsSpinner } from '~/design/vuetify'   // Vuetify 필요 · ds.css + ds-vuetify.css
+
+## 용도
+버튼 내부, 인라인 짧은 대기(2초 이내). 에이전트 작업에는 쓰지 않습니다.
+
+## Props
+- size: number = 16 — 지름(px).
+
+
+## 사용 예
+```vue
+<DsSpinner />
+<DsButton variant="secondary"><DsSpinner :size="13" /> 저장 중…</DsButton>
+```
+
+## 구분
+- vs ThinkingIndicator: 2초 이내면 Spinner, 에이전트 작업이면 ThinkingIndicator (원칙 1)
+- vs Skeleton: 자리를 미리 보여줘야 하면 Skeleton
+
+## 지침
+- [하지 말 것] 에이전트 작업에 쓰지 않습니다. ThinkingIndicator·ToolCallStep이 그 자리입니다 (원칙 1).
+- [해야 할 것] 2초를 넘길 것 같으면 Skeleton이나 진행 표시로 바꿉니다.
+
+## 접근성
+직접 처리: 주변에 무엇을 기다리는지 텍스트로 함께 표시 / 2초를 넘길 것 같으면 Skeleton이나 진행 표시로 교체
+
+## 시스템 규칙 (요약)
+- 색·간격·모서리는 CSS 변수만 (var(--gray-6), var(--brand)) — hex 금지
+- primary 버튼은 화면당 하나. 선택·활성 상태는 중립(--sel-bg/--sel-fg)
+- 컨트롤 높이 32(sm)/40/48 — 필터 바·툴바는 sm
+- 목록·테이블은 default/loading/empty/error/partial 5상태
+- 전체 규칙: https://kimjiyong995-coder.github.io/design-system/llms.txt

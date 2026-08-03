@@ -1,0 +1,35 @@
+# DsStepper — Cogniterm Design System
+
+import { DsStepper } from '~/design/vuetify'   // Vuetify 필요 · ds.css + ds-vuetify.css
+
+## 용도
+에이전트 생성 마법사, 온보딩, 다단계 폼.
+
+## Props
+- modelValue: number = 1 — 현재 단계 (1부터).
+- items: string[] = 필수 — 단계 이름.
+
+## Slots
+- #item.N — N번째 단계의 내용.
+
+## 사용 예
+```vue
+<DsStepper v-model="step" :items="['소스 선택', '규칙 설정', '검토']">
+  <template #item.1>1단계 내용</template>
+</DsStepper>
+```
+
+
+## 지침
+- [해야 할 것] 단계는 5개를 넘지 않게 합니다. 넘으면 흐름을 나눕니다.
+
+## 접근성
+키보드: Tab=단계로 이동
+직접 처리: 현재 단계에 aria-current="step" / "3단계 중 2단계"를 텍스트로도 제공 / 단계 전환 시 새 단계 제목으로 포커스 이동
+
+## 시스템 규칙 (요약)
+- 색·간격·모서리는 CSS 변수만 (var(--gray-6), var(--brand)) — hex 금지
+- primary 버튼은 화면당 하나. 선택·활성 상태는 중립(--sel-bg/--sel-fg)
+- 컨트롤 높이 32(sm)/40/48 — 필터 바·툴바는 sm
+- 목록·테이블은 default/loading/empty/error/partial 5상태
+- 전체 규칙: https://kimjiyong995-coder.github.io/design-system/llms.txt

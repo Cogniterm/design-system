@@ -1,0 +1,39 @@
+# DsAgentInput — Cogniterm Design System
+
+import { DsAgentInput } from '~/design'   // Vuetify 불필요 · ds.css만
+
+## 용도
+챗 화면 하단. Enter 전송, Shift+Enter 줄바꿈.
+
+## Props
+- modelValue: string = '' — v-model로 바인딩.
+- placeholder: string = 'Message agent…' — 입력 안내 문구.
+- sendLabel: string = 'Send' — 전송 버튼 라벨.
+
+## Events
+- @send — Enter 또는 전송 버튼. Shift+Enter는 줄바꿈.
+- @attach — ＋ 클릭.
+- @slash — / 클릭.
+
+## 사용 예
+```vue
+<DsAgentInput v-model="draft" @send="submit" @attach="pickFile" />
+```
+
+## 구분
+- vs Textarea: 일반 여러 줄 입력이면 Textarea
+
+## 지침
+- [해야 할 것] Enter로 전송, Shift+Enter로 줄바꿈 — 챗 제품의 관습입니다.
+- [해야 할 것] 전송 중에는 버튼을 정지(Stop)로 바꿔 생성을 멈출 수 있게 합니다.
+
+## 접근성
+키보드: Enter=전송 · Shift + Enter=줄바꿈 · Tab=도구 버튼으로 이동
+직접 처리: 도구 버튼에 aria-label / 전송 중에는 버튼을 정지(Stop)로 바꾸기
+
+## 시스템 규칙 (요약)
+- 색·간격·모서리는 CSS 변수만 (var(--gray-6), var(--brand)) — hex 금지
+- primary 버튼은 화면당 하나. 선택·활성 상태는 중립(--sel-bg/--sel-fg)
+- 컨트롤 높이 32(sm)/40/48 — 필터 바·툴바는 sm
+- 목록·테이블은 default/loading/empty/error/partial 5상태
+- 전체 규칙: https://kimjiyong995-coder.github.io/design-system/llms.txt

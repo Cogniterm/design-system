@@ -1,0 +1,31 @@
+# DsStreamingText — Cogniterm Design System
+
+import { DsStreamingText } from '~/design'   // Vuetify 불필요 · ds.css만
+
+## 용도
+스트리밍 중인 응답 본문.
+
+## Props
+- done: boolean = false — true가 되면 커서를 제거합니다.
+
+## Slots
+- #default — 지금까지 도착한 텍스트.
+
+## 사용 예
+```vue
+<DsStreamingText :done="!isStreaming">{{ text }}</DsStreamingText>
+```
+
+
+## 지침
+- [해야 할 것] 완료되는 즉시 커서를 없앱니다. 남아 있으면 멈춘 것처럼 보입니다.
+
+## 접근성
+직접 처리: 부모 영역에 aria-live="polite" — 도착하는 대로 읽어줌 / 커서는 aria-hidden / aria-busy로 생성 중임을 알리기
+
+## 시스템 규칙 (요약)
+- 색·간격·모서리는 CSS 변수만 (var(--gray-6), var(--brand)) — hex 금지
+- primary 버튼은 화면당 하나. 선택·활성 상태는 중립(--sel-bg/--sel-fg)
+- 컨트롤 높이 32(sm)/40/48 — 필터 바·툴바는 sm
+- 목록·테이블은 default/loading/empty/error/partial 5상태
+- 전체 규칙: https://kimjiyong995-coder.github.io/design-system/llms.txt

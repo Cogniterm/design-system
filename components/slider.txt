@@ -1,0 +1,33 @@
+# DsSlider — Cogniterm Design System
+
+import { DsSlider } from '~/design/vuetify'   // Vuetify 필요 · ds.css + ds-vuetify.css
+
+## 용도
+임계값 조정 — 신뢰도 컷오프, 결과 개수.
+
+## Props
+- modelValue: number = 0 — v-model.
+- label: string — 라벨. 우측에 현재 값이 표시됩니다.
+- min / max / step: number = 0 / 100 / 1 — 범위.
+- suffix: string — 값 뒤 단위 (예: %).
+
+
+## 사용 예
+```vue
+<DsSlider v-model="threshold" label="신뢰도 임계값" suffix="%" />
+```
+
+
+## 지침
+- [해야 할 것] 정확한 값이 중요하면 숫자 입력을 함께 제공합니다.
+
+## 접근성
+키보드: Tab=이동 · ← →=한 단계 · Home · End=최소 · 최대 · PageUp · PageDown=큰 단위
+직접 처리: 현재 값을 눈으로도 보이게 (label에 포함됨) / 정확한 값이 중요하면 숫자 입력 병기
+
+## 시스템 규칙 (요약)
+- 색·간격·모서리는 CSS 변수만 (var(--gray-6), var(--brand)) — hex 금지
+- primary 버튼은 화면당 하나. 선택·활성 상태는 중립(--sel-bg/--sel-fg)
+- 컨트롤 높이 32(sm)/40/48 — 필터 바·툴바는 sm
+- 목록·테이블은 default/loading/empty/error/partial 5상태
+- 전체 규칙: https://kimjiyong995-coder.github.io/design-system/llms.txt

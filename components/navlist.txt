@@ -1,0 +1,37 @@
+# DsNavList — Cogniterm Design System
+
+import { DsNavList } from '~/design/vuetify'   // Vuetify 필요 · ds.css + ds-vuetify.css
+
+## 용도
+앱 좌측 사이드바, 설정 좌측 메뉴.
+
+## Props
+- modelValue: any — 선택된 항목.
+- items: NavItem[] = 필수 — { value, title, icon?, badge?, subheader? }
+
+
+## 사용 예
+```vue
+<DsNavList v-model="nav" :items="[
+  { subheader: '워크스페이스' },
+  { value: 'agents', title: '에이전트', icon: 'agent', badge: 17 },
+  { value: 'logs', title: '감사 로그', icon: 'tableView', badge: 3 },
+]">
+  <template #icon="{ item }"><DsIcon :name="item.icon" size="sm" /></template>
+</DsNavList>
+```
+
+
+## 지침
+- [해야 할 것] 항목이 7개를 넘으면 subheader로 묶습니다.
+
+## 접근성
+키보드: Tab=목록 진입 · ↑ ↓=항목 이동 · Enter=이동
+직접 처리: <nav>로 감싸고 aria-label 부여 / 현재 페이지에 aria-current="page" / 배지 숫자에 의미를 붙이기 — "3"이 아니라 "미확인 3건"
+
+## 시스템 규칙 (요약)
+- 색·간격·모서리는 CSS 변수만 (var(--gray-6), var(--brand)) — hex 금지
+- primary 버튼은 화면당 하나. 선택·활성 상태는 중립(--sel-bg/--sel-fg)
+- 컨트롤 높이 32(sm)/40/48 — 필터 바·툴바는 sm
+- 목록·테이블은 default/loading/empty/error/partial 5상태
+- 전체 규칙: https://kimjiyong995-coder.github.io/design-system/llms.txt

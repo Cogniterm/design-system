@@ -1,0 +1,33 @@
+# DsTimeline — Cogniterm Design System
+
+import { DsTimeline } from '~/design/vuetify'   // Vuetify 필요 · ds.css + ds-vuetify.css
+
+## 용도
+문서 변경 이력, 에이전트 실행 이력, 승인 흐름.
+
+## Props
+- items: TimelineItem[] = 필수 — { id, time, title, body?, variant? }
+
+
+## 사용 예
+```vue
+<DsTimeline :items="[
+  { id: 1, time: '09:14', title: '삭제 시도 차단',
+    body: '권한 없음 — 법무 폴더', variant: 'danger' },
+]" />
+```
+
+
+## 지침
+- [해야 할 것] 항목이 20개를 넘으면 날짜로 묶고 더보기를 제공합니다.
+
+## 접근성
+키보드: Tab=항목 내 링크로 이동
+직접 처리: <ol>로 마크업해 순서를 전달 / 시각을 <time datetime="">로 표기 / 점 색만으로 성공·실패를 구분하지 않기
+
+## 시스템 규칙 (요약)
+- 색·간격·모서리는 CSS 변수만 (var(--gray-6), var(--brand)) — hex 금지
+- primary 버튼은 화면당 하나. 선택·활성 상태는 중립(--sel-bg/--sel-fg)
+- 컨트롤 높이 32(sm)/40/48 — 필터 바·툴바는 sm
+- 목록·테이블은 default/loading/empty/error/partial 5상태
+- 전체 규칙: https://kimjiyong995-coder.github.io/design-system/llms.txt

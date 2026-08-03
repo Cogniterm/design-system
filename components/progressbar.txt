@@ -1,0 +1,34 @@
+# DsProgressBar — Cogniterm Design System
+
+import { DsProgressBar } from '~/design/vuetify'   // Vuetify 필요 · ds.css + ds-vuetify.css
+
+## 용도
+업로드·일괄 처리 — 진행률을 아는 경우만. 모르면 ThinkingIndicator.
+
+## Props
+- value: number = 0 — 0~100.
+- label: string — 라벨. 우측에 %가 표시됩니다.
+- indeterminate: boolean = false — 진행률을 모를 때.
+
+
+## 사용 예
+```vue
+<DsProgressBar :value="progress" label="문서 분석 중" />
+```
+
+## 구분
+- vs ThinkingIndicator: 진행률을 모르면 ProgressBar 대신 ThinkingIndicator
+
+## 지침
+- [하지 말 것] 진행률을 모르면 indeterminate 대신 ThinkingIndicator를 씁니다 (원칙 1).
+- [해야 할 것] 오래 걸리는 작업은 남은 시간이나 처리 건수를 함께 보여줍니다.
+
+## 접근성
+직접 처리: label을 채워 무엇의 진행률인지 알리기 / 완료 시 aria-live로 알리기
+
+## 시스템 규칙 (요약)
+- 색·간격·모서리는 CSS 변수만 (var(--gray-6), var(--brand)) — hex 금지
+- primary 버튼은 화면당 하나. 선택·활성 상태는 중립(--sel-bg/--sel-fg)
+- 컨트롤 높이 32(sm)/40/48 — 필터 바·툴바는 sm
+- 목록·테이블은 default/loading/empty/error/partial 5상태
+- 전체 규칙: https://kimjiyong995-coder.github.io/design-system/llms.txt

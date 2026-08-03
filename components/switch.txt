@@ -1,0 +1,36 @@
+# DsSwitch — Cogniterm Design System
+
+import { DsSwitch } from '~/design/vuetify'   // Vuetify 필요 · ds.css + ds-vuetify.css
+
+## 용도
+즉시 적용되는 on/off — 에이전트 활성화, 자동 실행.
+
+## Props
+- modelValue: boolean — v-model.
+- label: string — 라벨.
+- hint: string — 끄면 무슨 일이 생기는지 적습니다.
+
+
+## 사용 예
+```vue
+<DsSwitch v-model="enabled" label="에이전트 활성화"
+  hint="끄면 예약된 실행도 중단됩니다." />
+```
+
+## 구분
+- vs Checkbox: 저장 버튼이 필요하면 Checkbox, 즉시 반영이면 Switch
+
+## 지침
+- [해야 할 것] 즉시 반영되므로 되돌리기(Undo) 토스트를 함께 제공하는 것이 좋습니다.
+- [해야 할 것] hint에 "끄면 무슨 일이 생기는지"를 적습니다.
+
+## 접근성
+키보드: Tab=이동 · Space · Enter=켜고 끄기
+직접 처리: 즉시 반영되므로 되돌리기(Undo) 제공 검토 / 끄면 무슨 일이 생기는지 hint에
+
+## 시스템 규칙 (요약)
+- 색·간격·모서리는 CSS 변수만 (var(--gray-6), var(--brand)) — hex 금지
+- primary 버튼은 화면당 하나. 선택·활성 상태는 중립(--sel-bg/--sel-fg)
+- 컨트롤 높이 32(sm)/40/48 — 필터 바·툴바는 sm
+- 목록·테이블은 default/loading/empty/error/partial 5상태
+- 전체 규칙: https://kimjiyong995-coder.github.io/design-system/llms.txt

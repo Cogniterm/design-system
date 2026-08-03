@@ -1,0 +1,43 @@
+# DsSnackbar — Cogniterm Design System
+
+import { DsSnackbar } from '~/design/vuetify'   // Vuetify 필요 · ds.css + ds-vuetify.css
+
+## 용도
+저장·삭제 결과 알림. 후속 액션은 하나까지.
+
+## Props
+- modelValue: boolean = false — v-model로 열고 닫습니다.
+- variant: 'success' | 'danger' = 'success' — 결과 종류.
+- action: string — 후속 액션 라벨. 하나까지.
+- timeout: number = 4000 — 자동 닫힘(ms).
+
+## Events
+- @action — 액션 클릭.
+## Slots
+- #default — 문구.
+
+## 사용 예
+```vue
+<DsSnackbar v-model="open" variant="success" action="View" @action="go">
+  에이전트가 생성되었습니다.
+</DsSnackbar>
+```
+
+## 구분
+- vs Toast: Toast는 생김새만, Snackbar는 표시·타이머까지 담당
+- vs Alert: 지나가도 되면 Snackbar, 남아야 하면 Alert
+
+## 지침
+- [해야 할 것] 삭제처럼 되돌릴 수 있는 작업에는 Undo 액션을 답니다.
+- [하지 말 것] 동시에 여러 개를 띄우지 않습니다. 큐로 하나씩 처리합니다.
+
+## 접근성
+키보드: Tab=액션으로 이동
+직접 처리: 중요한 정보는 Snackbar에 담지 않기 — 사라집니다 / 액션은 하나까지
+
+## 시스템 규칙 (요약)
+- 색·간격·모서리는 CSS 변수만 (var(--gray-6), var(--brand)) — hex 금지
+- primary 버튼은 화면당 하나. 선택·활성 상태는 중립(--sel-bg/--sel-fg)
+- 컨트롤 높이 32(sm)/40/48 — 필터 바·툴바는 sm
+- 목록·테이블은 default/loading/empty/error/partial 5상태
+- 전체 규칙: https://kimjiyong995-coder.github.io/design-system/llms.txt

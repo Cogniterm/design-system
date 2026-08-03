@@ -1,0 +1,31 @@
+# DsDatePicker — Cogniterm Design System
+
+import { DsDatePicker } from '~/design/vuetify'   // Vuetify 필요 · ds.css + ds-vuetify.css
+
+## 용도
+감사 로그 기간 필터, 스케줄 설정.
+
+## Props
+- modelValue: Date | Date[] — v-model.
+- label: string — 라벨.
+
+
+## 사용 예
+```vue
+<DsDatePicker v-model="date" label="시작일" />
+```
+
+
+## 지침
+- [해야 할 것] 기간 선택은 시작·종료 두 개를 나란히 두고 "최근 7일" 같은 프리셋을 함께 제공합니다.
+
+## 접근성
+키보드: Tab=달력 진입 · ← → ↑ ↓=날짜 이동 · PageUp · PageDown=월 이동 · Enter=선택 · Esc=닫기
+직접 처리: locale을 ko로 설정 (createVuetify의 locale) / 선택한 날짜를 텍스트로도 표시 / 기간 선택이면 시작·종료를 각각 라벨링
+
+## 시스템 규칙 (요약)
+- 색·간격·모서리는 CSS 변수만 (var(--gray-6), var(--brand)) — hex 금지
+- primary 버튼은 화면당 하나. 선택·활성 상태는 중립(--sel-bg/--sel-fg)
+- 컨트롤 높이 32(sm)/40/48 — 필터 바·툴바는 sm
+- 목록·테이블은 default/loading/empty/error/partial 5상태
+- 전체 규칙: https://kimjiyong995-coder.github.io/design-system/llms.txt

@@ -1,0 +1,32 @@
+# DsPagination — Cogniterm Design System
+
+import { DsPagination } from '~/design/vuetify'   // Vuetify 필요 · ds.css + ds-vuetify.css
+
+## 용도
+테이블 하단, 검색 결과 하단.
+
+## Props
+- modelValue: number = 1 — 현재 페이지.
+- length: number = 필수 — 전체 페이지 수.
+- totalVisible: number = 7 — 한 번에 보이는 버튼 수.
+
+
+## 사용 예
+```vue
+<DsPagination v-model="page" :length="8" />
+```
+
+
+## 지침
+- [해야 할 것] 무한 스크롤이 나은 화면도 있습니다. 되돌아올 일이 많으면 페이지네이션입니다.
+
+## 접근성
+키보드: Tab=페이지 버튼으로 이동 · Enter · Space=이동
+직접 처리: 페이지 이동 후 결과 영역으로 포커스를 옮기거나 aria-live로 알리기 / 전체 개수를 텍스트로도 제공
+
+## 시스템 규칙 (요약)
+- 색·간격·모서리는 CSS 변수만 (var(--gray-6), var(--brand)) — hex 금지
+- primary 버튼은 화면당 하나. 선택·활성 상태는 중립(--sel-bg/--sel-fg)
+- 컨트롤 높이 32(sm)/40/48 — 필터 바·툴바는 sm
+- 목록·테이블은 default/loading/empty/error/partial 5상태
+- 전체 규칙: https://kimjiyong995-coder.github.io/design-system/llms.txt

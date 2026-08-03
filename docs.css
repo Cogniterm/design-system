@@ -199,6 +199,7 @@
 .crumb .sep { color: var(--gray-7); }
 
 .page-head { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+.page-head .ai-copy { margin-left: auto; }
 .page-head h1 {
   font-size: clamp(20px, 1.4vw + 15px, 24px); font-weight: var(--weight-semibold);
   letter-spacing: -0.025em; line-height: var(--leading-tight); color: var(--gray-12);

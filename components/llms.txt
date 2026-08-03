@@ -6,6 +6,10 @@
 > (import from `~/design/vuetify`, also needs ds-vuetify.css).
 > Docs: https://kimjiyong995-coder.github.io/design-system/#/components
 
+## Per-component prompt files
+Each component has a standalone prompt at https://kimjiyong995-coder.github.io/design-system/components/<id>.txt
+(e.g. /components/button.txt) — fetch just the one you need.
+
 ## Rules
 - Import from the correct barrel. Mixing them breaks builds in apps without Vuetify.
 - Use CSS variables only — never hardcode hex, spacing or radius.

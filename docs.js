@@ -2,6 +2,7 @@ import { CATEGORIES, COMPONENTS, TEMPLATES, VUETIFY_COVERAGE, WHERE, A11Y, VERSU
 import { FOUNDATION_PAGES, FD_RENDERERS } from './foundation.js'
 import { ic, ICON_NAMES } from './icons-svg.js'
 import { PATTERNS, PATTERN_GROUPS, PATTERN_BY_ID } from './patterns.js'
+import { componentPrompt } from './ai-prompt.js'
 
 /* ═══════════ 유틸 ═══════════ */
 const $ = (s) => document.querySelector(s)
@@ -263,10 +264,20 @@ function renderComponent(id, tab) {
     <div class="page-head">
       <h1>${c.name}</h1><span class="page-ko">${c.ko}</span>
       ${originBadge(c)}
+      <button class="btn btn-secondary btn-sm ai-copy" id="aiCopy">${ic('ai', 'sm')} AI 프롬프트 복사</button>
     </div>
     <p class="page-lead">${c.summary}</p>
     <div class="tabs">${tabsHtml}</div>
     <div class="tabpane">${pane}</div>`
+
+  // AI 프롬프트 — 이 페이지 전체를 프롬프트 하나로 (components/<id>.txt와 동일)
+  $('#aiCopy')?.addEventListener('click', function () {
+    const SITE = location.origin + location.pathname.replace(/index\.html$/, '').replace(/\/$/, '')
+    navigator.clipboard.writeText(componentPrompt(c, { WHERE, VERSUS, A11Y, SITE })).then(() => {
+      this.innerHTML = `${ic('confirm', 'sm')} 복사됨`
+      setTimeout(() => { this.innerHTML = `${ic('ai', 'sm')} AI 프롬프트 복사` }, 1600)
+    })
+  })
 
   wireCodeTabs()
 }

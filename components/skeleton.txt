@@ -1,0 +1,36 @@
+# DsSkeleton — Cogniterm Design System
+
+import { DsSkeleton } from '~/design'   // Vuetify 불필요 · ds.css만
+
+## 용도
+목록·테이블의 로딩 상태. 에이전트 응답 대기에는 쓰지 않습니다.
+
+## Props
+- variant: 'text' | 'circle' | 'rect' = 'text' — 형태.
+- width: string — CSS 너비.
+- height: string — CSS 높이.
+
+
+## 사용 예
+```vue
+<DsSkeleton variant="circle" width="32px" height="32px" />
+<DsSkeleton width="60%" />
+<DsSkeleton width="90%" />
+```
+
+## 구분
+- vs ThinkingIndicator: 에이전트 응답 대기에는 Skeleton을 쓰지 않습니다
+
+## 지침
+- [하지 말 것] 에이전트 응답 대기에 쓰지 않습니다. 그건 ThinkingIndicator·ToolCallStep의 몫입니다(원칙 1).
+- [해야 할 것] 실제 콘텐츠와 비슷한 크기·개수로 만듭니다. 화면 흔들림을 줄이는 게 목적입니다.
+
+## 접근성
+직접 처리: 로딩 영역에 aria-busy="true" / 스켈레톤 자체는 aria-hidden — 스크린리더가 읽을 내용이 없음 / prefers-reduced-motion에서 셔머 애니메이션 정지
+
+## 시스템 규칙 (요약)
+- 색·간격·모서리는 CSS 변수만 (var(--gray-6), var(--brand)) — hex 금지
+- primary 버튼은 화면당 하나. 선택·활성 상태는 중립(--sel-bg/--sel-fg)
+- 컨트롤 높이 32(sm)/40/48 — 필터 바·툴바는 sm
+- 목록·테이블은 default/loading/empty/error/partial 5상태
+- 전체 규칙: https://kimjiyong995-coder.github.io/design-system/llms.txt

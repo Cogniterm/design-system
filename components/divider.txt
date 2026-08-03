@@ -1,0 +1,30 @@
+# DsDivider — Cogniterm Design System
+
+import { DsDivider } from '~/design'   // Vuetify 불필요 · ds.css만
+
+## 용도
+설정 그룹 사이, 대화의 날짜 구분.
+
+## Props
+- label: string — 있으면 선 가운데에 라벨을 넣습니다. "오늘 / 어제" 같은 구분에 사용.
+
+
+## 사용 예
+```vue
+<DsDivider />
+<DsDivider label="Yesterday" />
+```
+
+
+## 지침
+- [하지 말 것] 여백으로 충분히 구분되는 곳에 선을 또 긋지 않습니다.
+
+## 접근성
+직접 처리: 장식용 구분선이 많으면 aria-hidden 처리 / 라벨형은 제목이 아니므로 h 태그를 쓰지 않기
+
+## 시스템 규칙 (요약)
+- 색·간격·모서리는 CSS 변수만 (var(--gray-6), var(--brand)) — hex 금지
+- primary 버튼은 화면당 하나. 선택·활성 상태는 중립(--sel-bg/--sel-fg)
+- 컨트롤 높이 32(sm)/40/48 — 필터 바·툴바는 sm
+- 목록·테이블은 default/loading/empty/error/partial 5상태
+- 전체 규칙: https://kimjiyong995-coder.github.io/design-system/llms.txt

@@ -1,0 +1,43 @@
+# DsDataTable — Cogniterm Design System
+
+import { DsDataTable } from '~/design/vuetify'   // Vuetify 필요 · ds.css + ds-vuetify.css
+
+## 용도
+감사 로그, 에이전트 목록, 실행 이력 — 열이 고정된 데이터.
+
+## Props
+- headers: any[] = 필수 — Vuetify VDataTable의 headers 형식 그대로.
+- items: any[] = 필수 — 행 데이터.
+- density: 'compact' | 'comfortable' | 'spacious' = 'comfortable' — 행 높이 34 / 42 / 50px (원칙 3).
+- loading: boolean = false — 로딩 표시.
+
+## Slots
+- #(VDataTable의 모든 슬롯) — item.* 등 Vuetify 슬롯이 그대로 전달됩니다.
+
+## 사용 예
+```vue
+<DsDataTable :headers="headers" :items="agents" density="compact">
+  <template #item.status="{ item }">
+    <DsBadge :variant="item.status">{{ item.statusLabel }}</DsBadge>
+  </template>
+</DsDataTable>
+```
+
+## 구분
+- vs List: 열이 고정되고 정렬이 필요하면 DataTable, 아니면 List
+- vs FileRow: 파일이면 FileRow
+
+## 지침
+- [해야 할 것] 드라이브·목록처럼 훑는 화면은 compact, 그 외는 comfortable (원칙 3).
+- [해야 할 것] 행 액션은 호버 시에만 드러내 기본 화면을 조용하게 유지합니다.
+
+## 접근성
+키보드: Tab=테이블 진입 · ↑ ↓=행 이동 · Enter · Space=정렬 (헤더에서) · Space=행 선택
+직접 처리: 빈 상태·로딩·에러 상태 제공 / 색만으로 상태 구분하지 않기 — 배지에 텍스트 포함
+
+## 시스템 규칙 (요약)
+- 색·간격·모서리는 CSS 변수만 (var(--gray-6), var(--brand)) — hex 금지
+- primary 버튼은 화면당 하나. 선택·활성 상태는 중립(--sel-bg/--sel-fg)
+- 컨트롤 높이 32(sm)/40/48 — 필터 바·툴바는 sm
+- 목록·테이블은 default/loading/empty/error/partial 5상태
+- 전체 규칙: https://kimjiyong995-coder.github.io/design-system/llms.txt

@@ -1,0 +1,37 @@
+# DsAccordion — Cogniterm Design System
+
+import { DsAccordion } from '~/design/vuetify'   // Vuetify 필요 · ds.css + ds-vuetify.css
+
+## 용도
+툴콜 원본 페이로드, 고급 설정, FAQ. (원칙 4의 "접기")
+
+## Props
+- items: { title, text? }[] = 필수 — 패널 목록.
+
+## Slots
+- #item-N — N번째 패널의 내용(텍스트 대신 컴포넌트를 넣을 때).
+
+## 사용 예
+```vue
+<DsAccordion v-model="open" :items="[
+  { title: '원본 페이로드 보기' },
+]">
+  <template #item-0><pre>{{ payload }}</pre></template>
+</DsAccordion>
+```
+
+
+## 지침
+- [해야 할 것] 기본은 접힌 상태로 둡니다. 중요한 정보라면 접지 않습니다.
+- [하지 말 것] 에러 메시지를 접어두지 않습니다.
+
+## 접근성
+키보드: Tab=헤더로 이동 · Enter · Space=펴고 접기
+직접 처리: 에러 메시지를 접어두지 않기 / 기본은 접힌 상태로
+
+## 시스템 규칙 (요약)
+- 색·간격·모서리는 CSS 변수만 (var(--gray-6), var(--brand)) — hex 금지
+- primary 버튼은 화면당 하나. 선택·활성 상태는 중립(--sel-bg/--sel-fg)
+- 컨트롤 높이 32(sm)/40/48 — 필터 바·툴바는 sm
+- 목록·테이블은 default/loading/empty/error/partial 5상태
+- 전체 규칙: https://kimjiyong995-coder.github.io/design-system/llms.txt

@@ -1,0 +1,34 @@
+# DsToolCallStep — Cogniterm Design System
+
+import { DsToolCallStep } from '~/design'   // Vuetify 불필요 · ds.css만
+
+## 용도
+에이전트가 도구를 쓸 때마다. 실패한 단계도 그대로 보여줍니다.
+
+## Props
+- status: 'running' | 'done' | 'error' = 'running' — 진행 중 스피너 / 완료 체크 / 실패 ✕.
+
+## Slots
+- #default — 실행 내용. 도구 이름과 인자를 그대로 보여줍니다.
+
+## 사용 예
+```vue
+<DsToolCallStep status="done">search_drive("계약서", June) — 3 files</DsToolCallStep>
+<DsToolCallStep status="running">read_document("계약서_최종.pdf")</DsToolCallStep>
+<DsToolCallStep status="error">extract_table("스캔본.pdf") — 텍스트 레이어 없음</DsToolCallStep>
+```
+
+
+## 지침
+- [해야 할 것] 원칙 4 — 접을 수는 있어도 없애지 않습니다. 항상 열어볼 수 있게 합니다.
+- [해야 할 것] 실패한 단계도 그대로 보여줍니다. 무엇이 안 됐는지 아는 것이 사용자에게 유용합니다.
+
+## 접근성
+직접 처리: 진행 → 완료 전환 시 aria-live로 알리기 / 실패한 단계를 숨기지 않기
+
+## 시스템 규칙 (요약)
+- 색·간격·모서리는 CSS 변수만 (var(--gray-6), var(--brand)) — hex 금지
+- primary 버튼은 화면당 하나. 선택·활성 상태는 중립(--sel-bg/--sel-fg)
+- 컨트롤 높이 32(sm)/40/48 — 필터 바·툴바는 sm
+- 목록·테이블은 default/loading/empty/error/partial 5상태
+- 전체 규칙: https://kimjiyong995-coder.github.io/design-system/llms.txt

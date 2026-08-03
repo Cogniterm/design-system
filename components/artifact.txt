@@ -1,0 +1,40 @@
+# DsArtifactPanel — Cogniterm Design System
+
+import { DsArtifactPanel } from '~/design'   // Vuetify 불필요 · ds.css만
+
+## 용도
+20줄이 넘는 에이전트 산출물 — 코드·문서·표.
+
+## Props
+- title: string = 필수 — 산출물 이름 (파일명 권장).
+- copyable: boolean = false — 복사 버튼 표시.
+- downloadable: boolean = false — 다운로드 버튼 표시.
+
+## Events
+- @copy — 복사 클릭.
+- @download — 다운로드 클릭.
+## Slots
+- #default — 산출물 내용.
+
+## 사용 예
+```vue
+<DsArtifactPanel title="summary_report.md" copyable downloadable
+  @copy="copy" @download="save">
+{{ markdown }}
+</DsArtifactPanel>
+```
+
+
+## 지침
+- [해야 할 것] 산출물이 20줄을 넘으면 대화에 인라인으로 넣지 말고 이 패널로 분리합니다.
+
+## 접근성
+키보드: Tab=복사 · 다운로드 버튼으로 이동
+직접 처리: 패널에 aria-label로 무엇의 산출물인지 / 복사 완료를 aria-live로 알리기 / 코드면 <pre><code>로 마크업
+
+## 시스템 규칙 (요약)
+- 색·간격·모서리는 CSS 변수만 (var(--gray-6), var(--brand)) — hex 금지
+- primary 버튼은 화면당 하나. 선택·활성 상태는 중립(--sel-bg/--sel-fg)
+- 컨트롤 높이 32(sm)/40/48 — 필터 바·툴바는 sm
+- 목록·테이블은 default/loading/empty/error/partial 5상태
+- 전체 규칙: https://kimjiyong995-coder.github.io/design-system/llms.txt

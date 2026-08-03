@@ -1,0 +1,32 @@
+# DsThinkingIndicator — Cogniterm Design System
+
+import { DsThinkingIndicator } from '~/design'   // Vuetify 불필요 · ds.css만
+
+## 용도
+에이전트 대기 전부. 10초 이상이면 문구를 단계에 맞게 갱신.
+
+## Props
+- label: string = '생각하는 중…' — 현재 하는 일. 단계가 바뀌면 갱신합니다.
+
+## Slots
+- #default — label 대신 넣을 내용.
+
+## 사용 예
+```vue
+<DsThinkingIndicator :label="currentStep" />
+```
+
+
+## 지침
+- [해야 할 것] 10초 이상 걸리면 단계에 맞게 문구를 갱신합니다("문서를 읽는 중…" → "요약을 작성하는 중…").
+- [하지 말 것] "로딩 중…"처럼 아무 정보 없는 문구를 쓰지 않습니다.
+
+## 접근성
+직접 처리: aria-live="polite"로 단계 변경을 알리기 / 점 애니메이션은 aria-hidden / prefers-reduced-motion에서 애니메이션 정지
+
+## 시스템 규칙 (요약)
+- 색·간격·모서리는 CSS 변수만 (var(--gray-6), var(--brand)) — hex 금지
+- primary 버튼은 화면당 하나. 선택·활성 상태는 중립(--sel-bg/--sel-fg)
+- 컨트롤 높이 32(sm)/40/48 — 필터 바·툴바는 sm
+- 목록·테이블은 default/loading/empty/error/partial 5상태
+- 전체 규칙: https://kimjiyong995-coder.github.io/design-system/llms.txt

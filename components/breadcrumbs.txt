@@ -1,0 +1,32 @@
+# DsBreadcrumbs — Cogniterm Design System
+
+import { DsBreadcrumbs } from '~/design/vuetify'   // Vuetify 필요 · ds.css + ds-vuetify.css
+
+## 용도
+드라이브 폴더 경로, 설정 하위 페이지.
+
+## Props
+- items: { title, to?, disabled? }[] = 필수 — 마지막 항목은 disabled로 두어 현재 위치를 표시합니다.
+
+
+## 사용 예
+```vue
+<DsBreadcrumbs :items="[
+  { title: 'Drive' }, { title: '법무' }, { title: '2026', disabled: true },
+]" />
+```
+
+
+## 지침
+- [해야 할 것] 깊이가 4단계를 넘으면 중간을 … 으로 접습니다.
+
+## 접근성
+키보드: Tab=각 항목으로 이동
+직접 처리: nav에 aria-label="경로" / 마지막 항목은 링크가 아니라 현재 위치 — aria-current="page"
+
+## 시스템 규칙 (요약)
+- 색·간격·모서리는 CSS 변수만 (var(--gray-6), var(--brand)) — hex 금지
+- primary 버튼은 화면당 하나. 선택·활성 상태는 중립(--sel-bg/--sel-fg)
+- 컨트롤 높이 32(sm)/40/48 — 필터 바·툴바는 sm
+- 목록·테이블은 default/loading/empty/error/partial 5상태
+- 전체 규칙: https://kimjiyong995-coder.github.io/design-system/llms.txt

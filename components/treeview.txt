@@ -1,0 +1,33 @@
+# DsTreeview — Cogniterm Design System
+
+import { DsTreeview } from '~/design/vuetify'   // Vuetify 필요 · ds.css + ds-vuetify.css
+
+## 용도
+드라이브 폴더 트리, 문서 목차, 조직도.
+
+## Props
+- items: any[] = 필수 — children으로 중첩합니다.
+- itemTitle / itemValue: string = 'title' / 'id' — 필드 이름.
+
+
+## 사용 예
+```vue
+<DsTreeview v-model="activated" :items="[
+  { id: 1, title: '법무', children: [{ id: 2, title: '2026' }] },
+]" />
+```
+
+
+## 지침
+- [해야 할 것] 깊이가 3단계를 넘으면 검색을 함께 제공합니다.
+
+## 접근성
+키보드: Tab=트리 진입 · ↑ ↓=항목 이동 · ← →=접기 · 펴기 · Enter=선택 · Home · End=처음 · 끝
+직접 처리: 트리에 aria-label / 깊이가 3단계를 넘으면 검색을 함께 제공
+
+## 시스템 규칙 (요약)
+- 색·간격·모서리는 CSS 변수만 (var(--gray-6), var(--brand)) — hex 금지
+- primary 버튼은 화면당 하나. 선택·활성 상태는 중립(--sel-bg/--sel-fg)
+- 컨트롤 높이 32(sm)/40/48 — 필터 바·툴바는 sm
+- 목록·테이블은 default/loading/empty/error/partial 5상태
+- 전체 규칙: https://kimjiyong995-coder.github.io/design-system/llms.txt

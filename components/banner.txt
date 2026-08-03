@@ -1,0 +1,38 @@
+# DsBanner — Cogniterm Design System
+
+import { DsBanner } from '~/design/vuetify'   // Vuetify 필요 · ds.css + ds-vuetify.css
+
+## 용도
+화면 최상단 전역 공지 — 점검 예정, 요금제 만료.
+
+## Props
+- icon: string — 앞에 붙는 아이콘.
+
+## Slots
+- #default — 공지 문구.
+- #actions — 액션 버튼.
+
+## 사용 예
+```vue
+<DsBanner icon="◈">
+  8월 3일 02:00~04:00 서비스 점검이 예정되어 있습니다.
+  <template #actions><DsButton variant="ghost" size="sm">자세히</DsButton></template>
+</DsBanner>
+```
+
+## 구분
+- vs Alert: 페이지 전체에 해당하면 Banner, 특정 영역이면 Alert
+
+## 지침
+- [해야 할 것] 화면 최상단에 하나만. 여러 개가 필요하면 우선순위가 잘못된 것입니다.
+
+## 접근성
+키보드: Tab=액션으로 이동
+직접 처리: 페이지 최상단에 두고 랜드마크(role="region")로 표시 / 닫을 수 있으면 닫기 버튼에 aria-label
+
+## 시스템 규칙 (요약)
+- 색·간격·모서리는 CSS 변수만 (var(--gray-6), var(--brand)) — hex 금지
+- primary 버튼은 화면당 하나. 선택·활성 상태는 중립(--sel-bg/--sel-fg)
+- 컨트롤 높이 32(sm)/40/48 — 필터 바·툴바는 sm
+- 목록·테이블은 default/loading/empty/error/partial 5상태
+- 전체 규칙: https://kimjiyong995-coder.github.io/design-system/llms.txt

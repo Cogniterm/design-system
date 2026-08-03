@@ -1,0 +1,33 @@
+# DsCitationChip — Cogniterm Design System
+
+import { DsCitationChip } from '~/design'   // Vuetify 불필요 · ds.css만
+
+## 용도
+에이전트 응답에서 근거가 있는 주장 뒤.
+
+## Props
+- index: number | string = 필수 — 표시할 번호.
+
+## Events
+- @open — 클릭·Enter 시 발생. 원문 위치로 이동시키세요.
+
+## 사용 예
+```vue
+본문 텍스트<DsCitationChip :index="1" @open="scrollToSource(1)" />
+```
+
+
+## 지침
+- [해야 할 것] 원칙 4 — 근거는 접을 수 있어도 없앨 수 없습니다. 항상 열어볼 수 있게 합니다.
+- [하지 말 것] 문장 끝마다 칩을 다는 것은 피합니다. 실제 근거가 있는 주장에만 답니다.
+
+## 접근성
+키보드: Tab=칩으로 이동 · Enter=원문으로 이동
+직접 처리: 번호만으로는 뜻이 없으므로 aria-label에 "출처 1: 계약서_최종.pdf"처럼 대상 명시 / 이동 후 포커스를 원문 위치로 옮기기
+
+## 시스템 규칙 (요약)
+- 색·간격·모서리는 CSS 변수만 (var(--gray-6), var(--brand)) — hex 금지
+- primary 버튼은 화면당 하나. 선택·활성 상태는 중립(--sel-bg/--sel-fg)
+- 컨트롤 높이 32(sm)/40/48 — 필터 바·툴바는 sm
+- 목록·테이블은 default/loading/empty/error/partial 5상태
+- 전체 규칙: https://kimjiyong995-coder.github.io/design-system/llms.txt

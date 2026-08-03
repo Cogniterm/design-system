@@ -1,0 +1,39 @@
+# DsFileGrid — Cogniterm Design System
+
+import { DsFileGrid } from '~/design'   // Vuetify 불필요 · ds.css만
+
+## 용도
+드라이브 그리드 보기 — 훑어보기용.
+
+## Props
+- files: DsFile[] = 필수 — { id, name, meta?, icon? } 배열.
+- selected: string[] — 선택된 파일 id 목록.
+
+## Events
+- @select (DsFile) — 카드 클릭.
+## Slots
+- #icon — 파일 아이콘. 을 넣습니다. 생략하면 file.icon 문자열이 그대로 표시됩니다.
+
+## 사용 예
+```vue
+<DsFileGrid :files="files" :selected="selectedIds" @select="toggle">
+  <template #icon="{ file }"><DsIcon :name="file.icon" size="lg" /></template>
+</DsFileGrid>
+```
+
+## 구분
+- vs FileRow: 훑어보기면 그리드, 세부 비교면 리스트
+
+## 지침
+- [해야 할 것] FileRow와 같은 데이터로 보기 전환이 가능해야 합니다.
+
+## 접근성
+키보드: Tab=그리드 진입 · ↑ ↓ ← →=항목 이동 · Space=선택 · Enter=열기
+직접 처리: 선택 상태를 aria-selected로 / 선택 개수를 aria-live로 알리기 / 아이콘만으로 파일 종류를 구분하지 않기 — 확장자가 이름에 포함됨
+
+## 시스템 규칙 (요약)
+- 색·간격·모서리는 CSS 변수만 (var(--gray-6), var(--brand)) — hex 금지
+- primary 버튼은 화면당 하나. 선택·활성 상태는 중립(--sel-bg/--sel-fg)
+- 컨트롤 높이 32(sm)/40/48 — 필터 바·툴바는 sm
+- 목록·테이블은 default/loading/empty/error/partial 5상태
+- 전체 규칙: https://kimjiyong995-coder.github.io/design-system/llms.txt

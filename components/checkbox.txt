@@ -1,0 +1,39 @@
+# DsCheckbox — Cogniterm Design System
+
+import { DsCheckbox } from '~/design/vuetify'   // Vuetify 필요 · ds.css + ds-vuetify.css
+
+## 용도
+테이블 다중 선택, 약관 동의, 저장 버튼이 있는 설정.
+
+## Props
+- modelValue: boolean — v-model.
+- label: string — 라벨.
+- hint: string — 보조 설명.
+- indeterminate: boolean = false — 부분 선택 상태.
+
+
+## 사용 예
+```vue
+<DsCheckbox v-model="notify" label="이메일 알림 받기"
+  hint="실패한 실행에 대해서만 발송됩니다." />
+
+<DsCheckbox :indeterminate="someSelected" label="전체 선택" />
+```
+
+## 구분
+- vs Switch: 즉시 반영되면 Switch, 저장 버튼을 눌러야 반영되면 Checkbox
+
+## 지침
+- [해야 할 것] 저장 버튼을 눌러야 반영되면 Checkbox, 즉시 반영이면 Switch입니다.
+- [해야 할 것] 테이블 전체 선택은 일부만 선택됐을 때 indeterminate로 표시합니다.
+
+## 접근성
+키보드: Tab=이동 · Space=켜고 끄기
+직접 처리: label 필수 / 테이블 전체 선택은 부분 선택 시 indeterminate로
+
+## 시스템 규칙 (요약)
+- 색·간격·모서리는 CSS 변수만 (var(--gray-6), var(--brand)) — hex 금지
+- primary 버튼은 화면당 하나. 선택·활성 상태는 중립(--sel-bg/--sel-fg)
+- 컨트롤 높이 32(sm)/40/48 — 필터 바·툴바는 sm
+- 목록·테이블은 default/loading/empty/error/partial 5상태
+- 전체 규칙: https://kimjiyong995-coder.github.io/design-system/llms.txt

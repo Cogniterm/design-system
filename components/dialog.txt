@@ -1,0 +1,46 @@
+# DsDialog — Cogniterm Design System
+
+import { DsDialog } from '~/design/vuetify'   // Vuetify 필요 · ds.css + ds-vuetify.css
+
+## 용도
+되돌릴 수 없는 확인, 흐름을 멈춰야 하는 입력.
+
+## Props
+- modelValue: boolean = false — v-model로 열림 상태 제어.
+- title: string — 제목.
+- width: number | string = 480 — 너비.
+- persistent: boolean = false — 바깥 클릭으로 닫히지 않게 합니다. 위험한 작업에만.
+
+## Slots
+- #default — 본문.
+- #actions — 하단 버튼 영역.
+
+## 사용 예
+```vue
+<DsDialog v-model="open" title="에이전트를 삭제할까요?" persistent>
+  이 작업은 되돌릴 수 없습니다. 연결된 실행 기록 128건도 함께 삭제됩니다.
+  <template #actions>
+    <DsButton variant="secondary" size="sm" @click="open = false">Cancel</DsButton>
+    <DsButton variant="danger" size="sm" @click="remove">Delete</DsButton>
+  </template>
+</DsDialog>
+```
+
+## 구분
+- vs Snackbar: 단순 알림이면 Dialog가 아니라 Snackbar
+- vs Menu: 선택지 나열이면 Menu
+
+## 지침
+- [해야 할 것] 되돌릴 수 없는 작업은 결과를 구체적으로 씁니다("실행 기록 128건도 함께 삭제됩니다").
+- [하지 말 것] 단순 알림에 Dialog를 쓰지 않습니다. 그건 Toast입니다.
+
+## 접근성
+키보드: Tab=내부에서만 순환 (포커스 트랩) · Esc=닫기 — persistent면 무시 · Enter=기본 액션
+직접 처리: title 채우기 — 스크린리더가 읽는 이름입니다 / 되돌릴 수 없는 작업은 결과를 구체적으로
+
+## 시스템 규칙 (요약)
+- 색·간격·모서리는 CSS 변수만 (var(--gray-6), var(--brand)) — hex 금지
+- primary 버튼은 화면당 하나. 선택·활성 상태는 중립(--sel-bg/--sel-fg)
+- 컨트롤 높이 32(sm)/40/48 — 필터 바·툴바는 sm
+- 목록·테이블은 default/loading/empty/error/partial 5상태
+- 전체 규칙: https://kimjiyong995-coder.github.io/design-system/llms.txt

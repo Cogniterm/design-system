@@ -1,0 +1,47 @@
+# DsAlert — Cogniterm Design System
+
+import { DsAlert } from '~/design/vuetify'   // Vuetify 필요 · ds.css + ds-vuetify.css
+
+## 용도
+폼 상단 검증 요약, 권한 부족 안내, 한도 경고. 사라지면 안 되는 정보.
+
+## Props
+- variant: 'info' | 'success' | 'warning' | 'error' = 'info' — 심각도.
+- title: string — 제목. 한 줄로 끝나면 생략합니다.
+- closable: boolean = false — 닫기 버튼.
+
+## Events
+- @close — 닫기 클릭.
+## Slots
+- #default — 본문.
+- #actions — 후속 액션 버튼.
+
+## 사용 예
+```vue
+<DsAlert variant="error" title="삭제하지 못했습니다">
+  법무 폴더는 관리자만 삭제할 수 있습니다.
+  <template #actions>
+    <DsButton variant="secondary" size="sm">권한 요청</DsButton>
+  </template>
+</DsAlert>
+```
+
+## 구분
+- vs Snackbar: 사라지면 안 되는 정보는 Alert, 지나가도 되는 결과는 Snackbar
+- vs Banner: Alert는 영역 단위, Banner는 페이지 전체 단위
+
+## 지침
+- [해야 할 것] 사라지면 안 되는 정보는 Alert, 지나가도 되는 결과는 Toast입니다.
+- [해야 할 것] 에러 Alert에는 사용자가 할 수 있는 다음 행동을 답니다.
+- [하지 말 것] 한 화면에 Alert를 3개 이상 쌓지 않습니다.
+
+## 접근성
+키보드: Tab=액션 버튼으로 이동
+직접 처리: 색만으로 심각도 구분하지 않기 — 아이콘·제목 병기 / 에러에는 다음 행동을 함께
+
+## 시스템 규칙 (요약)
+- 색·간격·모서리는 CSS 변수만 (var(--gray-6), var(--brand)) — hex 금지
+- primary 버튼은 화면당 하나. 선택·활성 상태는 중립(--sel-bg/--sel-fg)
+- 컨트롤 높이 32(sm)/40/48 — 필터 바·툴바는 sm
+- 목록·테이블은 default/loading/empty/error/partial 5상태
+- 전체 규칙: https://kimjiyong995-coder.github.io/design-system/llms.txt

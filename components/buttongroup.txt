@@ -1,0 +1,37 @@
+# DsButtonGroup — Cogniterm Design System
+
+import { DsButtonGroup } from '~/design/vuetify'   // Vuetify 필요 · ds.css + ds-vuetify.css
+
+## 용도
+그리드/리스트 보기 전환, 기간(일·주·월), 밀도 전환.
+
+## Props
+- modelValue: any — v-model.
+- items: { value, label }[] = 필수 — 선택지.
+
+
+## 사용 예
+```vue
+<DsButtonGroup v-model="view" :items="[
+  { value: 'list', label: '리스트' },
+  { value: 'grid', label: '그리드' },
+]" />
+```
+
+## 구분
+- vs Tabs: 내용이 통째로 바뀌면 Tabs
+
+## 지침
+- [해야 할 것] 선택지는 2~4개까지. 그 이상이면 Select를 씁니다.
+- [하지 말 것] 페이지를 바꾸는 내비게이션으로 쓰지 않습니다. 그건 Tabs입니다.
+
+## 접근성
+키보드: Tab=그룹으로 진입 · ← →=항목 이동 · Enter · Space=선택
+직접 처리: 각 버튼의 라벨을 명확히 — 아이콘만이면 aria-label / 그룹 자체에 aria-label로 무엇을 고르는지 설명
+
+## 시스템 규칙 (요약)
+- 색·간격·모서리는 CSS 변수만 (var(--gray-6), var(--brand)) — hex 금지
+- primary 버튼은 화면당 하나. 선택·활성 상태는 중립(--sel-bg/--sel-fg)
+- 컨트롤 높이 32(sm)/40/48 — 필터 바·툴바는 sm
+- 목록·테이블은 default/loading/empty/error/partial 5상태
+- 전체 규칙: https://kimjiyong995-coder.github.io/design-system/llms.txt

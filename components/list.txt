@@ -1,0 +1,37 @@
+# DsList — Cogniterm Design System
+
+import { DsList } from '~/design/vuetify'   // Vuetify 필요 · ds.css + ds-vuetify.css
+
+## 용도
+설정 항목, 선택 가능한 항목 나열. (파일은 FileRow, 고정 열은 DataTable)
+
+## Props
+- items: ListItem[] = 필수 — { value?, title, subtitle?, icon?, meta? }
+- selectable: boolean = false — 선택 가능 여부.
+
+
+## 사용 예
+```vue
+<DsList :items="[
+  { value: 'a', title: '자동 분류', subtitle: '규칙에 따라 분류', icon: 'run', meta: '켜짐' },
+]" selectable>
+  <template #icon="{ item }"><DsIcon :name="item.icon" size="sm" /></template>
+</DsList>
+```
+
+## 구분
+- vs DataTable: 정렬·필터가 필요해지면 DataTable로 바꿉니다
+
+## 지침
+- [해야 할 것] 정렬·필터가 필요해지면 DataTable로 바꿉니다.
+
+## 접근성
+키보드: Tab=목록 진입 · ↑ ↓=항목 이동 (선택 가능할 때) · Enter · Space=선택
+직접 처리: 목록에 aria-label로 무엇의 목록인지 / meta 텍스트가 상태라면 색만으로 구분하지 않기
+
+## 시스템 규칙 (요약)
+- 색·간격·모서리는 CSS 변수만 (var(--gray-6), var(--brand)) — hex 금지
+- primary 버튼은 화면당 하나. 선택·활성 상태는 중립(--sel-bg/--sel-fg)
+- 컨트롤 높이 32(sm)/40/48 — 필터 바·툴바는 sm
+- 목록·테이블은 default/loading/empty/error/partial 5상태
+- 전체 규칙: https://kimjiyong995-coder.github.io/design-system/llms.txt

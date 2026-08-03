@@ -6,6 +6,7 @@ import { PATTERNS, PATTERN_GROUPS } from './patterns.js'
 import { FOUNDATION_PAGES } from './foundation.js'
 import { ICON_NAMES } from './icons-svg.js'
 import { mkdirSync, writeFileSync, readFileSync } from 'node:fs'
+import { componentPrompt } from './ai-prompt.js'
 
 const SITE = 'https://kimjiyong995-coder.github.io/design-system'
 const strip = (h) => h.replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim()
@@ -34,6 +35,10 @@ writeFileSync('components/llms.txt', `# Components — Cogniterm Design System
 > (import from \`~/design/vuetify\`, also needs ds-vuetify.css).
 > Docs: ${SITE}/#/components
 
+## Per-component prompt files
+Each component has a standalone prompt at ${SITE}/components/<id>.txt
+(e.g. /components/button.txt) — fetch just the one you need.
+
 ## Rules
 - Import from the correct barrel. Mixing them breaks builds in apps without Vuetify.
 - Use CSS variables only — never hardcode hex, spacing or radius.
@@ -43,6 +48,11 @@ writeFileSync('components/llms.txt', `# Components — Cogniterm Design System
 - Icons come from \`~/design/icon\` by semantic name; components take them via an \`#icon\` slot.
 ${byCat}
 `)
+
+/* ── 컴포넌트별 프롬프트 파일 — 페이지의 "AI 프롬프트 복사"와 같은 내용 ── */
+for (const c of COMPONENTS) {
+  writeFileSync(`components/${c.id}.txt`, componentPrompt(c, { WHERE, VERSUS, A11Y, SITE }))
+}
 
 /* ── /patterns/llms.txt ── */
 writeFileSync('patterns/llms.txt', `# Patterns — Cogniterm Design System

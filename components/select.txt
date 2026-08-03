@@ -1,0 +1,38 @@
+# DsSelect — Cogniterm Design System
+
+import { DsSelect } from '~/design/vuetify'   // Vuetify 필요 · ds.css + ds-vuetify.css
+
+## 용도
+옵션 10개 이하의 선택. 그 이상은 Autocomplete.
+
+## Props
+- modelValue: any — v-model로 바인딩.
+- items: any[] = 필수 — 옵션 목록.
+- label: string — 필드 라벨.
+- multiple: boolean = false — 다중 선택.
+- dense: boolean = false — 32px — 필터 바·툴바.
+- error: string — 에러 메시지.
+
+
+## 사용 예
+```vue
+<DsSelect v-model="status" label="Status"
+  :items="['Draft', 'Running', 'Completed']" />
+```
+
+## 구분
+- vs Autocomplete: 옵션 10개를 넘으면 Autocomplete
+
+## 지침
+- [해야 할 것] 옵션이 10개를 넘으면 검색 가능한 Autocomplete를 검토합니다.
+
+## 접근성
+키보드: Tab=필드로 이동 · Enter · Space · ↓=목록 열기 · ↑ ↓=항목 이동 · Enter=선택 · Esc=닫기 · 글자 입력=해당 글자로 시작하는 항목으로 점프
+직접 처리: label 채우기 / 옵션 10개 초과 시 Autocomplete로 교체
+
+## 시스템 규칙 (요약)
+- 색·간격·모서리는 CSS 변수만 (var(--gray-6), var(--brand)) — hex 금지
+- primary 버튼은 화면당 하나. 선택·활성 상태는 중립(--sel-bg/--sel-fg)
+- 컨트롤 높이 32(sm)/40/48 — 필터 바·툴바는 sm
+- 목록·테이블은 default/loading/empty/error/partial 5상태
+- 전체 규칙: https://kimjiyong995-coder.github.io/design-system/llms.txt

@@ -1,0 +1,36 @@
+# DsCard — Cogniterm Design System
+
+import { DsCard } from '~/design'   // Vuetify 불필요 · ds.css만
+
+## 용도
+대시보드 통계, 설정 그룹.
+
+## Props
+- title: string — 제목. 없으면 렌더하지 않습니다.
+- subtitle: string — 보조 설명.
+
+## Slots
+- #default — 카드 본문.
+
+## 사용 예
+```vue
+<DsCard title="Tasks automated" subtitle="Last 30 days">
+  <div class="num">1,284<span class="delta">+12.4%</span></div>
+</DsCard>
+```
+
+
+## 지침
+- [하지 말 것] 카드 안에 카드를 넣지 않습니다. 위계가 무너집니다.
+- [해야 할 것] 클릭 가능한 카드는 호버 시 보더가 진해지도록 해서 조작 가능함을 알립니다.
+
+## 접근성
+키보드: Tab=클릭 가능한 카드일 때만 포커스
+직접 처리: 클릭 가능하면 <a> 또는 <button>으로 감싸기 — div에 onclick만 달지 않기 / 제목을 h2/h3 계층에 맞추기 / 카드 전체가 링크면 안쪽에 또 링크를 넣지 않기
+
+## 시스템 규칙 (요약)
+- 색·간격·모서리는 CSS 변수만 (var(--gray-6), var(--brand)) — hex 금지
+- primary 버튼은 화면당 하나. 선택·활성 상태는 중립(--sel-bg/--sel-fg)
+- 컨트롤 높이 32(sm)/40/48 — 필터 바·툴바는 sm
+- 목록·테이블은 default/loading/empty/error/partial 5상태
+- 전체 규칙: https://kimjiyong995-coder.github.io/design-system/llms.txt

@@ -1,0 +1,36 @@
+# DsAutocomplete — Cogniterm Design System
+
+import { DsAutocomplete } from '~/design/vuetify'   // Vuetify 필요 · ds.css + ds-vuetify.css
+
+## 용도
+옵션이 10개를 넘는 선택 — 사용자 지정, 태그, 폴더 이동.
+
+## Props
+- modelValue: any — v-model.
+- items: any[] = 필수 — 옵션.
+- multiple: boolean = false — 다중 선택 시 칩으로 표시됩니다.
+- error: string — 에러 메시지.
+
+
+## 사용 예
+```vue
+<DsAutocomplete v-model="folders" label="폴더" multiple
+  :items="['법무', '재무', '인사', '영업']" />
+```
+
+## 구분
+- vs Select: 옵션 10개 이하면 Select로 충분
+
+## 지침
+- [해야 할 것] 옵션이 10개를 넘으면 Select 대신 이것을 씁니다.
+
+## 접근성
+키보드: Tab=필드로 이동 · 글자 입력=검색 · ↑ ↓=결과 이동 · Enter=선택 · Backspace=마지막 칩 제거 · Esc=닫기
+직접 처리: 결과 없음 문구 제공 / 로딩 중 상태 표시
+
+## 시스템 규칙 (요약)
+- 색·간격·모서리는 CSS 변수만 (var(--gray-6), var(--brand)) — hex 금지
+- primary 버튼은 화면당 하나. 선택·활성 상태는 중립(--sel-bg/--sel-fg)
+- 컨트롤 높이 32(sm)/40/48 — 필터 바·툴바는 sm
+- 목록·테이블은 default/loading/empty/error/partial 5상태
+- 전체 규칙: https://kimjiyong995-coder.github.io/design-system/llms.txt

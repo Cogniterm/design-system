@@ -1,0 +1,38 @@
+# DsAvatar — Cogniterm Design System
+
+import { DsAvatar } from '~/design'   // Vuetify 불필요 · ds.css만
+
+## 용도
+사용자·에이전트 표시. 이름과 함께 씁니다.
+
+## Props
+- size: 'sm' | 'default' | 'lg' = 'default' — 24 / 32 / 44px.
+- variant: 'default' | 'brand' = 'default' — brand는 에이전트를 뜻합니다.
+- src: string — 이미지 URL. 없으면 슬롯의 이니셜을 표시합니다.
+
+## Slots
+- #default — 이니셜 텍스트 (2글자 권장).
+
+## 사용 예
+```vue
+<DsAvatar>JK</DsAvatar>
+<DsAvatar size="sm">JK</DsAvatar>
+<DsAvatar size="lg">JK</DsAvatar>
+<DsAvatar variant="brand">A</DsAvatar>
+<DsAvatar src="/photo.jpg" />
+```
+
+
+## 지침
+- [해야 할 것] 에이전트는 brand, 사람은 기본 회색으로 구분합니다.
+- [하지 말 것] 아바타만으로 사람을 식별하게 하지 않습니다. 이름을 함께 보여주거나 Tooltip을 답니다.
+
+## 접근성
+직접 처리: 아바타만으로 사람을 식별하게 하지 않기 — 이름을 함께 표시 / 이미지에는 의미 있는 alt 또는 빈 alt
+
+## 시스템 규칙 (요약)
+- 색·간격·모서리는 CSS 변수만 (var(--gray-6), var(--brand)) — hex 금지
+- primary 버튼은 화면당 하나. 선택·활성 상태는 중립(--sel-bg/--sel-fg)
+- 컨트롤 높이 32(sm)/40/48 — 필터 바·툴바는 sm
+- 목록·테이블은 default/loading/empty/error/partial 5상태
+- 전체 규칙: https://kimjiyong995-coder.github.io/design-system/llms.txt

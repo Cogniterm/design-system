@@ -1,0 +1,45 @@
+# DsToast — Cogniterm Design System
+
+import { DsToast } from '~/design'   // Vuetify 불필요 · ds.css만
+
+## 용도
+Snackbar의 시각 부분. 큐 관리가 필요하면 Snackbar를 쓰세요.
+
+## Props
+- variant: 'success' | 'danger' = 'success' — 결과 종류.
+- action: string — 후속 액션 버튼 라벨. 하나까지만.
+
+## Events
+- @action — 액션 버튼 클릭.
+## Slots
+- #default — 알림 문구.
+
+## 사용 예
+```vue
+<DsToast variant="success" action="View" @action="open">
+  에이전트가 생성되었습니다.
+</DsToast>
+
+<DsToast variant="danger" action="Retry" @action="retry">
+  파일 업로드에 실패했습니다 — 10MB를 초과합니다.
+</DsToast>
+```
+
+## 구분
+- vs Snackbar: 실제로 떠서 사라지는 동작이 필요하면 Snackbar
+
+## 지침
+- [해야 할 것] 에러 토스트는 무엇이 실패했고 왜인지 말합니다("10MB를 초과합니다").
+- [하지 말 것] 액션을 두 개 이상 넣지 않습니다. 선택이 필요하면 Dialog입니다.
+- [예외] 떠 있는 요소라 이 시스템에서 그림자가 허용되는 몇 안 되는 컴포넌트입니다.
+
+## 접근성
+키보드: Tab=액션으로 이동
+직접 처리: role="status" 부여 — DsSnackbar를 쓰면 자동입니다 / 사라지는 시간을 충분히 (4초 이상). 액션이 있으면 더 길게
+
+## 시스템 규칙 (요약)
+- 색·간격·모서리는 CSS 변수만 (var(--gray-6), var(--brand)) — hex 금지
+- primary 버튼은 화면당 하나. 선택·활성 상태는 중립(--sel-bg/--sel-fg)
+- 컨트롤 높이 32(sm)/40/48 — 필터 바·툴바는 sm
+- 목록·테이블은 default/loading/empty/error/partial 5상태
+- 전체 규칙: https://kimjiyong995-coder.github.io/design-system/llms.txt

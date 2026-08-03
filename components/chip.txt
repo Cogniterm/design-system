@@ -1,0 +1,39 @@
+# DsChip — Cogniterm Design System
+
+import { DsChip } from '~/design'   // Vuetify 불필요 · ds.css만
+
+## 용도
+활성 필터 표시, 첨부 파일 목록, 선택된 태그.
+
+## Props
+- variant: 'default' | 'brand' = 'default' — 거의 default를 씁니다. 활성 필터도 중립 칩입니다.
+- removable: boolean = true — ✕ 버튼 표시.
+
+## Events
+- @remove — ✕ 클릭 시 발생.
+## Slots
+- #default — 칩 라벨.
+
+## 사용 예
+```vue
+<DsChip @remove="detach(file)">design-system.pdf</DsChip>
+<DsChip variant="brand" @remove="clearFilter">Status: Running</DsChip>
+```
+
+## 구분
+- vs Badge: 조작할 수 없으면 Badge
+
+## 지침
+- [해야 할 것] Badge는 읽기 전용, Chip은 조작 가능 — 이 구분을 지킵니다.
+- [접근성] ✕ 버튼에 aria-label="Remove"를 붙입니다.
+
+## 접근성
+키보드: Tab=칩 · 제거 버튼으로 이동 · Enter · Space=제거
+직접 처리: 제거 버튼에 aria-label="Remove" — 무엇을 제거하는지 포함하면 더 좋음 / 제거 후 포커스를 다음 칩 또는 컨테이너로 옮기기
+
+## 시스템 규칙 (요약)
+- 색·간격·모서리는 CSS 변수만 (var(--gray-6), var(--brand)) — hex 금지
+- primary 버튼은 화면당 하나. 선택·활성 상태는 중립(--sel-bg/--sel-fg)
+- 컨트롤 높이 32(sm)/40/48 — 필터 바·툴바는 sm
+- 목록·테이블은 default/loading/empty/error/partial 5상태
+- 전체 규칙: https://kimjiyong995-coder.github.io/design-system/llms.txt

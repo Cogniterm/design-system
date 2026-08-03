@@ -1,0 +1,44 @@
+# DsMenu — Cogniterm Design System
+
+import { DsMenu } from '~/design/vuetify'   // Vuetify 필요 · ds.css + ds-vuetify.css
+
+## 용도
+테이블 행 액션, 프로필 메뉴, 더보기.
+
+## Props
+- location: string = 'bottom start' — 열리는 방향. Vuetify VMenu의 location을 그대로 전달합니다.
+
+## Slots
+- #activator — 메뉴를 여는 요소. v-bind="props" 필수.
+- #default — 메뉴 내용. .ds-menu-item 사용.
+
+## 사용 예
+```vue
+<DsMenu location="bottom end">
+  <template #activator="props">
+    <DsButton variant="secondary" v-bind="props">More</DsButton>
+  </template>
+  <div class="ds-menu-item" @click="rename">이름 바꾸기</div>
+  <div class="ds-menu-item" @click="duplicate">복제</div>
+  <hr class="divider" />
+  <div class="ds-menu-item" style="color:var(--danger)" @click="remove">삭제</div>
+</DsMenu>
+```
+
+## 구분
+- vs Dialog: 폼이 들어가면 Menu가 아니라 Dialog
+
+## 지침
+- [해야 할 것] 항목이 8개를 넘으면 구분선으로 묶거나 Command Palette를 검토합니다.
+- [하지 말 것] 메뉴 안에 폼을 넣지 않습니다. 그건 Dialog의 역할입니다.
+
+## 접근성
+키보드: Enter · Space · ↓=열기 · ↑ ↓=항목 이동 · Enter=실행 · Esc=닫고 트리거로 복귀 · Tab=닫기
+직접 처리: 항목에 role="menuitem" 부여 / 파괴적 항목은 마지막에 두고 구분선으로 분리
+
+## 시스템 규칙 (요약)
+- 색·간격·모서리는 CSS 변수만 (var(--gray-6), var(--brand)) — hex 금지
+- primary 버튼은 화면당 하나. 선택·활성 상태는 중립(--sel-bg/--sel-fg)
+- 컨트롤 높이 32(sm)/40/48 — 필터 바·툴바는 sm
+- 목록·테이블은 default/loading/empty/error/partial 5상태
+- 전체 규칙: https://kimjiyong995-coder.github.io/design-system/llms.txt

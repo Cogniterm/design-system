@@ -1,0 +1,44 @@
+# DsButton — Cogniterm Design System
+
+import { DsButton } from '~/design'   // Vuetify 불필요 · ds.css만
+
+## 용도
+모든 화면의 액션. primary는 화면당 하나만.
+
+## Props
+- variant: 'primary' | 'secondary' | 'ghost' | 'danger' = 'primary' — 시각 강도. primary는 한 화면에 하나만.
+- size: 'default' | 'sm' = 'default' — Geist 스케일 32/40. 필터 바·테이블 주변 같은 밀한 맥락은 sm.
+- disabled: boolean = false — 비활성화. 이유를 Tooltip으로 알려주는 것을 권장.
+
+## Events
+- @click (MouseEvent) — 클릭 시 발생.
+## Slots
+- #default — 버튼 라벨. 아이콘만 넣을 경우 aria-label 필수.
+
+## 사용 예
+```vue
+<DsButton variant="primary" @click="run">New agent</DsButton>
+<DsButton variant="secondary">Cancel</DsButton>
+<DsButton variant="ghost">Learn more</DsButton>
+<DsButton variant="danger" @click="remove">Delete</DsButton>
+<DsButton disabled>Disabled</DsButton>
+<DsButton size="sm">Small</DsButton>
+```
+
+
+## 지침
+- [해야 할 것] primary는 한 화면에 하나. 그 화면에서 사용자가 할 "그 행동"에만 씁니다.
+- [해야 할 것] 파괴적 액션은 danger를 쓰되, 기본은 조용한 외곽선 — 호버할 때만 빨간 배경이 드러납니다.
+- [하지 말 것] 취소 버튼을 primary로 쓰지 않습니다. 취소는 secondary 또는 ghost입니다.
+- [접근성] 아이콘만 있는 버튼에는 반드시 aria-label을 붙입니다.
+
+## 접근성
+키보드: Tab=버튼으로 이동 · Enter · Space=실행
+직접 처리: 아이콘만 있으면 aria-label / disabled 이유를 Tooltip으로 알리기 / 라벨을 동사로 — "확인"이 아니라 "삭제"
+
+## 시스템 규칙 (요약)
+- 색·간격·모서리는 CSS 변수만 (var(--gray-6), var(--brand)) — hex 금지
+- primary 버튼은 화면당 하나. 선택·활성 상태는 중립(--sel-bg/--sel-fg)
+- 컨트롤 높이 32(sm)/40/48 — 필터 바·툴바는 sm
+- 목록·테이블은 default/loading/empty/error/partial 5상태
+- 전체 규칙: https://kimjiyong995-coder.github.io/design-system/llms.txt

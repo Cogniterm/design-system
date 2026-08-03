@@ -1,0 +1,37 @@
+# DsTabs — Cogniterm Design System
+
+import { DsTabs } from '~/design/vuetify'   // Vuetify 필요 · ds.css + ds-vuetify.css
+
+## 용도
+상세 화면 섹션 전환(개요·활동·설정), 로그 수준 필터.
+
+## Props
+- modelValue: any — v-model.
+- items: { value, label, count? }[] = 필수 — count를 주면 배지가 붙습니다.
+
+
+## 사용 예
+```vue
+<DsTabs v-model="tab" :items="[
+  { value: 'all', label: '전체', count: 12 },
+  { value: 'error', label: '실패', count: 3 },
+]" />
+```
+
+## 구분
+- vs ButtonGroup: 페이지 섹션 전환이면 Tabs, 같은 데이터의 보기 전환이면 ButtonGroup
+
+## 지침
+- [해야 할 것] 탭은 같은 대상의 다른 단면일 때만. 다른 대상이면 내비게이션입니다.
+- [하지 말 것] 탭 안에 탭을 넣지 않습니다.
+
+## 접근성
+키보드: Tab=탭 목록으로 진입 · ← →=탭 이동 · Home · End=첫 · 마지막 · Enter · Space=선택
+직접 처리: 탭 이름을 짧게 — 줄바꿈되면 읽기 어려움
+
+## 시스템 규칙 (요약)
+- 색·간격·모서리는 CSS 변수만 (var(--gray-6), var(--brand)) — hex 금지
+- primary 버튼은 화면당 하나. 선택·활성 상태는 중립(--sel-bg/--sel-fg)
+- 컨트롤 높이 32(sm)/40/48 — 필터 바·툴바는 sm
+- 목록·테이블은 default/loading/empty/error/partial 5상태
+- 전체 규칙: https://kimjiyong995-coder.github.io/design-system/llms.txt

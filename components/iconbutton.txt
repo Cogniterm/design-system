@@ -1,0 +1,38 @@
+# DsIconButton — Cogniterm Design System
+
+import { DsIconButton } from '~/design/vuetify'   // Vuetify 필요 · ds.css + ds-vuetify.css
+
+## 용도
+테이블 행 끝 ⋯, 툴바, 입력창 부가 버튼.
+
+## Props
+- label: string = 필수 — aria-label. 아이콘만 있으므로 생략할 수 없습니다.
+- variant: 'ghost' | 'secondary' = 'ghost' — 보더 유무.
+- size: 'sm' | 'default' = 'default' — 28 / 32px.
+
+## Events
+- @click (MouseEvent) — 클릭 시 발생.
+## Slots
+- #default — 아이콘.
+
+## 사용 예
+```vue
+<DsIconButton label="More"><DsIcon name="more" /></DsIconButton>
+<DsIconButton label="Archive" variant="secondary"><DsIcon name="archive" /></DsIconButton>
+```
+
+
+## 지침
+- [접근성] label은 필수입니다. 스크린리더에는 아이콘이 읽히지 않습니다.
+- [해야 할 것] 아이콘만으로 뜻이 분명하지 않으면 Tooltip을 함께 답니다.
+
+## 접근성
+키보드: Tab=버튼으로 이동 · Enter · Space=실행
+직접 처리: label에 동작을 씀 — "아이콘 이름"이 아니라 "보관함으로 이동" / 뜻이 모호하면 Tooltip 병기
+
+## 시스템 규칙 (요약)
+- 색·간격·모서리는 CSS 변수만 (var(--gray-6), var(--brand)) — hex 금지
+- primary 버튼은 화면당 하나. 선택·활성 상태는 중립(--sel-bg/--sel-fg)
+- 컨트롤 높이 32(sm)/40/48 — 필터 바·툴바는 sm
+- 목록·테이블은 default/loading/empty/error/partial 5상태
+- 전체 규칙: https://kimjiyong995-coder.github.io/design-system/llms.txt
