@@ -626,13 +626,13 @@ const SECTIONS = [
         <div class="g-item">
           <div class="g-meta">
             <div class="g-name">DsChatMessage · DsToolCallStep · DsCitationChip <i class="lg standalone"></i></div>
-            <div class="g-why"><b>왜</b> Vuetify에 대화형 메시지가 없음. 스트리밍 중 높이 변화와 역방향 스크롤 앵커링을 VCard가 지원 못함.</div>
+            <div class="g-why"><b>왜</b> Vuetify에 없음. 글로벌 표준(Claude·ChatGPT·Gemini) — 아바타 없이 정렬로 화자 구분.</div>
             <div class="g-where"><b>어디에</b> 챗 화면. 툴콜은 본문 <b>위</b>에 — 근거가 답보다 먼저 보여야 함.</div>
           </div>
           <div class="g-demo" style="display:block">
             <div class="chat">
-              <DsChatMessage role="user" name="You">지난달 계약서 파일 찾아서 요약해줘</DsChatMessage>
-              <DsChatMessage role="agent" name="Agent" :streaming="true">
+              <DsChatMessage role="user">지난달 계약서 파일 찾아서 요약해줘</DsChatMessage>
+              <DsChatMessage role="agent" :streaming="true">
                 <template #tools>
                   <DsToolCallStep status="done">search_drive("계약서", June) — 3 files</DsToolCallStep>
                   <DsToolCallStep status="running">read_document("계약서_최종.pdf")</DsToolCallStep>

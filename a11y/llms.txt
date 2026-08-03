@@ -90,8 +90,8 @@ YOU must handle: 에러 메시지를 접어두지 않기; 기본은 접힌 상�
 
 ### DsChatMessage (채팅 메시지)
 Keyboard: Tab = 메시지 내 링크·인용 칩으로 이동
-Component handles: 의미 있는 순서로 DOM 구성 (툴콜 → 본문)
-YOU must handle: 스트리밍 영역에 aria-live="polite" — 응답 도착을 읽어줌; 아바타 이니셜만으로 화자를 구분하지 않기 (이름 병기)
+Component handles: 역할별 aria-label("내 메시지"/"에이전트 응답") — 정렬은 시각 정보라 스크린리더에 전달되지 않으므로; 의미 있는 순서로 DOM 구성 (툴콜 → 본문)
+YOU must handle: 스트리밍 영역에 aria-live="polite" — 응답 도착을 읽어줌
 
 ### DsToolCallStep (툴콜 단계)
 Keyboard: n/a

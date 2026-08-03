@@ -250,8 +250,8 @@ function exportCsv() { toast.value = { msg: '내보내기에 실패했습니다 
         <h2 class="sec">에이전트 분석</h2>
         <div class="agent-box">
           <div class="chat">
-            <DsChatMessage role="user" name="You">오늘 실패한 이벤트 원인 정리해줘</DsChatMessage>
-            <DsChatMessage role="agent" name="Audit Agent" :streaming="true">
+            <DsChatMessage role="user">오늘 실패한 이벤트 원인 정리해줘</DsChatMessage>
+            <DsChatMessage role="agent" :streaming="true">
               <template #tools>
                 <DsToolCallStep status="done">query_logs(level="error", since="24h") — 3건</DsToolCallStep>
                 <DsToolCallStep status="done">group_by(cause) — 3개 원인</DsToolCallStep>

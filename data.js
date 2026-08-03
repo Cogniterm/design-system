@@ -646,44 +646,38 @@ export const COMPONENTS = [
   reason: { ko: 'Vuetify에 대화형 메시지 컴포넌트가 없습니다. 스트리밍 중 높이가 변하고 역방향 스크롤 앵커링이 필요해 VCard로 대체할 수 없습니다.',
             en: 'No conversational message component in Vuetify. Streaming height changes and reverse scroll anchoring cannot be supported by VCard.' },
   props: [
-    ['role', `'user' | 'agent'`, `'agent'`, '말하는 주체. 아바타 색이 달라집니다.'],
-    ['name', 'string', '—', '표시 이름.'],
-    ['streaming', 'boolean', 'false', 'true면 끝에 깜빡이는 커서를 붙입니다.'],
+    ['role', `'user' | 'agent'`, `'agent'`, 'user는 오른쪽 회색 풍선, agent는 풍선 없는 본문.'],
+    ['streaming', 'boolean', 'false', 'true면 끝에 깜빡이는 커서.'],
   ],
-  slots: [['default', '메시지 본문.'], ['tools', '본문 위에 들어가는 ToolCallStep 목록.']],
+  slots: [['default', '메시지 본문.'], ['tools', '응답 위에 들어가는 ToolCallStep 목록.']],
   demo: `<div class="chat">
-    <div class="msg"><div class="avatar user">U</div><div class="msg-body">
-      <div class="msg-name">You</div><div class="msg-text">지난달 계약서 파일 찾아서 요약해줘</div>
-    </div></div>
-    <div class="msg"><div class="avatar ai">A</div><div class="msg-body">
-      <div class="msg-name">Agent</div>
-      <div class="toolcall"><span class="check">${ic('confirm','sm')}</span> search_drive("계약서", June) — 3 files found</div>
+    <div class="msg msg-user"><div class="msg-bubble">지난달 계약서 파일 찾아서 요약해줘</div></div>
+    <div class="msg msg-agent"><div class="msg-body">
+      <div class="toolcall"><span class="check">${ic('success','sm')}</span> search_drive("계약서", June) — 3 files found</div>
       <div class="msg-text">6월에 체결된 계약서 3건을 찾았습니다. 그중 최종본<span class="cite">1</span>의 핵심 조항을 정리하면<span class="cursor"></span></div>
     </div></div>
   </div>`,
-  vue: `<DsChatMessage role="user" name="You">
+  vue: `<DsChatMessage role="user">
   지난달 계약서 파일 찾아서 요약해줘
 </DsChatMessage>
 
-<DsChatMessage role="agent" name="Agent" :streaming="isStreaming">
+<DsChatMessage role="agent" :streaming="isStreaming">
   <template #tools>
     <DsToolCallStep status="done">search_drive("계약서", June) — 3 files</DsToolCallStep>
   </template>
   6월에 체결된 계약서 3건을 찾았습니다<DsCitationChip :index="1" />
 </DsChatMessage>`,
-  html: `<div class="msg">
-  <div class="avatar ai">A</div>
-  <div class="msg-body">
-    <div class="msg-name">Agent</div>
-    <div class="msg-text">
-      본문 텍스트<span class="cite">1</span>
-      <span class="cursor"></span>  <!-- 스트리밍 중일 때만 -->
-    </div>
-  </div>
-</div>`,
+  html: `<!-- 사용자 — 오른쪽 회색 풍선 -->
+<div class="msg msg-user"><div class="msg-bubble">질문 텍스트</div></div>
+
+<!-- 에이전트 — 풍선 없는 본문, 툴콜은 위에 -->
+<div class="msg msg-agent"><div class="msg-body">
+  <div class="msg-text">응답<span class="cursor"></span></div>
+</div></div>`,
   guidelines: [
-    ['해야 할 것', '툴콜은 본문 위에 둡니다. 무엇을 근거로 답했는지가 답보다 먼저 보여야 합니다.'],
-    ['하지 말 것', '메시지에 말풍선 꼬리·배경색을 넣지 않습니다. 구분은 보더와 아바타로 충분합니다.'],
+    ['해야 할 것', '글로벌 표준(Claude·ChatGPT·Gemini) — 아바타·이름표 없이 정렬로 화자를 구분합니다.'],
+    ['해야 할 것', '툴콜은 본문 위에. 무엇을 근거로 답했는지가 답보다 먼저 보여야 합니다.'],
+    ['하지 말 것', '에이전트 응답을 풍선에 넣지 않습니다. 긴 응답이 풍선에 갇히면 읽기 어렵습니다.'],
   ],
 },
 {
@@ -1570,8 +1564,8 @@ export const A11Y = {
   },
   chatmessage: {
     keys: [['Tab', '메시지 내 링크·인용 칩으로 이동']],
-    free: ['의미 있는 순서로 DOM 구성 (툴콜 → 본문)'],
-    yours: ['스트리밍 영역에 aria-live="polite" — 응답 도착을 읽어줌', '아바타 이니셜만으로 화자를 구분하지 않기 (이름 병기)'],
+    free: ['역할별 aria-label("내 메시지"/"에이전트 응답") — 정렬은 시각 정보라 스크린리더에 전달되지 않으므로', '의미 있는 순서로 DOM 구성 (툴콜 → 본문)'],
+    yours: ['스트리밍 영역에 aria-live="polite" — 응답 도착을 읽어줌'],
   },
   toolcall: {
     keys: [],

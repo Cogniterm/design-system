@@ -172,20 +172,22 @@ body {
 .card .num { font-size: 24px; font-weight: 600; letter-spacing: -0.02em; margin-top: 12px; }
 .card .delta { font-size: 12px; color: var(--success); margin-left: 6px; font-weight: 500; }
 
-/* ── ds-chat ── */
+/* ── ds-chat ──
+   글로벌 표준(Claude·ChatGPT·Gemini): 아바타·이름표 없음.
+   사용자 = 오른쪽 연회색 풍선, 에이전트 = 풍선 없는 본문.
+   정렬이 화자를 구분합니다. */
 .chat { border: 1px solid var(--gray-4); border-radius: var(--r-xl); overflow: hidden; background: var(--surface); }
-.msg { padding: 22px 24px; display: flex; gap: 14px; }
-.msg + .msg { border-top: 1px solid var(--gray-3); }
-.avatar {
-  width: 28px; height: 28px; border-radius: var(--r-full); flex-shrink: 0;
-  display: flex; align-items: center; justify-content: center;
-  font-size: 12px; font-weight: 600;
+.msg { display: flex; padding: 10px 24px; }
+.chat .msg:first-child { padding-top: 22px; }
+.chat .msg:last-of-type { padding-bottom: 22px; }
+.msg-user { justify-content: flex-end; }
+.msg-bubble {
+  background: var(--gray-3); border-radius: var(--r-xl);
+  padding: 10px 15px; max-width: 76%;
+  font-size: var(--text-base); line-height: 1.7; color: var(--gray-12);
 }
-.avatar.user { background: var(--gray-3); color: var(--gray-11); }
-.avatar.ai { background: var(--brand); color: var(--on-brand); }
-.msg-body { flex: 1; min-width: 0; }
-.msg-name { font-size: 13px; font-weight: 600; margin-bottom: 4px; }
-.msg-text { font-size: 14px; color: var(--gray-12); line-height: 1.7; }
+.msg-agent .msg-body { flex: 1; min-width: 0; max-width: 100%; }
+.msg-text { font-size: var(--text-base); color: var(--gray-12); line-height: 1.7; }
 .toolcall {
   margin: 10px 0; border: 1px solid var(--gray-4); border-radius: var(--r-md);
   padding: 9px 13px; font-size: 12.5px; color: var(--gray-11);
