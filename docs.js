@@ -101,8 +101,7 @@ function enhance() {
     hs.forEach((h, i) => { if (!h.id) h.id = 'sec-' + i })
     const toc = document.createElement('aside')
     toc.className = 'toc'
-    toc.innerHTML = '<div class="toc-t">이 페이지</div>' +
-      hs.map((h) => `<a href="#${h.id}" data-toc="${h.id}">${h.textContent}</a>`).join('')
+    toc.innerHTML = hs.map((h) => `<a href="#${h.id}" data-toc="${h.id}">${h.textContent}</a>`).join('')
     content.appendChild(toc)
 
     // 해시 라우터와 충돌하지 않게 — 목차 링크는 scrollIntoView로 처리
