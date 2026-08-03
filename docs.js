@@ -564,10 +564,13 @@ import { dsTheme } from '~/src/design/theme'
 import { dsDefaults } from '~/src/design/defaults'
 import { lucideIconSet } from '~/src/design/vuetify-icons'
 
+import { ko } from 'vuetify/locale'
+
 createVuetify({
   theme: dsTheme,
   defaults: dsDefaults,
   icons: lucideIconSet,   // 내부 아이콘도 Lucide로 — @mdi/font 불필요
+  locale: { locale: 'ko', messages: { ko } },   // VDataTable 등 내장 문구 한국어
 })</code></pre>
       <div class="callout warn"><b><code>icons</code>를 빠뜨리면 체크박스·화살표 등 내부 아이콘이 전부 빈 글자로 나옵니다.</b></div>
 
