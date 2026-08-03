@@ -25,6 +25,8 @@ function applyTheme(dark) {
   document.documentElement.setAttribute('data-theme', dark ? 'dark' : 'light')
   $('#theme-icon').innerHTML = ic(dark ? 'light' : 'dark', 'sm')
   localStorage.setItem('theme', dark ? 'dark' : 'light')
+  document.querySelectorAll('.play-frame').forEach((f) =>
+    f.contentWindow?.postMessage({ t: 'ds-theme' }, '*'))
 }
 // 상단 바 아이콘 주입
 {
@@ -273,9 +275,20 @@ function renderComponent(id, tab) {
 
 function overviewPane(c) {
   const imp = c.origin === 'wrapped' ? '~/design/vuetify' : '~/design'
-  return `<div class="demo">${c.demo}</div>` + codeBlock(c) +
+  // 실제 Vue + Vuetify로 도는 데모 — 같은 오리진의 라이브 앱을 임베드합니다
+  return `<div class="play-wrap">
+      <iframe class="play-frame" src="live/#play/${c.id}" title="${c.name} 라이브 데모" loading="lazy"></iframe>
+    </div>` + codeBlock(c) +
     `<div class="imp" style="margin:20px 0 0"><code>import { Ds${c.name.replace(/^Ds/, '')} } from '${imp}'</code></div>`
 }
+
+/* 플레이그라운드 높이 동기화 */
+window.addEventListener('message', (e) => {
+  if (e.data?.t !== 'ds-play-h') return
+  document.querySelectorAll('.play-frame').forEach((f) => {
+    if (f.contentWindow === e.source) f.style.height = e.data.h + 'px'
+  })
+})
 
 function codeBlock(c, standalone) {
   const hasHtml = !!c.html

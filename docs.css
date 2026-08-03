@@ -970,3 +970,14 @@
   }
 }
 /* stylelint-enable declaration-no-important */
+
+/* ── 라이브 플레이그라운드 ── */
+.play-wrap {
+  border: 1px solid var(--border);
+  border-radius: var(--r-xl) var(--r-xl) 0 0;
+  overflow: hidden; background: var(--gray-1);
+}
+.play-frame {
+  display: block; width: 100%; height: 120px; border: 0;
+  transition: height .16s ease;
+}
