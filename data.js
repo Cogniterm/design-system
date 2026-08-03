@@ -32,7 +32,7 @@ export const COMPONENTS = [
             en: 'Purely visual; building it ourselves avoids specificity wars with Vuetify.' },
   props: [
     ['variant', `'primary' | 'secondary' | 'ghost' | 'danger'`, `'primary'`, '시각 강도. primary는 한 화면에 하나만.'],
-    ['size', `'default' | 'sm'`, `'default'`, '높이 38px / 32px.'],
+    ['size', `'default' | 'sm'`, `'default'`, '높이 36px / 30px. 필터 바·테이블 주변 같은 밀한 맥락은 sm.'],
     ['disabled', 'boolean', 'false', '비활성화. 이유를 Tooltip으로 알려주는 것을 권장.'],
   ],
   events: [['click', 'MouseEvent', '클릭 시 발생.']],
@@ -823,7 +823,7 @@ export const COMPONENTS = [
   props: [
     ['label', 'string', '필수', 'aria-label. 아이콘만 있으므로 생략할 수 없습니다.'],
     ['variant', "'ghost' | 'secondary'", "'ghost'", '보더 유무.'],
-    ['size', "'sm' | 'default'", "'default'", '28 / 32px.'],
+    ['size', "'sm' | 'default'", "'default'", '26 / 30px.'],
   ],
   events: [['click', 'MouseEvent', '클릭 시 발생.']],
   slots: [['default', '아이콘.']],

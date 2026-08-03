@@ -413,7 +413,7 @@ export function fdSpacing() {
           <tr><td>사이드바 너비</td><td><code>232px</code></td></tr>
           <tr><td>페이지 좌우 여백</td><td><code>24px</code> (모바일) / <code>44px</code> (데스크톱)</td></tr>
           <tr><td>상단 바 높이</td><td><code>52px</code></td></tr>
-          <tr><td>버튼 · 입력 높이</td><td><code>38px</code> (기본) / <code>32px</code> (작게)</td></tr>
+          <tr><td>버튼 · 입력 높이</td><td><code>36px</code> (기본) / <code>30px</code> (sm)</td></tr>
         </tbody>
       </table>
       <div class="callout">

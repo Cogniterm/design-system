@@ -391,9 +391,9 @@
 
 /* ── VBtn — Geist 버튼 치수에 맞춤 ── */
 .v-btn { min-width: 0; }
-.v-btn--size-default { height: 38px; padding: 0 16px; font-size: var(--text-base); }
-.v-btn--size-small { height: 32px; padding: 0 12px; font-size: var(--text-sm); }
-.v-btn--size-large { height: 44px; padding: 0 20px; font-size: var(--text-base); }
+.v-btn--size-default { height: 36px; padding: 0 14px; font-size: var(--text-base); }
+.v-btn--size-small { height: 30px; padding: 0 11px; font-size: var(--text-sm); }
+.v-btn--size-large { height: 42px; padding: 0 18px; font-size: var(--text-base); }
 .v-btn--variant-flat.bg-primary,
 .v-btn--variant-flat.text-primary { color: var(--on-brand); }
 .v-btn--variant-elevated { box-shadow: none; }
@@ -402,7 +402,7 @@
 .v-field--variant-outlined .v-field__outline__start { border-radius: var(--r-lg) 0 0 var(--r-lg); }
 .v-field--variant-outlined .v-field__outline__end { border-radius: 0 var(--r-lg) var(--r-lg) 0; }
 .v-field--variant-outlined.v-field--focused .v-field__outline { --v-field-border-width: 1px; }
-.v-input--density-comfortable .v-field__input { min-height: 38px; padding-top: 0; padding-bottom: 0; }
+.v-input--density-comfortable .v-field__input { min-height: 36px; padding-top: 0; padding-bottom: 0; }
 .v-field__field { align-items: center; }
 .v-field__prepend-inner, .v-field__append-inner { align-items: center; padding-top: 0; }
 .v-input__details { padding-inline: 2px; min-height: 0; padding-top: 6px; }
