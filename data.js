@@ -275,6 +275,7 @@ export const COMPONENTS = [
     ['items', 'any[]', '필수', '옵션 목록.'],
     ['label', 'string', '—', '필드 라벨.'],
     ['multiple', 'boolean', 'false', '다중 선택.'],
+    ['dense', 'boolean', 'false', '32px — 필터 바·툴바.'],
     ['error', 'string', '—', '에러 메시지.'],
   ],
   slots: [],

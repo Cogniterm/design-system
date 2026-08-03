@@ -403,6 +403,9 @@
 .v-field--variant-outlined .v-field__outline__end { border-radius: 0 var(--r-lg) var(--r-lg) 0; }
 .v-field--variant-outlined.v-field--focused .v-field__outline { --v-field-border-width: 1px; }
 .v-input--density-comfortable .v-field__input { min-height: 40px; padding-top: 0; padding-bottom: 0; }
+.v-input--density-compact .v-field__input { min-height: 32px; padding-top: 0; padding-bottom: 0; }
+.ds-vselect--dense { width: auto; }
+.ds-vselect--dense .v-field { font-size: var(--text-sm); }
 .v-field__field { align-items: center; }
 .v-field__prepend-inner, .v-field__append-inner { align-items: center; padding-top: 0; }
 .v-input__details { padding-inline: 2px; min-height: 0; padding-top: 6px; }
@@ -442,6 +445,7 @@
 .v-data-table-footer__items-per-page,
 .v-data-table-footer__info { font-size: var(--text-xs); color: var(--gray-10); }
 .v-data-table-footer__items-per-page .v-field { min-height: 30px; }
+.v-data-table-footer__items-per-page .v-field__input { min-height: 30px; padding-top: 0; padding-bottom: 0; font-size: var(--text-xs); }
 .v-data-table__th .v-data-table-header__content { gap: 5px; }
 
 /* ── VTabs ── */

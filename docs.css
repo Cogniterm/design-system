@@ -47,7 +47,7 @@
 .search-ic svg { display: block; }
 .searchbox {
   all: unset; box-sizing: border-box;
-  width: 216px; height: 34px; padding: 0 12px 0 32px;
+  width: 216px; height: 32px; padding: 0 12px 0 32px;
   border: 1px solid var(--gray-6); border-radius: var(--r-lg);
   font-size: var(--text-sm); font-family: var(--font);
   color: var(--gray-12); background: var(--bg);
@@ -58,7 +58,7 @@
 .icon-btn:focus-visible, .topnav-links a:focus-visible, .sidebar a:focus-visible { outline: none; box-shadow: var(--focus-ring); }
 .icon-btn {
   all: unset; box-sizing: border-box; cursor: pointer;
-  width: 34px; height: 34px;
+  width: 32px; height: 32px;
   display: inline-flex; align-items: center; justify-content: center;
   border: 1px solid var(--gray-6); border-radius: var(--r-lg);
   color: var(--gray-11); background: var(--bg); text-decoration: none;

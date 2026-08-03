@@ -137,7 +137,7 @@ function exportCsv() { toast.value = { msg: '내보내기에 실패했습니다 
         <!-- ═══ 필터 바 ═══ -->
         <div class="filters">
           <DsInput v-model="q" placeholder="동작·대상·수행자 검색…" />
-          <DsSelect v-model="actorFilter" :items="actors" style="width:180px" />
+          <DsSelect v-model="actorFilter" :items="actors" dense style="width:180px" />
           <div class="lvl-chips">
             <button
               v-for="(m, k) in LEVEL_META" :key="k"
@@ -149,7 +149,7 @@ function exportCsv() { toast.value = { msg: '내보내기에 실패했습니다 
           </div>
           <span style="flex:1"></span>
           <DsTooltip text="행 높이를 바꿉니다 (원칙 3 — 밀도는 선택)">
-            <DsSelect v-model="density" :items="['compact', 'comfortable', 'spacious']" style="width:150px" />
+            <DsSelect v-model="density" :items="['compact', 'comfortable', 'spacious']" dense style="width:150px" />
           </DsTooltip>
         </div>
 
@@ -376,6 +376,7 @@ function exportCsv() { toast.value = { msg: '내보내기에 실패했습니다 
 .filters { display: flex; align-items: flex-start; gap: 10px; margin-top: 24px; flex-wrap: wrap; }
 .filters .field { width: 260px; }
 .lvl-chips { display: flex; gap: 6px; }
+.filters .input { height: 32px; padding: 0 12px; font-size: var(--text-sm); }
 .lvl-chip {
   all: unset; box-sizing: border-box; cursor: pointer; height: 32px; padding: 0 12px;
   display: inline-flex; align-items: center; gap: 6px;
