@@ -7,6 +7,8 @@ Vue 3 · Vuetify 3.11 환경에서 그대로 사용합니다.
 **라이브 갤러리** → https://kimjiyong995-coder.github.io/design-system/live/
 **감사 로그 예시** → https://kimjiyong995-coder.github.io/design-system/live/#audit
 
+> **개발자와 처음 앉는다면** → [HANDOFF.md](HANDOFF.md) — 30분 적용 가이드, 리뷰 포인트, 미리 아는 함정
+
 ---
 
 ## 무엇인가
