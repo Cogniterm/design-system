@@ -123,10 +123,20 @@ ok('Standalone 컴포넌트 — 외부 의존 없음')
 /* ── 9. 타입 스케일 준수 (문서 사이트 + 템플릿) ── */
 const ALLOWED_PX = ['10', '11', '12', '13', '14', '15', '16', '20', '24', '30', '36']
 let scaleOk = true
-for (const f of ['docs.css', 'templates/audit.html', 'templates/chat.html', 'templates/search.html']) {
+for (const f of ['ds.css', 'ds-vuetify.css', 'docs.css', 'templates/audit.html', 'templates/chat.html', 'templates/search.html']) {
   const src = readFileSync(f, 'utf8')
-  const bad = [...src.matchAll(/font-size:\s*(\d+(?:\.\d+)?)px/g)]
-    .map((m) => m[1]).filter((v) => !ALLOWED_PX.includes(v))
+  // Vuetify는 아이콘 크기를 font-size로 지정합니다 — 아이콘 규칙은 아이콘 스케일을 허용
+  const ICON_PX = ['16', '18', '20', '24']
+  const bad = []
+  for (const line of src.split('\n')) {
+    const isIcon = /\.v-icon|\.lic|icon/i.test(line)
+    for (const m of line.matchAll(/font-size:\s*(\d+(?:\.\d+)?)px/g)) {
+      const v = m[1]
+      if (ALLOWED_PX.includes(v)) continue
+      if (isIcon && ICON_PX.includes(v)) continue
+      bad.push(v)
+    }
+  }
   if (bad.length) {
     scaleOk = false
     errors.push(`${f}에 스케일 밖 글자 크기: ${[...new Set(bad)].join(', ')}px — var(--text-*)를 쓰세요`)
@@ -176,6 +186,69 @@ if (scaleOk) {
   }
   if (bad.length) errors.push(`보더에 불투명 회색 직접 사용: ${[...new Set(bad)].join(' · ')} — var(--border*)를 쓰세요`)
   else ok('보더 시맨틱 토큰 준수')
+}
+
+/* ── 15. 자기 참조 토큰 — --x: var(--x) 는 값이 없습니다 ── */
+{
+  const src = readFileSync('ds.css', 'utf8')
+  const self = [...src.matchAll(/(--[a-z0-9-]+)\s*:\s*var\(\1\)/g)].map((m) => m[1])
+  if (self.length) errors.push(`자기 참조 토큰(값 없음): ${self.join(', ')}`)
+  else ok('토큰 자기 참조 없음')
+}
+
+/* ── 16. 정의되지 않은 토큰 사용 ── */
+{
+  const all = ['ds.css', 'ds-vuetify.css', 'docs.css'].map((f) => readFileSync(f, 'utf8')).join('\n')
+  const defined = new Set([...all.matchAll(/(--[a-z0-9-]+)\s*:\s*[^;}]/g)].map((m) => m[1]))
+  const used = new Set([...all.matchAll(/var\((--[a-z0-9-]+)/g)].map((m) => m[1]))
+  const undef = [...used].filter((u) => !defined.has(u) && !u.startsWith('--v-'))
+  if (undef.length) errors.push(`정의되지 않은 토큰 사용: ${undef.join(', ')}`)
+  else ok(`토큰 정의 ${defined.size}종 · 미정의 사용 없음`)
+}
+
+/* ── 17. 색 대비 — WCAG 2.2 AA 실측 ── */
+{
+  const css = readFileSync('ds.css', 'utf8')
+  const hex = (name, block) => {
+    const scope = block === 'dark'
+      ? css.slice(css.indexOf('[data-theme="dark"]'))
+      : css.slice(0, css.indexOf('[data-theme="dark"]'))
+    const m = scope.match(new RegExp(`${name}\\s*:\\s*(#[0-9a-fA-F]{6})`))
+    return m ? m[1] : null
+  }
+  const lum = (h) => {
+    const c = h.match(/\w\w/g).map((x) => {
+      const v = parseInt(x, 16) / 255
+      return v <= 0.03928 ? v / 12.92 : Math.pow((v + 0.055) / 1.055, 2.4)
+    })
+    return 0.2126 * c[0] + 0.7152 * c[1] + 0.0722 * c[2]
+  }
+  const ratio = (a, b) => {
+    const l1 = lum(a), l2 = lum(b)
+    return (Math.max(l1, l2) + 0.05) / (Math.min(l1, l2) + 0.05)
+  }
+  // [설명, 앞색, 뒷색, 최소비] — 본문 4.5, UI 3
+  const PAIRS = [
+    ['본문 gray-12', '--gray-12', '--bg', 4.5],
+    ['보조 gray-11', '--gray-11', '--bg', 4.5],
+    ['링크 brand-text', '--brand-text', '--bg', 4.5],
+    ['버튼 라벨 on-brand', '--on-brand', '--brand', 4.5],
+    ['상태 success', '--success', '--bg', 4.5],
+    ['상태 warning', '--warning', '--bg', 4.5],
+    ['상태 danger', '--danger', '--bg', 4.5],
+  ]
+  const fails = []
+  for (const theme of ['light', 'dark']) {
+    for (const [label, fg, bg, min] of PAIRS) {
+      const a = hex(fg, theme) || hex(fg, 'light')
+      const b = hex(bg, theme) || hex(bg, 'light')
+      if (!a || !b) continue
+      const r = ratio(a, b)
+      if (r < min) fails.push(`${theme} ${label}: ${r.toFixed(2)}:1 (최소 ${min})`)
+    }
+  }
+  if (fails.length) errors.push(`대비 미달 — ${fails.join(' · ')}`)
+  else ok('색 대비 WCAG 2.2 AA — 라이트·다크 14조합 통과')
 }
 
 /* ── 결과 ── */

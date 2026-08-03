@@ -162,7 +162,7 @@ export function fdTokens() {
       </p>
 
       <h2>전체 목록</h2>
-      <p><a href="#/docs/tokens">토큰 값 전체 보기 →</a></p>
+      <p><a href="#/foundation/color">토큰 값 전체 보기 →</a></p>
     </div>`
 }
 
@@ -195,16 +195,19 @@ export function fdColor() {
 
       <h2>Brand</h2>
       <div class="tok-row">
-        ${sw('--brand', '기본 액션 · 링크')}
+        ${sw('--brand', '면 — 버튼 배경 · 점')}
+        ${sw('--brand-text', '글자 · 링크')}
         ${sw('--brand-hover', '호버')}
         ${sw('--brand-active', '누름')}
         ${sw('--brand-subtle', '연한 면')}
         ${sw('--on-brand', '브랜드 위 글자')}
       </div>
-      <p>
-        라이트 <code>#1F7FF0</code> · 다크 <code>#4593F5</code>.
-        어두운 배경에서 원색이 가라앉아 한 톤 밝은 변형을 씁니다.
-      </p>
+      <div class="callout warn">
+        <b>면과 글자를 나눕니다.</b>
+        <code>--brand</code>는 버튼 배경처럼 <b>면</b>에만 씁니다.
+        흰 배경 위 <b>글자·링크</b>에 쓰면 대비가 부족하므로
+        반드시 <code>--brand-text</code>를 씁니다 (5.89:1).
+      </div>
       <div class="dodont">
         <div class="dd do">
           <span class="dd-tag">이럴 때만</span>
@@ -310,6 +313,23 @@ export function fdColor() {
           <span class="badge success"><span class="dot"></span>완료</span>
           <span class="badge danger"><span class="dot"></span>실패</span>
         </div>
+      </div>
+
+      <h2>대비</h2>
+      <p>WCAG 2.2 AA 기준 — 본문 4.5:1, UI 요소·보더 3:1.</p>
+      <table>
+        <thead><tr><th>조합</th><th>라이트</th><th>다크</th></tr></thead>
+        <tbody>
+          <tr><td>본문 (<code>gray-12</code>)</td><td>16.4:1</td><td>16.3:1</td></tr>
+          <tr><td>보조 텍스트 (<code>gray-11</code>)</td><td>5.9:1</td><td>9.1:1</td></tr>
+          <tr><td>링크 (<code>brand-text</code>)</td><td>5.9:1</td><td>7.8:1</td></tr>
+          <tr><td>버튼 라벨 (<code>on-brand</code> on <code>brand</code>)</td><td>4.7:1</td><td>6.0:1</td></tr>
+          <tr><td>상태색</td><td>4.6~5.0:1</td><td>4.8~10.1:1</td></tr>
+        </tbody>
+      </table>
+      <div class="callout">
+        <code>gray-9</code>(3.3:1)·<code>gray-10</code>(3.8:1)은 본문 기준에 미달합니다 —
+        <b>의미 있는 정보를 담지 마세요.</b> placeholder·장식 메타에만 씁니다.
       </div>
 
       <h2>Chart</h2>

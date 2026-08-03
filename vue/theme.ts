@@ -21,14 +21,14 @@ export const dsLight = {
     'on-surface-variant': '#ffffff',
 
     // ── 브랜드 ──
-    'primary':           '#1F7FF0',   // --brand
-    'primary-darken-1':  '#155eb8',   // --brand-active
+    'primary':           '#1B72D9',   // --brand
+    'primary-darken-1':  '#1560B8',   // --brand-active
     'secondary':         '#60646c',   // --gray-11
     'secondary-darken-1': '#1c2024',
 
     // ── 상태 ──
     'error':             '#d93036',
-    'info':              '#1F7FF0',
+    'info':              '#1B72D9',
     'success':           '#17803d',
     'warning':           '#ab6400',
 

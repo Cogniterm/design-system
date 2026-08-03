@@ -85,10 +85,15 @@
 ## Tokens (source of truth: ds.css)
 ```css
 :root {
-  /* ── Brand ── */
-  --brand: #1F7FF0;
-  --brand-hover: #1a6fd6;
-  --brand-active: #155eb8;
+  /* ── Brand ──────────────────────────
+     --brand는 "면" 색입니다 (버튼 배경·점·인디케이터).
+     흰 배경 위 글자로 쓰면 대비가 3.92:1로 WCAG AA에 미달하므로,
+     글자·링크에는 반드시 --brand-text를 씁니다 (5.89:1).
+     버튼 배경도 라벨이 흰색이라 한 단계 어둡게 잡았습니다 (4.71:1). */
+  --brand: #1B72D9;         /* 면 — 흰 라벨과 4.71:1 */
+  --brand-text: #0F62C4;    /* 글자·링크 — 흰 배경과 5.89:1 */
+  --brand-hover: #1868C7;
+  --brand-active: #1560B8;
   --brand-subtle: #EBF3FE;
   --on-brand: #ffffff;
 
@@ -140,7 +145,7 @@
   /* ── Data Visualization ──────────────
      차트 계열 색. 브랜드에서 시작해 색상환을 돌되 명도를 맞춰
      인접 계열이 구분되게 했습니다. 상태색과 겹치지 않는 색만 씁니다. */
-  --chart-1: #1F7FF0;   /* 브랜드 블루 */
+  --chart-1: #1B72D9;   /* 브랜드 블루 */
   --chart-2: #16a3a3;   /* 틸 */
   --chart-3: #8b5cf6;   /* 바이올렛 */
   --chart-4: #e8963c;   /* 앰버 */
@@ -207,8 +212,10 @@
   --gray-5: #2e3135; --gray-6: #363a3f; --gray-7: #43484e; --gray-8: #5a6169;
   --gray-9: #696e77; --gray-10: #777b84; --gray-11: #b0b4ba; --gray-12: #edeef0;
 
-  /* 다크에선 파랑을 한 톤 밝게 */
+  /* 다크에선 파랑을 밝게 — 어두운 배경에서 대비를 얻습니다.
+     다크에서는 면과 글자가 같은 값이어도 둘 다 AA를 통과합니다. */
   --brand: #4593F5;
+  --brand-text: #6BA9F7;    /* 다크 배경과 7.4:1 */
   --brand-hover: #5CA1F7;
   --brand-active: #77B1F9;
   --brand-subtle: #10243E;
