@@ -28,31 +28,90 @@ const swatchRow = (n) => `<div class="swatch" style="background:var(--gray-${n})
 
 /* ════════════════════════════════════════ */
 export function fdOverview() {
+  /* 주제별 미니 견본 — 전부 실제 토큰으로 그립니다 */
+  const THUMBS = {
+    tokens: `<div style="display:flex;gap:6px;flex-wrap:wrap;justify-content:center">
+      ${['--brand', '--gray-a3', '--sel-bg'].map((t) =>
+        `<code style="font-family:var(--mono);font-size:10px;background:var(--gray-3);color:var(--brand);padding:3px 7px;border-radius:var(--r-sm)">${t}</code>`).join('')}
+    </div>`,
+    color: `<div style="display:flex;flex-direction:column;gap:6px;width:150px">
+      <div style="display:flex;border-radius:var(--r-sm);overflow:hidden;height:16px">
+        ${[3,5,7,9,11,12].map((n) => `<div style="flex:1;background:var(--gray-${n})"></div>`).join('')}
+      </div>
+      <div style="height:16px;border-radius:var(--r-sm);background:var(--brand)"></div>
+    </div>`,
+    typography: `<div style="display:flex;align-items:baseline;gap:10px;color:var(--gray-12)">
+      <span style="font-size:26px;font-weight:600;letter-spacing:-.02em">Ag</span>
+      <span style="font-size:16px;font-weight:500">가나</span>
+      <span style="font-size:12px;color:var(--gray-10)">12–30px</span>
+    </div>`,
+    spacing: `<div style="display:flex;flex-direction:column;gap:5px;width:130px">
+      ${[8,16,32,56].map((w) => `<div style="height:8px;width:${w}px;background:var(--brand-subtle);border-left:2px solid var(--brand)"></div>`).join('')}
+    </div>`,
+    shape: `<div style="display:flex;gap:8px;align-items:flex-end">
+      ${['sm','md','lg','xl'].map((r) =>
+        `<div style="width:26px;height:26px;border:1px solid var(--brand);background:var(--brand-subtle);border-radius:var(--r-${r})"></div>`).join('')}
+    </div>`,
+    elevation: `<div style="display:flex;gap:12px;align-items:center">
+      <div style="width:44px;height:32px;border:1px solid var(--border);border-radius:var(--r-md);background:var(--surface)"></div>
+      <div style="width:44px;height:32px;border-radius:var(--r-md);background:var(--surface);box-shadow:var(--shadow-overlay)"></div>
+    </div>`,
+    density: `<div style="width:120px;border:1px solid var(--border);border-radius:var(--r-md);overflow:hidden">
+      ${[22,28,34].map((h) => `<div style="height:${h}px;border-bottom:1px solid var(--border-subtle);display:flex;align-items:center;padding:0 8px"><div style="width:60%;height:5px;border-radius:3px;background:var(--gray-4)"></div></div>`).join('')}
+    </div>`,
+    iconography: `<div style="display:flex;gap:10px;color:var(--gray-11)">
+      ${ic('agent')}${ic('search')}${ic('folder')}${ic('settings')}
+    </div>`,
+    motion: `<div style="display:flex;align-items:center;gap:9px;color:var(--gray-10)">
+      <span class="spinner"></span>
+      <code style="font-family:var(--mono);font-size:11px">160ms ease</code>
+    </div>`,
+    state: `<div style="display:flex;gap:6px;flex-wrap:wrap;justify-content:center">
+      <span class="badge brand"><span class="dot"></span>실행 중</span>
+      <span class="badge danger"><span class="dot"></span>실패</span>
+    </div>`,
+    a11y: `<div style="display:flex;align-items:center;gap:10px">
+      <div style="width:34px;height:24px;border-radius:var(--r-md);background:var(--brand);box-shadow:var(--focus-ring)"></div>
+      <span class="kbd">Tab</span>
+    </div>`,
+    writing: `<div style="font-size:13px;line-height:1.7;text-align:center">
+      <div style="color:var(--gray-12);font-weight:600">삭제할까요?</div>
+      <div style="color:var(--gray-8);text-decoration:line-through">하시겠습니까?</div>
+    </div>`,
+    wordlist: `<div style="display:flex;gap:5px;flex-wrap:wrap;justify-content:center">
+      <span class="chip" style="height:24px;padding:0 10px">에이전트</span>
+      <span class="chip" style="height:24px;padding:0 10px">실행 중</span>
+    </div>`,
+    i18n: `<div style="display:flex;align-items:center;gap:8px;color:var(--gray-12)">
+      <span style="font-size:20px;font-weight:600">한</span>
+      <span style="color:var(--gray-7)">·</span>
+      <span style="font-size:20px;font-weight:600">Aa</span>
+    </div>`,
+  }
+
+  const DESC = {
+    tokens: '모든 값의 단일 원본', color: '브랜드 1 · 회색 12 · 알파 12 · 상태 4',
+    typography: 'Pretendard 9단계 — UI와 본문 분리', spacing: '4px 배수 · 역할 열 그리드',
+    shape: '4/6/8/12 — 컨트롤과 면의 두 단계', elevation: '그림자 없음 · 떠 있는 것만 예외',
+    density: '32/40/48 — 화면 성격별 행 높이', iconography: 'Lucide 59 · stroke 1.5',
+    motion: '160ms ease · 상태를 알리는 움직임만', state: '화면 5종 + 인터랙션 6종',
+    a11y: 'WCAG 2.2 AA · 포커스 링 · 키보드', writing: '에러는 사과하지 않는다',
+    wordlist: '한국어 UI 어휘 고정', i18n: '이름은 영문 · 문구는 한글',
+  }
+
+  const cards = FOUNDATION_PAGES.filter(([id]) => id !== 'overview').map(([id, ko, en]) => `
+    <a class="cat-card" href="#/foundation/${id}">
+      <div class="thumb"><div class="thumb-inner">${THUMBS[id] || ''}</div></div>
+      <div class="cat-body">
+        <div class="cc-top"><h3>${en}</h3><span class="cc-ko">${ko}</span></div>
+        <p>${DESC[id] || ''}</p>
+      </div>
+    </a>`).join('')
+
   return `
     <div class="page-head"><h1>Foundation</h1><span class="page-ko">기초</span></div>
     <p class="page-lead">컴포넌트 이전의 결정들.</p>
-    <div class="prose">
-      <h2>구성</h2>
-      <table>
-        <thead><tr><th>주제</th><th>무엇을 정하나</th></tr></thead>
-        <tbody>
-          <tr><td><a href="#/foundation/tokens">토큰</a></td><td>모든 값의 단일 원본. 여기서 CSS 변수로 흘러갑니다.</td></tr>
-          <tr><td><a href="#/foundation/color">색</a></td><td>브랜드 1개 + 회색 12단계 + 상태 4개. 그 이상은 쓰지 않습니다.</td></tr>
-          <tr><td><a href="#/foundation/typography">타이포그래피</a></td><td>Pretendard 5단계. 위계는 크기보다 굵기로 만듭니다.</td></tr>
-          <tr><td><a href="#/foundation/spacing">여백 · 레이아웃</a></td><td>4px 배수 9단계. 그림자가 없으므로 여백이 구조를 만듭니다.</td></tr>
-          <tr><td><a href="#/foundation/shape">모서리 · 보더</a></td><td>2 / 4 / 6px. 1px 보더가 이 시스템의 유일한 구분 장치입니다.</td></tr>
-          <tr><td><a href="#/foundation/elevation">높낮이</a></td><td>그림자를 쓰지 않는 이유와, 유일한 예외.</td></tr>
-          <tr><td><a href="#/foundation/density">밀도</a></td><td>챗과 드라이브를 같은 시스템으로 만드는 방법. B2B의 핵심.</td></tr>
-          <tr><td><a href="#/foundation/iconography">아이콘</a></td><td>세트 하나, 크기 3개, 굵기 하나.</td></tr>
-          <tr><td><a href="#/foundation/motion">모션</a></td><td>거의 움직이지 않습니다. 움직인다면 120ms.</td></tr>
-          <tr><td><a href="#/foundation/state">상태</a></td><td>화면 상태 5종과 인터랙션 상태 5종. 처음부터 만듭니다.</td></tr>
-          <tr><td><a href="#/foundation/a11y">접근성</a></td><td>대비, 포커스, 키보드, 색맹 대응.</td></tr>
-          <tr><td><a href="#/foundation/writing">글쓰기</a></td><td>에러는 사과하지 않습니다. 문구도 디자인입니다.</td></tr>
-          <tr><td><a href="#/foundation/i18n">다국어</a></td><td>컴포넌트 이름은 영문, UI 문구는 한글.</td></tr>
-        </tbody>
-      </table>
-
-    </div>`
+    <div class="cat-grid" style="margin-top:30px">${cards}</div>`
 }
 
 /* ════════════════════════════════════════ */
