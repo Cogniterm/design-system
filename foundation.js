@@ -52,24 +52,6 @@ export function fdOverview() {
         </tbody>
       </table>
 
-      <h2>다른 시스템과 다른 점</h2>
-      <ul>
-        <li><b>극한 미니멀</b> — 그림자·그라디언트·일러스트 없음. 보더와 여백이 위계를 만듭니다.</li>
-        <li><b>에이전트 제품</b> — 로딩이 아니라 <a href="#/foundation/state">진행</a>을 표현합니다.</li>
-      </ul>
-
-      <h2>참고한 시스템</h2>
-      <table>
-        <thead><tr><th>시스템</th><th>가져온 것</th></tr></thead>
-        <tbody>
-          <tr><td>Vercel Geist</td><td>극한 미니멀의 기준 — 보더 중심, 장식 없음</td></tr>
-          <tr><td>Radix Themes / Colors</td><td>회색 12단계 체계와 역할 구분</td></tr>
-          <tr><td>Seed (당근)</td><td>Foundation 문서 구조</td></tr>
-          <tr><td>Atlassian Design</td><td>토큰 · 스타일 · 가이드라인의 3층 분리</td></tr>
-          <tr><td>IBM Carbon</td><td>데이터 밀집 화면의 밀도·그리드 접근</td></tr>
-          <tr><td>Shopify Polaris</td><td>인터페이스 문구를 시스템으로 다루는 방식</td></tr>
-        </tbody>
-      </table>
     </div>`
 }
 

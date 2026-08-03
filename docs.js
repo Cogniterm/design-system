@@ -367,12 +367,6 @@ function guidelinesPane(c) {
   const items = (c.guidelines || []).map(([tag, text]) =>
     `<div class="gl-item"><span class="gl-tag ${tagClass(tag)}">${tag}</span><span class="gl-text">${text}</span></div>`).join('')
 
-  const why = `
-    <div class="whybox">
-      <div class="wb-row"><span class="wb-tag why">왜 필요한가</span><span>${c.reason.ko}${c.vuetifyAlt ? ` (Vuetify의 <code>${c.vuetifyAlt}</code> 대신)` : ''}</span></div>
-      <div class="wb-row"><span class="wb-tag where">어디에 쓰나</span><span>${WHERE[c.id] || ''}</span></div>
-    </div>`
-
   const vs = VERSUS[c.id] ? `
     <div class="vsbox">
       <div class="vs-head">비슷한 것과의 구분</div>
@@ -383,7 +377,7 @@ function guidelinesPane(c) {
       }).join('')}
     </div>` : ''
 
-  return why + vs + (items ? `<div class="tbl-title">사용 지침</div><div class="gl">${items}</div>` : '')
+  return vs + (items ? `<div class="tbl-title">사용 지침</div><div class="gl">${items}</div>` : '')
 }
 
 function wireCodeTabs() {

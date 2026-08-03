@@ -96,8 +96,6 @@ const SECTIONS = [
         <div class="g-item">
           <div class="g-meta">
             <div class="g-name">DsButton <i class="lg standalone"></i></div>
-            <div class="g-why"><b>왜</b> 시각이 전부라 직접 만듦. Vuetify와 특이도 충돌 없음.</div>
-            <div class="g-where"><b>어디에</b> 모든 화면의 액션. primary는 화면당 하나.</div>
           </div>
           <div class="g-demo">
             <DsButton><DsIcon name="add" size="sm" />New agent</DsButton>
@@ -111,8 +109,6 @@ const SECTIONS = [
         <div class="g-item">
           <div class="g-meta">
             <div class="g-name">DsIconButton <i class="lg wrapped"></i> <code>VBtn</code></div>
-            <div class="g-why"><b>왜</b> 아이콘 버튼은 크기·정렬·aria-label 규칙이 매번 어긋나서 고정이 필요.</div>
-            <div class="g-where"><b>어디에</b> 테이블 행 끝 ⋯, 툴바, 입력창 부가 버튼.</div>
           </div>
           <div class="g-demo">
             <DsIconButton label="More"><DsIcon name="more" /></DsIconButton>
@@ -124,8 +120,6 @@ const SECTIONS = [
         <div class="g-item">
           <div class="g-meta">
             <div class="g-name">DsButtonGroup <i class="lg wrapped"></i> <code>VBtnToggle</code></div>
-            <div class="g-why"><b>왜</b> 배타적 전환에 라디오는 무겁고 탭은 과함. 중간 크기가 필요.</div>
-            <div class="g-where"><b>어디에</b> 그리드/리스트 보기 전환, 기간(일·주·월), 밀도 전환.</div>
           </div>
           <div class="g-demo">
             <DsButtonGroup v-model="view" :items="[
@@ -137,8 +131,6 @@ const SECTIONS = [
         <div class="g-item">
           <div class="g-meta">
             <div class="g-name">DsMenu <i class="lg wrapped"></i> <code>VMenu</code></div>
-            <div class="g-why"><b>왜</b> 뷰포트 경계 포지셔닝·키보드 네비를 직접 만들면 버그가 남.</div>
-            <div class="g-where"><b>어디에</b> 행 액션, 프로필 메뉴, 더보기.</div>
           </div>
           <div class="g-demo">
             <DsMenu location="bottom start">
@@ -158,8 +150,6 @@ const SECTIONS = [
         <div class="g-item">
           <div class="g-meta">
             <div class="g-name">DsTabs <i class="lg wrapped"></i> <code>VTabs</code></div>
-            <div class="g-why"><b>왜</b> Vuetify 기본 탭은 대문자 변환·리플이 우리 기조와 안 맞음. 건수 배지도 필요.</div>
-            <div class="g-where"><b>어디에</b> 상세 화면 섹션 전환, 로그 수준 필터.</div>
           </div>
           <div class="g-demo" style="display:block">
             <DsTabs v-model="tab" :items="[
@@ -172,8 +162,6 @@ const SECTIONS = [
         <div class="g-item">
           <div class="g-meta">
             <div class="g-name">DsBreadcrumbs <i class="lg wrapped"></i> <code>VBreadcrumbs</code></div>
-            <div class="g-why"><b>왜</b> 구분자와 마지막 항목 강조 규칙을 고정.</div>
-            <div class="g-where"><b>어디에</b> 드라이브 폴더 경로, 설정 하위 페이지.</div>
           </div>
           <div class="g-demo">
             <DsBreadcrumbs :items="[
@@ -184,8 +172,6 @@ const SECTIONS = [
         <div class="g-item">
           <div class="g-meta">
             <div class="g-name">DsPagination <i class="lg wrapped"></i> <code>VPagination</code></div>
-            <div class="g-why"><b>왜</b> 기본 스타일이 크고 그림자가 있음. 조용하게 낮춤.</div>
-            <div class="g-where"><b>어디에</b> 테이블 하단, 검색 결과 하단.</div>
           </div>
           <div class="g-demo"><DsPagination v-model="page" :length="8" /></div>
         </div>
@@ -193,8 +179,6 @@ const SECTIONS = [
         <div class="g-item">
           <div class="g-meta">
             <div class="g-name">DsNavList <i class="lg wrapped"></i> <code>VList</code></div>
-            <div class="g-why"><b>왜</b> 사이드바는 모든 화면에 나오는데 매번 다르게 만들어짐. 아이콘·배지·활성 표시를 고정.</div>
-            <div class="g-where"><b>어디에</b> 앱 좌측 사이드바, 설정 좌측 메뉴.</div>
           </div>
           <div class="g-demo" style="display:block;max-width:240px">
             <DsNavList v-model="nav" :items="[
@@ -210,8 +194,6 @@ const SECTIONS = [
         <div class="g-item">
           <div class="g-meta">
             <div class="g-name">DsStepper <i class="lg wrapped"></i> <code>VStepper</code></div>
-            <div class="g-why"><b>왜</b> 마법사 UI를 매번 새로 만들면 단계 표시가 제각각이 됨.</div>
-            <div class="g-where"><b>어디에</b> 에이전트 생성 마법사, 온보딩, 다단계 폼.</div>
           </div>
           <div class="g-demo" style="display:block">
             <DsStepper v-model="step" :items="['소스 선택', '규칙 설정', '검토']" />
@@ -224,8 +206,6 @@ const SECTIONS = [
         <div class="g-item">
           <div class="g-meta">
             <div class="g-name">DsInput <i class="lg standalone"></i></div>
-            <div class="g-why"><b>왜</b> VTextField는 래퍼가 5~6겹이라 벗기는 비용이 새로 만드는 비용보다 큼.</div>
-            <div class="g-where"><b>어디에</b> 한 줄 입력 전부. 에러 상태 필수.</div>
           </div>
           <div class="g-demo">
             <DsInput label="워크스페이스 이름" placeholder="Acme Inc." hint="모든 멤버에게 표시됩니다." />
@@ -236,8 +216,6 @@ const SECTIONS = [
         <div class="g-item">
           <div class="g-meta">
             <div class="g-name">DsTextarea <i class="lg wrapped"></i> <code>VTextarea</code></div>
-            <div class="g-why"><b>왜</b> auto-grow와 라벨·에러 규칙을 DsInput과 똑같이 맞추기 위해.</div>
-            <div class="g-where"><b>어디에</b> 설명·메모, 프롬프트 편집. (대화 입력은 DsAgentInput)</div>
           </div>
           <div class="g-demo"><DsTextarea v-model="memo" label="메모" placeholder="내용을 입력하세요" hint="줄이 늘면 자동으로 커집니다." /></div>
         </div>
@@ -245,8 +223,6 @@ const SECTIONS = [
         <div class="g-item">
           <div class="g-meta">
             <div class="g-name">DsSelect <i class="lg wrapped"></i> <code>VSelect</code></div>
-            <div class="g-why"><b>왜</b> 옵션 목록 포지셔닝·키보드 선택·다중 선택 동작이 복잡.</div>
-            <div class="g-where"><b>어디에</b> 옵션 10개 이하 선택. 그 이상은 DsAutocomplete.</div>
           </div>
           <div class="g-demo"><DsSelect v-model="sel" label="상태" :items="['대기', '실행 중', '완료', '실패']" style="width:200px" /></div>
         </div>
@@ -254,8 +230,6 @@ const SECTIONS = [
         <div class="g-item">
           <div class="g-meta">
             <div class="g-name">DsAutocomplete <i class="lg wrapped"></i> <code>VAutocomplete</code></div>
-            <div class="g-why"><b>왜</b> 검색·필터링 로직을 직접 만들면 한글 조합 입력에서 깨짐.</div>
-            <div class="g-where"><b>어디에</b> 옵션이 10개를 넘는 선택 — 사용자 지정, 태그, 폴더 이동.</div>
           </div>
           <div class="g-demo"><DsAutocomplete v-model="auto" label="폴더" multiple
             :items="['법무', '재무', '인사', '영업', '기술', '마케팅']" style="width:260px" /></div>
@@ -264,8 +238,6 @@ const SECTIONS = [
         <div class="g-item">
           <div class="g-meta">
             <div class="g-name">DsCheckbox <i class="lg wrapped"></i> <code>VCheckbox</code></div>
-            <div class="g-why"><b>왜</b> 부분 선택(indeterminate) 상태가 테이블 전체 선택에 반드시 필요.</div>
-            <div class="g-where"><b>어디에</b> 테이블 다중 선택, 약관 동의, 저장 버튼이 있는 설정.</div>
           </div>
           <div class="g-demo">
             <DsCheckbox v-model="check" label="이메일 알림 받기" hint="실패한 실행에 대해서만 발송됩니다." />
@@ -276,8 +248,6 @@ const SECTIONS = [
         <div class="g-item">
           <div class="g-meta">
             <div class="g-name">DsSwitch <i class="lg wrapped"></i> <code>VSwitch</code></div>
-            <div class="g-why"><b>왜</b> Checkbox와 혼용되면 "저장을 눌러야 하나"가 헷갈림. 즉시 반영 = Switch로 고정.</div>
-            <div class="g-where"><b>어디에</b> 즉시 적용되는 on/off — 에이전트 활성화, 자동 실행.</div>
           </div>
           <div class="g-demo"><DsSwitch v-model="sw" label="에이전트 활성화" hint="끄면 예약된 실행도 중단됩니다." /></div>
         </div>
@@ -285,8 +255,6 @@ const SECTIONS = [
         <div class="g-item">
           <div class="g-meta">
             <div class="g-name">DsRadioGroup <i class="lg wrapped"></i> <code>VRadioGroup</code></div>
-            <div class="g-why"><b>왜</b> 항목마다 부연 설명이 필요한 경우가 많아 hint 슬롯을 고정.</div>
-            <div class="g-where"><b>어디에</b> 배타적 설정 — 보존 기간, 공개 범위.</div>
           </div>
           <div class="g-demo" style="display:block">
             <DsRadioGroup v-model="radio" label="보존 기간" :items="[
@@ -299,8 +267,6 @@ const SECTIONS = [
         <div class="g-item">
           <div class="g-meta">
             <div class="g-name">DsSlider <i class="lg wrapped"></i> <code>VSlider</code></div>
-            <div class="g-why"><b>왜</b> 현재 값 표시가 기본으로 없어서 매번 붙이게 됨. 라벨에 통합.</div>
-            <div class="g-where"><b>어디에</b> 임계값 조정 — 신뢰도 컷오프, 결과 개수.</div>
           </div>
           <div class="g-demo" style="display:block;max-width:320px">
             <DsSlider v-model="slider" label="신뢰도 임계값" suffix="%" />
@@ -310,8 +276,6 @@ const SECTIONS = [
         <div class="g-item">
           <div class="g-meta">
             <div class="g-name">DsFileInput <i class="lg wrapped"></i> <code>VFileInput</code></div>
-            <div class="g-why"><b>왜</b> 기본 클립 아이콘·머티리얼 스타일이 우리 기조와 안 맞음.</div>
-            <div class="g-where"><b>어디에</b> 문서 업로드, 로고 교체.</div>
           </div>
           <div class="g-demo"><DsFileInput v-model="files" label="문서 업로드" hint="PDF·DOCX · 최대 10MB" /></div>
         </div>
@@ -319,8 +283,6 @@ const SECTIONS = [
         <div class="g-item">
           <div class="g-meta">
             <div class="g-name">DsDatePicker <i class="lg wrapped"></i> <code>VDatePicker</code></div>
-            <div class="g-why"><b>왜</b> 달력을 직접 만드는 것은 비현실적(로케일·윤년·키보드).</div>
-            <div class="g-where"><b>어디에</b> 감사 로그 기간 필터, 스케줄 설정.</div>
           </div>
           <div class="g-demo"><DsDatePicker v-model="date" /></div>
         </div>
@@ -331,8 +293,6 @@ const SECTIONS = [
         <div class="g-item">
           <div class="g-meta">
             <div class="g-name">DsAlert <i class="lg wrapped"></i> <code>VAlert</code></div>
-            <div class="g-why"><b>왜</b> Toast와 역할이 섞이면 중요한 정보가 사라짐. <b>머무는</b> 알림으로 고정.</div>
-            <div class="g-where"><b>어디에</b> 폼 상단 검증 요약, 권한 부족 안내, 한도 경고.</div>
           </div>
           <div class="g-demo" style="display:block">
             <DsAlert variant="error" title="삭제하지 못했습니다">
@@ -348,8 +308,6 @@ const SECTIONS = [
         <div class="g-item">
           <div class="g-meta">
             <div class="g-name">DsBanner <i class="lg wrapped"></i> <code>VBanner</code></div>
-            <div class="g-why"><b>왜</b> Alert는 영역 단위, Banner는 페이지 전체 단위 — 이 구분이 없으면 둘 다 남발됨.</div>
-            <div class="g-where"><b>어디에</b> 화면 최상단 전역 공지 — 점검 예정, 요금제 만료.</div>
           </div>
           <div class="g-demo" style="display:block">
             <DsBanner>
@@ -363,8 +321,6 @@ const SECTIONS = [
         <div class="g-item">
           <div class="g-meta">
             <div class="g-name">DsProgressBar <i class="lg wrapped"></i> <code>VProgressLinear</code></div>
-            <div class="g-why"><b>왜</b> 진행률 숫자를 매번 따로 붙이게 됨. 라벨에 통합.</div>
-            <div class="g-where"><b>어디에</b> 업로드·일괄 처리 — <b>진행률을 아는 경우만</b>. 모르면 ThinkingIndicator.</div>
           </div>
           <div class="g-demo" style="display:block;max-width:320px">
             <DsProgressBar :value="62" label="문서 분석 중" />
@@ -374,8 +330,6 @@ const SECTIONS = [
         <div class="g-item">
           <div class="g-meta">
             <div class="g-name">DsSpinner <i class="lg wrapped"></i> <code>VProgressCircular</code></div>
-            <div class="g-why"><b>왜</b> 크기·굵기가 제각각이 되기 쉬움. 2초 이내 대기 전용으로 한정.</div>
-            <div class="g-where"><b>어디에</b> 버튼 내부, 인라인 짧은 대기. <b>에이전트 작업에는 금지</b>(원칙 1).</div>
           </div>
           <div class="g-demo">
             <DsSpinner />
@@ -386,8 +340,6 @@ const SECTIONS = [
         <div class="g-item">
           <div class="g-meta">
             <div class="g-name">DsSnackbar <i class="lg wrapped"></i> <code>VSnackbar</code></div>
-            <div class="g-why"><b>왜</b> DsToast는 생김새만 담당. 실제로 <b>떠서 시간이 지나면 사라지는</b> 동작이 필요.</div>
-            <div class="g-where"><b>어디에</b> 저장·삭제 결과 알림. 후속 액션은 하나까지.</div>
           </div>
           <div class="g-demo">
             <DsButton variant="secondary" @click="snackOpen = true">토스트 띄우기</DsButton>
@@ -398,8 +350,6 @@ const SECTIONS = [
         <div class="g-item">
           <div class="g-meta">
             <div class="g-name">DsBadge · DsChip <i class="lg standalone"></i></div>
-            <div class="g-why"><b>왜</b> Badge는 읽기 전용, Chip은 제거 가능 — 이 구분을 코드로 강제.</div>
-            <div class="g-where"><b>어디에</b> Badge: 테이블 상태 열. Chip: 활성 필터, 첨부 파일.</div>
           </div>
           <div class="g-demo">
             <DsBadge>대기</DsBadge>
@@ -414,8 +364,6 @@ const SECTIONS = [
         <div class="g-item">
           <div class="g-meta">
             <div class="g-name">DsSkeleton · DsEmptyState <i class="lg standalone"></i></div>
-            <div class="g-why"><b>왜</b> 극한 미니멀에서는 빈 화면이 "고장"처럼 보임. 빈 상태는 반드시 다음 행동을 제안.</div>
-            <div class="g-where"><b>어디에</b> 모든 목록·테이블의 로딩/빈 상태. 상태 5종의 일부.</div>
           </div>
           <div class="g-demo" style="display:block">
             <div style="display:flex;gap:12px;align-items:center;margin-bottom:16px">
@@ -436,8 +384,6 @@ const SECTIONS = [
         <div class="g-item">
           <div class="g-meta">
             <div class="g-name">DsDialog <i class="lg wrapped"></i> <code>VDialog</code></div>
-            <div class="g-why"><b>왜</b> 포커스 트랩·스크롤 락·ESC·접근성 속성을 직접 만들면 반드시 빠짐.</div>
-            <div class="g-where"><b>어디에</b> 되돌릴 수 없는 확인, 흐름을 멈춰야 하는 입력.</div>
           </div>
           <div class="g-demo">
             <DsButton variant="danger" @click="dialogOpen = true">삭제 확인창 열기</DsButton>
@@ -454,8 +400,6 @@ const SECTIONS = [
         <div class="g-item">
           <div class="g-meta">
             <div class="g-name">DsTooltip <i class="lg wrapped"></i> <code>VTooltip</code></div>
-            <div class="g-why"><b>왜</b> 지연 표시·포지셔닝·터치 대응을 Vuetify가 이미 해결.</div>
-            <div class="g-where"><b>어디에</b> 아이콘 버튼 설명, 잘린 텍스트 전체 보기.</div>
           </div>
           <div class="g-demo">
             <DsTooltip text="보관함으로 이동"><DsIconButton label="Archive"><DsIcon name="archive" /></DsIconButton></DsTooltip>
@@ -469,8 +413,6 @@ const SECTIONS = [
         <div class="g-item">
           <div class="g-meta">
             <div class="g-name">DsDataTable <i class="lg wrapped"></i> <code>VDataTable</code></div>
-            <div class="g-why"><b>왜</b> 정렬·페이지네이션·선택·가상 스크롤을 직접 만드는 것은 비현실적.</div>
-            <div class="g-where"><b>어디에</b> 감사 로그, 에이전트 목록, 실행 이력 — 열이 고정된 데이터.</div>
           </div>
           <div class="g-demo" style="display:block">
             <DsDataTable :headers="tableHeaders" :items="tableRows" density="compact">
@@ -484,8 +426,6 @@ const SECTIONS = [
         <div class="g-item">
           <div class="g-meta">
             <div class="g-name">DsList <i class="lg wrapped"></i> <code>VList</code></div>
-            <div class="g-why"><b>왜</b> 열이 고정되지 않은 목록에 테이블은 과함. 중간 단계가 필요.</div>
-            <div class="g-where"><b>어디에</b> 설정 항목, 선택 가능한 항목 나열. (파일은 FileRow)</div>
           </div>
           <div class="g-demo" style="display:block;max-width:420px">
             <DsList v-model="listSel" selectable :items="[
@@ -500,8 +440,6 @@ const SECTIONS = [
         <div class="g-item">
           <div class="g-meta">
             <div class="g-name">DsTreeview <i class="lg wrapped"></i> <code>VTreeview</code></div>
-            <div class="g-why"><b>왜</b> 펼침 상태·키보드 이동·중첩 선택을 직접 만들면 깊이가 늘 때 무너짐.</div>
-            <div class="g-where"><b>어디에</b> 드라이브 폴더 트리, 문서 목차.</div>
           </div>
           <div class="g-demo" style="display:block;max-width:280px">
             <DsTreeview v-model="tree" :items="treeItems" />
@@ -511,8 +449,6 @@ const SECTIONS = [
         <div class="g-item">
           <div class="g-meta">
             <div class="g-name">DsTimeline <i class="lg wrapped"></i> <code>VTimeline</code></div>
-            <div class="g-why"><b>왜</b> 시간순 이력을 목록으로 만들면 "무엇이 먼저인지"가 안 읽힘.</div>
-            <div class="g-where"><b>어디에</b> 문서 변경 이력, 에이전트 실행 이력, 승인 흐름.</div>
           </div>
           <div class="g-demo" style="display:block">
             <DsTimeline :items="timelineItems" />
@@ -522,8 +458,6 @@ const SECTIONS = [
         <div class="g-item">
           <div class="g-meta">
             <div class="g-name">DsAccordion <i class="lg wrapped"></i> <code>VExpansionPanels</code></div>
-            <div class="g-why"><b>왜</b> 원칙 4 — 근거를 <b>접을 수는 있어도 없애지 않는다</b>. 그 "접기"의 구현체.</div>
-            <div class="g-where"><b>어디에</b> 툴콜 원본 페이로드, 고급 설정, FAQ.</div>
           </div>
           <div class="g-demo" style="display:block">
             <DsAccordion v-model="accordion" :items="[
@@ -535,8 +469,6 @@ const SECTIONS = [
         <div class="g-item">
           <div class="g-meta">
             <div class="g-name">DsFileGrid · DsFileRow <i class="lg standalone"></i></div>
-            <div class="g-why"><b>왜</b> Vuetify에 파일 브라우저 개념이 없음. 같은 데이터로 보기 전환이 되어야 함.</div>
-            <div class="g-where"><b>어디에</b> 드라이브 화면. 그리드는 훑기, 리스트는 세부 비교.</div>
           </div>
           <div class="g-demo" style="display:block">
             <DsFileGrid :files="[
@@ -562,8 +494,6 @@ const SECTIONS = [
         <div class="g-item">
           <div class="g-meta">
             <div class="g-name">DsIcon <i class="lg wrapped"></i> <code>Lucide</code></div>
-            <div class="g-why"><b>왜</b> 세트가 3종 섞여 있으면 굵기·광학 크기가 달라 같은 줄에서 어긋남. 하나로 고정.</div>
-            <div class="g-where"><b>어디에</b> 아이콘이 필요한 모든 곳. Lucide 이름이 아니라 <b>의미 이름</b>으로 부릅니다.</div>
           </div>
           <div class="g-demo" style="display:block">
             <div style="display:flex;gap:20px;align-items:flex-end;margin-bottom:18px">
@@ -591,8 +521,6 @@ const SECTIONS = [
         <div class="g-item">
           <div class="g-meta">
             <div class="g-name">DsAvatar · DsCard · DsDivider <i class="lg standalone"></i></div>
-            <div class="g-why"><b>왜</b> elevation 시스템이 필요 없음. 그림자 대신 1px 보더로만 구분.</div>
-            <div class="g-where"><b>어디에</b> 대시보드 통계, 설정 그룹, 사용자 표시.</div>
           </div>
           <div class="g-demo" style="display:block">
             <div style="display:flex;gap:10px;align-items:center;margin-bottom:14px">
@@ -610,8 +538,6 @@ const SECTIONS = [
         <div class="g-item">
           <div class="g-meta">
             <div class="g-name">DsSearchResult <i class="lg standalone"></i></div>
-            <div class="g-why"><b>왜</b> Vuetify에 검색 결과 개념이 없음. 하이라이트를 조용하게 유지해야 함.</div>
-            <div class="g-where"><b>어디에</b> 검색 화면, 문서 찾기 결과.</div>
           </div>
           <div class="g-demo" style="display:block">
             <DsSearchResult title="계약서_최종.pdf" path="Drive / 법무 / 2026">
@@ -626,8 +552,6 @@ const SECTIONS = [
         <div class="g-item">
           <div class="g-meta">
             <div class="g-name">DsChatMessage · DsToolCallStep · DsCitationChip <i class="lg standalone"></i></div>
-            <div class="g-why"><b>왜</b> Vuetify에 없음. 글로벌 표준(Claude·ChatGPT·Gemini) — 아바타 없이 정렬로 화자 구분.</div>
-            <div class="g-where"><b>어디에</b> 챗 화면. 툴콜은 본문 <b>위</b>에 — 근거가 답보다 먼저 보여야 함.</div>
           </div>
           <div class="g-demo" style="display:block">
             <div class="chat">
@@ -647,8 +571,6 @@ const SECTIONS = [
         <div class="g-item">
           <div class="g-meta">
             <div class="g-name">DsThinkingIndicator <i class="lg standalone"></i></div>
-            <div class="g-why"><b>왜</b> 원칙 1 — 빈 스피너는 "느린 제품", 무엇을 하는지 보이면 "일하는 제품".</div>
-            <div class="g-where"><b>어디에</b> 에이전트 대기 전부. 10초 이상이면 단계에 맞게 문구를 갱신.</div>
           </div>
           <div class="g-demo"><DsThinkingIndicator label="계약서 조항을 분석하는 중…" /></div>
         </div>
@@ -656,8 +578,6 @@ const SECTIONS = [
         <div class="g-item">
           <div class="g-meta">
             <div class="g-name">DsAgentInput <i class="lg standalone"></i></div>
-            <div class="g-why"><b>왜</b> auto-grow·첨부·슬래시 명령·Enter 전송이 한 컴포넌트에 필요.</div>
-            <div class="g-where"><b>어디에</b> 챗 화면 하단. Enter 전송, Shift+Enter 줄바꿈.</div>
           </div>
           <div class="g-demo" style="display:block;max-width:520px"><DsAgentInput /></div>
         </div>
@@ -665,8 +585,6 @@ const SECTIONS = [
         <div class="g-item">
           <div class="g-meta">
             <div class="g-name">DsArtifactPanel <i class="lg standalone"></i></div>
-            <div class="g-why"><b>왜</b> 긴 산출물을 대화에 인라인으로 넣으면 대화도 산출물도 못 읽음.</div>
-            <div class="g-where"><b>어디에</b> 20줄 넘는 에이전트 산출물 — 코드·문서·표.</div>
           </div>
           <div class="g-demo" style="display:block;max-width:520px">
             <DsArtifactPanel title="audit_summary.md" copyable downloadable>
@@ -705,7 +623,7 @@ const SECTIONS = [
   margin: 44px 0 14px; padding-bottom: 8px; border-bottom: 1px solid var(--gray-4); }
 .g-sec span { text-transform: none; letter-spacing: 0; font-weight: 500; color: var(--gray-8); margin-left: 8px; }
 
-.g-item { display: grid; grid-template-columns: 300px 1fr; gap: 24px;
+.g-item { display: grid; grid-template-columns: 210px 1fr; gap: 24px;
   border: 1px solid var(--gray-4); border-radius: var(--r-xl); overflow: hidden; margin-bottom: 12px; }
 .g-meta { padding: 18px; background: var(--gray-2); border-right: 1px solid var(--gray-4); }
 .g-name { font-size: 13.5px; font-weight: 650; color: var(--gray-12);
