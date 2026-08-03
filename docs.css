@@ -27,11 +27,9 @@
 }
 .brandmark span { color: var(--brand); }
 
-/* 메뉴는 화면 기준 정중앙 — 로고·우측 컨트롤과 무관하게 */
-.topnav-links {
-  display: flex; gap: 2px;
-  position: absolute; left: 50%; translate: -50% 0;
-}
+/* Astryx 배치 — 로고 옆 메뉴 클러스터, 유틸은 오른쪽 끝 */
+.topnav-links { display: flex; gap: 2px; }
+.topnav-right { margin-left: auto; }
 .topnav-links a {
   display: inline-flex; align-items: center; gap: 5px;
   height: 32px; padding: 0 11px; border-radius: var(--r-lg);
@@ -921,11 +919,6 @@
    ══════════════════════════════════════ */
 @media (max-width: 1280px) {
   .toc { display: none; }
-}
-@media (max-width: 1120px) {
-  .topnav-links { position: static; translate: none; }
-  .topnav { justify-content: flex-start; }
-  .topnav-right { margin-left: auto; }
 }
 @media (max-width: 1080px) {
   .content { padding: 36px 32px 140px; }
