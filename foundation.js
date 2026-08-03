@@ -526,7 +526,7 @@ export function fdShape() {
         <div class="dd dont">
           <span class="dd-tag">여백으로 충분합니다</span>
           <ul>
-            <li>이미 32px 이상 떨어진 섹션 사이</li>
+            <li><b>섹션 사이 — 선을 긋지 않습니다.</b> 위 여백 64px + 제목 굵기가 그룹을 만듭니다</li>
             <li>카드가 이미 보더를 가진 경우 그 안쪽</li>
             <li>제목과 본문 사이</li>
           </ul>

@@ -114,6 +114,9 @@ ${FOUNDATION_PAGES.map(([id, ko, en]) => `- ${en} (${ko}) — ${SITE}/#/foundati
   repeat(auto-fill, minmax(232px,1fr)). Breakpoints 1280/1080/900/640; at 900 the
   LNB becomes a drawer (never just disappears); tables scroll horizontally
   instead of dropping columns; long pages get an on-this-page TOC rail.
+- Grouping: sections are separated by WHITESPACE and heading weight (64px above
+  an h2), never by horizontal rules. Borders belong to components (cards, tables,
+  controls) and shell edges only.
 - Shape: radius sm=4 md=6 lg=8 xl=12. Controls use lg, large surfaces use xl.
   Border always 1px. Nested radius must be <= parent radius.
 - Elevation: NO elevation scale. Shadow only on Menu, Dialog, Tooltip, Snackbar.

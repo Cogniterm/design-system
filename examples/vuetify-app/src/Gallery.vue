@@ -620,7 +620,7 @@ const SECTIONS = [
 [data-theme="dark"] .lg.wrapped { background: #f0b429; }
 
 .g-sec { font-size: 12px; font-weight: 700; color: var(--gray-9);
-  margin: 44px 0 14px; padding-bottom: 8px; border-bottom: 1px solid var(--border); }
+  margin: 56px 0 14px; }
 .g-sec span { text-transform: none; letter-spacing: 0; font-weight: 500; color: var(--gray-8); margin-left: 8px; }
 
 .g-item { display: grid; grid-template-columns: 210px 1fr; gap: 24px;
