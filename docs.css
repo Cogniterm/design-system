@@ -152,6 +152,10 @@
 }
 .page-main { flex: 0 1 960px; min-width: 0; }
 
+/* 산문 중심 페이지 — 컨테이너 = 측정폭. 헤더·본문·표가 같은 폭으로 정렬됩니다 */
+.content.narrow .page-main { flex-basis: var(--measure); }
+.content.narrow .prose { max-width: none; }
+
 /* "이 페이지" 목차 — 긴 페이지의 조감도 (≥1280px) */
 /* 목차 — Notion 방식.
    연한 세로 스트로크 트랙 위에서, 현재 읽는 구간의 세그먼트만 진해집니다.
