@@ -377,7 +377,7 @@ function exportCsv() { toast.value = { msg: '내보내기에 실패했습니다 
 .filters .field { width: 260px; }
 .lvl-chips { display: flex; gap: 6px; }
 .lvl-chip {
-  all: unset; box-sizing: border-box; cursor: pointer; height: 36px; padding: 0 12px;
+  all: unset; box-sizing: border-box; cursor: pointer; height: 32px; padding: 0 12px;
   display: inline-flex; align-items: center; gap: 6px;
   border: 1px solid var(--gray-6); border-radius: var(--r-lg);
   font-size: 13px; font-weight: 500; color: var(--gray-11);

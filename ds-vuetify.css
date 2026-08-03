@@ -240,11 +240,11 @@
 .ds-icon-btn .ds-icon { margin: 0 !important; }
 
 /* ── DsIconButton ── */
-.ds-icon-btn.v-btn { width: 30px; height: 30px; min-width: 0; border-radius: var(--r-md); color: var(--gray-10); }
+.ds-icon-btn.v-btn { width: 32px; height: 32px; min-width: 0; border-radius: var(--r-md); color: var(--gray-10); }
 .ds-icon-btn.v-btn:hover { background: var(--gray-3); color: var(--gray-12); }
 .ds-icon-btn.is-secondary.v-btn { border: 1px solid var(--gray-6); background: var(--surface); }
 .ds-icon-btn.is-secondary.v-btn:hover { border-color: var(--gray-8); }
-.ds-icon-btn.is-sm.v-btn { width: 26px; height: 26px; font-size: 12px; }
+.ds-icon-btn.is-sm.v-btn { width: 28px; height: 28px; font-size: 12px; }
 
 /* ── DsButtonGroup ── */
 .ds-btn-group.v-btn-toggle { height: 32px; border-radius: var(--r-lg); border: 1px solid var(--gray-6); overflow: hidden; }
@@ -391,9 +391,9 @@
 
 /* ── VBtn — Geist 버튼 치수에 맞춤 ── */
 .v-btn { min-width: 0; }
-.v-btn--size-default { height: 36px; padding: 0 14px; font-size: var(--text-base); }
-.v-btn--size-small { height: 30px; padding: 0 11px; font-size: var(--text-sm); }
-.v-btn--size-large { height: 42px; padding: 0 18px; font-size: var(--text-base); }
+.v-btn--size-default { height: 40px; padding: 0 16px; font-size: var(--text-base); }
+.v-btn--size-small { height: 32px; padding: 0 12px; font-size: var(--text-sm); }
+.v-btn--size-large { height: 48px; padding: 0 20px; font-size: var(--text-lg); }
 .v-btn--variant-flat.bg-primary,
 .v-btn--variant-flat.text-primary { color: var(--on-brand); }
 .v-btn--variant-elevated { box-shadow: none; }
@@ -402,7 +402,7 @@
 .v-field--variant-outlined .v-field__outline__start { border-radius: var(--r-lg) 0 0 var(--r-lg); }
 .v-field--variant-outlined .v-field__outline__end { border-radius: 0 var(--r-lg) var(--r-lg) 0; }
 .v-field--variant-outlined.v-field--focused .v-field__outline { --v-field-border-width: 1px; }
-.v-input--density-comfortable .v-field__input { min-height: 36px; padding-top: 0; padding-bottom: 0; }
+.v-input--density-comfortable .v-field__input { min-height: 40px; padding-top: 0; padding-bottom: 0; }
 .v-field__field { align-items: center; }
 .v-field__prepend-inner, .v-field__append-inner { align-items: center; padding-top: 0; }
 .v-input__details { padding-inline: 2px; min-height: 0; padding-top: 6px; }
