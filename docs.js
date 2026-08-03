@@ -1,7 +1,6 @@
 import { CATEGORIES, COMPONENTS, TEMPLATES, VUETIFY_COVERAGE, WHERE, A11Y, VERSUS } from './data.js'
 import { FOUNDATION_PAGES, FD_RENDERERS } from './foundation.js'
 import { ic, ICON_NAMES } from './icons-svg.js'
-import { PATTERNS, PATTERN_GROUPS, PATTERN_BY_ID } from './patterns.js'
 import { componentPrompt } from './ai-prompt.js'
 
 /* ═══════════ 유틸 ═══════════ */
@@ -56,13 +55,12 @@ function render() {
   if (section === 'docs') navKey = 'docs'
   else if (!section) navKey = 'docs'
   else if (section === 'foundation') navKey = 'foundation'
-  else if (section === 'patterns') navKey = 'patterns'
   else if (section === 'templates') navKey = 'templates'
   document.querySelectorAll('.topnav-links a').forEach((a) =>
     a.classList.toggle('on', a.dataset.nav === navKey))
 
   if (section === 'foundation') renderFoundation(id || 'overview')
-  else if (section === 'patterns') { id ? renderPattern(id) : renderPatternIndex() }
+  else if (section === 'patterns') { location.replace('#/templates'); return }
   else if (section === 'docs') renderDocsPage(id || 'start')
   else if (section === 'templates') renderTemplates()
   else if (id) renderComponent(id, tab)
@@ -141,7 +139,6 @@ const LNB_HEAD = {
   docs:       ['Docs', '문서', '설치부터 Vuetify 연동까지'],
   foundation: ['Foundation', '기초', '컴포넌트 이전의 결정들'],
   components: ['Components', '컴포넌트', `${COMPONENTS.length}종 · Standalone ${COMPONENTS.filter((c) => c.origin === 'custom').length} · Vuetify ${COMPONENTS.filter((c) => c.origin === 'wrapped').length}`],
-  patterns:   ['Patterns', '패턴', `${PATTERNS.length}종 · 컴포넌트를 조합하는 법`],
   templates:  ['Templates', '템플릿', '골든 스크린과 라이브 예제'],
 }
 
@@ -170,16 +167,6 @@ function renderSidebar(section, activeId) {
         const tag = c.origin === 'wrapped' ? '<span class="vtag">V</span>' : ''
         return `<a href="#/components/${c.id}" class="${activeId === c.id ? 'on' : ''}">${c.name}${tag}</a>`
       }).join('')
-    }
-  }
-
-  else if (sec === 'patterns') {
-    body = `<a href="#/patterns" class="${!activeId ? 'on' : ''}">전체 보기</a>`
-    for (const g of PATTERN_GROUPS) {
-      const items = PATTERNS.filter((p) => p.group === g.id)
-      if (!items.length) continue
-      body += `<div class="nav-title">${g.name} · ${g.ko}</div>` + items.map((p) =>
-        `<a href="#/patterns/${p.id}" class="${activeId === p.id ? 'on' : ''}">${p.ko}<span class="nav-en">${p.name}</span></a>`).join('')
     }
   }
 
@@ -438,49 +425,6 @@ function renderTemplates() {
       </a>`).join('') + `</div>`
 }
 
-/* ═══════════ Patterns ═══════════ */
-function renderPatternIndex() {
-  let html = crumb({ label: 'Patterns' }) + `
-    <div class="page-head"><h1>Patterns</h1><span class="page-ko">패턴</span></div>
-    <p class="page-lead">컴포넌트를 조합하는 법.</p>`
-  for (const g of PATTERN_GROUPS) {
-    const items = PATTERNS.filter((p) => p.group === g.id)
-    if (!items.length) continue
-    html += `<div class="cat-group">
-      <div class="cat-head"><h2>${g.name}</h2><span>${g.ko} · ${items.length}</span></div>
-      <div class="cat-grid">` + items.map((p) => `
-        <a class="cat-card" href="#/patterns/${p.id}">
-          <div class="cc-top"><h3>${p.name}</h3><span class="cc-ko">${p.ko}</span></div>
-          <p>${p.summary}</p>
-        </a>`).join('') + `</div></div>`
-  }
-  $('#content').innerHTML = html
-}
-
-function renderPattern(id) {
-  const p = PATTERN_BY_ID[id]
-  if (!p) return renderPatternIndex()
-  const g = PATTERN_GROUPS.find((x) => x.id === p.group)
-  const list = PATTERNS.filter((x) => x.group === p.group)
-  const i = list.findIndex((x) => x.id === id)
-  const prev = i > 0 ? list[i - 1] : null
-  const next = i < list.length - 1 ? list[i + 1] : null
-
-  $('#content').innerHTML =
-    crumb({ label: 'Patterns', href: '#/patterns' }, { label: g.ko }, { label: p.ko }) + `
-    <div class="page-head">
-      <h1>${p.name}</h1><span class="page-ko">${p.ko}</span>
-      <span class="origin-badge custom">${g.ko}</span>
-    </div>
-    <p class="page-lead">${p.summary}</p>
-    <div class="tabpane">${p.body()}</div>
-    <div class="pagenav">
-      ${prev ? `<a href="#/patterns/${prev.id}"><span>${ic('back', 12)} 이전</span><b>${prev.ko}</b></a>` : '<span></span>'}
-      ${next ? `<a class="nx" href="#/patterns/${next.id}"><span>다음 ${ic('forward', 12)}</span><b>${next.ko}</b></a>` : '<span></span>'}
-    </div>`
-  wireCodeTabs()
-}
-
 /* ═══════════ Foundation ═══════════ */
 function renderFoundation(id) {
   const fn = FD_RENDERERS[id] || FD_RENDERERS.overview
@@ -529,7 +473,6 @@ function pageStart() {
       </div>
       <div class="hero-stats">
         <div class="hero-stat"><b>${total}</b><span>컴포넌트</span></div>
-        <div class="hero-stat"><b>${PATTERNS.length}</b><span>패턴</span></div>
         <div class="hero-stat"><b>${FOUNDATION_PAGES.length}</b><span>Foundation</span></div>
         <div class="hero-stat"><b>${VUETIFY_COVERAGE.length}</b><span>Vuetify 커버리지</span></div>
         <div class="hero-stat"><b>2</b><span>외부 의존성</span></div>
@@ -543,7 +486,6 @@ function pageStart() {
       ${entry('#/docs/install', 'download', '설치 · 사용법', '파일 복사 → CSS 등록 → 끝. 개발자 기준 10분.')}
       ${entry('#/foundation/overview', 'settings', 'Foundation', '색 · 타이포 · 여백 · 밀도 — 컴포넌트 이전의 결정 ' + FOUNDATION_PAGES.length + '가지')}
       ${entry('#/components', 'gridView', 'Components', total + '종. props · 접근성 · 비슷한 것과의 구분')}
-      ${entry('#/patterns', 'listView', 'Patterns', '폼 · 필터 · 에이전트 흐름 · 페이지 템플릿 ' + PATTERNS.length + '종')}
       ${entry('#/docs/vuetify', 'link', 'Vuetify와의 관계', '무엇이 Vuetify 기반이고 무엇이 아닌지')}
       ${entry('#/foundation/wordlist', 'chat', '용어집', '한국어 UI 문안 통일표')}
     </div>

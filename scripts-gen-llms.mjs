@@ -59,13 +59,13 @@ writeFileSync('patterns/llms.txt', `# Patterns — Cogniterm Design System
 
 > How to COMBINE components. Solving the same problem differently on each screen
 > makes the product inconsistent even when the components match.
-> Docs: ${SITE}/#/patterns
+> (내부 사이트에는 패턴 페이지가 없습니다 — 이 파일이 원본입니다)
 
 ${PATTERN_GROUPS.map((g) => {
   const items = PATTERNS.filter((p) => p.group === g.id)
   if (!items.length) return ''
   return `## ${g.name} (${g.ko})\n\n` + items.map((p) =>
-    `### ${p.name} — ${p.ko}\n${p.summary}\n\n${strip(p.body()).slice(0, 1400)}\n\n${SITE}/#/patterns/${p.id}\n`
+    `### ${p.name} — ${p.ko}\n${p.summary}\n\n${strip(p.body()).slice(0, 1400)}\n`
   ).join('\n')
 }).join('\n')}`)
 
