@@ -323,12 +323,13 @@ Each component has a standalone prompt at https://kimjiyong995-coder.github.io/d
 - **DsBadge** (배지) — 상태를 표시하는 작은 읽기 전용 라벨.
   import: ~/design | origin: custom
   where: 테이블 상태 열, 목록 항목의 상태 표시. 읽기 전용.
-  props: variant='default', dot=true
+  props: variant='default'
   vs: Chip — Badge는 읽기 전용, Chip은 제거 가능
   usage:
     <DsBadge>Draft</DsBadge>
     <DsBadge variant="brand">Running</DsBadge>
     <DsBadge variant="success">Completed</DsBadge>
+    <DsBadge variant="warning">Delayed</DsBadge>
     <DsBadge variant="danger">Failed</DsBadge>
 - **DsSkeleton** (스켈레톤) — 데이터 로딩 중 콘텐츠의 자리를 미리 보여줍니다.
   import: ~/design | origin: custom

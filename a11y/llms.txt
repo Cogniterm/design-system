@@ -145,8 +145,8 @@ YOU must handle: 제거 버튼에 aria-label="Remove" — 무엇을 제거하는
 
 ### DsBadge (배지)
 Keyboard: n/a
-Component handles: 점 + 텍스트를 함께 렌더 — 색만으로 구분되지 않음
-YOU must handle: 텍스트를 반드시 넣기 (dot만 두지 않기); 상태가 바뀌면 aria-live로 알릴지 검토
+Component handles: 상태 색(배경·글자·테두리) + 텍스트를 함께 렌더
+YOU must handle: 텍스트를 반드시 넣기 (색만으로 구분하지 않기); 상태가 바뀌면 aria-live로 알릴지 검토
 
 ### DsSkeleton (스켈레톤)
 Keyboard: n/a
