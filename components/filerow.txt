@@ -10,11 +10,14 @@ import { DsFileRow } from '~/design'   // Vuetify 불필요 · ds.css만
 - meta: string — 크기·날짜 등.
 - icon: IconName — 어떤 아이콘인지 알려주는 값. 실제 그림은 #icon 슬롯이 그립니다.
 - selected: boolean = false — 선택 상태.
+- checkbox: boolean = false — 다중 선택 피커에서 앞에 체크박스를 노출.
+- disabled: boolean = false — 선택 불가 — 흐리게, 클릭 안 됨.
 
 ## Events
-- @select — 행 클릭.
+- @select — 행 클릭 (disabled면 발생 안 함).
 ## Slots
 - #icon — 파일 아이콘. 을 넣습니다. 생략하면 아이콘 자리가 비어 있습니다.
+- #trailing — 이름 뒤 우측 부가 정보 — 배지·상태 (예: CSO 등급).
 
 ## 사용 예
 ```vue

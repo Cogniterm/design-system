@@ -402,9 +402,12 @@ td.mono { font-family: var(--mono); font-size: var(--text-xs); color: var(--gray
   border-radius: var(--r-md); cursor: pointer; font-size: var(--text-sm); transition: background .16s ease; }
 .file-row:hover { background: var(--gray-2); }
 .file-row.selected { background: var(--sel-bg); }
-.file-row .f-icon { font-size: var(--text-lg); width: 20px; text-align: center; }
+.file-row.disabled { cursor: default; opacity: .5; }
+.file-row.disabled:hover { background: transparent; }
+.file-row .f-check { width: 16px; height: 16px; margin: 0; flex-shrink: 0; accent-color: var(--brand); pointer-events: none; }
+.file-row .f-icon { font-size: var(--text-lg); width: 20px; text-align: center; flex-shrink: 0; color: var(--gray-9); }
 .file-row .f-name { flex: 1; font-weight: var(--weight-medium); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.file-row .f-meta { font-size: var(--text-xs); color: var(--gray-11); font-family: var(--mono); }
+.file-row .f-meta { font-size: var(--text-xs); color: var(--gray-11); font-family: var(--mono); flex-shrink: 0; }
 
 /* ── ds-artifact-panel ── */
 .artifact { border: 1px solid var(--border); border-radius: var(--r-xl); overflow: hidden; background: var(--surface); }

@@ -1,8 +1,8 @@
 # Components — Cogniterm Design System
 
-> 65 components. 31 standalone
+> 66 components. 31 standalone
 > (no Vuetify needed, import from `~/design`) and
-> 34 Vuetify-based
+> 35 Vuetify-based
 > (import from `~/design/vuetify`, also needs ds-vuetify.css).
 > Docs: https://kimjiyong995-coder.github.io/design-system/#/components
 
@@ -461,6 +461,14 @@ Each component has a standalone prompt at https://kimjiyong995-coder.github.io/d
   usage:
     <DsCommandPalette v-model="open" :items="commands" @select="run" />
     <!-- 전역: keydown ⌘K → open = true -->
+- **DsDrivePicker** (드라이브 피커) — 드라이브에서 파일을 찾아 고르는 2단 피커 — 좌 폴더 트리 + 우 목록. 검색하면 목록이 검색 결과 뷰로 바뀝니다.
+  import: ~/design/vuetify | origin: wrapped (VDialog)
+  where: 채팅 첨부·업로드 대상 고르기 — 드라이브에서 파일을 찾아 선택.
+  props: modelValue=false, tree, files, title='드라이브에서 파일 추가', confirmLabel='첨부'
+  vs: FileGrid — 한 폴더 안 썸네일 고르기는 그리드 / CommandPalette — 파일이 아니라 명령·이동이면 팔레트
+  usage:
+    <DsDrivePicker v-model="open" :tree="tree" :files="files"
+      title="AI 드라이브에서 파일 추가" @confirm="attach" />
 ### Table & List (표·목록)
 - **DsDataTable** (데이터 테이블) — 정렬·페이지네이션이 되는 데이터 목록.
   import: ~/design/vuetify | origin: wrapped (VDataTable)
@@ -485,7 +493,7 @@ Each component has a standalone prompt at https://kimjiyong995-coder.github.io/d
 - **DsFileRow** (파일 행) — 드라이브의 리스트 보기 한 줄.
   import: ~/design | origin: custom
   where: 드라이브 리스트 보기 — 세부 비교용.
-  props: name, meta, icon, selected=false
+  props: name, meta, icon, selected=false, checkbox=false, disabled=false
   vs: FileGrid — 썸네일이 중요하면 그리드
   usage:
     <DsFileRow v-for="f in files" :key="f.id"

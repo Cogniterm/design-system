@@ -1,0 +1,42 @@
+# DsDrivePicker — Cogniterm Design System
+
+import { DsDrivePicker } from '~/design/vuetify'   // Vuetify 필요 · ds.css + ds-vuetify.css
+
+## 용도
+채팅 첨부·업로드 대상 고르기 — 드라이브에서 파일을 찾아 선택.
+
+## Props
+- modelValue: boolean = false — 열림 (v-model).
+- tree: DpTreeNode[] = 필수 — { id, title, path, icon?, locked?, children? } — 좌측 폴더 트리.
+- files: DpFile[] = 필수 — { id, name, path, icon?, meta?, badge?, disabled?, disabledReason? }
+- title: string = '드라이브에서 파일 추가' — 헤더 제목.
+- confirmLabel: string = '첨부' — 확정 버튼 라벨.
+
+## Events
+- @confirm (DpFile[]) — 선택을 확정하면 발생. 피커는 자동으로 닫힘.
+
+## 사용 예
+```vue
+<DsDrivePicker v-model="open" :tree="tree" :files="files"
+  title="AI 드라이브에서 파일 추가" @confirm="attach" />
+```
+
+## 구분
+- vs FileGrid: 한 폴더 안 썸네일 고르기는 그리드
+- vs CommandPalette: 파일이 아니라 명령·이동이면 팔레트
+
+## 지침
+- [해야 할 것] 검색은 현재 폴더와 무관하게 드라이브 전체를 훑고, 결과마다 경로를 함께 보여줍니다.
+- [해야 할 것] 고를 수 없는 파일(권한·정책)은 행을 흐리게 하고 사유를 title로 설명합니다.
+- [하지 말 것] 색(배지)만으로 등급을 전달하지 않습니다 — 글자(C/S/O)를 항상 함께 씁니다.
+
+## 접근성
+키보드: Enter / Space=행 선택/해제 · Esc=닫기
+직접 처리: 고를 수 없는 파일은 사유를 title로 설명 / 등급 배지는 색만 말고 글자(C/S/O)를 함께
+
+## 시스템 규칙 (요약)
+- 색·간격·모서리는 CSS 변수만 (var(--gray-6), var(--brand)) — hex 금지
+- primary 버튼은 화면당 하나. 선택·활성 상태는 중립(--sel-bg/--sel-fg)
+- 컨트롤 높이 32(sm)/40/48 — 필터 바·툴바는 sm
+- 목록·테이블은 default/loading/empty/error/partial 5상태
+- 전체 규칙: https://kimjiyong995-coder.github.io/design-system/llms.txt

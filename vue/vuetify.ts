@@ -48,6 +48,8 @@ export { default as DsCombobox } from './components/vuetify/DsCombobox.vue'
 export { default as DsPopover } from './components/vuetify/DsPopover.vue'
 export { default as DsHoverCard } from './components/vuetify/DsHoverCard.vue'
 export { default as DsCommandPalette } from './components/vuetify/DsCommandPalette.vue'
+export { default as DsDrivePicker } from './components/vuetify/DsDrivePicker.vue'
+export type { DpTreeNode, DpFile, DpBadge } from './components/vuetify/DsDrivePicker.vue'
 
 /* ── 설정 ── */
 export { dsDefaults } from './defaults'

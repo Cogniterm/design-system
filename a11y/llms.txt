@@ -333,6 +333,11 @@ Keyboard: ⌘K = 열기 (앱에서 바인딩) | ↑ ↓ = 이동 | Enter = 실�
 Component handles: 포커스 트랩·listbox 시맨틱·활성 항목 추적
 YOU must handle: 전역 단축키 등록은 앱 몫; 최근 사용 상단 정렬
 
+### DsDrivePicker (드라이브 피커)
+Keyboard: Enter / Space = 행 선택/해제 | Esc = 닫기
+Component handles: 포커스 트랩·다이얼로그 이름·트리 키보드 탐색
+YOU must handle: 고를 수 없는 파일은 사유를 title로 설명; 등급 배지는 색만 말고 글자(C/S/O)를 함께
+
 ### DsIcon (아이콘)
 Keyboard: n/a
 Component handles: label이 없으면 aria-hidden="true" 자동 부여; label이 있으면 role="img"
