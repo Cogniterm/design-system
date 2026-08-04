@@ -574,7 +574,6 @@ td.mono { font-family: var(--mono); font-size: var(--text-xs); color: var(--gray
 .ds-code-copy:focus-visible,
 .sf-clear:focus-visible,
 .ds-palette-item:focus-visible,
-.searchfield input:focus-visible,
 .agent-input textarea:focus-visible,
 .file-row:focus-visible,
 .file-card:focus-visible {

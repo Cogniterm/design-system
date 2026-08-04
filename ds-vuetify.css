@@ -396,8 +396,19 @@
 
 /* ── DsTreeview ── */
 .ds-treeview.v-treeview { background: transparent; }
-.ds-treeview .v-list-item { min-height: 30px; font-size: var(--text-sm); border-radius: var(--r-md); }
+.ds-treeview .v-list-item { font-size: var(--text-sm); border-radius: var(--r-md); }
+/* 컴팩트 행 — Vuetify density가 40px로 키우는 것을 32px로 (특이도로 이김) */
+.ds-treeview .v-list-item.v-list-item--one-line { min-height: 32px; }
 .ds-treeview .v-list-item--active { background: var(--sel-bg); color: var(--sel-fg); }
+/* 트리 가이드선 — 부모 셰브런 중심에 세로 연결선. 없으면 들여쓴 목록처럼 보여 트리로 안 읽힘.
+   레벨별 x = 셰브런 중심(측정): 루트 22 · 2단계 50 (레벨당 들여쓰기 28px). */
+.ds-treeview .v-list-group__items { position: relative; }
+.ds-treeview .v-list-group__items::before {
+  content: ''; position: absolute; top: 1px; bottom: 1px; left: 22px; width: 1px;
+  background: var(--border); pointer-events: none;
+}
+.ds-treeview .v-list-group__items .v-list-group__items::before { left: 50px; }
+.ds-treeview .v-list-group__items .v-list-group__items .v-list-group__items::before { left: 78px; }
 
 /* ── DsTimeline ── */
 .ds-timeline .v-timeline-divider__dot { box-shadow: none; }
