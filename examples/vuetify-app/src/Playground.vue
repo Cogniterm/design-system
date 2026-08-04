@@ -226,6 +226,7 @@ function search() { loading.value = true; setTimeout(() => { loading.value = fal
         <DsBadge>대기</DsBadge>
         <DsBadge variant="brand">실행 중</DsBadge>
         <DsBadge variant="success">완료</DsBadge>
+        <DsBadge variant="warning">지연</DsBadge>
         <DsBadge variant="danger">실패</DsBadge>
       </template>
 

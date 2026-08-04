@@ -219,11 +219,11 @@ const status = P('status', 'Object Status', '객체 상태', 'core',
     <table>
       <thead><tr><th>상태</th><th>배지</th><th>뜻</th></tr></thead>
       <tbody>
-        <tr><td><code>대기</code></td><td><span class="badge"><span class="dot"></span>대기</span></td><td>아직 시작하지 않음</td></tr>
-        <tr><td><code>실행 중</code></td><td><span class="badge brand"><span class="dot"></span>실행 중</span></td><td>진행 중</td></tr>
-        <tr><td><code>완료</code></td><td><span class="badge success"><span class="dot"></span>완료</span></td><td>정상 종료</td></tr>
-        <tr><td><code>실패</code></td><td><span class="badge danger"><span class="dot"></span>실패</span></td><td>오류로 중단</td></tr>
-        <tr><td><code>부분 완료</code></td><td><span class="badge"><span class="dot" style="background:var(--warning)"></span>부분 완료</span></td><td>일부만 성공</td></tr>
+        <tr><td><code>대기</code></td><td><span class="badge">대기</span></td><td>아직 시작하지 않음</td></tr>
+        <tr><td><code>실행 중</code></td><td><span class="badge brand">실행 중</span></td><td>진행 중</td></tr>
+        <tr><td><code>완료</code></td><td><span class="badge success">완료</span></td><td>정상 종료</td></tr>
+        <tr><td><code>실패</code></td><td><span class="badge danger">실패</span></td><td>오류로 중단</td></tr>
+        <tr><td><code>부분 완료</code></td><td><span class="badge warning">부분 완료</span></td><td>일부만 성공</td></tr>
       </tbody>
     </table>
 
@@ -373,7 +373,7 @@ const aiContent = P('ai-content', 'AI Content Labeling', 'AI 생성 표시', 'ag
     <div class="demo" style="border-radius:var(--r-xl)">
       <div style="border:1px solid var(--gray-4);border-radius:var(--r-lg);padding:16px;max-width:480px;background:var(--surface)">
         <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px">
-          <span class="badge brand"><span class="dot"></span>AI 요약</span>
+          <span class="badge brand">AI 요약</span>
           <span style="font-size:11.5px;color:var(--gray-9);font-family:var(--mono)">3개 문서 기반</span>
         </div>
         <div style="font-size:13.5px;color:var(--gray-12);line-height:1.7">

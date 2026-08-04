@@ -364,26 +364,28 @@ export const COMPONENTS = [
   summary: '상태를 표시하는 작은 읽기 전용 라벨.',
   reason: { ko: 'VChip으로 대체 가능하지만 필요한 형태가 훨씬 단순합니다.', en: 'Simpler than VChip for our needs.' },
   props: [
-    ['variant', `'default' | 'brand' | 'success' | 'danger'`, `'default'`, '상태 색.'],
-    ['dot', 'boolean', 'true', '앞의 색 점 표시.'],
+    ['variant', `'default' | 'brand' | 'success' | 'warning' | 'danger'`, `'default'`, '상태 색 — 배경·글자·테두리로 구분.'],
   ],
   slots: [['default', '상태 텍스트.']],
   demo: `<div class="row">
-    <span class="badge"><span class="dot"></span>Draft</span>
-    <span class="badge brand"><span class="dot"></span>Running</span>
-    <span class="badge success"><span class="dot"></span>Completed</span>
-    <span class="badge danger"><span class="dot"></span>Failed</span>
+    <span class="badge">Draft</span>
+    <span class="badge brand">Running</span>
+    <span class="badge success">Completed</span>
+    <span class="badge warning">Delayed</span>
+    <span class="badge danger">Failed</span>
   </div>`,
   vue: `<DsBadge>Draft</DsBadge>
 <DsBadge variant="brand">Running</DsBadge>
 <DsBadge variant="success">Completed</DsBadge>
+<DsBadge variant="warning">Delayed</DsBadge>
 <DsBadge variant="danger">Failed</DsBadge>`,
-  html: `<span class="badge"><span class="dot"></span>Draft</span>
-<span class="badge brand"><span class="dot"></span>Running</span>
-<span class="badge success"><span class="dot"></span>Completed</span>
-<span class="badge danger"><span class="dot"></span>Failed</span>`,
+  html: `<span class="badge">Draft</span>
+<span class="badge brand">Running</span>
+<span class="badge success">Completed</span>
+<span class="badge warning">Delayed</span>
+<span class="badge danger">Failed</span>`,
   guidelines: [
-    ['해야 할 것', '색 점이 상태를 말하고 배경은 조용하게 둡니다.'],
+    ['해야 할 것', '상태별 색(배경·글자·테두리)으로 구분하고, 라벨 텍스트를 항상 함께 씁니다.'],
     ['하지 말 것', '색만으로 상태를 구분하지 않습니다. 텍스트를 항상 함께 씁니다(색맹 대응).'],
   ],
 },
