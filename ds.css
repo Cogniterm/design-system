@@ -50,6 +50,7 @@
   --warning: #ab6400;
   --danger:  #d93036;
   --info:    var(--brand);
+  --favorite: #e8a800;      /* 즐겨찾기 별 — 골드 (비텍스트 UI, 3:1) */
 
   --success-subtle: color-mix(in srgb, var(--success) 6%, var(--bg));
   --success-border: color-mix(in srgb, var(--success) 28%, transparent);
@@ -139,7 +140,7 @@
   --brand-subtle: #10243E;
   --on-brand: #0b1220;
 
-  --success: #46a758; --warning: #f0b429; --danger: #e5484d;
+  --success: #46a758; --warning: #f0b429; --danger: #e5484d; --favorite: #f5c518;
 
   /* 차트 — 다크 배경에서 채도가 죽지 않게 한 톤 밝게 */
   --chart-1: #4593F5;
@@ -398,16 +399,27 @@ td.mono { font-family: var(--mono); font-size: var(--text-xs); color: var(--gray
 .file-card .f-name { font-size: var(--text-sm); font-weight: var(--weight-medium); margin-top: 8px;
   white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .file-card .f-meta { font-size: var(--text-2xs); color: var(--gray-11); margin-top: 2px; }
-.file-row { display: flex; align-items: center; gap: 12px; height: 42px; padding: 0 13px;
-  border-radius: var(--r-md); cursor: pointer; font-size: var(--text-sm); transition: background .16s ease; }
+.file-row { display: flex; align-items: center; gap: 10px; height: 42px; padding: 0 13px;
+  border-radius: var(--r-md); cursor: pointer; font-size: var(--text-base); transition: background .16s ease; }
 .file-row:hover { background: var(--gray-2); }
 .file-row.selected { background: var(--sel-bg); }
 .file-row.disabled { cursor: default; opacity: .5; }
 .file-row.disabled:hover { background: transparent; }
-.file-row .f-check { width: 16px; height: 16px; margin: 0; flex-shrink: 0; accent-color: var(--brand); pointer-events: none; }
-.file-row .f-icon { font-size: var(--text-lg); width: 20px; text-align: center; flex-shrink: 0; color: var(--gray-9); }
-.file-row .f-name { flex: 1; font-weight: var(--weight-medium); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.file-row .f-meta { font-size: var(--text-xs); color: var(--gray-11); font-family: var(--mono); flex-shrink: 0; }
+/* 체크박스 — 테두리 톤을 시스템 보더(--border-strong)에 맞춤. 네이티브 진한 회색 대신. */
+.file-row .f-check {
+  appearance: none;
+  width: 16px; height: 16px; margin: 0; flex-shrink: 0; pointer-events: none;
+  border: 1px solid var(--border-strong); border-radius: 4px; background: var(--surface);
+}
+.file-row .f-check:checked {
+  border-color: var(--brand);
+  background: var(--brand) url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23fff' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'><path d='M20 6 9 17l-5-5'/></svg>") center / 11px no-repeat;
+}
+.file-row .f-icon { width: 18px; display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0; color: var(--gray-11); }
+/* 이름은 내용 폭 — 뒤 슬롯(즐겨찾기 별)이 이름 바로 옆에 붙도록. 남는 공간은 f-fill이 차지. */
+.file-row .f-name { flex: 0 1 auto; min-width: 0; font-weight: var(--weight-medium); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.file-row .f-fill { flex: 1 1 0; min-width: 8px; }
+.file-row .f-meta { font-size: var(--text-xs); color: var(--gray-11); flex-shrink: 0; }
 
 /* ── ds-artifact-panel ── */
 .artifact { border: 1px solid var(--border); border-radius: var(--r-xl); overflow: hidden; background: var(--surface); }

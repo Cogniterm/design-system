@@ -19,7 +19,7 @@ import {
   LayoutGrid, List, Table, Calendar, Clock, Bell,
   User, Users, Shield, ShieldAlert, Lock, LogOut,
   AlertCircle, AlertTriangle, CheckCircle2, Info, Loader2,
-  Play, Pause, Sun, Moon, Link2,
+  Play, Pause, Sun, Moon, Link2, Star,
 } from 'lucide-vue-next'
 
 /* ── 의미 → 아이콘 ─────────────────────────
@@ -77,6 +77,8 @@ export const icons = {
   tableView: Table,
   calendar: Calendar,
   time: Clock,
+  recent: Clock,
+  favorite: Star,
   notification: Bell,
 
   /* 사람 · 권한 */

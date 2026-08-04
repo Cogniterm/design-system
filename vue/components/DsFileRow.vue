@@ -29,8 +29,10 @@ const emit = defineEmits<{ select: [] }>()
       v-if="checkbox" type="checkbox" class="f-check"
       :checked="!!selected" :disabled="disabled" tabindex="-1" aria-hidden="true"
     />
-    <span v-if="icon || $slots.icon" class="f-icon"><slot name="icon" :name="icon" /></span>
+    <span v-if="icon || $slots.icon" class="f-icon"><slot name="icon" /></span>
     <span class="f-name">{{ name }}</span>
+    <slot name="afterName" />
+    <span class="f-fill" aria-hidden="true" />
     <slot name="trailing" />
     <span v-if="meta" class="f-meta">{{ meta }}</span>
   </div>
