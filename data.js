@@ -75,27 +75,44 @@ export const COMPONENTS = [
   props: [
     ['location', 'string', `'bottom start'`, '열리는 방향. Vuetify VMenu의 location을 그대로 전달합니다.'],
   ],
-  slots: [['activator', '메뉴를 여는 요소. v-bind="props" 필수.'], ['default', '메뉴 내용. .ds-menu-item 사용.']],
-  demo: `<div class="ds-menu-panel" style="max-width:200px">
-    <div class="ds-menu-item">${ic('edit','sm')}이름 바꾸기</div>
-    <div class="ds-menu-item">${ic('copy','sm')}복제</div>
-    <hr class="divider" style="margin:4px 0">
-    <div class="ds-menu-item" style="color:var(--danger)">${ic('delete','sm')}삭제</div>
+  slots: [['activator', '메뉴를 여는 요소. v-bind="props" 필수.'], ['default', '메뉴 내용. .ds-menu-item + __label / __trail 로 조립.']],
+  demo: `<div class="ds-menu-panel" style="max-width:240px">
+    <div class="ds-menu-label">보기</div>
+    <div class="ds-menu-item ds-menu-item--selected">${ic('confirm','sm')}<span class="ds-menu-item__label">목록</span></div>
+    <div class="ds-menu-item">${ic('gridView','sm')}<span class="ds-menu-item__label">갤러리</span></div>
+    <hr class="ds-menu-sep">
+    <div class="ds-menu-label">동작</div>
+    <div class="ds-menu-item">${ic('edit','sm')}<span class="ds-menu-item__label">이름 바꾸기</span><span class="ds-menu-item__trail">F2</span></div>
+    <div class="ds-menu-item">${ic('copy','sm')}<span class="ds-menu-item__label">복제</span><span class="ds-menu-item__trail">⌘D</span></div>
+    <div class="ds-menu-item ds-menu-item--disabled">${ic('download','sm')}<span class="ds-menu-item__label">다운로드</span></div>
+    <hr class="ds-menu-sep">
+    <div class="ds-menu-item ds-menu-item--danger">${ic('delete','sm')}<span class="ds-menu-item__label">삭제</span><span class="ds-menu-item__trail">⌦</span></div>
   </div>
   <div class="hint" style="margin-top:10px">↑ 실제로는 버튼 클릭 시 이 패널이 떠서 열립니다.</div>`,
   vue: `<DsMenu location="bottom end">
   <template #activator="props">
     <DsButton variant="secondary" v-bind="props">More</DsButton>
   </template>
-  <div class="ds-menu-item" @click="rename">이름 바꾸기</div>
-  <div class="ds-menu-item" @click="duplicate">복제</div>
-  <hr class="divider" />
-  <div class="ds-menu-item" style="color:var(--danger)" @click="remove">삭제</div>
+  <div class="ds-menu-label">동작</div>
+  <div class="ds-menu-item" @click="rename">
+    <DsIcon name="edit" size="sm" /><span class="ds-menu-item__label">이름 바꾸기</span><span class="ds-menu-item__trail">F2</span>
+  </div>
+  <div class="ds-menu-item" @click="duplicate">
+    <DsIcon name="copy" size="sm" /><span class="ds-menu-item__label">복제</span><span class="ds-menu-item__trail">⌘D</span>
+  </div>
+  <hr class="ds-menu-sep" />
+  <div class="ds-menu-item ds-menu-item--danger" @click="remove">
+    <DsIcon name="delete" size="sm" /><span class="ds-menu-item__label">삭제</span>
+  </div>
 </DsMenu>`,
   html: null,
   guidelines: [
-    ['해야 할 것', '항목이 8개를 넘으면 구분선으로 묶거나 Command Palette를 검토합니다.'],
+    ['해야 할 것', '항목은 아이콘 + <code>__label</code>(신축·말줄임) + 선택적 <code>__trail</code>(단축키·메타) 순서로 조립합니다.'],
+    ['해야 할 것', '현재 선택값은 <code>--selected</code>(브랜드색), 파괴적 동작은 <code>--danger</code>, 잠긴 항목은 <code>--disabled</code>를 씁니다 — 인라인 스타일 대신 변형 클래스.'],
+    ['해야 할 것', '항목을 묶을 땐 <code>.ds-menu-label</code>(섹션 머리글)과 <code>.ds-menu-sep</code>(구분선)을 씁니다. 긴 메뉴는 패널이 자동 스크롤됩니다.'],
     ['하지 말 것', '메뉴 안에 폼을 넣지 않습니다. 그건 Dialog의 역할입니다.'],
+    ['하지 말 것', '항목이 8개를 넘고 탐색이 필요하면 Command Palette를 검토합니다.'],
+    ['접근성', '키보드 포커스가 항목에 닿으면 호버와 같은 배경이 드러납니다(focus-visible). 활성자(activator)에는 <code>aria-haspopup</code>을 붙입니다.'],
   ],
 },
 

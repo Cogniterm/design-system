@@ -152,19 +152,61 @@
 .dp-spacer { flex: 1; }
 .ds-drivepicker-content { box-shadow: var(--shadow-overlay); border-radius: var(--r-xl); }
 
-/* ── DsMenu — VMenu 내부 면 ── */
+/* ── DsMenu — VMenu 내부 면 ──
+   저수준 패널 + 항목 어휘. 항목은 소비자가 .ds-menu-item 으로 조립합니다.
+   구조: <div class="ds-menu-item">[아이콘 svg] <span class="ds-menu-item__label">라벨</span>
+          [<span class="ds-menu-item__trail">단축키·메타</span>]</div>
+   변형: --selected(현재값·체크) · --danger(파괴적) · --disabled(비활성)
+   구성: .ds-menu-label(섹션 머리) · .ds-menu-sep(구분선) */
 .ds-menu-panel {
   background: var(--surface); border: 0;
-  border-radius: var(--r-lg); padding: 4px; min-width: 180px;
+  border-radius: var(--r-lg); padding: 4px; min-width: 180px; max-width: 320px;
+  max-height: min(60vh, 420px); overflow-y: auto;
   font-family: var(--font); box-shadow: var(--shadow-overlay);
 }
 
 .ds-menu-item {
-  display: flex; align-items: center; gap: 9px; height: 34px; padding: 0 11px;
-  border-radius: var(--r-md); font-size: var(--text-sm); color: var(--gray-12); cursor: pointer;
-  transition: background .16s ease;
+  position: relative; display: flex; align-items: center; gap: 9px; height: 34px; padding: 0 10px;
+  border-radius: var(--r-md); font-size: var(--text-sm); color: var(--gray-12);
+  cursor: pointer; user-select: none; white-space: nowrap;
+  transition: background .12s ease, color .12s ease;
 }
-.ds-menu-item:hover { background: var(--gray-3); }
+/* 앞머리 아이콘은 muted (docs=.lic · Vue=DsIcon svg 모두 직계 자식) */
+.ds-menu-item > svg { flex: none; color: var(--gray-11); }
+.ds-menu-item:hover,
+.ds-menu-item:focus-visible { background: var(--gray-3); outline: none; }
+.ds-menu-item:active { background: var(--gray-4); }
+
+/* 라벨은 신축·말줄임, 우측 보조(단축키·메타)는 끝으로 */
+.ds-menu-item__label { flex: 1 1 auto; min-width: 0; overflow: hidden; text-overflow: ellipsis; }
+.ds-menu-item__trail {
+  flex: none; margin-left: auto; display: inline-flex; align-items: center; gap: 6px;
+  color: var(--gray-11); font-size: var(--text-xs); font-family: var(--mono);
+}
+
+/* 선택됨 — 브랜드색 + 앞아이콘 강조 (소비자가 check 아이콘을 앞에 두면 체크로 읽힘) */
+.ds-menu-item--selected { color: var(--brand-text); font-weight: var(--weight-medium); }
+.ds-menu-item--selected > svg { color: var(--brand); }
+
+/* 파괴적 동작 */
+.ds-menu-item--danger { color: var(--danger); }
+.ds-menu-item--danger > svg { color: var(--danger); }
+.ds-menu-item--danger:hover,
+.ds-menu-item--danger:focus-visible { background: var(--danger-subtle); }
+
+/* 비활성 */
+.ds-menu-item--disabled { color: var(--gray-9); cursor: default; pointer-events: none; }
+.ds-menu-item--disabled > svg { color: var(--gray-8); }
+
+/* 섹션 머리글 */
+.ds-menu-label {
+  padding: 7px 10px 4px; font-size: var(--text-2xs); font-weight: var(--weight-semibold);
+  color: var(--gray-11);
+}
+.ds-menu-panel > .ds-menu-label:first-child { padding-top: 4px; }
+
+/* 구분선 — 얇게, 좌우 인셋 */
+.ds-menu-sep { height: 1px; margin: 4px 6px; background: var(--border-subtle); border: 0; }
 
 /* ── DsTooltip ── */
 .v-tooltip > .v-overlay__content {
