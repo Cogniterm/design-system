@@ -108,8 +108,8 @@
 .dp-filter-scrim { position: fixed; inset: 0; z-index: 10; }
 .dp-filter-panel {
   position: absolute; top: calc(100% + 6px); right: 0; z-index: 11; min-width: 200px;
-  background: var(--surface); border: 1px solid var(--border); border-radius: var(--r-lg);
-  box-shadow: var(--shadow-overlay); padding: 6px;
+  background: var(--surface); border: 0; border-radius: var(--r-lg);
+  box-shadow: var(--shadow-overlay); padding: 4px;
 }
 .dp-filter-head { font-size: var(--text-2xs); font-weight: var(--weight-semibold); color: var(--gray-11); padding: 4px 8px; }
 .dp-filter-opt {
