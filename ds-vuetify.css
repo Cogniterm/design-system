@@ -144,6 +144,12 @@
 .v-list-subheader { font-size: var(--text-2xs); font-weight: var(--weight-semibold); color: var(--gray-11);
   min-height: 28px; }
 
+/* Select·Combobox·Autocomplete 드롭다운 옵션 — 밀도 comfortable이 항목을 44px로 키우는 것을
+   Menu(34px)와 같은 컴팩트 높이로 교정. (min-height 36px 기본 규칙이 Vuetify density 규칙에 밀렸음) */
+.v-select__content .v-list-item--density-comfortable.v-list-item--one-line,
+.v-autocomplete__content .v-list-item--density-comfortable.v-list-item--one-line,
+.v-combobox__content .v-list-item--density-comfortable.v-list-item--one-line { min-height: 36px; }
+
 /* ── VTable (VDataTable의 기반) ── */
 .v-table { background: var(--surface); }
 .v-table > .v-table__wrapper > table > thead > tr > th {
@@ -184,6 +190,13 @@
 .v-chip { font-size: var(--text-xs); font-weight: 500; border-color: var(--gray-5); }
 .v-chip--variant-outlined { background: var(--surface); }
 
+/* 입력 안 태그(Combobox·Autocomplete의 chips) — 알약형 큰 칩 대신 컴팩트한 태그로.
+   필드 높이(40px) 안에 여유 있게 들어가도록 22px·모서리 6px, 닫기 아이콘도 축소.
+   (vite-plugin-vuetify가 칩 CSS를 나중에 주입하므로 특이도를 올려 확실히 이김) */
+.v-field .v-chip.v-chip { height: 22px; min-height: 22px; --v-chip-height: 22px; border-radius: var(--r-md); font-size: var(--text-xs); padding-inline: 8px; }
+.v-field .v-chip.v-chip .v-chip__close .v-icon { font-size: 15px; }
+.v-field .v-chip.v-chip .v-avatar { display: none; }
+
 /* ── VBreadcrumbs / VPagination ── */
 .v-breadcrumbs { font-size: var(--text-sm); padding: 0; }
 .v-breadcrumbs-item { color: var(--gray-11); }
@@ -216,6 +229,12 @@
 /* ── VSelectionControl (체크박스·라디오·스위치 공통) ── */
 .v-selection-control__input > .v-icon { font-size: 18px; }
 .v-selection-control--density-comfortable { --v-selection-control-size: 36px; }
+/* 체크박스·라디오는 아이콘 상자와 라벨 사이 간격이 과했음(36px 상자) → 28px로 좁혀 라벨에 붙임.
+   스위치는 트랙 크기에 영향 있어 제외. */
+.v-checkbox .v-selection-control--density-comfortable,
+.v-radio .v-selection-control--density-comfortable { --v-selection-control-size: 28px; }
+.v-checkbox .v-selection-control .v-label,
+.v-radio .v-selection-control .v-label { padding-inline-start: 6px; }
 
 /* ── VTreeview / VVirtualScroll ── */
 .v-treeview-item { font-size: var(--text-sm); border-radius: var(--r-md); min-height: 32px; }
@@ -410,6 +429,11 @@
 .ds-vselect--dense .v-field { font-size: var(--text-sm); }
 .v-field__field { align-items: center; }
 .v-field__prepend-inner, .v-field__append-inner { align-items: center; padding-top: 0; }
+/* 텍스트에어리어(여러 줄)는 위 규칙(padding 0 + 중앙 정렬)에서 첫 줄이 상단 경계에 붙어
+   글자 윗부분이 잘렸음 → 상단 정렬 + 상하 여백을 줘서 값·placeholder가 온전히 보이게. */
+.v-textarea .v-field__field { align-items: flex-start; }
+.v-textarea .v-field__input,
+.v-input--density-comfortable .v-textarea .v-field__input { padding-top: 9px; padding-bottom: 9px; min-height: 40px; }
 .v-input__details { padding-inline: 2px; min-height: 0; padding-top: 6px; }
 .v-messages { opacity: 1; }
 .v-field--focused { box-shadow: 0 0 0 3.5px var(--brand-subtle); border-radius: var(--r-lg); }

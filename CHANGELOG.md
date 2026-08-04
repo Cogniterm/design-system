@@ -27,6 +27,18 @@
 - `vue/meta.ts`를 `data.js`에서 자동 생성 (20종 → 50종 동기화)
 - `vuetifyBase`(감싼 것)와 `vuetifyAlt`(대안이 있지만 안 쓴 것) 분리
 
+### Fixed
+- **Select·Combobox·Autocomplete 드롭다운 옵션 높이** — Vuetify density 규칙이
+  `.v-list-item` 기본(36px)을 44px로 덮어써 Menu(34px)와 어긋나던 것 교정.
+  오버레이(`.v-select__content` 등)에 특이도를 올려 36px로 통일
+- **텍스트에어리어 값·placeholder 상단 잘림** — `padding:0`+중앙 정렬이 여러 줄
+  입력의 첫 줄을 필드 경계에 붙여 글자 윗부분이 잘렸음. `.v-textarea`만 상단 정렬+상하 여백
+- **체크박스·라디오 라벨 간격 과다** — 선택 컨트롤 상자(36px)와 라벨 사이 빈 공간을
+  28px로 좁혀 라벨에 붙임 (스위치는 트랙 크기 영향으로 제외)
+- **입력 안 태그(Combobox·Autocomplete chips) 크기** — 26px 큰 알약을 22px 컴팩트 태그로,
+  닫기 아이콘 축소. 필드 높이(40px) 안에 여유 있게
+- 위 수정은 모두 `ds-vuetify.css`에서만 처리 (컴포넌트 API·`!important` 변화 없음)
+
 ## [0.3.0] — 2026-07-31
 
 ### Added
