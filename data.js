@@ -890,7 +890,8 @@ export const COMPONENTS = [
   origin: 'wrapped', vuetifyBase: 'VBreadcrumbs',
   summary: '현재 위치의 계층 경로.',
   reason: { ko: '구분자 모양과 마지막 항목 강조 규칙을 고정합니다.', en: 'Fix separator and last-item emphasis.' },
-  props: [['items', '{ title, to?, disabled? }[]', '필수', '마지막 항목은 disabled로 두어 현재 위치를 표시합니다.']],
+  props: [['items', '{ title, to?, disabled?, index? }[]', '필수', 'to가 있으면 링크, 없으면 @select로 클릭 이동. 마지막·disabled 항목은 현재 위치.']],
+  events: [['select', 'number', 'to 없는 항목 클릭 시 그 index. 라우터 없이 이동할 때.']],
   slots: [],
   demo: `<div class="ds-bc-demo">Drive <i>/</i> 법무 <i>/</i> <b>2026</b></div>`,
   vue: `<DsBreadcrumbs :items="[
@@ -1244,8 +1245,10 @@ export const COMPONENTS = [
   props: [
     ['items', 'any[]', '필수', 'children으로 중첩합니다.'],
     ['itemTitle / itemValue', 'string', "'title' / 'id'", '필드 이름.'],
+    ['opened', 'any[]', '—', '펼쳐진 노드 (v-model:opened).'],
+    ['density', "'compact' | 'comfortable'", "'comfortable'", '행 높이.'],
   ],
-  slots: [],
+  slots: [['prepend', '노드마다 앞 아이콘. <DsIcon>을 넣습니다.']],
   demo: `<div class="ds-tree-demo"><div>${ic('expand','sm')} 법무</div><div class="ind on">2026</div><div class="ind">2025</div><div>${ic('collapse','sm')} 재무</div></div>`,
   vue: `<DsTreeview v-model="activated" :items="[
   { id: 1, title: '법무', children: [{ id: 2, title: '2026' }] },
@@ -1532,7 +1535,7 @@ export const COMPONENTS = [
       </nav>
       <div class="dp-main">
         <div class="dp-search"><div class="searchfield"><span class="sf-icon">${ic('search','sm')}</span><input placeholder="드라이브 전체에서 검색 — 파일명·경로" disabled /></div></div>
-        <div class="dp-crumb"><span class="dp-crumb-cur">개인 / 내 문서</span></div>
+        <div class="dp-crumb"><span class="ds-bc-cur">개인 / 내 문서</span></div>
         <div class="dp-list">
           <div class="file-row"><input class="f-check" type="checkbox" checked disabled /><span class="f-icon">${ic('document','sm')}</span><span class="f-name">내부보고서.docx</span><span class="badge warning">S</span><span class="f-meta">나 · 1.1MB</span></div>
           <div class="file-row"><input class="f-check" type="checkbox" disabled /><span class="f-icon">${ic('document','sm')}</span><span class="f-name">보도자료_초안.hwp</span><span class="badge warning">S</span><span class="f-meta">나 · 320KB</span></div>

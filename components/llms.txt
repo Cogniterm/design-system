@@ -530,7 +530,7 @@ Each component has a standalone prompt at https://kimjiyong995-coder.github.io/d
 - **DsTreeview** (트리) — 계층 구조를 펼쳐서 봅니다.
   import: ~/design/vuetify | origin: wrapped (VTreeview)
   where: 드라이브 폴더 트리, 문서 목차, 조직도.
-  props: items, itemTitle / itemValue='title' / 'id'
+  props: items, itemTitle / itemValue='title' / 'id', opened, density='comfortable'
   usage:
     <DsTreeview v-model="activated" :items="[
       { id: 1, title: '법무', children: [{ id: 2, title: '2026' }] },

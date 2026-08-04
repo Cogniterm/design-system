@@ -3,13 +3,15 @@
 // 왼쪽 폴더 트리 + 오른쪽 파일 목록. 검색하면 목록이 "검색 결과 뷰"로 바뀝니다.
 // 데이터는 전부 props로 받습니다 (연동 시 API 응답으로 교체) — 컴포넌트는 데이터를 모릅니다.
 import { computed, ref, watch } from 'vue'
-import { VDialog, VTreeview } from 'vuetify/components'
+import { VDialog } from 'vuetify/components'
 import DsIcon from '../DsIcon.vue'
 import DsBadge from '../DsBadge.vue'
 import DsButton from '../DsButton.vue'
 import DsFileRow from '../DsFileRow.vue'
 import DsSearchField from '../DsSearchField.vue'
 import DsEmptyState from '../DsEmptyState.vue'
+import DsTreeview from './DsTreeview.vue'
+import DsBreadcrumbs from './DsBreadcrumbs.vue'
 import type { IconName } from '../../icons'
 
 export interface DpTreeNode {
@@ -59,6 +61,7 @@ function findNode(nodes: DpTreeNode[], id?: string): DpTreeNode | null {
 const currentNode = computed(() => findNode(props.tree, currentId.value))
 const currentPath = computed(() => currentNode.value?.path ?? '')
 const crumb = computed(() => (currentPath.value ? currentPath.value.split(' / ') : []))
+const crumbItems = computed(() => crumb.value.map((seg, i) => ({ title: seg, index: i, disabled: i === crumb.value.length - 1 })))
 const childFolders = computed(() => currentNode.value?.children ?? [])
 const browseFiles = computed(() => props.files.filter(f => f.path === currentPath.value))
 
@@ -125,15 +128,15 @@ watch(open, (o) => { if (!o) reset() })
       <!-- 본문: 좌 트리 + 우 목록 -->
       <div class="dp-body">
         <nav class="dp-nav" aria-label="폴더 트리">
-          <VTreeview
-            v-model:activated="activated" v-model:opened="opened"
+          <DsTreeview
+            v-model="activated" v-model:opened="opened"
             :items="tree" item-value="id" item-title="title"
-            activatable density="compact" class="ds-treeview dp-tree"
+            density="compact" class="dp-tree"
           >
             <template #prepend="{ item }">
               <DsIcon :name="nodeIcon(raw(item))" size="sm" class="dp-tree-icon" />
             </template>
-          </VTreeview>
+          </DsTreeview>
         </nav>
 
         <div class="dp-main">
@@ -167,13 +170,7 @@ watch(open, (o) => { if (!o) reset() })
 
           <!-- 폴더 탐색 뷰 -->
           <template v-else>
-            <nav class="dp-crumb" aria-label="현재 위치">
-              <template v-for="(seg, i) in crumb" :key="i">
-                <DsIcon v-if="i > 0" name="forward" size="sm" class="dp-crumb-sep" />
-                <button v-if="i < crumb.length - 1" type="button" class="dp-crumb-btn" @click="gotoCrumb(i)">{{ seg }}</button>
-                <span v-else class="dp-crumb-cur">{{ seg }}</span>
-              </template>
-            </nav>
+            <DsBreadcrumbs class="dp-crumb" :items="crumbItems" @select="gotoCrumb" />
             <div v-if="childFolders.length + browseFiles.length" class="dp-list" role="listbox" aria-label="파일 목록">
               <!-- 하위 폴더 -->
               <DsFileRow

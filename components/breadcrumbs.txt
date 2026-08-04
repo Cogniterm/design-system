@@ -6,8 +6,10 @@ import { DsBreadcrumbs } from '~/design/vuetify'   // Vuetify 필요 · ds.css +
 드라이브 폴더 경로, 설정 하위 페이지.
 
 ## Props
-- items: { title, to?, disabled? }[] = 필수 — 마지막 항목은 disabled로 두어 현재 위치를 표시합니다.
+- items: { title, to?, disabled?, index? }[] = 필수 — to가 있으면 링크, 없으면 @select로 클릭 이동. 마지막·disabled 항목은 현재 위치.
 
+## Events
+- @select (number) — to 없는 항목 클릭 시 그 index. 라우터 없이 이동할 때.
 
 ## 사용 예
 ```vue

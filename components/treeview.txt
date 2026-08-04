@@ -8,7 +8,11 @@ import { DsTreeview } from '~/design/vuetify'   // Vuetify 필요 · ds.css + ds
 ## Props
 - items: any[] = 필수 — children으로 중첩합니다.
 - itemTitle / itemValue: string = 'title' / 'id' — 필드 이름.
+- opened: any[] — 펼쳐진 노드 (v-model:opened).
+- density: 'compact' | 'comfortable' = 'comfortable' — 행 높이.
 
+## Slots
+- #prepend — 노드마다 앞 아이콘. 을 넣습니다.
 
 ## 사용 예
 ```vue
