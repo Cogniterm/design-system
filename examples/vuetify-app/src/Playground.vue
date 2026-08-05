@@ -105,6 +105,14 @@ function cycleTool() {
 }
 function search() { loading.value = true; setTimeout(() => { loading.value = false }, 900) }
 
+/* ── Button — variant 카드 (새 variant가 생기면 여기에만 추가) ── */
+const btnVariants = [
+  { variant: 'primary',   label: '새 에이전트', icon: 'add',      desc: '화면의 대표 액션 — 한 화면에 하나' },
+  { variant: 'secondary', label: '내보내기',    icon: 'download', desc: '보조 액션 — 취소·닫기·부가 기능' },
+  { variant: 'ghost',     label: '더 알아보기', icon: 'link',     desc: '가장 조용한 액션 — 툴바·반복 요소' },
+  { variant: 'danger',    label: '삭제',        icon: 'delete',   desc: '파괴적 액션 — 호버에만 빨간 면' },
+] as const
+
 </script>
 
 <template>
@@ -112,36 +120,34 @@ function search() { loading.value = true; setTimeout(() => { loading.value = fal
     <div ref="root" class="play" :data-id="id">
 
       <template v-if="id === 'button'">
-        <div class="play-sections">
-          <div class="play-sec">
-            <div class="play-sec-cap">Variants</div>
-            <div class="play-sec-row">
-              <DsButton @click="clicks++">클릭 {{ clicks }}</DsButton>
-              <DsButton variant="secondary">Secondary</DsButton>
-              <DsButton variant="ghost">Ghost</DsButton>
-              <DsButton variant="danger">Delete</DsButton>
+        <!-- variant마다 카드 하나 — 늘어나면 btnVariants 배열에만 추가 -->
+        <div class="play-cards">
+          <div v-for="v in btnVariants" :key="v.variant" class="play-card">
+            <div class="play-card-head">
+              <span class="play-card-name">{{ v.variant }}</span>
+              <span class="play-card-desc">{{ v.desc }}</span>
             </div>
-          </div>
-          <div class="play-sec">
-            <div class="play-sec-cap">Sizes · 32 / 40 / 48</div>
-            <div class="play-sec-row">
-              <DsButton size="sm">Small</DsButton>
-              <DsButton>Default</DsButton>
-              <DsButton size="lg">Large</DsButton>
+            <div class="play-sec">
+              <div class="play-sec-cap">Sizes · 32 / 40 / 48</div>
+              <div class="play-sec-row">
+                <DsButton :variant="v.variant" size="sm">{{ v.label }}</DsButton>
+                <DsButton :variant="v.variant">{{ v.label }}</DsButton>
+                <DsButton :variant="v.variant" size="lg">{{ v.label }}</DsButton>
+              </div>
             </div>
-          </div>
-          <div class="play-sec">
-            <div class="play-sec-cap">States</div>
-            <div class="play-sec-row">
-              <DsButton disabled>Disabled</DsButton>
-              <DsButton variant="secondary"><DsSpinner :size="13" /> 저장 중…</DsButton>
+            <div class="play-sec">
+              <div class="play-sec-cap">States</div>
+              <div class="play-sec-row">
+                <DsButton :variant="v.variant" disabled>Disabled</DsButton>
+                <DsButton :variant="v.variant"><DsSpinner :size="13" /> 저장 중…</DsButton>
+              </div>
             </div>
-          </div>
-          <div class="play-sec">
-            <div class="play-sec-cap">With icon</div>
-            <div class="play-sec-row">
-              <DsButton><DsIcon name="add" size="sm" /> 새 에이전트</DsButton>
-              <DsButton variant="secondary">내보내기 <DsIcon name="download" size="sm" /></DsButton>
+            <div class="play-sec">
+              <div class="play-sec-cap">With icon</div>
+              <div class="play-sec-row">
+                <DsButton :variant="v.variant"><DsIcon :name="v.icon" size="sm" /> {{ v.label }}</DsButton>
+                <DsButton :variant="v.variant">{{ v.label }} <DsIcon name="forward" size="sm" /></DsButton>
+              </div>
             </div>
           </div>
         </div>
@@ -604,5 +610,21 @@ function search() { loading.value = true; setTimeout(() => { loading.value = fal
   margin-bottom: 8px; letter-spacing: .02em;
 }
 .play-sec-row { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+/* variant별 카드 — 종류가 늘어나도 그리드가 받아줌 */
+.play-cards {
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+  gap: 14px; width: 100%;
+}
+.play-card {
+  display: flex; flex-direction: column; gap: 16px;
+  border: 1px solid var(--border); border-radius: var(--r-xl);
+  padding: 18px; background: var(--surface);
+}
+.play-card-head { display: flex; align-items: baseline; gap: 10px; }
+.play-card-name {
+  font-family: var(--mono); font-size: var(--text-sm);
+  font-weight: var(--weight-semibold); color: var(--gray-12);
+}
+.play-card-desc { font-size: var(--text-xs); color: var(--gray-11); }
 .play .v-application__wrap { min-height: 0; }
 </style>
