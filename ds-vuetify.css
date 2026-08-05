@@ -677,6 +677,33 @@
 .v-selection-control-group { gap: 4px; }
 .v-selection-control__input::before { display: none; }   /* 머티리얼 원형 하이라이트 */
 
+/* 체크박스 선택 상태 — 브랜드 면 + 흰 체크 (Geist 방식).
+   머티리얼은 체크 글리프만 색을 바꿔 선택 여부가 멀리서 안 읽힙니다.
+   면이 차야 목록에서 선택된 행이 한눈에 보입니다.
+   .v-checkbox-btn은 VCheckbox·테이블 선택·리스트 체크에 모두 붙습니다. */
+.v-checkbox-btn .v-selection-control__input > .v-icon { color: var(--gray-9); }
+.v-checkbox-btn .v-selection-control__input::before {
+  display: block; width: 16px; height: 16px; top: 50%; left: 50%;
+  transform: translate(-50%, -50%); border-radius: var(--r-sm);
+  background: var(--brand); opacity: 0;
+  transition: opacity .12s ease;
+}
+/* 부분 선택(indeterminate)은 aria-checked="mixed"가 안쪽 input에 붙습니다 — :has로 잡습니다 */
+.v-checkbox-btn.v-selection-control--dirty .v-selection-control__input::before,
+.v-checkbox-btn .v-selection-control__input:has(input[aria-checked="mixed"])::before { opacity: 1; }
+/* 면 위의 글리프 — 체크·대시는 흰색으로, 사각형 아이콘보다 작게 */
+.v-checkbox-btn.v-selection-control--dirty .v-selection-control__input > .v-icon,
+.v-checkbox-btn .v-selection-control__input:has(input[aria-checked="mixed"]) > .v-icon {
+  color: var(--on-brand); position: relative; z-index: 1; font-size: 12px;
+}
+/* 비활성 — 면도 글리프도 회색 */
+.v-checkbox-btn.v-selection-control--disabled .v-selection-control__input::before { background: var(--gray-6); }
+.v-checkbox-btn.v-selection-control--disabled .v-selection-control__input > .v-icon { color: var(--gray-9); }
+/* 포커스 — 면 바깥으로 링 (::before를 상자로 쓰므로 wrapper에 그립니다) */
+.v-checkbox-btn.v-selection-control--focus-visible .v-selection-control__input {
+  border-radius: var(--r-sm); box-shadow: var(--focus-ring);
+}
+
 /* ── 스위치 — 트랙 20px / 노브 16px ── */
 .v-switch .v-selection-control { min-height: 0; }
 .v-switch__track { height: 20px; min-width: 34px; opacity: 1; border-radius: var(--r-full); }

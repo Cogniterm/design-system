@@ -503,15 +503,21 @@ td.mono { font-family: var(--mono); font-size: var(--text-xs); color: var(--gray
 .file-row.selected { background: var(--sel-bg); }
 .file-row.disabled { cursor: default; opacity: .5; }
 .file-row.disabled:hover { background: transparent; }
-/* 체크박스 — 테두리 톤을 시스템 보더(--border-strong)에 맞춤. 네이티브 진한 회색 대신. */
-.file-row .f-check {
+/* 체크박스 — 테두리 톤을 시스템 보더(--border-strong)에 맞춤. 네이티브 진한 회색 대신.
+   선택하면 브랜드 면이 차고 흰 체크가 얹힙니다 (Vuetify 기반 DsCheckbox와 같은 모양). */
+.check, .file-row .f-check {
   appearance: none;
-  width: 16px; height: 16px; margin: 0; flex-shrink: 0; pointer-events: none;
+  width: 16px; height: 16px; margin: 0; flex-shrink: 0;
   border: 1px solid var(--border-strong); border-radius: 4px; background: var(--surface);
 }
-.file-row .f-check:checked {
+.file-row .f-check { pointer-events: none; }
+.check:checked, .file-row .f-check:checked {
   border-color: var(--brand);
   background: var(--brand) url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23fff' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'><path d='M20 6 9 17l-5-5'/></svg>") center / 11px no-repeat;
+}
+.check:indeterminate {
+  border-color: var(--brand);
+  background: var(--brand) url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23fff' stroke-width='3' stroke-linecap='round'><path d='M5 12h14'/></svg>") center / 11px no-repeat;
 }
 .file-row .f-icon { width: 18px; display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0; color: var(--gray-11); }
 /* 이름은 내용 폭 — 뒤 슬롯(즐겨찾기 별)이 이름 바로 옆에 붙도록. 남는 공간은 f-fill이 차지. */

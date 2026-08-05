@@ -46,9 +46,11 @@ export const lucideAliases: IconAliases = {
   error: wrap(AlertCircle),
   prev: wrap(ChevronLeft),
   next: wrap(ChevronRight),
-  checkboxOn: wrap(CheckSquare),
+  /* 체크박스 — 선택하면 브랜드 면이 채워지므로(ds-vuetify.css) 상자가 아니라
+     글리프만 얹습니다. 미선택은 빈 사각형 그대로. */
+  checkboxOn: wrap(Check),
   checkboxOff: wrap(Square),
-  checkboxIndeterminate: wrap(MinusSquare),
+  checkboxIndeterminate: wrap(Minus),
   delimiter: wrap(Circle),     // 캐러셀 점
   sortAsc: wrap(ArrowUp),
   sortDesc: wrap(ArrowDown),

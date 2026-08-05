@@ -1097,7 +1097,7 @@ export const COMPONENTS = [
     ['indeterminate', 'boolean', 'false', '부분 선택 상태.'],
   ],
   slots: [],
-  demo: `<div style="display:flex;flex-direction:column;gap:10px"><label style="display:flex;gap:8px;align-items:center;font-size:13.5px"><input type="checkbox" checked style="accent-color:var(--brand);width:16px;height:16px">이메일 알림 받기</label><label style="display:flex;gap:8px;align-items:center;font-size:13.5px"><input type="checkbox" style="accent-color:var(--brand);width:16px;height:16px">자동 재시도</label></div>`,
+  demo: `<div style="display:flex;flex-direction:column;gap:10px"><label style="display:flex;gap:8px;align-items:center;font-size:13.5px"><input class="check" type="checkbox" checked>이메일 알림 받기</label><label style="display:flex;gap:8px;align-items:center;font-size:13.5px"><input class="check" type="checkbox">자동 재시도</label></div>`,
   vue: `<DsCheckbox v-model="notify" label="이메일 알림 받기"
   hint="실패한 실행에 대해서만 발송됩니다." />
 

@@ -40,7 +40,7 @@ const tableHeaders = [
   { title: '이름', key: 'name' }, { title: '상태', key: 'status' }, { title: '수정', key: 'at' },
 ]
 const tableRows = [
-  { name: 'Weekly report agent', status: 'brand', label: '실행 중', at: '2h ago' },
+  { name: 'Weekly report agent', status: 'brand', label: '실행중', at: '2h ago' },
   { name: 'Invoice classifier', status: 'success', label: '완료', at: '1d ago' },
   { name: 'Drive sync', status: 'danger', label: '실패', at: '3d ago' },
 ]

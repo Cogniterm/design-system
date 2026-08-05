@@ -98,7 +98,7 @@ const q = ref(''); const loading = ref(false)
 const now = ref(Date.now() - 2 * 36e5)
 
 const tableRows = [
-  { name: 'Weekly report agent', status: 'brand', label: '실행 중', at: '2h ago' },
+  { name: 'Weekly report agent', status: 'brand', label: '실행중', at: '2h ago' },
   { name: 'Invoice classifier', status: 'success', label: '완료', at: '1d ago' },
   { name: 'Drive sync', status: 'danger', label: '실패', at: '3d ago' },
 ]
@@ -289,7 +289,9 @@ const dotLabel: Record<string, string> = { neutral: '오프라인', brand: '실�
 
       <template v-else-if="id === 'checkbox'">
         <DsCheckbox v-model="b1" label="이메일 알림 받기" hint="실패한 실행에 대해서만 발송됩니다." />
+        <DsCheckbox :model-value="false" label="자동 재시도" />
         <DsCheckbox :indeterminate="true" label="일부 선택됨" />
+        <DsCheckbox :model-value="true" label="비활성 · 선택됨" disabled />
       </template>
 
       <template v-else-if="id === 'switch'">
