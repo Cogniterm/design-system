@@ -18,7 +18,7 @@ import { DsToolbar } from '~/design'   // Vuetify 불필요 · ds.css만
   <DsButton variant="secondary" size="sm">필터</DsButton>
   <span class="sep"></span>
   <span class="spacer"></span>
-  <DsButton size="sm">새로 만들기</DsButton>
+  <DsButton size="sm">에이전트 추가</DsButton>
 </DsToolbar>
 ```
 

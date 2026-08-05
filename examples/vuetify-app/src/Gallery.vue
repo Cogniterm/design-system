@@ -343,7 +343,7 @@ const SECTIONS = [
           </div>
           <div class="g-demo">
             <DsButton variant="secondary" @click="snackOpen = true">토스트 띄우기</DsButton>
-            <DsSnackbar v-model="snackOpen" variant="success" action="View">에이전트가 생성되었습니다.</DsSnackbar>
+            <DsSnackbar v-model="snackOpen" variant="success" action="View">에이전트를 추가했습니다.</DsSnackbar>
           </div>
         </div>
 
@@ -573,7 +573,7 @@ const SECTIONS = [
           <div class="g-meta">
             <div class="g-name">DsThinkingIndicator <i class="lg standalone"></i></div>
           </div>
-          <div class="g-demo"><DsThinkingIndicator label="문서를 분석하고 있어요" /></div>
+          <div class="g-demo"><DsThinkingIndicator label="문서 분석 중" /></div>
         </div>
 
         <div class="g-item">

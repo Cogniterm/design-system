@@ -369,14 +369,14 @@ export const COMPONENTS = [
             en: 'Not in Vuetify. Auto-grow, attachments, slash commands, Enter-to-send in one component.' },
   props: [
     ['modelValue', 'string', `''`, 'v-model로 바인딩.'],
-    ['placeholder', 'string', `'Message agent…'`, '입력 안내 문구.'],
+    ['placeholder', 'string', `'질문을 입력하세요'`, '입력 안내 문구.'],
     ['sendLabel', 'string', `'Send'`, '전송 버튼 라벨.'],
   ],
   events: [['send', '—', 'Enter 또는 전송 버튼. Shift+Enter는 줄바꿈.'], ['attach', '—', '＋ 클릭.'], ['slash', '—', '/ 클릭.']],
   slots: [],
-  thumb: `<div class="agent-input" style="max-width:280px;padding:12px 14px"><textarea rows="1" placeholder="Message agent…" disabled style="all:unset;width:100%;font-size:var(--text-sm);color:var(--gray-11)"></textarea></div>`,
+  thumb: `<div class="agent-input" style="max-width:280px;padding:12px 14px"><textarea rows="1" placeholder="질문을 입력하세요" disabled style="all:unset;width:100%;font-size:var(--text-sm);color:var(--gray-11)"></textarea></div>`,
   demo: `<div class="agent-input" style="max-width:560px">
-    <textarea rows="1" placeholder="Message agent… (/ 로 명령어)"></textarea>
+    <textarea rows="1" placeholder="질문을 입력하세요"></textarea>
     <div class="ai-bar">
       <button class="ai-tool" aria-label="Attach file">${ic('attach','sm')}</button>
       <button class="ai-tool" aria-label="Slash commands">${ic('command','sm')}</button>
@@ -386,7 +386,7 @@ export const COMPONENTS = [
   </div>`,
   vue: `<DsAgentInput v-model="draft" @send="submit" @attach="pickFile" />`,
   html: `<div class="agent-input">
-  <textarea rows="1" placeholder="Message agent…"></textarea>
+  <textarea rows="1" placeholder="질문을 입력하세요"></textarea>
   <div class="ai-bar">
     <button class="ai-tool" aria-label="Attach file">${ic('attach','sm')}</button>
     <button class="ai-tool" aria-label="Slash commands">${ic('command','sm')}</button>
@@ -414,7 +414,7 @@ export const COMPONENTS = [
     { key: 'default', title: 'Default', desc: '중립 상태 — 대기·보통.' },
     { key: 'brand',   title: 'Brand',   desc: '진행·실행 중 — 에이전트가 움직이는 상태.' },
     { key: 'success', title: 'Success', desc: '완료·정상.' },
-    { key: 'warning', title: 'Warning', desc: '지연·주의.' },
+    { key: 'warning', title: 'Warning', desc: '보류·주의.' },
     { key: 'danger',  title: 'Danger',  desc: '실패·오류.' },
   ],
   demo: `<div class="row">
@@ -490,21 +490,21 @@ export const COMPONENTS = [
     { key: 'success', title: 'Success', desc: '성공 결과.' },
     { key: 'danger',  title: 'Danger',  desc: '실패 결과.' },
   ],
-  thumb: `<div class="toast success"><span class="t-icon">${ic('success','sm')}</span><span class="t-body">에이전트가 생성되었습니다.</span></div>`,
+  thumb: `<div class="toast success"><span class="t-icon">${ic('success','sm')}</span><span class="t-body">에이전트를 추가했습니다.</span></div>`,
   demo: `<div style="display:flex;flex-direction:column;gap:10px;align-items:flex-start">
-    <div class="toast success"><span class="t-icon">${ic('success','sm')}</span><span class="t-body">에이전트가 생성되었습니다.</span><button class="t-action">View</button></div>
-    <div class="toast danger"><span class="t-icon">${ic('error','sm')}</span><span class="t-body">파일 업로드에 실패했습니다 — 10MB를 초과합니다.</span><button class="t-action">Retry</button></div>
+    <div class="toast success"><span class="t-icon">${ic('success','sm')}</span><span class="t-body">에이전트를 추가했습니다.</span><button class="t-action">View</button></div>
+    <div class="toast danger"><span class="t-icon">${ic('error','sm')}</span><span class="t-body">파일이 10MB를 초과했습니다. 나누어 업로드하세요.</span><button class="t-action">Retry</button></div>
   </div>`,
   vue: `<DsToast variant="success" action="View" @action="open">
-  에이전트가 생성되었습니다.
+  에이전트를 추가했습니다.
 </DsToast>
 
 <DsToast variant="danger" action="Retry" @action="retry">
-  파일 업로드에 실패했습니다 — 10MB를 초과합니다.
+  파일이 10MB를 초과했습니다. 나누어 업로드하세요.
 </DsToast>`,
   html: `<div class="toast success">
   <span class="t-icon"><!-- success 아이콘 svg --></span>
-  <span class="t-body">에이전트가 생성되었습니다.</span>
+  <span class="t-body">에이전트를 추가했습니다.</span>
   <button class="t-action">View</button>
 </div>`,
   guidelines: [
@@ -529,7 +529,7 @@ export const COMPONENTS = [
   ],
   slots: [['default', '본문.'], ['actions', '하단 버튼 영역.']],
   demo: `<div class="ds-dialog-panel" style="max-width:420px">
-    <div class="ds-dialog-head">에이전트를 삭제할까요?</div>
+    <div class="ds-dialog-head">에이전트 삭제</div>
     <div class="ds-dialog-body">이 작업은 되돌릴 수 없습니다. 연결된 실행 기록 128건도 함께 삭제됩니다.</div>
     <div class="ds-dialog-foot">
       <button class="btn btn-secondary btn-sm">Cancel</button>
@@ -537,7 +537,7 @@ export const COMPONENTS = [
     </div>
   </div>
   <div class="hint" style="margin-top:10px">↑ 실제로는 이 패널이 화면 중앙에 떠서 배경을 어둡게 덮습니다.</div>`,
-  vue: `<DsDialog v-model="open" title="에이전트를 삭제할까요?" persistent>
+  vue: `<DsDialog v-model="open" title="에이전트 삭제" persistent>
   이 작업은 되돌릴 수 없습니다. 연결된 실행 기록 128건도 함께 삭제됩니다.
   <template #actions>
     <DsButton variant="secondary" size="sm" @click="open = false">Cancel</DsButton>
@@ -773,11 +773,11 @@ export const COMPONENTS = [
 {
   id: 'thinking', name: 'ThinkingIndicator', ko: '추론 표시', category: 'agent',
   origin: 'custom', vuetifyBase: null,
-  summary: '에이전트가 생각하는 중임을 알립니다. (Soft Rise v1.0)',
+  summary: '에이전트가 무엇을 하는 중인지 알립니다. (Soft Rise v1.0)',
   reason: { ko: 'Vuetify에 없습니다. 원칙 1 — 빈 스피너 대신 무엇을 하고 있는지 말로 보여줍니다. 도트 3개가 -4px 파동, 라벨은 브랜드 shimmer.',
             en: 'Not in Vuetify. Principle 1 — words, not a bare spinner. Three dots rise softly; the label shimmers.' },
   props: [
-    ['label', 'string', `'답변을 생성하고 있어요'`, '현재 하는 일. 단계가 바뀌면 갱신합니다 — 바뀔 때 450ms fade-in.'],
+    ['label', 'string', `'답변 생성 중'`, '현재 하는 일. 단계가 바뀌면 갱신합니다 — 바뀔 때 450ms fade-in.'],
     ['size', `'default' | 'compact' | 'inline'`, `'default'`, 'compact는 dot 4px·텍스트 12px, inline은 텍스트 뒤에 도트. 둘 다 shimmer 생략.'],
   ],
   slots: [['default', 'label 대신 넣을 내용.']],
@@ -786,19 +786,19 @@ export const COMPONENTS = [
     { key: 'compact', title: 'Compact', desc: 'dot 4px · 텍스트 12px — 좁은 자리. shimmer 생략.' },
     { key: 'inline',  title: 'Inline',  desc: '텍스트 뒤에 도트 — 문장 속. shimmer 생략.' },
   ],
-  thumb: `<div class="thinking"><span class="dots"><i></i><i></i><i></i></span><span class="t-label">문서를 분석하고 있어요</span></div>`,
-  demo: `<div style="display:flex;flex-direction:column;gap:14px;align-items:flex-start"><div class="thinking"><span class="dots"><i></i><i></i><i></i></span><span class="t-label">문서를 분석하고 있어요</span></div><div class="thinking thinking--compact"><span class="dots"><i></i><i></i><i></i></span><span class="t-label">생성 중</span></div><div class="thinking thinking--inline"><span class="t-label">검토 의견 생성 중</span><span class="dots"><i></i><i></i><i></i></span></div></div>`,
+  thumb: `<div class="thinking"><span class="dots"><i></i><i></i><i></i></span><span class="t-label">문서 분석 중</span></div>`,
+  demo: `<div style="display:flex;flex-direction:column;gap:14px;align-items:flex-start"><div class="thinking"><span class="dots"><i></i><i></i><i></i></span><span class="t-label">문서 분석 중</span></div><div class="thinking thinking--compact"><span class="dots"><i></i><i></i><i></i></span><span class="t-label">생성 중</span></div><div class="thinking thinking--inline"><span class="t-label">검토 의견 생성 중</span><span class="dots"><i></i><i></i><i></i></span></div></div>`,
   vue: `<DsThinkingIndicator :label="currentStep" />
 <DsThinkingIndicator size="compact" label="생성 중" />
 <DsThinkingIndicator size="inline" label="검토 의견 생성 중" />`,
   html: `<div class="thinking" role="status" aria-live="polite">
   <span class="dots" aria-hidden="true"><i></i><i></i><i></i></span>
-  <span class="t-label">문서를 분석하고 있어요</span>
+  <span class="t-label">문서 분석 중</span>
 </div>`,
   guidelines: [
-    ['해야 할 것', '10초 이상 걸리면 단계에 맞게 문구를 갱신합니다("문서를 분석하고 있어요" → "관련 근거를 검색하고 있어요" → "답변을 정리하고 있어요").'],
+    ['해야 할 것', '10초 이상 걸리면 단계에 맞게 문구를 갱신합니다("문서 분석 중" → "근거 문서 검색 중" → "답변 정리 중").'],
     ['해야 할 것', '단계 전환은 최소 2.5초 간격 — 너무 빠른 문구 교체는 불안감을 줍니다. 최소 노출 500ms로 깜빡임을 막습니다.'],
-    ['해야 할 것', '단계 신호가 없을 때는 기본 문구("답변을 생성하고 있어요")를 유지합니다.'],
+    ['해야 할 것', '단계 신호가 없을 때는 기본 문구("답변 생성 중")를 유지합니다.'],
     ['하지 말 것', '"로딩 중…"처럼 아무 정보 없는 문구를 쓰지 않습니다.'],
   ],
 },
@@ -1307,7 +1307,7 @@ export const COMPONENTS = [
     ['cols', 'number', '17', '정사각 그리드 한 변의 도트 수.'],
     ['speed', 'number', '1.1', '모션 배속.'],
     ['size', 'number', '380', '카드 최대 폭(px). 정사각을 유지합니다.'],
-    ['label', 'string', `'AI가 생성하는 중'`, '스크린리더용 라벨. 화면에는 보이지 않습니다.'],
+    ['label', 'string', `'콘텐츠 생성 중'`, '스크린리더용 라벨. 화면에는 보이지 않습니다.'],
   ],
   slots: [],
   demo: `<div class="dotfield dotfield--css" style="max-width:180px"><div class="dotfield-grid" style="grid-template-columns:repeat(9,4px);gap:8px">${Array.from({ length: 81 }, (_, i) => {
@@ -1315,9 +1315,9 @@ export const COMPONENTS = [
     const d = Math.hypot(c - 4, r - 4)
     return `<i style="animation-delay:${(d * 0.15).toFixed(2)}s"></i>`
   }).join('')}</div></div>`,
-  vue: `<DsDotField v-if="generating" label="이미지를 생성하는 중" />`,
+  vue: `<DsDotField v-if="generating" label="이미지 생성 중" />`,
   html: `<!-- 정적 마크업은 골격만 — 도트별 scale·opacity는 rAF로 매 프레임 계산 -->
-<div class="dotfield" role="status" aria-label="AI가 생성하는 중">
+<div class="dotfield" role="status" aria-label="콘텐츠 생성 중">
   <div class="dotfield-grid" aria-hidden="true"><!-- 17×17 <i> --></div>
 </div>`,
   guidelines: [
@@ -1344,9 +1344,9 @@ export const COMPONENTS = [
     { key: 'success', title: 'Success', desc: '저장·생성 성공.' },
     { key: 'danger',  title: 'Danger',  desc: '실패 알림.' },
   ],
-  demo: `<div class="toast success"><span class="t-icon">${ic('success','sm')}</span><span class="t-body">에이전트가 생성되었습니다.</span><button class="t-action">View</button></div>`,
+  demo: `<div class="toast success"><span class="t-icon">${ic('success','sm')}</span><span class="t-body">에이전트를 추가했습니다.</span><button class="t-action">View</button></div>`,
   vue: `<DsSnackbar v-model="open" variant="success" action="View" @action="go">
-  에이전트가 생성되었습니다.
+  에이전트를 추가했습니다.
 </DsSnackbar>`,
   html: null,
   guidelines: [
@@ -1566,12 +1566,12 @@ export const COMPONENTS = [
     ['label','string','—','화면에 툴바가 둘 이상이면 구분할 이름.'],
   ],
   slots: [['default','컨트롤들. .sep(구분) · .spacer(밀기) 사용 가능.']],
-  demo: `<div class="ds-toolbar" style="width:100%"><button class="btn btn-secondary btn-sm">필터</button><button class="btn btn-ghost btn-sm">내보내기</button><span class="sep"></span><span style="font-size:var(--text-xs);color:var(--gray-9)">12건</span><span class="spacer"></span><button class="btn btn-primary btn-sm">새로 만들기</button></div>`,
+  demo: `<div class="ds-toolbar" style="width:100%"><button class="btn btn-secondary btn-sm">필터</button><button class="btn btn-ghost btn-sm">내보내기</button><span class="sep"></span><span style="font-size:var(--text-xs);color:var(--gray-9)">12건</span><span class="spacer"></span><button class="btn btn-primary btn-sm">에이전트 추가</button></div>`,
   vue: `<DsToolbar dense>
   <DsButton variant="secondary" size="sm">필터</DsButton>
   <span class="sep"></span>
   <span class="spacer"></span>
-  <DsButton size="sm">새로 만들기</DsButton>
+  <DsButton size="sm">에이전트 추가</DsButton>
 </DsToolbar>`,
   html: null,
   guidelines: [['해야 할 것','툴바 안 컨트롤은 전부 sm(32px).']],
@@ -2051,7 +2051,7 @@ Object.assign(A11Y, {
     keys: [],
     free: ['role="status" + aria-label 강제', '도트 그리드는 aria-hidden',
            'prefers-reduced-motion이면 rAF 루프 대신 정지 프레임 1장'],
-    yours: ['label에 무엇을 생성 중인지 구체적으로 ("이미지를 생성하는 중")', '완료되면 즉시 결과로 교체'],
+    yours: ['label에 무엇을 생성 중인지 구체적으로 ("이미지 생성 중")', '완료되면 즉시 결과로 교체'],
   },
   banner: {
     keys: [['Tab', '액션으로 이동']],

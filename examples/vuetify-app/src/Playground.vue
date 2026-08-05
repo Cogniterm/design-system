@@ -89,7 +89,7 @@ const tree = ref([5]); const treeOpen = ref([1, 4]); const acc = ref<any>(null)
 const dlg = ref(false); const snack = ref(false); const pal = ref(false)
 const streaming = ref(true); const toolStatus = ref<'running' | 'done' | 'error'>('running')
 /* thinking — 단계 문구 자동 전환 (스펙: 2.6s 간격, 450ms fade-in) */
-const stages = ['문서를 분석하고 있어요', '관련 근거를 검색하고 있어요', '답변을 정리하고 있어요']
+const stages = ['문서 분석 중', '근거 문서 검색 중', '답변 정리 중']
 const stageIdx = ref(0)
 onMounted(() => { window.setInterval(() => { stageIdx.value = (stageIdx.value + 1) % stages.length }, 2600) })
 const chips = ref(['계약서_최종.pdf', 'Q3 보고서'])
@@ -126,7 +126,7 @@ const btnGroup = computed(() => btnVariants.find(v => v.variant === group.value)
 function gv(allowed: string[], def: string): any {
   return allowed.includes(group.value) ? group.value : def
 }
-const badgeLabel: Record<string, string> = { default: '대기', brand: '실행 중', success: '완료', warning: '지연', danger: '실패' }
+const badgeLabel: Record<string, string> = { default: '대기', brand: '실행중', success: '완료', warning: '보류', danger: '실패' }
 const dotLabel: Record<string, string> = { neutral: '오프라인', brand: '실행 중', success: '온라인', warning: '지연', danger: '오류' }
 
 </script>
@@ -218,7 +218,7 @@ const dotLabel: Record<string, string> = { neutral: '오프라인', brand: '실�
           <span class="sep"></span>
           <span style="font-size:var(--text-xs);color:var(--gray-9)">12건</span>
           <span class="spacer"></span>
-          <DsButton size="sm">새로 만들기</DsButton>
+          <DsButton size="sm">에이전트 추가</DsButton>
         </DsToolbar>
       </template>
 
@@ -358,14 +358,14 @@ const dotLabel: Record<string, string> = { neutral: '오프라인', brand: '실�
       </template>
 
       <template v-else-if="id === 'toast'">
-        <DsToast v-if="gv(['success','danger'], 'success') === 'success'" variant="success" action="보기">에이전트가 생성되었습니다.</DsToast>
-        <DsToast v-else variant="danger" action="재시도">동기화에 실패했습니다.</DsToast>
+        <DsToast v-if="gv(['success','danger'], 'success') === 'success'" variant="success" action="보기">에이전트를 추가했습니다.</DsToast>
+        <DsToast v-else variant="danger" action="재시도">동기화하지 못했습니다. 잠시 후 다시 시도하세요.</DsToast>
       </template>
 
       <template v-else-if="id === 'snackbar'">
         <DsButton variant="secondary" @click="snack = true">스낵바 띄우기</DsButton>
-        <DsSnackbar v-if="gv(['success','danger'], 'success') === 'success'" v-model="snack" variant="success" action="보기">저장되었습니다.</DsSnackbar>
-        <DsSnackbar v-else v-model="snack" variant="danger" action="재시도">저장에 실패했습니다.</DsSnackbar>
+        <DsSnackbar v-if="gv(['success','danger'], 'success') === 'success'" v-model="snack" variant="success" action="보기">저장했습니다.</DsSnackbar>
+        <DsSnackbar v-else v-model="snack" variant="danger" action="재시도">저장하지 못했습니다. 네트워크를 확인하고 다시 시도하세요.</DsSnackbar>
       </template>
 
       <template v-else-if="id === 'alert'">
@@ -410,7 +410,7 @@ const dotLabel: Record<string, string> = { neutral: '오프라인', brand: '실�
 
       <template v-else-if="id === 'dialog'">
         <DsButton variant="danger" @click="dlg = true">삭제 확인창 열기</DsButton>
-        <DsDialog v-model="dlg" title="에이전트를 삭제할까요?">
+        <DsDialog v-model="dlg" title="에이전트 삭제">
           이 작업은 되돌릴 수 없습니다. 연결된 실행 기록 128건도 함께 삭제됩니다.
           <template #actions>
             <DsButton variant="secondary" size="sm" @click="dlg = false">취소</DsButton>

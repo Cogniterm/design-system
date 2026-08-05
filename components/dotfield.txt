@@ -9,12 +9,12 @@ import { DsDotField } from '~/design'   // Vuetify 불필요 · ds.css만
 - cols: number = 17 — 정사각 그리드 한 변의 도트 수.
 - speed: number = 1.1 — 모션 배속.
 - size: number = 380 — 카드 최대 폭(px). 정사각을 유지합니다.
-- label: string = 'AI가 생성하는 중' — 스크린리더용 라벨. 화면에는 보이지 않습니다.
+- label: string = '콘텐츠 생성 중' — 스크린리더용 라벨. 화면에는 보이지 않습니다.
 
 
 ## 사용 예
 ```vue
-<DsDotField v-if="generating" label="이미지를 생성하는 중" />
+<DsDotField v-if="generating" label="이미지 생성 중" />
 ```
 
 ## 구분
@@ -28,7 +28,7 @@ import { DsDotField } from '~/design'   // Vuetify 불필요 · ds.css만
 - [하지 말 것] 진행률·문구·취소 버튼을 카드 안에 얹지 않습니다. 필요하면 카드 바깥에 둡니다.
 
 ## 접근성
-직접 처리: label에 무엇을 생성 중인지 구체적으로 ("이미지를 생성하는 중") / 완료되면 즉시 결과로 교체
+직접 처리: label에 무엇을 생성 중인지 구체적으로 ("이미지 생성 중") / 완료되면 즉시 결과로 교체
 
 ## 시스템 규칙 (요약)
 - 색·간격·모서리는 CSS 변수만 (var(--gray-6), var(--brand)) — hex 금지

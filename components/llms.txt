@@ -57,7 +57,7 @@ Each component has a standalone prompt at https://kimjiyong995-coder.github.io/d
       <DsButton variant="secondary" size="sm">필터</DsButton>
       <span class="sep"></span>
       <span class="spacer"></span>
-      <DsButton size="sm">새로 만들기</DsButton>
+      <DsButton size="sm">에이전트 추가</DsButton>
     </DsToolbar>
 ### Navigation (내비게이션)
 - **DsTabs** (탭) — 같은 대상의 여러 단면을 전환합니다.
@@ -335,11 +335,11 @@ Each component has a standalone prompt at https://kimjiyong995-coder.github.io/d
   vs: Snackbar — 실제로 떠서 사라지는 동작이 필요하면 Snackbar
   usage:
     <DsToast variant="success" action="View" @action="open">
-      에이전트가 생성되었습니다.
+      에이전트를 추가했습니다.
     </DsToast>
     
     <DsToast variant="danger" action="Retry" @action="retry">
-      파일 업로드에 실패했습니다 — 10MB를 초과합니다.
+      파일이 10MB를 초과했습니다. 나누어 업로드하세요.
     </DsToast>
 - **DsAlert** (알림) — 화면에 머무는 상태 알림.
   import: ~/design/vuetify | origin: wrapped (VAlert)
@@ -381,10 +381,10 @@ Each component has a standalone prompt at https://kimjiyong995-coder.github.io/d
 - **DsDotField** (도트 필드 로더) — 이미지·미디어 생성 대기 전용 앰비언트 로더.
   import: ~/design | origin: custom
   where: 이미지·미디어 생성 대기 — 단계 문구도 진행률도 줄 수 없는 생성형 작업 전용.
-  props: cols=17, speed=1.1, size=380, label='AI가 생성하는 중'
+  props: cols=17, speed=1.1, size=380, label='콘텐츠 생성 중'
   vs: ThinkingIndicator — 단계를 말로 알릴 수 있으면 ThinkingIndicator — DotField는 말할 단계가 없는 생성 대기 전용 / ProgressBar — 진행률을 알면 ProgressBar / Skeleton — 결과의 자리(레이아웃)를 미리 알면 Skeleton
   usage:
-    <DsDotField v-if="generating" label="이미지를 생성하는 중" />
+    <DsDotField v-if="generating" label="이미지 생성 중" />
 - **DsSnackbar** (스낵바) — 떴다가 사라지는 알림.
   import: ~/design/vuetify | origin: wrapped (VSnackbar)
   where: 저장·삭제 결과 알림. 후속 액션은 하나까지.
@@ -392,7 +392,7 @@ Each component has a standalone prompt at https://kimjiyong995-coder.github.io/d
   vs: Toast — Toast는 생김새만, Snackbar는 표시·타이머까지 담당 / Alert — 지나가도 되면 Snackbar, 남아야 하면 Alert
   usage:
     <DsSnackbar v-model="open" variant="success" action="View" @action="go">
-      에이전트가 생성되었습니다.
+      에이전트를 추가했습니다.
     </DsSnackbar>
 - **DsStatusDot** (상태 점) — 텍스트 없는 최소 상태 표시.
   import: ~/design | origin: custom
@@ -431,7 +431,7 @@ Each component has a standalone prompt at https://kimjiyong995-coder.github.io/d
   props: modelValue=false, title, width=480, persistent=false
   vs: Snackbar — 단순 알림이면 Dialog가 아니라 Snackbar / Menu — 선택지 나열이면 Menu
   usage:
-    <DsDialog v-model="open" title="에이전트를 삭제할까요?" persistent>
+    <DsDialog v-model="open" title="에이전트 삭제" persistent>
       이 작업은 되돌릴 수 없습니다. 연결된 실행 기록 128건도 함께 삭제됩니다.
       <template #actions>
         <DsButton variant="secondary" size="sm" @click="open = false">Cancel</DsButton>
@@ -559,7 +559,7 @@ Each component has a standalone prompt at https://kimjiyong995-coder.github.io/d
 - **DsAgentInput** (에이전트 입력창) — 에이전트에게 메시지를 보내는 입력창.
   import: ~/design | origin: custom
   where: 챗 화면 하단. Enter 전송, Shift+Enter 줄바꿈.
-  props: modelValue='', placeholder='Message agent…', sendLabel='Send'
+  props: modelValue='', placeholder='질문을 입력하세요', sendLabel='Send'
   vs: Textarea — 일반 여러 줄 입력이면 Textarea
   usage:
     <DsAgentInput v-model="draft" @send="submit" @attach="pickFile" />
@@ -584,10 +584,10 @@ Each component has a standalone prompt at https://kimjiyong995-coder.github.io/d
   props: done=false
   usage:
     <DsStreamingText :done="!isStreaming">{{ text }}</DsStreamingText>
-- **DsThinkingIndicator** (추론 표시) — 에이전트가 생각하는 중임을 알립니다. (Soft Rise v1.0)
+- **DsThinkingIndicator** (추론 표시) — 에이전트가 무엇을 하는 중인지 알립니다. (Soft Rise v1.0)
   import: ~/design | origin: custom
   where: 에이전트 대기 전부. 10초 이상이면 문구를 단계에 맞게 갱신.
-  props: label='답변을 생성하고 있어요', size='default'
+  props: label='답변 생성 중', size='default'
   usage:
     <DsThinkingIndicator :label="currentStep" />
     <DsThinkingIndicator size="compact" label="생성 중" />

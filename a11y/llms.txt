@@ -171,7 +171,7 @@ YOU must handle: 주변에 무엇을 기다리는지 텍스트로 함께 표시;
 ### DsDotField (도트 필드 로더)
 Keyboard: n/a
 Component handles: role="status" + aria-label 강제; 도트 그리드는 aria-hidden; prefers-reduced-motion이면 rAF 루프 대신 정지 프레임 1장
-YOU must handle: label에 무엇을 생성 중인지 구체적으로 ("이미지를 생성하는 중"); 완료되면 즉시 결과로 교체
+YOU must handle: label에 무엇을 생성 중인지 구체적으로 ("이미지 생성 중"); 완료되면 즉시 결과로 교체
 
 ### DsBanner (배너)
 Keyboard: Tab = 액션으로 이동

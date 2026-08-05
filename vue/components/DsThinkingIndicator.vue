@@ -20,7 +20,7 @@ watch(() => props.label, () => { labelKey.value++ })
        :class="{ 'thinking--compact': size === 'compact', 'thinking--inline': size === 'inline' }"
        role="status" aria-live="polite">
     <span v-if="size !== 'inline'" class="dots" aria-hidden="true"><i></i><i></i><i></i></span>
-    <span :key="labelKey" class="t-label"><slot>{{ label || '답변을 생성하고 있어요' }}</slot></span>
+    <span :key="labelKey" class="t-label"><slot>{{ label || '답변 생성 중' }}</slot></span>
     <span v-if="size === 'inline'" class="dots" aria-hidden="true"><i></i><i></i><i></i></span>
   </div>
 </template>

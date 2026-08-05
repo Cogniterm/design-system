@@ -17,7 +17,7 @@ import { DsDialog } from '~/design/vuetify'   // Vuetify 필요 · ds.css + ds-v
 
 ## 사용 예
 ```vue
-<DsDialog v-model="open" title="에이전트를 삭제할까요?" persistent>
+<DsDialog v-model="open" title="에이전트 삭제" persistent>
   이 작업은 되돌릴 수 없습니다. 연결된 실행 기록 128건도 함께 삭제됩니다.
   <template #actions>
     <DsButton variant="secondary" size="sm" @click="open = false">Cancel</DsButton>

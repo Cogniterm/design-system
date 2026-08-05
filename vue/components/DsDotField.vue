@@ -13,7 +13,7 @@ const props = withDefaults(defineProps<{
   size?: number
   /** 스크린리더용 라벨 — 시각적으로는 표시되지 않습니다 */
   label?: string
-}>(), { cols: 17, speed: 1.1, size: 380, label: 'AI가 생성하는 중' })
+}>(), { cols: 17, speed: 1.1, size: 380, label: '콘텐츠 생성 중' })
 
 const grid = ref<HTMLElement | null>(null)
 let raf = 0

@@ -101,7 +101,7 @@ function simulateLoad() {
   setTimeout(() => { loading.value = false; toast.value = { msg: '로그를 새로 불러왔습니다.', variant: 'success' } }, 1200)
   setTimeout(() => { toast.value = null }, 4200)
 }
-function exportCsv() { toast.value = { msg: '내보내기에 실패했습니다 — 권한이 없습니다.', variant: 'danger' }; setTimeout(() => { toast.value = null }, 4000) }
+function exportCsv() { toast.value = { msg: '내보내지 못했습니다. 감사 권한은 조회만 할 수 있습니다.', variant: 'danger' }; setTimeout(() => { toast.value = null }, 4000) }
 </script>
 
 <template>

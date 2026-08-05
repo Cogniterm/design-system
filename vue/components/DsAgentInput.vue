@@ -2,7 +2,7 @@
 // origin: custom — auto-grow 입력창 + 첨부/슬래시 + Send. Enter 전송, Shift+Enter 줄바꿈
 import { ref, watch } from 'vue'
 withDefaults(defineProps<{ placeholder?: string; sendLabel?: string }>(), {
-  placeholder: 'Message agent…', sendLabel: 'Send',
+  placeholder: '질문을 입력하세요', sendLabel: 'Send',
 })
 const model = defineModel<string>({ default: '' })
 const emit = defineEmits<{ send: []; attach: []; slash: [] }>()

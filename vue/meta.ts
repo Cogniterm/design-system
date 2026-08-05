@@ -338,7 +338,7 @@ export const meta: ComponentMeta[] = [
     category: 'agent',
     origin: 'custom',
     vuetifyBase: null,
-    summary: { ko: '에이전트가 생각하는 중임을 알립니다. (Soft Rise v1.0)', en: '' },
+    summary: { ko: '에이전트가 무엇을 하는 중인지 알립니다. (Soft Rise v1.0)', en: '' },
     reason: {
       ko: 'Vuetify에 없습니다. 원칙 1 — 빈 스피너 대신 무엇을 하고 있는지 말로 보여줍니다. 도트 3개가 -4px 파동, 라벨은 브랜드 shimmer.',
       en: 'Not in Vuetify. Principle 1 — words, not a bare spinner. Three dots rise softly; the label shimmers.',

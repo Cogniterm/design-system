@@ -7,7 +7,7 @@ import { DsAgentInput } from '~/design'   // Vuetify 불필요 · ds.css만
 
 ## Props
 - modelValue: string = '' — v-model로 바인딩.
-- placeholder: string = 'Message agent…' — 입력 안내 문구.
+- placeholder: string = '질문을 입력하세요' — 입력 안내 문구.
 - sendLabel: string = 'Send' — 전송 버튼 라벨.
 
 ## Events
