@@ -217,7 +217,10 @@
 
 /* ── VField (VTextField·VSelect 등 입력 공통) ── */
 .v-field { border-radius: var(--r-lg); font-size: 14px; background: var(--surface); }
-.v-field.v-field--variant-outlined { --v-field-padding-start: 13px; }
+/* 글자 들여쓰기 — 커스텀 .input과 같은 자리에 오게 합니다.
+   .input은 보더 1px + padding 14px라 바깥 경계에서 15px.
+   .v-field는 보더가 없고 테두리를 안쪽 outline 요소로 그리므로 15px를 그대로 줍니다. */
+.v-field.v-field--variant-outlined { --v-field-padding-start: 15px; }
 .v-field__outline__start, .v-field__outline__end,
 .v-field__outline__notch::before, .v-field__outline__notch::after { border-color: var(--border-strong); }
 .v-field--focused .v-field__outline__start, .v-field--focused .v-field__outline__end,
@@ -411,7 +414,7 @@
    NumberInput은 <input> 자체가 .v-field__input이라, 아래 "padding-inline: 0"
    규칙(다른 필드는 .v-field가 패딩을 담당)에 값까지 끌려갑니다.
    특이도를 한 단계 올려 다른 필드와 같은 13px를 돌려줍니다. */
-.v-number-input .v-field--variant-outlined .v-field__input { padding-inline-start: 13px; min-height: 40px; }
+.v-number-input .v-field--variant-outlined .v-field__input { padding-inline-start: 15px; min-height: 40px; }
 /* 스텝 버튼(위·아래)은 필드 높이를 넘기지 않게 */
 /* 스텝 버튼 기둥이 40px을 1px 넘겨 필드만 41px이 되던 것 */
 .v-number-input .v-number-input__control { align-self: center; height: 38px; }
@@ -492,6 +495,10 @@
 .v-textarea .v-field__field { align-items: flex-start; }
 .v-textarea .v-field__input,
 .v-input--density-comfortable .v-textarea .v-field__input { padding-top: 9px; padding-bottom: 9px; min-height: 40px; }
+/* 좌우 여백 — <textarea> 자체가 .v-field__input이라 위쪽 "padding-inline: 0"
+   규칙(다른 필드는 .v-field가 여백을 담당)에 글자까지 끌려가 왼쪽 경계에 붙었습니다.
+   특이도를 올려 DsInput과 같은 들여쓰기를 돌려줍니다. */
+.v-textarea .v-field--variant-outlined .v-field__input { padding-inline: 15px; }
 .v-input__details { padding-inline: 2px; min-height: 0; padding-top: 6px; }
 .v-messages { opacity: 1; }
 .v-field--focused { box-shadow: 0 0 0 3.5px var(--brand-subtle); border-radius: var(--r-lg); }
