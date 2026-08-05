@@ -319,10 +319,20 @@ function renderComponent(id, tab) {
 
 function overviewPane(c) {
   const imp = importPath(c)
-  // 실제 Vue + Vuetify로 도는 데모 — 같은 오리진의 라이브 앱을 임베드합니다
-  return `<div class="play-wrap">
+  // 실제 Vue + Vuetify로 도는 데모 — 같은 오리진의 라이브 앱을 임베드합니다.
+  // c.demos가 있으면 그룹(variant 등)마다 제목·설명 + 독립 iframe으로 나눠 보여줍니다.
+  const demoArea = c.demos
+    ? c.demos.map((d) => `<section class="demo-group">
+        <h3 class="demo-group-title">${d.title}</h3>
+        ${d.desc ? `<p class="demo-group-desc">${d.desc}</p>` : ''}
+        <div class="play-wrap play-wrap--rounded">
+          <iframe class="play-frame" src="live/${V}#play/${c.id}/${d.key}" title="${c.name} · ${d.title} 데모" loading="lazy"></iframe>
+        </div>
+      </section>`).join('')
+    : `<div class="play-wrap">
       <iframe class="play-frame" src="live/${V}#play/${c.id}" title="${c.name} 라이브 데모" loading="lazy"></iframe>
-    </div>` + codeBlock(c) +
+    </div>`
+  return demoArea + codeBlock(c, !!c.demos) +
     `<div class="imp" style="margin:20px 0 0"><code>import { Ds${c.name.replace(/^Ds/, '')} } from '${imp}'</code></div>`
 }
 
@@ -334,10 +344,10 @@ window.addEventListener('message', (e) => {
   })
 })
 
-function codeBlock(c) {
+function codeBlock(c, solo = false) {
   const hasHtml = !!c.html
   return `
-    <div class="codewrap">
+    <div class="codewrap${solo ? ' codewrap--solo' : ''}">
       <div class="codetabs">
         <button data-code="vue" class="on">Vue</button>
         ${hasHtml ? `<button data-code="html">HTML</button>` : ''}

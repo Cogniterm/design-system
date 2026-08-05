@@ -20,8 +20,14 @@ import {
 } from '~/design/vuetify'
 import { DsIcon } from '~/design/icon'
 
-const id = ref(location.hash.replace(/^#play\//, '') || 'button')
-window.addEventListener('hashchange', () => { id.value = location.hash.replace(/^#play\//, '') || 'button' })
+/* #play/<id> 또는 #play/<id>/<group> — group은 데모를 쪼갠 컴포넌트만 사용 */
+function parseHash() {
+  const [cid, sub] = location.hash.replace(/^#play\//, '').split('/')
+  return { id: cid || 'button', group: sub || '' }
+}
+const id = ref(parseHash().id)
+const group = ref(parseHash().group)
+window.addEventListener('hashchange', () => { id.value = parseHash().id; group.value = parseHash().group })
 
 /* 부모(문서 사이트)의 테마를 따라갑니다 — 같은 오리진이라 localStorage 공유 */
 const theme = useTheme()
@@ -105,13 +111,14 @@ function cycleTool() {
 }
 function search() { loading.value = true; setTimeout(() => { loading.value = false }, 900) }
 
-/* ── Button — variant 카드 (새 variant가 생기면 여기에만 추가) ── */
+/* ── Button — variant 그룹 (새 variant가 생기면 여기 + data.js demos에 추가) ── */
 const btnVariants = [
-  { variant: 'primary',   label: '새 에이전트', icon: 'add',      desc: '화면의 대표 액션 — 한 화면에 하나' },
-  { variant: 'secondary', label: '내보내기',    icon: 'download', desc: '보조 액션 — 취소·닫기·부가 기능' },
-  { variant: 'ghost',     label: '더 알아보기', icon: 'link',     desc: '가장 조용한 액션 — 툴바·반복 요소' },
-  { variant: 'danger',    label: '삭제',        icon: 'delete',   desc: '파괴적 액션 — 호버에만 빨간 면' },
+  { variant: 'primary',   label: '새 에이전트', icon: 'add' },
+  { variant: 'secondary', label: '내보내기',    icon: 'download' },
+  { variant: 'ghost',     label: '더 알아보기', icon: 'link' },
+  { variant: 'danger',    label: '삭제',        icon: 'delete' },
 ] as const
+const btnGroup = computed(() => btnVariants.find(v => v.variant === group.value) ?? btnVariants[0])
 
 </script>
 
@@ -120,70 +127,30 @@ const btnVariants = [
     <div ref="root" class="play" :data-id="id">
 
       <template v-if="id === 'button'">
-        <!-- Geist·Astryx식 분류 — 축(variant·size·state)마다 섹션, 예시마다 타일+캡션 -->
-        <div class="play-doc">
-
-          <section class="play-group">
-            <h3 class="play-h2">Variants</h3>
-            <p class="play-sub">시각 강도 4단계. primary는 한 화면에 하나만.</p>
-            <div class="play-tiles">
-              <div v-for="v in btnVariants" :key="v.variant" class="play-tile">
-                <div class="play-tile-stage"><DsButton :variant="v.variant">{{ v.label }}</DsButton></div>
-                <div class="play-tile-name">{{ v.variant }}</div>
-                <div class="play-tile-desc">{{ v.desc }}</div>
-              </div>
+        <!-- 그룹(variant) 하나만 렌더 — 문서 페이지가 그룹마다 iframe을 따로 띄웁니다 -->
+        <div class="play-sections">
+          <div class="play-sec">
+            <div class="play-sec-cap">Sizes · 32 / 40 / 48</div>
+            <div class="play-sec-row">
+              <DsButton :variant="btnGroup.variant" size="sm">{{ btnGroup.label }}</DsButton>
+              <DsButton :variant="btnGroup.variant">{{ btnGroup.label }}</DsButton>
+              <DsButton :variant="btnGroup.variant" size="lg">{{ btnGroup.label }}</DsButton>
             </div>
-          </section>
-
-          <section class="play-group">
-            <h3 class="play-h2">Sizes</h3>
-            <p class="play-sub">컨트롤 스케일 32 / 40 / 48. 필터 바·툴바는 sm, 랜딩·빈 상태의 대표 액션은 lg.</p>
-            <div class="play-tiles">
-              <div class="play-tile">
-                <div class="play-tile-stage"><DsButton size="sm">새 에이전트</DsButton></div>
-                <div class="play-tile-name">sm · 32px</div>
-              </div>
-              <div class="play-tile">
-                <div class="play-tile-stage"><DsButton>새 에이전트</DsButton></div>
-                <div class="play-tile-name">default · 40px</div>
-              </div>
-              <div class="play-tile">
-                <div class="play-tile-stage"><DsButton size="lg">새 에이전트</DsButton></div>
-                <div class="play-tile-name">lg · 48px</div>
-              </div>
+          </div>
+          <div class="play-sec">
+            <div class="play-sec-cap">States</div>
+            <div class="play-sec-row">
+              <DsButton :variant="btnGroup.variant" disabled>Disabled</DsButton>
+              <DsButton :variant="btnGroup.variant"><DsSpinner :size="13" /> 저장 중…</DsButton>
             </div>
-          </section>
-
-          <section class="play-group">
-            <h3 class="play-h2">States</h3>
-            <div class="play-tiles">
-              <div class="play-tile">
-                <div class="play-tile-stage"><DsButton disabled>새 에이전트</DsButton></div>
-                <div class="play-tile-name">disabled</div>
-                <div class="play-tile-desc">이유를 Tooltip으로 함께</div>
-              </div>
-              <div class="play-tile">
-                <div class="play-tile-stage"><DsButton variant="secondary"><DsSpinner :size="13" /> 저장 중…</DsButton></div>
-                <div class="play-tile-name">loading</div>
-                <div class="play-tile-desc">DsSpinner 조합 — 라벨은 진행형으로</div>
-              </div>
+          </div>
+          <div class="play-sec">
+            <div class="play-sec-cap">With icon</div>
+            <div class="play-sec-row">
+              <DsButton :variant="btnGroup.variant"><DsIcon :name="btnGroup.icon" size="sm" /> {{ btnGroup.label }}</DsButton>
+              <DsButton :variant="btnGroup.variant">{{ btnGroup.label }} <DsIcon name="forward" size="sm" /></DsButton>
             </div>
-          </section>
-
-          <section class="play-group">
-            <h3 class="play-h2">With icon</h3>
-            <div class="play-tiles">
-              <div class="play-tile">
-                <div class="play-tile-stage"><DsButton><DsIcon name="add" size="sm" /> 새 에이전트</DsButton></div>
-                <div class="play-tile-name">prefix</div>
-              </div>
-              <div class="play-tile">
-                <div class="play-tile-stage"><DsButton variant="secondary">내보내기 <DsIcon name="download" size="sm" /></DsButton></div>
-                <div class="play-tile-name">suffix</div>
-              </div>
-            </div>
-          </section>
-
+          </div>
         </div>
       </template>
 

@@ -39,6 +39,13 @@ export const COMPONENTS = [
   ],
   events: [['click', 'MouseEvent', '클릭 시 발생.']],
   slots: [['default', '버튼 라벨. 아이콘만 넣을 경우 aria-label 필수.']],
+  // variant마다 독립 미리보기 블록 — 플레이그라운드가 #play/button/<key>로 그룹만 렌더
+  demos: [
+    { key: 'primary',   title: 'Primary',   desc: '화면의 대표 액션. 한 화면에 하나만.' },
+    { key: 'secondary', title: 'Secondary', desc: '보조 액션 — 취소·닫기·부가 기능.' },
+    { key: 'ghost',     title: 'Ghost',     desc: '가장 조용한 액션 — 툴바·반복 요소.' },
+    { key: 'danger',    title: 'Danger',    desc: '파괴적 액션. 기본은 조용한 외곽선, 호버할 때만 빨간 면.' },
+  ],
   demo: `<div class="row">
     <button class="btn btn-primary">New agent</button>
     <button class="btn btn-secondary">Cancel</button>
