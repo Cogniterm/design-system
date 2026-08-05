@@ -34,11 +34,30 @@ applyTheme()
 window.addEventListener('storage', applyTheme)
 window.addEventListener('message', (e) => { if (e.data?.t === 'ds-theme') applyTheme() })
 
-/* 높이 보고 */
+/* 높이 보고 — 데모 루트 + 열린 오버레이(메뉴·팝오버·달력 등)까지 포함.
+   Vuetify 오버레이는 루트 밖 .v-overlay-container에 렌더링돼 scrollHeight에 안 잡힙니다.
+   그대로 두면 iframe이 짧아서 메뉴가 잘려 보입니다. */
 const root = ref<HTMLElement>()
+function measureH() {
+  let h = (root.value?.scrollHeight ?? 0) + 2
+  document.querySelectorAll<HTMLElement>('.v-overlay__content').forEach((el) => {
+    const r = el.getBoundingClientRect()
+    if (r.height > 0) h = Math.max(h, Math.ceil(r.bottom) + 24)
+  })
+  return h
+}
+let rafId = 0
+function report() {
+  cancelAnimationFrame(rafId)
+  rafId = requestAnimationFrame(() =>
+    parent.postMessage({ t: 'ds-play-h', h: measureH() }, '*'))
+}
 onMounted(() => {
-  const report = () => parent.postMessage({ t: 'ds-play-h', h: (root.value?.scrollHeight ?? 0) + 2 }, '*')
   new ResizeObserver(report).observe(root.value!)
+  // 오버레이 열림·닫힘·이동 감지 (포지셔닝이 몇 프레임 뒤에 끝나 transitionend도 함께)
+  new MutationObserver(report).observe(document.body,
+    { childList: true, subtree: true, attributes: true, attributeFilter: ['style', 'class'] })
+  document.body.addEventListener('transitionend', report, true)
   report()
 })
 
