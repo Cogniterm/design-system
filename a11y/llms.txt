@@ -1,6 +1,6 @@
 # Accessibility — Cogniterm Design System
 
-> Target: WCAG 2.2 AA. Docs: https://kimjiyong995-coder.github.io/design-system/#/foundation/a11y
+> Target: WCAG 2.2 AA. Docs: https://Cogniterm.github.io/design-system/#/foundation/a11y
 
 ## Universal rules
 - Contrast: 4.5:1 body text, 3:1 borders and icons. Never put meaning in anything

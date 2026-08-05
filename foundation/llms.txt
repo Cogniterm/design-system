@@ -2,23 +2,23 @@
 
 > Decisions made before components: tokens, color, type, spacing, shape, elevation,
 > density, icons, motion, state, accessibility, writing, i18n.
-> Docs: https://kimjiyong995-coder.github.io/design-system/#/foundation
+> Docs: https://Cogniterm.github.io/design-system/#/foundation
 
 ## Pages
-- Overview (개요) — https://kimjiyong995-coder.github.io/design-system/#/foundation/overview
-- Design Tokens (토큰) — https://kimjiyong995-coder.github.io/design-system/#/foundation/tokens
-- Color (컬러) — https://kimjiyong995-coder.github.io/design-system/#/foundation/color
-- Typography (타이포그래피) — https://kimjiyong995-coder.github.io/design-system/#/foundation/typography
-- Spacing & Layout (스페이싱 · 레이아웃) — https://kimjiyong995-coder.github.io/design-system/#/foundation/spacing
-- Radius & Border (라디우스 · 보더) — https://kimjiyong995-coder.github.io/design-system/#/foundation/shape
-- Elevation (엘리베이션) — https://kimjiyong995-coder.github.io/design-system/#/foundation/elevation
-- Density (밀도) — https://kimjiyong995-coder.github.io/design-system/#/foundation/density
-- Iconography (아이콘) — https://kimjiyong995-coder.github.io/design-system/#/foundation/iconography
-- Motion (모션) — https://kimjiyong995-coder.github.io/design-system/#/foundation/motion
-- State (상태) — https://kimjiyong995-coder.github.io/design-system/#/foundation/state
-- Accessibility (접근성) — https://kimjiyong995-coder.github.io/design-system/#/foundation/a11y
-- Writing (UX 라이팅) — https://kimjiyong995-coder.github.io/design-system/#/foundation/writing
-- Word List (용어집) — https://kimjiyong995-coder.github.io/design-system/#/foundation/wordlist
+- Overview (개요) — https://Cogniterm.github.io/design-system/#/foundation/overview
+- Design Tokens (토큰) — https://Cogniterm.github.io/design-system/#/foundation/tokens
+- Color (컬러) — https://Cogniterm.github.io/design-system/#/foundation/color
+- Typography (타이포그래피) — https://Cogniterm.github.io/design-system/#/foundation/typography
+- Spacing & Layout (스페이싱 · 레이아웃) — https://Cogniterm.github.io/design-system/#/foundation/spacing
+- Radius & Border (라디우스 · 보더) — https://Cogniterm.github.io/design-system/#/foundation/shape
+- Elevation (엘리베이션) — https://Cogniterm.github.io/design-system/#/foundation/elevation
+- Density (밀도) — https://Cogniterm.github.io/design-system/#/foundation/density
+- Iconography (아이콘) — https://Cogniterm.github.io/design-system/#/foundation/iconography
+- Motion (모션) — https://Cogniterm.github.io/design-system/#/foundation/motion
+- State (상태) — https://Cogniterm.github.io/design-system/#/foundation/state
+- Accessibility (접근성) — https://Cogniterm.github.io/design-system/#/foundation/a11y
+- Writing (UX 라이팅) — https://Cogniterm.github.io/design-system/#/foundation/writing
+- Word List (용어집) — https://Cogniterm.github.io/design-system/#/foundation/wordlist
 
 ## Hard rules for generating screens
 - Color: brand ONLY for primary actions, links, focus and progress. Gray does 95%.
@@ -80,7 +80,7 @@
   만들기 (not 생성/추가), 저장 (not 적용/확인), 되돌리기 (not 언두).
   Sentences end 합니다; instructions 하세요; dialog titles 할까요? (never 하시겠습니까?).
   Units are spaced from numbers: 2.1 MB, 128건, 12.4초.
-  Full list: https://kimjiyong995-coder.github.io/design-system/#/foundation/wordlist
+  Full list: https://Cogniterm.github.io/design-system/#/foundation/wordlist
 
 ## Tokens (source of truth: ds.css)
 ```css

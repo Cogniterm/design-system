@@ -631,19 +631,10 @@
 .v-slider-thumb__ripple { display: none; }
 .v-slider-track__background { background: var(--gray-5); opacity: 1; }
 
-/* ── 스크롤바 — 앱 전체 얇게 ── */
-.v-application *::-webkit-scrollbar { width: 10px; height: 10px; }
-/* 스크롤바 thumb의 3px는 보더가 아니라 안쪽 여백입니다.
-   background-clip: content-box와 함께 써서 얇은 막대를 만듭니다. */
-.v-application *::-webkit-scrollbar-thumb {
-  background: var(--gray-6);
-  border-radius: var(--r-full);
-  /* stylelint-disable-next-line declaration-property-value-disallowed-list */
-  border: 3px solid transparent;
-  background-clip: content-box;
-}
-.v-application *::-webkit-scrollbar-thumb:hover { background: var(--gray-8); background-clip: content-box; }
-.v-application *::-webkit-scrollbar-track { background: transparent; }
+/* ── 스크롤바 ──
+   ds.css로 옮겼습니다. 여기 있던 `.v-application` 스코프는 VApp(<v-app>)을 쓰지 않는
+   앱에서는 한 번도 적용되지 않아, OS 기본 스크롤바가 그대로 노출됐습니다.
+   스크롤바는 Vuetify 전용이 아니므로 프레임워크와 무관한 ds.css가 맞는 자리입니다. */
 
 /* ── DsPopover · DsHoverCard ── */
 .ds-popover {

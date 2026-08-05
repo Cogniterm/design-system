@@ -3,8 +3,8 @@
 > 함께 앉아서 30분이면 앱에 적용까지 끝납니다.
 > 이 문서 하나만 따라가면 되고, 막히는 지점은 마지막 절에 미리 적어뒀습니다.
 
-**문서 사이트** → https://kimjiyong995-coder.github.io/design-system/
-**라이브 갤러리** → https://kimjiyong995-coder.github.io/design-system/live/
+**문서 사이트** → https://Cogniterm.github.io/design-system/
+**라이브 갤러리** → https://Cogniterm.github.io/design-system/live/
 
 ---
 
@@ -282,7 +282,7 @@ function toggle(dark: boolean) {
 `llms.txt`를 컨텍스트로 넣으면 이 시스템의 규칙을 따라 코드를 생성합니다.
 섹션별로 나뉘어 있어 필요한 것만 읽히면 됩니다.
 
-문서 사이트 주소(`https://kimjiyong995-coder.github.io/design-system`) 뒤에 붙입니다.
+문서 사이트 주소(`https://Cogniterm.github.io/design-system`) 뒤에 붙입니다.
 
 ```
 /llms.txt                  색인 (3 KB)

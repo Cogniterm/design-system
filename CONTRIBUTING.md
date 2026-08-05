@@ -8,7 +8,7 @@
 ## 시작하기
 
 ```bash
-git clone https://github.com/kimjiyong995-coder/design-system.git
+git clone https://github.com/Cogniterm/design-system.git
 cd design-system
 
 # 1) 문서 사이트 — 빌드 과정 없음
@@ -29,7 +29,7 @@ npm run dev
 
 **대부분의 경우 답은 "만들지 않는다"입니다.** 아래 순서로 확인하세요.
 
-1. **기존 컴포넌트 조합으로 되는가?** → 그러면 [Patterns](https://kimjiyong995-coder.github.io/design-system/#/templates)에 추가합니다.
+1. **기존 컴포넌트 조합으로 되는가?** → 그러면 [Patterns](https://Cogniterm.github.io/design-system/#/templates)에 추가합니다.
 2. **Vuetify에 이미 있고 동작이 복잡한가?** (포커스 트랩·포지셔닝·정렬·키보드)
    → `wrapped`로 감쌉니다. 직접 만들지 않습니다.
 3. **시각이 전부이거나 Vuetify에 없는가?** → `custom`으로 만듭니다.
@@ -73,7 +73,7 @@ node scripts-gen-meta.mjs
 ## 판단이 갈릴 때
 
 **기본은 Geist, 갈리면 Radix Themes의 규칙을 따릅니다.**
-그래도 안 되면 [디자인 원칙 6가지](https://kimjiyong995-coder.github.io/design-system/#/docs/principles)로 판단합니다.
+그래도 안 되면 [디자인 원칙 6가지](https://Cogniterm.github.io/design-system/#/docs/principles)로 판단합니다.
 
 자주 나오는 갈림길:
 

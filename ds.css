@@ -175,6 +175,43 @@ body {
 ::selection { background: var(--brand-subtle); color: var(--brand-active); }
 [data-theme="dark"] ::selection { background: var(--brand-subtle); color: var(--brand); }
 
+/* ── 스크롤바 ──────────────────────────
+   브라우저가 그리는 UI(스크롤바·폼 컨트롤)에 현재 테마를 알려 줍니다.
+   이게 없으면 다크로 바꿔도 스크롤바만 밝은 채로 남습니다. */
+:root { color-scheme: light; }
+[data-theme="dark"] { color-scheme: dark; }
+
+/* 표준 속성 — Firefox 계열. 10px 트랙에 4px 막대라는 우리 규격을 px로 지정할 수는 없어
+   thin + 색 지정으로 근사합니다. */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--gray-6) transparent;
+}
+
+/* Chromium·Safari — 의사요소로 규격(10px 트랙 · 4px 막대)을 정확히 그립니다.
+   주의: scrollbar-width나 scrollbar-color가 지정돼 있으면 Chromium은
+   ::-webkit-scrollbar를 통째로 무시합니다. 그래서 둘 다 auto로 되돌린 뒤 그립니다.
+   @supports 블록이라 Firefox에는 적용되지 않고 위의 thin 설정이 그대로 남습니다. */
+@supports selector(::-webkit-scrollbar) {
+  * { scrollbar-width: auto; scrollbar-color: auto; }
+
+  *::-webkit-scrollbar { width: 10px; height: 10px; }
+
+  /* thumb의 3px는 보더가 아니라 안쪽 여백입니다.
+     background-clip: content-box와 함께 써서 얇은 막대를 만듭니다. */
+  *::-webkit-scrollbar-thumb {
+    background: var(--gray-6);
+    border-radius: var(--r-full);
+    /* stylelint-disable-next-line declaration-property-value-disallowed-list */
+    border: 3px solid transparent;
+    background-clip: content-box;
+  }
+  *::-webkit-scrollbar-thumb:hover { background: var(--gray-8); background-clip: content-box; }
+  *::-webkit-scrollbar-track { background: transparent; }
+  /* 가로·세로가 만나는 모서리 — 기본 회색 사각형을 지웁니다 */
+  *::-webkit-scrollbar-corner { background: transparent; }
+}
+
 /* 숫자가 세로로 흔들리지 않게 — 시각·용량·건수는 모두 tabular */
 .mono, .tabular, td.mono, code, kbd, pre {
   font-variant-numeric: tabular-nums;

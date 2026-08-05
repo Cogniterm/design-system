@@ -5,17 +5,17 @@
 > No shadows, 1px borders, radius 4/6/8/12, Pretendard, brand blue #1B72D9
 > (#4593F5 in dark), Radix Slate gray 1-12. Light + dark via [data-theme="dark"].
 > 65 components, 17 patterns, 14 foundation pages.
-> Docs: https://kimjiyong995-coder.github.io/design-system
+> Docs: https://Cogniterm.github.io/design-system
 
 ## Read the section you need — not everything
 
 | Section | File | Use it when |
 |---|---|---|
-| Components | https://kimjiyong995-coder.github.io/design-system/components/llms.txt | Building UI. Props, imports, usage, disambiguation. |
-| Patterns | https://kimjiyong995-coder.github.io/design-system/patterns/llms.txt | Composing a whole screen or an agent flow. |
-| Foundation | https://kimjiyong995-coder.github.io/design-system/foundation/llms.txt | Choosing colors, spacing, type, density. Full token list. |
-| Vuetify | https://kimjiyong995-coder.github.io/design-system/vuetify/llms.txt | Setup, and which components need Vuetify. |
-| Accessibility | https://kimjiyong995-coder.github.io/design-system/a11y/llms.txt | Keyboard tables and per-component a11y duties. |
+| Components | https://Cogniterm.github.io/design-system/components/llms.txt | Building UI. Props, imports, usage, disambiguation. |
+| Patterns | https://Cogniterm.github.io/design-system/patterns/llms.txt | Composing a whole screen or an agent flow. |
+| Foundation | https://Cogniterm.github.io/design-system/foundation/llms.txt | Choosing colors, spacing, type, density. Full token list. |
+| Vuetify | https://Cogniterm.github.io/design-system/vuetify/llms.txt | Setup, and which components need Vuetify. |
+| Accessibility | https://Cogniterm.github.io/design-system/a11y/llms.txt | Keyboard tables and per-component a11y duties. |
 
 For a whole screen you usually need **Foundation + Components + Patterns**.
 
@@ -38,11 +38,11 @@ For a whole screen you usually need **Foundation + Components + Patterns**.
 `DsChatMessage`, `variant`, `@send` stay English. User-facing text is Korean.
 
 ## Templates — clone these to start a screen
-https://kimjiyong995-coder.github.io/design-system/templates/audit.html   admin audit log: LNB shell, stat cards, filter bar,
+https://Cogniterm.github.io/design-system/templates/audit.html   admin audit log: LNB shell, stat cards, filter bar,
                                sortable table with selection, detail panel, all 5 states
-https://kimjiyong995-coder.github.io/design-system/templates/chat.html    agent chat: message stream, tool calls, citations, composer
-https://kimjiyong995-coder.github.io/design-system/templates/search.html  search: query bar, filter chips, highlighted results
+https://Cogniterm.github.io/design-system/templates/chat.html    agent chat: message stream, tool calls, citations, composer
+https://Cogniterm.github.io/design-system/templates/search.html  search: query bar, filter chips, highlighted results
 
 ## Live examples
-https://kimjiyong995-coder.github.io/design-system/live/        every component rendered on real Vuetify 3.11.6
-https://kimjiyong995-coder.github.io/design-system/live/#audit  the audit-log screen as a working Vue app
+https://Cogniterm.github.io/design-system/live/        every component rendered on real Vuetify 3.11.6
+https://Cogniterm.github.io/design-system/live/#audit  the audit-log screen as a working Vue app

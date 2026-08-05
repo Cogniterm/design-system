@@ -38,4 +38,4 @@ import { DsHoverCard } from '~/design/vuetify'   // Vuetify 필요 · ds.css + d
 - primary 버튼은 화면당 하나. 선택·활성 상태는 중립(--sel-bg/--sel-fg)
 - 컨트롤 높이 32(sm)/40/48 — 필터 바·툴바는 sm
 - 목록·테이블은 default/loading/empty/error/partial 5상태
-- 전체 규칙: https://kimjiyong995-coder.github.io/design-system/llms.txt
+- 전체 규칙: https://Cogniterm.github.io/design-system/llms.txt

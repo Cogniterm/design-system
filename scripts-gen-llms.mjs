@@ -8,7 +8,7 @@ import { ICON_NAMES } from './icons-svg.js'
 import { mkdirSync, writeFileSync, readFileSync } from 'node:fs'
 import { componentPrompt } from './ai-prompt.js'
 
-const SITE = 'https://kimjiyong995-coder.github.io/design-system'
+const SITE = 'https://Cogniterm.github.io/design-system'
 const strip = (h) => h.replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim()
 
 /* ── /components/llms.txt ── */

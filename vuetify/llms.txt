@@ -2,7 +2,7 @@
 
 > This system lives ALONGSIDE Vuetify 3.11, it does not replace it.
 > No migration. Existing screens are unchanged. Vuetify stays at 3.11 — v4 is not planned.
-> Docs: https://kimjiyong995-coder.github.io/design-system/#/docs/vuetify
+> Docs: https://Cogniterm.github.io/design-system/#/docs/vuetify
 
 ## Setup
 ```ts

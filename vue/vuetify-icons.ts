@@ -18,7 +18,7 @@ import {
   ChevronUp, ChevronDown, ChevronLeft, ChevronRight,
   ChevronsLeft, ChevronsRight, ChevronsUpDown,
   X, XCircle, Check, CheckCircle2, Info, AlertTriangle, AlertCircle,
-  Loader2, Square, CheckSquare, MinusSquare, Circle, CircleDot,
+  Loader2, Square, Circle, CircleDot,
   ArrowUp, ArrowDown, Menu, Pencil, Star, StarHalf,
   Paperclip, Plus, Minus, Calendar, Pipette, Upload, EllipsisVertical,
   Palette, Command, ArrowBigUp, Option, CornerDownLeft,

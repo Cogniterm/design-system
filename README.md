@@ -3,9 +3,9 @@
 AI SaaS Agent 제품군을 위한 미니멀 디자인 시스템.
 Vue 3 · Vuetify 3.11 환경에서 그대로 사용합니다.
 
-**문서 사이트** → https://kimjiyong995-coder.github.io/design-system/
-**라이브 갤러리** → https://kimjiyong995-coder.github.io/design-system/live/
-**감사 로그 예시** → https://kimjiyong995-coder.github.io/design-system/live/#audit
+**문서 사이트** → https://Cogniterm.github.io/design-system/
+**라이브 갤러리** → https://Cogniterm.github.io/design-system/live/
+**감사 로그 예시** → https://Cogniterm.github.io/design-system/live/#audit
 
 > **개발자와 처음 앉는다면** → [HANDOFF.md](HANDOFF.md) — 30분 적용 가이드, 리뷰 포인트, 미리 아는 함정
 
@@ -109,7 +109,7 @@ scripts-check.mjs     문서 무결성 검사 (CI)
 컴포넌트 이전의 결정 14가지 — 토큰 · 색 · 타이포그래피 · 여백 · 모서리 · 높낮이 ·
 밀도 · 아이콘 · 모션 · 상태 · 접근성 · 글쓰기 · 다국어.
 
-https://kimjiyong995-coder.github.io/design-system/#/foundation/overview
+https://Cogniterm.github.io/design-system/#/foundation/overview
 
 ## 라이브 갤러리 직접 실행
 
