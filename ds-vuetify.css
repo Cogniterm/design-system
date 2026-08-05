@@ -413,7 +413,8 @@
    특이도를 한 단계 올려 다른 필드와 같은 13px를 돌려줍니다. */
 .v-number-input .v-field--variant-outlined .v-field__input { padding-inline-start: 13px; min-height: 40px; }
 /* 스텝 버튼(위·아래)은 필드 높이를 넘기지 않게 */
-.v-number-input .v-number-input__control { align-self: stretch; }
+/* 스텝 버튼 기둥이 40px을 1px 넘겨 필드만 41px이 되던 것 */
+.v-number-input .v-number-input__control { align-self: center; height: 38px; }
 .v-number-input .v-number-input__control .v-btn { height: 18px; min-height: 0; border-radius: 0; }
 
 /* ── VFileInput — 빈 상자로 보이던 문제 ──
@@ -475,7 +476,11 @@
 /* ── VField — 입력 필드를 DsInput과 같은 인상으로 ── */
 .v-field--variant-outlined .v-field__outline__start { border-radius: var(--r-lg) 0 0 var(--r-lg); }
 .v-field--variant-outlined .v-field__outline__end { border-radius: 0 var(--r-lg) var(--r-lg) 0; }
-.v-field--variant-outlined.v-field--focused .v-field__outline { --v-field-border-width: 1px; }
+/* 포커스 시 테두리가 굵어지지 않게 — Vuetify는 1px→2px로 키웁니다.
+   커스텀 .input은 1px을 유지하고 색만 바꾸므로 나란히 두면 두께가 튀어 보입니다.
+   Vuetify 규칙과 선택자가 같아 특이도를 한 단계 올려야 이깁니다
+   (플러그인이 컴포넌트 CSS를 우리 파일보다 뒤에 주입하는 경우가 있음). */
+.v-field.v-field--variant-outlined.v-field--focused .v-field__outline { --v-field-border-width: 1px; }
 .v-input--density-comfortable .v-field__input { min-height: 40px; padding-top: 0; padding-bottom: 0; }
 .v-input--density-compact .v-field__input { min-height: 32px; padding-top: 0; padding-bottom: 0; }
 .ds-vselect--dense { width: auto; }
