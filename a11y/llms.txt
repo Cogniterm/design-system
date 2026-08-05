@@ -278,11 +278,6 @@ Keyboard: Tab = 복사 버튼으로 (블록)
 Component handles: 블록 복사 버튼; 고정폭·tabular
 YOU must handle: 긴 페이로드는 접기(Accordion)와 조합
 
-### DsStatusDot (상태 점)
-Keyboard: n/a
-Component handles: role="img" + aria-label 강제
-YOU must handle: label에 의미를 — "성공"이 아니라 "온라인"처럼 구체적으로
-
 ### DsTimestamp (시각)
 Keyboard: n/a
 Component handles: <time datetime> · title에 ISO

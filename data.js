@@ -404,36 +404,38 @@ export const COMPONENTS = [
 {
   id: 'badge', name: 'Badge', ko: '배지', category: 'feedback',
   origin: 'custom', vuetifyBase: null,
-  summary: '상태를 표시하는 작은 읽기 전용 라벨.',
-  reason: { ko: 'VChip으로 대체 가능하지만 필요한 형태가 훨씬 단순합니다.', en: 'Simpler than VChip for our needs.' },
+  summary: '상태·분류를 표시하는 작은 읽기 전용 라벨.',
+  reason: { ko: 'VChip으로 대체 가능하지만 필요한 형태가 훨씬 단순합니다. 톤(무엇인지)과 외형(얼마나 강조할지)을 분리해 같은 상태를 화면 맥락에 맞게 쓸 수 있게 했습니다.',
+            en: 'Simpler than VChip. Tone (what it means) and appearance (how loud) are separate axes.' },
   props: [
-    ['variant', `'default' | 'brand' | 'success' | 'warning' | 'danger'`, `'default'`, '상태 색 — 배경·글자·테두리로 구분.'],
+    ['variant', `'default' | 'brand' | 'success' | 'warning' | 'danger' | 'info' | 'violet' | 'teal' | 'pink'`, `'default'`, '톤 — 앞의 여섯은 의미색, 뒤의 셋은 분류용(베타·신규 같은 라벨).'],
+    ['appearance', `'subtle' | 'solid' | 'outline'`, `'subtle'`, '외형 — subtle은 면만(테두리 없음), solid는 채움, outline은 테두리만.'],
+    ['size', `'default' | 'sm'`, `'default'`, '22px / 18px.'],
   ],
   slots: [['default', '상태 텍스트.']],
   demos: [
-    { key: 'default', title: 'Default', desc: '중립 상태 — 대기·보통.' },
-    { key: 'brand',   title: 'Brand',   desc: '진행·실행 중 — 에이전트가 움직이는 상태.' },
-    { key: 'success', title: 'Success', desc: '완료·정상.' },
-    { key: 'warning', title: 'Warning', desc: '보류·주의.' },
-    { key: 'danger',  title: 'Danger',  desc: '실패·오류.' },
+    { key: 'subtle',  title: 'Subtle',  desc: '기본 — 연한 면, 테두리 없음. 표·목록에 여러 개 놓여도 조용합니다.' },
+    { key: 'solid',   title: 'Solid',   desc: '채운 면 + 반전 글자. 눈에 띄어야 하는 소수에만.' },
+    { key: 'outline', title: 'Outline', desc: '면 없이 테두리만. 이미 배경이 있는 카드·행 위에서.' },
   ],
   demo: `<div class="row">
-    <span class="badge">Draft</span>
-    <span class="badge brand">Running</span>
-    <span class="badge success">Completed</span>
-    <span class="badge warning">Delayed</span>
-    <span class="badge danger">Failed</span>
+    <span class="badge">대기</span>
+    <span class="badge brand">실행중</span>
+    <span class="badge success">완료</span>
+    <span class="badge warning">보류</span>
+    <span class="badge danger">실패</span>
+    <span class="badge violet">베타</span>
   </div>`,
-  vue: `<DsBadge>Draft</DsBadge>
-<DsBadge variant="brand">Running</DsBadge>
-<DsBadge variant="success">Completed</DsBadge>
-<DsBadge variant="warning">Delayed</DsBadge>
-<DsBadge variant="danger">Failed</DsBadge>`,
-  html: `<span class="badge">Draft</span>
-<span class="badge brand">Running</span>
-<span class="badge success">Completed</span>
-<span class="badge warning">Delayed</span>
-<span class="badge danger">Failed</span>`,
+  vue: `<DsBadge>대기</DsBadge>
+<DsBadge variant="brand">실행중</DsBadge>
+<DsBadge variant="success" appearance="solid">완료</DsBadge>
+<DsBadge variant="danger" appearance="outline">실패</DsBadge>
+<DsBadge variant="violet" size="sm">베타</DsBadge>`,
+  html: `<span class="badge">대기</span>
+<span class="badge brand">실행중</span>
+<span class="badge success solid">완료</span>
+<span class="badge danger outline">실패</span>
+<span class="badge violet sm">베타</span>`,
   guidelines: [
     ['해야 할 것', '상태별 색(배경·글자·테두리)으로 구분하고, 라벨 텍스트를 항상 함께 씁니다.'],
     ['하지 말 것', '색만으로 상태를 구분하지 않습니다. 텍스트를 항상 함께 씁니다(색맹 대응).'],
@@ -1086,18 +1088,20 @@ export const COMPONENTS = [
 },
 {
   id: 'checkbox', name: 'Checkbox', ko: '체크박스', category: 'input',
-  origin: 'wrapped', vuetifyBase: 'VCheckbox',
+  origin: 'custom', vuetifyBase: null,
   summary: '켜고 끄는 선택. 저장 버튼과 함께 씁니다.',
-  reason: { ko: '부분 선택(indeterminate) 상태가 테이블 전체 선택에 반드시 필요한데 직접 만들면 빠뜨립니다.',
-            en: 'Indeterminate state is required for table select-all and is easy to miss.' },
+  reason: { ko: 'VCheckbox를 쓰다가 버렸습니다 — 상자를 아이콘 글리프로 그려서 면을 채우려면 CSS로 상자를 덧대야 하고, 그러면 크기별로 표식이 상자 밖으로 나가거나 눌립니다. 상자는 CSS(정확한 px), 체크·대시는 뷰박스 고정 SVG로 그려 항상 정중앙에 옵니다.',
+            en: 'Dropped VCheckbox — it draws the box as an icon glyph, so filling it needs a CSS box on top and the mark never lines up across sizes. Box in CSS, mark as a fixed-viewBox SVG.' },
   props: [
-    ['modelValue', 'boolean', '—', 'v-model.'],
+    ['modelValue', 'boolean', 'false', 'v-model.'],
     ['label', 'string', '—', '라벨.'],
     ['hint', 'string', '—', '보조 설명.'],
-    ['indeterminate', 'boolean', 'false', '부분 선택 상태.'],
+    ['indeterminate', 'boolean', 'false', '부분 선택 상태 — 테이블 전체 선택 헤더에 씁니다.'],
+    ['size', `'sm' | 'default' | 'lg'`, `'default'`, '상자 14 / 16 / 20px.'],
+    ['disabled', 'boolean', 'false', '비활성.'],
   ],
   slots: [],
-  demo: `<div style="display:flex;flex-direction:column;gap:10px"><label style="display:flex;gap:8px;align-items:center;font-size:13.5px"><input class="check" type="checkbox" checked>이메일 알림 받기</label><label style="display:flex;gap:8px;align-items:center;font-size:13.5px"><input class="check" type="checkbox">자동 재시도</label></div>`,
+  demo: `<div class="row" style="gap:18px"><label class="row" style="gap:9px;font-size:14px"><input class="check" type="checkbox" checked>선택</label><label class="row" style="gap:9px;font-size:14px"><input class="check" type="checkbox">미선택</label><label class="row" style="gap:9px;font-size:14px"><input class="check" type="checkbox" indeterminate>부분 선택</label></div>`,
   vue: `<DsCheckbox v-model="notify" label="이메일 알림 받기"
   hint="실패한 실행에 대해서만 발송됩니다." />
 
@@ -1482,26 +1486,6 @@ export const COMPONENTS = [
   guidelines: [['해야 할 것','툴콜 페이로드·API 응답은 블록으로, 식별자 언급은 인라인으로.']],
 },
 {
-  id: 'statusdot', name: 'StatusDot', ko: '상태 점', category: 'feedback',
-  origin: 'custom', vuetifyBase: null,
-  summary: '텍스트 없는 최소 상태 표시.',
-  reason: { ko: '아바타 모서리·탭 이름 옆처럼 배지가 들어가지 않는 자리가 있습니다.', en: 'For spots too small for a badge.' },
-  props: [['status',`'neutral'|'brand'|'success'|'warning'|'danger'`,`'neutral'`,'색.'],['label','string','필수','스크린리더용 의미. 색만으로는 전달되지 않습니다.'],['pulse','boolean','false','실행 중 깜빡임.']],
-  slots: [],
-  demos: [
-    { key: 'neutral', title: 'Neutral', desc: '오프라인·비활성.' },
-    { key: 'brand',   title: 'Brand',   desc: '실행 중 — pulse와 함께.' },
-    { key: 'success', title: 'Success', desc: '온라인·정상.' },
-    { key: 'warning', title: 'Warning', desc: '주의.' },
-    { key: 'danger',  title: 'Danger',  desc: '오류.' },
-  ],
-  demo: `<div class="row"><span class="status-dot success"></span><span class="status-dot brand pulse"></span><span class="status-dot danger"></span><span style="font-size:var(--text-xs);color:var(--gray-9)">← 실행 중은 pulse</span></div>`,
-  vue: `<DsStatusDot status="success" label="온라인" />
-<DsStatusDot status="brand" label="실행 중" pulse />`,
-  html: `<span class="status-dot success" role="img" aria-label="온라인"></span>`,
-  guidelines: [['하지 말 것','주변에 뜻이 없는 곳에 단독 사용 — Badge를 씁니다.'],['접근성','label은 필수입니다.']],
-},
-{
   id: 'timestamp', name: 'Timestamp', ko: '시각', category: 'content',
   origin: 'custom', vuetifyBase: null,
   summary: '용어집 규칙이 내장된 시각 표기.',
@@ -1861,7 +1845,6 @@ export const WHERE = {
   link: '본문·설명 속 이동. 동작 실행은 Button.',
   kbd: '단축키 안내 — 팔레트 항목, 툴팁, 문서.',
   code: '식별자·페이로드·API 응답 표기.',
-  statusdot: '아바타 모서리·탭 이름 옆 — 배지가 안 들어가는 최소 자리.',
   timestamp: '테이블 시각 열, 메시지 시각, 실행 기록.',
   metalist: '상세 패널의 키-값 — 이벤트·문서·에이전트 속성.',
   searchfield: '목록 상단·GNB 검색. 전역이면 CommandPalette와 연동.',
@@ -2160,8 +2143,6 @@ Object.assign(A11Y, {
   kbd: { keys: [], free: ['<kbd> 시맨틱'], yours: ['어떤 기능의 키인지 주변 텍스트로'] },
   code: { keys: [['Tab','복사 버튼으로 (블록)']], free: ['블록 복사 버튼','고정폭·tabular'],
     yours: ['긴 페이로드는 접기(Accordion)와 조합'] },
-  statusdot: { keys: [], free: ['role="img" + aria-label 강제'],
-    yours: ['label에 의미를 — "성공"이 아니라 "온라인"처럼 구체적으로'] },
   timestamp: { keys: [], free: ['<time datetime> · title에 ISO'],
     yours: ['감사 기록은 absolute 고정'] },
   metalist: { keys: [], free: ['<dl> 시맨틱'], yours: ['라벨을 짧게 — 88px 폭'] },
@@ -2237,6 +2218,5 @@ export const VERSUS = {
   combobox: [['Autocomplete', '목록의 값만 허용하면 Autocomplete']],
   searchfield: [['Input', '검색이 아닌 일반 입력은 Input']],
   commandpalette: [['SearchField', '한 목록 안 검색은 SearchField']],
-  statusdot: [['Badge', '텍스트를 놓을 수 있으면 Badge']],
   systemmessage: [['Alert', '에러·경고는 Alert']],
 }

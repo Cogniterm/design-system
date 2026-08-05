@@ -1,15 +1,17 @@
 # DsCheckbox — Cogniterm Design System
 
-import { DsCheckbox } from '~/design/vuetify'   // Vuetify 필요 · ds.css + ds-vuetify.css
+import { DsCheckbox } from '~/design'   // Vuetify 불필요 · ds.css만
 
 ## 용도
 테이블 다중 선택, 약관 동의, 저장 버튼이 있는 설정.
 
 ## Props
-- modelValue: boolean — v-model.
+- modelValue: boolean = false — v-model.
 - label: string — 라벨.
 - hint: string — 보조 설명.
-- indeterminate: boolean = false — 부분 선택 상태.
+- indeterminate: boolean = false — 부분 선택 상태 — 테이블 전체 선택 헤더에 씁니다.
+- size: 'sm' | 'default' | 'lg' = 'default' — 상자 14 / 16 / 20px.
+- disabled: boolean = false — 비활성.
 
 
 ## 사용 예

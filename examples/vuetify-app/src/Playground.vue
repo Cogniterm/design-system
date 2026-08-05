@@ -4,16 +4,16 @@
 import { computed, onMounted, ref, watch } from 'vue'
 import { useTheme } from 'vuetify'
 import {
-  DsButton, DsButtonGroup, DsInput, DsBadge, DsChip, DsAvatar, DsCard, DsDivider, DsSkeleton,
+  DsButton, DsButtonGroup, DsCheckbox, DsInput, DsBadge, DsChip, DsAvatar, DsCard, DsDivider, DsSkeleton,
   DsToast, DsEmptyState, DsChatMessage, DsStreamingText, DsThinkingIndicator,
   DsDotField, DsToolCallStep, DsAgentInput, DsCitationChip, DsArtifactPanel, DsSearchResult,
-  DsFileGrid, DsFileRow, DsLink, DsKbd, DsCode, DsStatusDot, DsTimestamp,
+  DsFileGrid, DsFileRow, DsLink, DsKbd, DsCode, DsTimestamp,
   DsMetaList, DsSearchField, DsSystemMessage, DsToolbar, DsVisuallyHidden,
   DsTreeview,
 } from '~/design'
 import {
   DsIconButton, DsMenu, DsTabs, DsBreadcrumbs, DsPagination,
-  DsNavList, DsStepper, DsSelect, DsAutocomplete, DsTextarea, DsCheckbox,
+  DsNavList, DsStepper, DsSelect, DsAutocomplete, DsTextarea,
   DsRadioGroup, DsSwitch, DsSlider, DsFileInput, DsDatePicker, DsAlert,
   DsBanner, DsProgressBar, DsSpinner, DsSnackbar, DsDialog, DsTooltip,
   DsDataTable, DsList, DsTimeline, DsAccordion,
@@ -127,7 +127,6 @@ function gv(allowed: string[], def: string): any {
   return allowed.includes(group.value) ? group.value : def
 }
 const badgeLabel: Record<string, string> = { default: '대기', brand: '실행중', success: '완료', warning: '보류', danger: '실패' }
-const dotLabel: Record<string, string> = { neutral: '오프라인', brand: '실행 중', success: '온라인', warning: '지연', danger: '오류' }
 
 </script>
 
@@ -288,10 +287,25 @@ const dotLabel: Record<string, string> = { neutral: '오프라인', brand: '실�
       </template>
 
       <template v-else-if="id === 'checkbox'">
-        <DsCheckbox v-model="b1" label="이메일 알림 받기" hint="실패한 실행에 대해서만 발송됩니다." />
-        <DsCheckbox :model-value="false" label="자동 재시도" />
-        <DsCheckbox :indeterminate="true" label="일부 선택됨" />
-        <DsCheckbox :model-value="true" label="비활성 · 선택됨" disabled />
+        <div class="play-sections">
+          <div class="play-sec">
+            <div class="play-sec-cap">Sizes · 14 / 16 / 20</div>
+            <div class="play-sec-row">
+              <DsCheckbox :model-value="true" size="sm" label="Small" />
+              <DsCheckbox :model-value="true" label="Default" />
+              <DsCheckbox :model-value="true" size="lg" label="Large" />
+            </div>
+          </div>
+          <div class="play-sec">
+            <div class="play-sec-cap">States</div>
+            <div class="play-sec-row">
+              <DsCheckbox v-model="b1" label="선택" />
+              <DsCheckbox :model-value="false" label="미선택" />
+              <DsCheckbox :indeterminate="true" label="부분 선택" />
+              <DsCheckbox :model-value="true" label="비활성" disabled />
+            </div>
+          </div>
+        </div>
       </template>
 
       <template v-else-if="id === 'switch'">
@@ -323,8 +337,17 @@ const dotLabel: Record<string, string> = { neutral: '오프라인', brand: '실�
       </template>
 
       <template v-else-if="id === 'badge'">
-        <DsBadge :variant="gv(['default','brand','success','warning','danger'], 'default')">
-          {{ badgeLabel[gv(['default','brand','success','warning','danger'], 'default')] }}</DsBadge>
+        <div class="play-sec-row">
+          <DsBadge :appearance="gv(['subtle','solid','outline'], 'subtle')">대기</DsBadge>
+          <DsBadge :appearance="gv(['subtle','solid','outline'], 'subtle')" variant="brand">실행중</DsBadge>
+          <DsBadge :appearance="gv(['subtle','solid','outline'], 'subtle')" variant="success">완료</DsBadge>
+          <DsBadge :appearance="gv(['subtle','solid','outline'], 'subtle')" variant="warning">보류</DsBadge>
+          <DsBadge :appearance="gv(['subtle','solid','outline'], 'subtle')" variant="danger">실패</DsBadge>
+          <DsBadge :appearance="gv(['subtle','solid','outline'], 'subtle')" variant="info">안내</DsBadge>
+          <DsBadge :appearance="gv(['subtle','solid','outline'], 'subtle')" variant="violet">베타</DsBadge>
+          <DsBadge :appearance="gv(['subtle','solid','outline'], 'subtle')" variant="teal">신규</DsBadge>
+          <DsBadge :appearance="gv(['subtle','solid','outline'], 'subtle')" variant="pink">실험</DsBadge>
+        </div>
       </template>
 
       <template v-else-if="id === 'chip'">
@@ -337,12 +360,6 @@ const dotLabel: Record<string, string> = { neutral: '오프라인', brand: '실�
           <DsButton v-if="!chips.length" variant="ghost" size="sm"
             @click="chips = ['계약서_최종.pdf', 'Q3 보고서']">복원</DsButton>
         </template>
-      </template>
-
-      <template v-else-if="id === 'statusdot'">
-        <DsStatusDot :status="gv(['neutral','brand','success','warning','danger'], 'success')"
-          :label="dotLabel[gv(['neutral','brand','success','warning','danger'], 'success')]"
-          :pulse="gv(['neutral','brand','success','warning','danger'], 'success') === 'brand'" />
       </template>
 
       <template v-else-if="id === 'skeleton'">
@@ -649,9 +666,12 @@ const dotLabel: Record<string, string> = { neutral: '오프라인', brand: '실�
 </template>
 
 <style>
+/* iframe 안이라 스크롤바가 보이면 데모가 잘려 보입니다.
+   높이는 부모에게 정확히 보고하므로 스크롤은 필요 없습니다. */
+html, body { overflow: hidden; }
 .play {
   display: flex; flex-wrap: wrap; gap: 12px; align-items: center;
-  padding: 28px; min-height: 96px;
+  padding: 20px 24px; min-height: 64px;
   background: var(--gray-1);
 }
 .play-val { font-family: var(--mono); font-size: var(--text-xs); color: var(--gray-9); }

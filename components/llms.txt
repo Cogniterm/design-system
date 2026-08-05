@@ -1,8 +1,8 @@
 # Components — Cogniterm Design System
 
-> 66 components. 34 standalone
+> 65 components. 34 standalone
 > (no Vuetify needed, import from `~/design`) and
-> 32 Vuetify-based
+> 31 Vuetify-based
 > (import from `~/design/vuetify`, also needs ds-vuetify.css).
 > Docs: https://kimjiyong995-coder.github.io/design-system/#/components
 
@@ -161,9 +161,9 @@ Each component has a standalone prompt at https://kimjiyong995-coder.github.io/d
     <DsAutocomplete v-model="folders" label="폴더" multiple
       :items="['법무', '재무', '인사', '영업']" />
 - **DsCheckbox** (체크박스) — 켜고 끄는 선택. 저장 버튼과 함께 씁니다.
-  import: ~/design/vuetify | origin: wrapped (VCheckbox)
+  import: ~/design | origin: custom
   where: 테이블 다중 선택, 약관 동의, 저장 버튼이 있는 설정.
-  props: modelValue, label, hint, indeterminate=false
+  props: modelValue=false, label, hint, indeterminate=false, size='default', disabled=false
   vs: Switch — 즉시 반영되면 Switch, 저장 버튼을 눌러야 반영되면 Checkbox
   usage:
     <DsCheckbox v-model="notify" label="이메일 알림 받기"
@@ -308,17 +308,17 @@ Each component has a standalone prompt at https://kimjiyong995-coder.github.io/d
   usage:
     <DsVisuallyHidden>검색 결과 12건</DsVisuallyHidden>
 ### Feedback & Status (피드백·상태)
-- **DsBadge** (배지) — 상태를 표시하는 작은 읽기 전용 라벨.
+- **DsBadge** (배지) — 상태·분류를 표시하는 작은 읽기 전용 라벨.
   import: ~/design | origin: custom
   where: 테이블 상태 열, 목록 항목의 상태 표시. 읽기 전용.
-  props: variant='default'
+  props: variant='default', appearance='subtle', size='default'
   vs: Chip — Badge는 읽기 전용, Chip은 제거 가능
   usage:
-    <DsBadge>Draft</DsBadge>
-    <DsBadge variant="brand">Running</DsBadge>
-    <DsBadge variant="success">Completed</DsBadge>
-    <DsBadge variant="warning">Delayed</DsBadge>
-    <DsBadge variant="danger">Failed</DsBadge>
+    <DsBadge>대기</DsBadge>
+    <DsBadge variant="brand">실행중</DsBadge>
+    <DsBadge variant="success" appearance="solid">완료</DsBadge>
+    <DsBadge variant="danger" appearance="outline">실패</DsBadge>
+    <DsBadge variant="violet" size="sm">베타</DsBadge>
 - **DsSkeleton** (스켈레톤) — 데이터 로딩 중 콘텐츠의 자리를 미리 보여줍니다.
   import: ~/design | origin: custom
   where: 목록·테이블의 로딩 상태. 에이전트 응답 대기에는 쓰지 않습니다.
@@ -394,14 +394,6 @@ Each component has a standalone prompt at https://kimjiyong995-coder.github.io/d
     <DsSnackbar v-model="open" variant="success" action="View" @action="go">
       에이전트를 추가했습니다.
     </DsSnackbar>
-- **DsStatusDot** (상태 점) — 텍스트 없는 최소 상태 표시.
-  import: ~/design | origin: custom
-  where: 아바타 모서리·탭 이름 옆 — 배지가 안 들어가는 최소 자리.
-  props: status='neutral', label, pulse=false
-  vs: Badge — 텍스트를 놓을 수 있으면 Badge
-  usage:
-    <DsStatusDot status="success" label="온라인" />
-    <DsStatusDot status="brand" label="실행 중" pulse />
 ### Overlay (오버레이)
 - **DsMenu** (메뉴) — 클릭하면 열리는 드롭다운 메뉴.
   import: ~/design/vuetify | origin: wrapped (VMenu)
