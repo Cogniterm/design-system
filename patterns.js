@@ -170,7 +170,7 @@ const destructive = P('destructive', 'Confirmation & Destructive', '확인 · �
       실제로 되돌릴 수 있다면 바로 실행하고 Snackbar에 "실행 취소"를 답니다.
     </p>
     <div class="demo" style="border-radius:var(--r-xl)">
-      <div class="toast danger" style="max-width:360px"><span class="t-dot"></span>
+      <div class="toast danger" style="max-width:360px"><span class="t-icon">${ic('error','sm')}</span>
         <span class="t-body">에이전트를 삭제했습니다.</span><button class="t-action">실행 취소</button></div>
     </div>
 

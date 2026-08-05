@@ -490,10 +490,10 @@ export const COMPONENTS = [
     { key: 'success', title: 'Success', desc: '성공 결과.' },
     { key: 'danger',  title: 'Danger',  desc: '실패 결과.' },
   ],
-  thumb: `<div class="toast success"><span class="t-dot"></span><span class="t-body">에이전트가 생성되었습니다.</span></div>`,
+  thumb: `<div class="toast success"><span class="t-icon">${ic('success','sm')}</span><span class="t-body">에이전트가 생성되었습니다.</span></div>`,
   demo: `<div style="display:flex;flex-direction:column;gap:10px;align-items:flex-start">
-    <div class="toast success"><span class="t-dot"></span><span class="t-body">에이전트가 생성되었습니다.</span><button class="t-action">View</button></div>
-    <div class="toast danger"><span class="t-dot"></span><span class="t-body">파일 업로드에 실패했습니다 — 10MB를 초과합니다.</span><button class="t-action">Retry</button></div>
+    <div class="toast success"><span class="t-icon">${ic('success','sm')}</span><span class="t-body">에이전트가 생성되었습니다.</span><button class="t-action">View</button></div>
+    <div class="toast danger"><span class="t-icon">${ic('error','sm')}</span><span class="t-body">파일 업로드에 실패했습니다 — 10MB를 초과합니다.</span><button class="t-action">Retry</button></div>
   </div>`,
   vue: `<DsToast variant="success" action="View" @action="open">
   에이전트가 생성되었습니다.
@@ -503,7 +503,7 @@ export const COMPONENTS = [
   파일 업로드에 실패했습니다 — 10MB를 초과합니다.
 </DsToast>`,
   html: `<div class="toast success">
-  <span class="t-dot"></span>
+  <span class="t-icon"><!-- success 아이콘 svg --></span>
   <span class="t-body">에이전트가 생성되었습니다.</span>
   <button class="t-action">View</button>
 </div>`,
@@ -1343,7 +1343,7 @@ export const COMPONENTS = [
     { key: 'success', title: 'Success', desc: '저장·생성 성공.' },
     { key: 'danger',  title: 'Danger',  desc: '실패 알림.' },
   ],
-  demo: `<div class="toast success"><span class="t-dot"></span><span class="t-body">에이전트가 생성되었습니다.</span><button class="t-action">View</button></div>`,
+  demo: `<div class="toast success"><span class="t-icon">${ic('success','sm')}</span><span class="t-body">에이전트가 생성되었습니다.</span><button class="t-action">View</button></div>`,
   vue: `<DsSnackbar v-model="open" variant="success" action="View" @action="go">
   에이전트가 생성되었습니다.
 </DsSnackbar>`,

@@ -353,12 +353,19 @@ td.mono { font-family: var(--mono); font-size: var(--text-xs); color: var(--gray
   padding: 12px 14px; font-size: var(--text-sm);
   box-shadow: var(--shadow-overlay); }   /* 다크에서도 보이도록 토큰으로 */
 
-.toast .t-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
-.toast.success .t-dot { background: var(--success); }
-.toast.danger .t-dot { background: var(--danger); }
+/* 앞머리는 점 대신 상태 아이콘 — 색+형태로 성공/실패가 동시에 읽힘 (Geist·Astryx 참고) */
+.toast .t-icon { display: inline-flex; flex-shrink: 0; align-items: center; }
+.toast.success .t-icon { color: var(--success); }
+.toast.danger .t-icon { color: var(--danger); }
 .toast .t-body { flex: 1; }
-.toast .t-action { all: unset; cursor: pointer; font-size: var(--text-xs); font-weight: var(--weight-medium); color: var(--brand-text); font-family: var(--font); }
-.toast .t-action:hover { text-decoration: underline; }
+.toast .t-action {
+  all: unset; box-sizing: border-box; cursor: pointer; flex-shrink: 0;
+  height: 24px; padding: 0 8px; border-radius: var(--r-sm);
+  font-size: var(--text-xs); font-weight: var(--weight-medium);
+  color: var(--gray-11); border: 1px solid var(--border-strong);
+  font-family: var(--font); display: inline-flex; align-items: center;
+}
+.toast .t-action:hover { background: var(--gray-2); color: var(--gray-12); border-color: var(--border-hover); }
 
 /* ── ds-thinking (에이전트 추론 중 — Soft Rise v1.0) ──
    도트 3개가 -4px 파동(사이클의 64%는 정지), 라벨은 브랜드 shimmer.
