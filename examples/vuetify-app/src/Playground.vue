@@ -84,7 +84,7 @@ const b1 = ref(true); const b2 = ref(false); const radio = ref('180')
 const slider = ref(70); const files = ref(null); const date = ref(null)
 const tab = ref('all'); const view = ref('list'); const page = ref(2)
 const nav = ref(['logs']); const step = ref(2); const listSel = ref([])
-const tree = ref([]); const acc = ref<any>(null)
+const tree = ref([5]); const treeOpen = ref([1, 4]); const acc = ref<any>(null)
 const dlg = ref(false); const snack = ref(false); const pal = ref(false)
 const streaming = ref(true); const toolStatus = ref<'running' | 'done' | 'error'>('running')
 /* thinking — 단계 문구 자동 전환 (스펙: 2.6s 간격, 450ms fade-in) */
@@ -459,9 +459,14 @@ const dotLabel: Record<string, string> = { neutral: '오프라인', brand: '실�
       </template>
 
       <template v-else-if="id === 'treeview'">
-        <div style="width:260px"><DsTreeview v-model="tree" :items="[
-          { id: 1, title: '법무', children: [{ id: 2, title: '2026' }, { id: 3, title: '2025' }] },
-          { id: 4, title: '재무', children: [{ id: 5, title: 'Q3' }] }]" /></div>
+        <!-- 파일 피커에서 확정한 모습 그대로 — 펼침 + 아이콘 + 선택 + 깊이 가이드선 -->
+        <div style="width:260px"><DsTreeview v-model="tree" v-model:opened="treeOpen" :items="[
+          { id: 1, title: '법무', icon: 'folder', children: [
+            { id: 2, title: '2026', icon: 'folder', children: [{ id: 6, title: '계약서', icon: 'folder' }] },
+            { id: 3, title: '2025', icon: 'folder' }] },
+          { id: 4, title: '재무', icon: 'folder', children: [{ id: 5, title: 'Q3', icon: 'folder' }] }]">
+          <template #prepend="{ item }"><DsIcon :name="(item as any).icon" size="sm" /></template>
+        </DsTreeview></div>
       </template>
 
       <template v-else-if="id === 'timeline'">

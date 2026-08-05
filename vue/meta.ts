@@ -41,7 +41,7 @@ export const meta: ComponentMeta[] = [
   {
     name: 'DsMenu',
     ko: '메뉴',
-    category: 'action',
+    category: 'overlay',
     origin: 'wrapped',
     vuetifyBase: 'VMenu',
     summary: { ko: '클릭하면 열리는 드롭다운 메뉴.', en: '' },
@@ -97,7 +97,7 @@ export const meta: ComponentMeta[] = [
   {
     name: 'DsCitationChip',
     ko: '인용 칩',
-    category: 'content',
+    category: 'agent',
     origin: 'custom',
     vuetifyBase: null,
     summary: { ko: '에이전트 응답의 근거 출처를 가리키는 번호 칩.', en: '' },
@@ -167,7 +167,7 @@ export const meta: ComponentMeta[] = [
   {
     name: 'DsAgentInput',
     ko: '에이전트 입력창',
-    category: 'input',
+    category: 'agent',
     origin: 'custom',
     vuetifyBase: null,
     summary: { ko: '에이전트에게 메시지를 보내는 입력창.', en: '' },
@@ -419,7 +419,7 @@ export const meta: ComponentMeta[] = [
   {
     name: 'DsTabs',
     ko: '탭',
-    category: 'action',
+    category: 'nav',
     origin: 'wrapped',
     vuetifyBase: 'VTabs',
     summary: { ko: '같은 대상의 여러 단면을 전환합니다.', en: '' },
@@ -433,7 +433,7 @@ export const meta: ComponentMeta[] = [
   {
     name: 'DsBreadcrumbs',
     ko: '경로',
-    category: 'action',
+    category: 'nav',
     origin: 'wrapped',
     vuetifyBase: 'VBreadcrumbs',
     summary: { ko: '현재 위치의 계층 경로.', en: '' },
@@ -447,7 +447,7 @@ export const meta: ComponentMeta[] = [
   {
     name: 'DsPagination',
     ko: '페이지네이션',
-    category: 'data',
+    category: 'nav',
     origin: 'wrapped',
     vuetifyBase: 'VPagination',
     summary: { ko: '긴 목록을 페이지로 나눕니다.', en: '' },
@@ -461,7 +461,7 @@ export const meta: ComponentMeta[] = [
   {
     name: 'DsNavList',
     ko: '내비게이션 목록',
-    category: 'action',
+    category: 'nav',
     origin: 'wrapped',
     vuetifyBase: 'VList',
     summary: { ko: '좌측 사이드바 메뉴.', en: '' },
@@ -475,7 +475,7 @@ export const meta: ComponentMeta[] = [
   {
     name: 'DsStepper',
     ko: '단계 표시',
-    category: 'action',
+    category: 'nav',
     origin: 'wrapped',
     vuetifyBase: 'VStepper',
     summary: { ko: '여러 단계로 나뉜 흐름.', en: '' },
@@ -741,7 +741,7 @@ export const meta: ComponentMeta[] = [
   {
     name: 'DsLink',
     ko: '링크',
-    category: 'action',
+    category: 'nav',
     origin: 'custom',
     vuetifyBase: null,
     summary: { ko: '본문 속 이동.', en: '' },
@@ -937,7 +937,7 @@ export const meta: ComponentMeta[] = [
   {
     name: 'DsCommandPalette',
     ko: '명령 팔레트',
-    category: 'overlay',
+    category: 'nav',
     origin: 'wrapped',
     vuetifyBase: 'VDialog',
     summary: { ko: '⌘K — 어디서든 검색·실행.', en: '' },

@@ -31,28 +31,6 @@ Each component has a standalone prompt at https://kimjiyong995-coder.github.io/d
     <DsButton disabled>Disabled</DsButton>
     <DsButton size="sm">Small</DsButton>
     <DsButton size="lg">Large</DsButton>
-- **DsMenu** (메뉴) — 클릭하면 열리는 드롭다운 메뉴.
-  import: ~/design/vuetify | origin: wrapped (VMenu)
-  where: 테이블 행 액션, 프로필 메뉴, 더보기.
-  props: location='bottom start'
-  vs: Dialog — 폼이 들어가면 Menu가 아니라 Dialog
-  usage:
-    <DsMenu location="bottom end">
-      <template #activator="props">
-        <DsButton variant="secondary" v-bind="props">More</DsButton>
-      </template>
-      <div class="ds-menu-label">동작</div>
-      <div class="ds-menu-item" @click="rename">
-        <DsIcon name="edit" size="sm" /><span class="ds-menu-item__label">이름 바꾸기</span><span class="ds-menu-item__trail">F2</span>
-      </div>
-      <div class="ds-menu-item" @click="duplicate">
-        <DsIcon name="copy" size="sm" /><span class="ds-menu-item__label">복제</span><span class="ds-menu-item__trail">⌘D</span>
-      </div>
-      <hr class="ds-menu-sep" />
-      <div class="ds-menu-item ds-menu-item--danger" @click="remove">
-        <DsIcon name="delete" size="sm" /><span class="ds-menu-item__label">삭제</span>
-      </div>
-    </DsMenu>
 - **DsIconButton** (아이콘 버튼) — 아이콘만 있는 버튼.
   import: ~/design/vuetify | origin: wrapped (VBtn)
   where: 테이블 행 끝 ⋯, 툴바, 입력창 부가 버튼.
@@ -70,6 +48,18 @@ Each component has a standalone prompt at https://kimjiyong995-coder.github.io/d
       { value: 'list', label: '리스트' },
       { value: 'grid', label: '그리드' },
     ]" />
+- **DsToolbar** (툴바) — 컨트롤 줄 정렬 규약.
+  import: ~/design | origin: custom
+  where: 테이블 위 컨트롤 줄, 상세 헤더 액션 줄.
+  props: dense=false, label
+  usage:
+    <DsToolbar dense>
+      <DsButton variant="secondary" size="sm">필터</DsButton>
+      <span class="sep"></span>
+      <span class="spacer"></span>
+      <DsButton size="sm">새로 만들기</DsButton>
+    </DsToolbar>
+### Navigation (내비게이션)
 - **DsTabs** (탭) — 같은 대상의 여러 단면을 전환합니다.
   import: ~/design/vuetify | origin: wrapped (VTabs)
   where: 상세 화면 섹션 전환(개요·활동·설정), 로그 수준 필터.
@@ -88,6 +78,12 @@ Each component has a standalone prompt at https://kimjiyong995-coder.github.io/d
     <DsBreadcrumbs :items="[
       { title: 'Drive' }, { title: '법무' }, { title: '2026', disabled: true },
     ]" />
+- **DsPagination** (페이지네이션) — 긴 목록을 페이지로 나눕니다.
+  import: ~/design/vuetify | origin: wrapped (VPagination)
+  where: 테이블 하단, 검색 결과 하단.
+  props: modelValue=1, length, totalVisible=7
+  usage:
+    <DsPagination v-model="page" :length="8" />
 - **DsNavList** (내비게이션 목록) — 좌측 사이드바 메뉴.
   import: ~/design/vuetify | origin: wrapped (VList)
   where: 앱 좌측 사이드바, 설정 좌측 메뉴.
@@ -114,104 +110,14 @@ Each component has a standalone prompt at https://kimjiyong995-coder.github.io/d
   usage:
     <DsLink href="/docs/audit">감사 로그 문서</DsLink>
     <DsLink href="https://…" external>외부 문서<template #icon>​</template></DsLink>
-- **DsToolbar** (툴바) — 컨트롤 줄 정렬 규약.
-  import: ~/design | origin: custom
-  where: 테이블 위 컨트롤 줄, 상세 헤더 액션 줄.
-  props: dense=false, label
+- **DsCommandPalette** (명령 팔레트) — ⌘K — 어디서든 검색·실행.
+  import: ~/design/vuetify | origin: wrapped (VDialog)
+  where: 전역 ⌘K — 문서·에이전트·명령으로 점프.
+  props: modelValue=false, items, placeholder
+  vs: SearchField — 한 목록 안 검색은 SearchField
   usage:
-    <DsToolbar dense>
-      <DsButton variant="secondary" size="sm">필터</DsButton>
-      <span class="sep"></span>
-      <span class="spacer"></span>
-      <DsButton size="sm">새로 만들기</DsButton>
-    </DsToolbar>
-### Content (콘텐츠)
-- **DsAvatar** (아바타) — 사람 또는 에이전트를 나타내는 원형 표식.
-  import: ~/design | origin: custom
-  where: 사용자·에이전트 표시. 이름과 함께 씁니다.
-  props: size='default', variant='default', src
-  usage:
-    <DsAvatar>JK</DsAvatar>
-    <DsAvatar size="sm">JK</DsAvatar>
-    <DsAvatar size="lg">JK</DsAvatar>
-    <DsAvatar variant="brand">A</DsAvatar>
-    <DsAvatar src="/photo.jpg" />
-- **DsCard** (카드) — 콘텐츠를 담는 면(Surface).
-  import: ~/design | origin: custom
-  where: 대시보드 통계, 설정 그룹.
-  props: title, subtitle
-  usage:
-    <DsCard title="Tasks automated" subtitle="Last 30 days">
-      <div class="num">1,284<span class="delta">+12.4%</span></div>
-    </DsCard>
-- **DsDivider** (구분선) — 내용을 나누는 1px 선.
-  import: ~/design | origin: custom
-  where: 설정 그룹 사이, 대화의 날짜 구분.
-  props: label
-  usage:
-    <DsDivider />
-    <DsDivider label="Yesterday" />
-- **DsCitationChip** (인용 칩) — 에이전트 응답의 근거 출처를 가리키는 번호 칩.
-  import: ~/design | origin: custom
-  where: 에이전트 응답에서 근거가 있는 주장 뒤.
-  props: index
-  usage:
-    본문 텍스트<DsCitationChip :index="1" @open="scrollToSource(1)" />
-- **DsEmptyState** (빈 상태) — 데이터가 없을 때 보여주는 화면.
-  import: ~/design | origin: custom
-  where: 모든 목록·테이블·검색의 빈 상태. 다음 행동을 반드시 제안.
-  props: title, description
-  usage:
-    <DsEmptyState title="No agents yet" description="첫 에이전트를 만들어 업무 자동화를 시작하세요.">
-      <DsButton @click="create">New agent</DsButton>
-    </DsEmptyState>
-- **DsIcon** (아이콘) — 아이콘 하나를 그립니다.
-  import: ~/design | origin: custom
-  where: 아이콘이 필요한 모든 곳. 의미 이름으로 부르고, 없으면 vue/icons.ts에 등록합니다.
-  props: name, size='md', label, spin=false
-  usage:
-    import { DsIcon } from '~/design/icon'
-    
-    <DsIcon name="delete" />
-    <DsIcon name="agent" size="lg" />
-    <DsIcon name="loading" spin />
-    <DsIcon name="search" label="검색" />
-- **DsKbd** (키 표기) — 키보드 키를 표기합니다.
-  import: ~/design | origin: custom
-  where: 단축키 안내 — 팔레트 항목, 툴팁, 문서.
-  props: keys
-  usage:
-    <DsKbd :keys="['⌘', 'K']" />
-    <DsKbd>Esc</DsKbd>
-- **DsCode** (코드) — 인라인 · 블록 코드.
-  import: ~/design | origin: custom
-  where: 식별자·페이로드·API 응답 표기.
-  props: block=false, copyable=true
-  usage:
-    <DsCode>agent.run()</DsCode>
-    <DsCode block>const result = await agent.run()</DsCode>
-- **DsTimestamp** (시각) — 용어집 규칙이 내장된 시각 표기.
-  import: ~/design | origin: custom
-  where: 테이블 시각 열, 메시지 시각, 실행 기록.
-  props: value, mode='auto'
-  usage:
-    <DsTimestamp :value="log.createdAt" />
-    <DsTimestamp :value="log.createdAt" mode="absolute" />
-- **DsMetaList** (메타 목록) — 키-값 정보 나열.
-  import: ~/design | origin: custom
-  where: 상세 패널의 키-값 — 이벤트·문서·에이전트 속성.
-  props: items
-  usage:
-    <DsMetaList :items="[
-      { label: '수행자', value: 'Jiyong Kim' },
-      { label: '이벤트 ID', value: 'evt_8f3a2c91', mono: true },
-    ]" />
-- **DsVisuallyHidden** (시각 숨김) — 화면에는 없고 스크린리더에는 읽힘.
-  import: ~/design | origin: custom
-  where: 아이콘·시각 정보에 보조기기용 설명을 붙일 때.
-  props: 없음
-  usage:
-    <DsVisuallyHidden>검색 결과 12건</DsVisuallyHidden>
+    <DsCommandPalette v-model="open" :items="commands" @select="run" />
+    <!-- 전역: keydown ⌘K → open = true -->
 ### Data Input (입력)
 - **DsInput** (입력 필드) — 한 줄 텍스트 입력.
   import: ~/design | origin: custom
@@ -239,13 +145,6 @@ Each component has a standalone prompt at https://kimjiyong995-coder.github.io/d
   usage:
     <DsChip @remove="detach(file)">design-system.pdf</DsChip>
     <DsChip variant="brand" @remove="clearFilter">Status: Running</DsChip>
-- **DsAgentInput** (에이전트 입력창) — 에이전트에게 메시지를 보내는 입력창.
-  import: ~/design | origin: custom
-  where: 챗 화면 하단. Enter 전송, Shift+Enter 줄바꿈.
-  props: modelValue='', placeholder='Message agent…', sendLabel='Send'
-  vs: Textarea — 일반 여러 줄 입력이면 Textarea
-  usage:
-    <DsAgentInput v-model="draft" @send="submit" @attach="pickFile" />
 - **DsTextarea** (여러 줄 입력) — 여러 줄 텍스트 입력.
   import: ~/design/vuetify | origin: wrapped (VTextarea)
   where: 설명·메모 입력, 프롬프트 편집. (대화 입력은 AgentInput)
@@ -327,6 +226,87 @@ Each component has a standalone prompt at https://kimjiyong995-coder.github.io/d
   vs: Autocomplete — 목록의 값만 허용하면 Autocomplete
   usage:
     <DsCombobox v-model="tags" label="태그" :items="suggested" />
+### Content (콘텐츠)
+- **DsAvatar** (아바타) — 사람 또는 에이전트를 나타내는 원형 표식.
+  import: ~/design | origin: custom
+  where: 사용자·에이전트 표시. 이름과 함께 씁니다.
+  props: size='default', variant='default', src
+  usage:
+    <DsAvatar>JK</DsAvatar>
+    <DsAvatar size="sm">JK</DsAvatar>
+    <DsAvatar size="lg">JK</DsAvatar>
+    <DsAvatar variant="brand">A</DsAvatar>
+    <DsAvatar src="/photo.jpg" />
+- **DsCard** (카드) — 콘텐츠를 담는 면(Surface).
+  import: ~/design | origin: custom
+  where: 대시보드 통계, 설정 그룹.
+  props: title, subtitle
+  usage:
+    <DsCard title="Tasks automated" subtitle="Last 30 days">
+      <div class="num">1,284<span class="delta">+12.4%</span></div>
+    </DsCard>
+- **DsDivider** (구분선) — 내용을 나누는 1px 선.
+  import: ~/design | origin: custom
+  where: 설정 그룹 사이, 대화의 날짜 구분.
+  props: label
+  usage:
+    <DsDivider />
+    <DsDivider label="Yesterday" />
+- **DsEmptyState** (빈 상태) — 데이터가 없을 때 보여주는 화면.
+  import: ~/design | origin: custom
+  where: 모든 목록·테이블·검색의 빈 상태. 다음 행동을 반드시 제안.
+  props: title, description
+  usage:
+    <DsEmptyState title="No agents yet" description="첫 에이전트를 만들어 업무 자동화를 시작하세요.">
+      <DsButton @click="create">New agent</DsButton>
+    </DsEmptyState>
+- **DsIcon** (아이콘) — 아이콘 하나를 그립니다.
+  import: ~/design | origin: custom
+  where: 아이콘이 필요한 모든 곳. 의미 이름으로 부르고, 없으면 vue/icons.ts에 등록합니다.
+  props: name, size='md', label, spin=false
+  usage:
+    import { DsIcon } from '~/design/icon'
+    
+    <DsIcon name="delete" />
+    <DsIcon name="agent" size="lg" />
+    <DsIcon name="loading" spin />
+    <DsIcon name="search" label="검색" />
+- **DsKbd** (키 표기) — 키보드 키를 표기합니다.
+  import: ~/design | origin: custom
+  where: 단축키 안내 — 팔레트 항목, 툴팁, 문서.
+  props: keys
+  usage:
+    <DsKbd :keys="['⌘', 'K']" />
+    <DsKbd>Esc</DsKbd>
+- **DsCode** (코드) — 인라인 · 블록 코드.
+  import: ~/design | origin: custom
+  where: 식별자·페이로드·API 응답 표기.
+  props: block=false, copyable=true
+  usage:
+    <DsCode>agent.run()</DsCode>
+    <DsCode block>const result = await agent.run()</DsCode>
+- **DsTimestamp** (시각) — 용어집 규칙이 내장된 시각 표기.
+  import: ~/design | origin: custom
+  where: 테이블 시각 열, 메시지 시각, 실행 기록.
+  props: value, mode='auto'
+  usage:
+    <DsTimestamp :value="log.createdAt" />
+    <DsTimestamp :value="log.createdAt" mode="absolute" />
+- **DsMetaList** (메타 목록) — 키-값 정보 나열.
+  import: ~/design | origin: custom
+  where: 상세 패널의 키-값 — 이벤트·문서·에이전트 속성.
+  props: items
+  usage:
+    <DsMetaList :items="[
+      { label: '수행자', value: 'Jiyong Kim' },
+      { label: '이벤트 ID', value: 'evt_8f3a2c91', mono: true },
+    ]" />
+- **DsVisuallyHidden** (시각 숨김) — 화면에는 없고 스크린리더에는 읽힘.
+  import: ~/design | origin: custom
+  where: 아이콘·시각 정보에 보조기기용 설명을 붙일 때.
+  props: 없음
+  usage:
+    <DsVisuallyHidden>검색 결과 12건</DsVisuallyHidden>
 ### Feedback & Status (피드백·상태)
 - **DsBadge** (배지) — 상태를 표시하는 작은 읽기 전용 라벨.
   import: ~/design | origin: custom
@@ -423,6 +403,28 @@ Each component has a standalone prompt at https://kimjiyong995-coder.github.io/d
     <DsStatusDot status="success" label="온라인" />
     <DsStatusDot status="brand" label="실행 중" pulse />
 ### Overlay (오버레이)
+- **DsMenu** (메뉴) — 클릭하면 열리는 드롭다운 메뉴.
+  import: ~/design/vuetify | origin: wrapped (VMenu)
+  where: 테이블 행 액션, 프로필 메뉴, 더보기.
+  props: location='bottom start'
+  vs: Dialog — 폼이 들어가면 Menu가 아니라 Dialog
+  usage:
+    <DsMenu location="bottom end">
+      <template #activator="props">
+        <DsButton variant="secondary" v-bind="props">More</DsButton>
+      </template>
+      <div class="ds-menu-label">동작</div>
+      <div class="ds-menu-item" @click="rename">
+        <DsIcon name="edit" size="sm" /><span class="ds-menu-item__label">이름 바꾸기</span><span class="ds-menu-item__trail">F2</span>
+      </div>
+      <div class="ds-menu-item" @click="duplicate">
+        <DsIcon name="copy" size="sm" /><span class="ds-menu-item__label">복제</span><span class="ds-menu-item__trail">⌘D</span>
+      </div>
+      <hr class="ds-menu-sep" />
+      <div class="ds-menu-item ds-menu-item--danger" @click="remove">
+        <DsIcon name="delete" size="sm" /><span class="ds-menu-item__label">삭제</span>
+      </div>
+    </DsMenu>
 - **DsDialog** (다이얼로그) — 화면 위에 떠서 흐름을 멈추는 창.
   import: ~/design/vuetify | origin: wrapped (VDialog)
   where: 되돌릴 수 없는 확인, 흐름을 멈춰야 하는 입력.
@@ -468,14 +470,6 @@ Each component has a standalone prompt at https://kimjiyong995-coder.github.io/d
       </template>
       <DsAvatar>JK</DsAvatar> 편집자 · 법무팀
     </DsHoverCard>
-- **DsCommandPalette** (명령 팔레트) — ⌘K — 어디서든 검색·실행.
-  import: ~/design/vuetify | origin: wrapped (VDialog)
-  where: 전역 ⌘K — 문서·에이전트·명령으로 점프.
-  props: modelValue=false, items, placeholder
-  vs: SearchField — 한 목록 안 검색은 SearchField
-  usage:
-    <DsCommandPalette v-model="open" :items="commands" @select="run" />
-    <!-- 전역: keydown ⌘K → open = true -->
 ### Table & List (표·목록)
 - **DsDataTable** (데이터 테이블) — 정렬·페이지네이션이 되는 데이터 목록.
   import: ~/design/vuetify | origin: wrapped (VDataTable)
@@ -519,12 +513,6 @@ Each component has a standalone prompt at https://kimjiyong995-coder.github.io/d
         <DsBadge variant="success">Signed</DsBadge>
       </template>
     </DsSearchResult>
-- **DsPagination** (페이지네이션) — 긴 목록을 페이지로 나눕니다.
-  import: ~/design/vuetify | origin: wrapped (VPagination)
-  where: 테이블 하단, 검색 결과 하단.
-  props: modelValue=1, length, totalVisible=7
-  usage:
-    <DsPagination v-model="page" :length="8" />
 - **DsList** (목록) — 열이 고정되지 않은 항목 목록.
   import: ~/design/vuetify | origin: wrapped (VList)
   where: 설정 항목, 선택 가능한 항목 나열. (파일은 FileRow, 고정 열은 DataTable)
@@ -562,6 +550,19 @@ Each component has a standalone prompt at https://kimjiyong995-coder.github.io/d
       <template #item-0><pre>{{ payload }}</pre></template>
     </DsAccordion>
 ### Agent (에이전트)
+- **DsCitationChip** (인용 칩) — 에이전트 응답의 근거 출처를 가리키는 번호 칩.
+  import: ~/design | origin: custom
+  where: 에이전트 응답에서 근거가 있는 주장 뒤.
+  props: index
+  usage:
+    본문 텍스트<DsCitationChip :index="1" @open="scrollToSource(1)" />
+- **DsAgentInput** (에이전트 입력창) — 에이전트에게 메시지를 보내는 입력창.
+  import: ~/design | origin: custom
+  where: 챗 화면 하단. Enter 전송, Shift+Enter 줄바꿈.
+  props: modelValue='', placeholder='Message agent…', sendLabel='Send'
+  vs: Textarea — 일반 여러 줄 입력이면 Textarea
+  usage:
+    <DsAgentInput v-model="draft" @send="submit" @attach="pickFile" />
 - **DsChatMessage** (채팅 메시지) — 대화의 메시지 한 건.
   import: ~/design | origin: custom
   where: 챗 화면. 툴콜은 본문 위에 — 근거가 답보다 먼저.

@@ -245,7 +245,7 @@ const unlinkDemo = (html) => String(html)
 function catCard(c) {
   return `
     <a class="cat-card" href="#/components/${c.id}">
-      <div class="thumb" inert><div class="thumb-inner">${unlinkDemo(c.demo)}</div></div>
+      <div class="thumb" inert><div class="thumb-inner">${unlinkDemo(c.thumb || c.demo)}</div></div>
       <div class="cat-body">
         <div class="cc-top">
           <h3>${c.name}</h3><span class="cc-ko">${c.ko}</span>

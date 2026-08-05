@@ -14,10 +14,10 @@ const { ic } = await import('./icons-svg.js' + V)
 
 export const CATEGORIES = [
   { id: 'action',   name: 'Action',            ko: '액션' },
-  { id: 'content',  name: 'Content',           ko: '콘텐츠' },
+  { id: 'nav',      name: 'Navigation',        ko: '내비게이션' },
   { id: 'input',    name: 'Data Input',        ko: '입력' },
+  { id: 'content',  name: 'Content',           ko: '콘텐츠' },
   { id: 'feedback', name: 'Feedback & Status', ko: '피드백·상태' },
-  { id: 'layout',   name: 'Layout',            ko: '레이아웃' },
   { id: 'overlay',  name: 'Overlay',           ko: '오버레이' },
   { id: 'data',     name: 'Table & List',      ko: '표·목록' },
   { id: 'agent',    name: 'Agent',             ko: '에이전트' },
@@ -46,6 +46,7 @@ export const COMPONENTS = [
     { key: 'ghost',     title: 'Ghost',     desc: '가장 조용한 액션 — 툴바·반복 요소.' },
     { key: 'danger',    title: 'Danger',    desc: '파괴적 액션. 기본은 조용한 외곽선, 호버할 때만 빨간 면.' },
   ],
+  thumb: `<button class="btn btn-primary">New agent</button>`,
   demo: `<div class="row">
     <button class="btn btn-primary">New agent</button>
     <button class="btn btn-secondary">Cancel</button>
@@ -77,7 +78,7 @@ export const COMPONENTS = [
   ],
 },
 {
-  id: 'menu', name: 'Menu', ko: '메뉴', category: 'action',
+  id: 'menu', name: 'Menu', ko: '메뉴', category: 'overlay',
   origin: 'wrapped', vuetifyBase: 'VMenu',
   summary: '클릭하면 열리는 드롭다운 메뉴.',
   reason: { ko: '뷰포트 경계에서 위치를 뒤집는 포지셔닝과 키보드 네비게이션을 직접 만들기 어렵습니다. Vuetify의 VMenu를 유지하고 안쪽 면만 우리 스타일로 바꿉니다.',
@@ -86,6 +87,7 @@ export const COMPONENTS = [
     ['location', 'string', `'bottom start'`, '열리는 방향. Vuetify VMenu의 location을 그대로 전달합니다.'],
   ],
   slots: [['activator', '메뉴를 여는 요소. v-bind="props" 필수.'], ['default', '메뉴 내용. .ds-menu-item + __label / __trail 로 조립.']],
+  thumb: `<div class="ds-menu-panel" style="max-width:200px"><div class="ds-menu-item">${ic('edit','sm')}<span class="ds-menu-item__label">이름 바꾸기</span></div><div class="ds-menu-item ds-menu-item--danger">${ic('delete','sm')}<span class="ds-menu-item__label">삭제</span></div></div>`,
   demo: `<div class="ds-menu-panel" style="max-width:240px">
     <div class="ds-menu-label">보기</div>
     <div class="ds-menu-item ds-menu-item--selected">${ic('confirm','sm')}<span class="ds-menu-item__label">목록</span></div>
@@ -143,6 +145,7 @@ export const COMPONENTS = [
     { key: 'default', title: 'Default · 32px', desc: '일반.' },
     { key: 'lg',      title: 'Large · 40px',   desc: '프로필·헤더.' },
   ],
+  thumb: `<div class="row"><span class="ds-avatar">JK</span><span class="ds-avatar brand">A</span></div>`,
   demo: `<div class="row">
     <span class="ds-avatar sm">JK</span>
     <span class="ds-avatar">JK</span>
@@ -179,6 +182,7 @@ export const COMPONENTS = [
     ['subtitle', 'string', '—', '보조 설명.'],
   ],
   slots: [['default', '카드 본문.']],
+  thumb: `<div class="card" style="min-width:180px"><h3>Tasks automated</h3><p>Last 30 days</p><div class="num">1,284<span class="delta">+12.4%</span></div></div>`,
   demo: `<div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
     <div class="card"><h3>Tasks automated</h3><p>Last 30 days</p><div class="num">1,284<span class="delta">+12.4%</span></div></div>
     <div class="card"><h3>Active agents</h3><p>Across all workspaces</p><div class="num">17<span class="delta">+2</span></div></div>
@@ -215,7 +219,7 @@ export const COMPONENTS = [
   guidelines: [['하지 말 것', '여백으로 충분히 구분되는 곳에 선을 또 긋지 않습니다.']],
 },
 {
-  id: 'citation', name: 'CitationChip', ko: '인용 칩', category: 'content',
+  id: 'citation', name: 'CitationChip', ko: '인용 칩', category: 'agent',
   origin: 'custom', vuetifyBase: null,
   summary: '에이전트 응답의 근거 출처를 가리키는 번호 칩.',
   reason: { ko: 'Vuetify에 근거 인용 개념이 없습니다. 에이전트 제품의 신뢰도를 만드는 핵심 요소입니다.',
@@ -223,6 +227,7 @@ export const COMPONENTS = [
   props: [['index', 'number | string', '필수', '표시할 번호.']],
   events: [['open', '—', '클릭·Enter 시 발생. 원문 위치로 이동시키세요.']],
   slots: [],
+  thumb: `<div class="msg-text">계약 기간은 12개월<span class="cite">1</span></div>`,
   demo: `<div class="msg-text">계약 기간은 12개월이며<span class="cite">1</span> 대금은 30일 이내 지급합니다<span class="cite">2</span></div>`,
   vue: `본문 텍스트<DsCitationChip :index="1" @open="scrollToSource(1)" />`,
   html: `본문 텍스트<span class="cite">1</span>`,
@@ -274,6 +279,7 @@ export const COMPONENTS = [
     ['type', 'string', `'text'`, 'HTML input type.'],
   ],
   slots: [],
+  thumb: `<div class="field"><input class="input" placeholder="Acme Inc." /></div>`,
   demo: `<div class="row" style="align-items:flex-start;gap:24px">
     <div class="field"><label>Workspace name</label><input class="input" placeholder="Acme Inc." /><div class="hint">모든 멤버에게 표시됩니다.</div></div>
     <div class="field"><label>Email</label><input class="input error" value="ujin@" /><div class="hint error">올바른 이메일 주소를 입력하세요.</div></div>
@@ -356,7 +362,7 @@ export const COMPONENTS = [
   ],
 },
 {
-  id: 'agentinput', name: 'AgentInput', ko: '에이전트 입력창', category: 'input',
+  id: 'agentinput', name: 'AgentInput', ko: '에이전트 입력창', category: 'agent',
   origin: 'custom', vuetifyBase: null,
   summary: '에이전트에게 메시지를 보내는 입력창.',
   reason: { ko: 'Vuetify에 없습니다. 여러 줄 자동 확장, 파일 첨부, 슬래시 명령, Enter 전송이 한 컴포넌트에 필요합니다.',
@@ -368,6 +374,7 @@ export const COMPONENTS = [
   ],
   events: [['send', '—', 'Enter 또는 전송 버튼. Shift+Enter는 줄바꿈.'], ['attach', '—', '＋ 클릭.'], ['slash', '—', '/ 클릭.']],
   slots: [],
+  thumb: `<div class="agent-input" style="max-width:280px;padding:12px 14px"><textarea rows="1" placeholder="Message agent…" disabled style="all:unset;width:100%;font-size:var(--text-sm);color:var(--gray-11)"></textarea></div>`,
   demo: `<div class="agent-input" style="max-width:560px">
     <textarea rows="1" placeholder="Message agent… (/ 로 명령어)"></textarea>
     <div class="ai-bar">
@@ -483,6 +490,7 @@ export const COMPONENTS = [
     { key: 'success', title: 'Success', desc: '성공 결과.' },
     { key: 'danger',  title: 'Danger',  desc: '실패 결과.' },
   ],
+  thumb: `<div class="toast success"><span class="t-dot"></span><span class="t-body">에이전트가 생성되었습니다.</span></div>`,
   demo: `<div style="display:flex;flex-direction:column;gap:10px;align-items:flex-start">
     <div class="toast success"><span class="t-dot"></span><span class="t-body">에이전트가 생성되었습니다.</span><button class="t-action">View</button></div>
     <div class="toast danger"><span class="t-dot"></span><span class="t-body">파일 업로드에 실패했습니다 — 10MB를 초과합니다.</span><button class="t-action">Retry</button></div>
@@ -576,6 +584,7 @@ export const COMPONENTS = [
     ['loading', 'boolean', 'false', '로딩 표시.'],
   ],
   slots: [['(VDataTable의 모든 슬롯)', 'item.* 등 Vuetify 슬롯이 그대로 전달됩니다.']],
+  thumb: `<div class="table-wrap" style="min-width:300px"><table><thead><tr><th>Name</th><th>Status</th></tr></thead><tbody><tr><td>Weekly report agent</td><td><span class="badge brand"><span class="dot"></span>Running</span></td></tr><tr><td>Invoice classifier</td><td><span class="badge success"><span class="dot"></span>Completed</span></td></tr></tbody></table></div>`,
   demo: `<div class="table-wrap"><table>
     <thead><tr><th>Name</th><th>Status</th><th>Owner</th><th>Updated</th></tr></thead>
     <tbody>
@@ -612,6 +621,7 @@ export const COMPONENTS = [
   ],
   events: [['select', 'DsFile', '카드 클릭.']],
   slots: [['icon', '파일 아이콘. <DsIcon>을 넣습니다. 생략하면 아이콘 자리 자체가 비어 있습니다.']],
+  thumb: `<div class="file-card"><div class="f-icon">${ic('folder','lg')}</div><div class="f-name">법무</div><div class="f-meta">12 files</div></div>`,
   demo: `<div class="file-grid">
     <div class="file-card"><div class="f-icon">${ic('folder','lg')}</div><div class="f-name">법무</div><div class="f-meta">12 files</div></div>
     <div class="file-card selected"><div class="f-icon">${ic('document','lg')}</div><div class="f-name">계약서_최종.pdf</div><div class="f-meta">2.1 MB</div></div>
@@ -649,6 +659,7 @@ export const COMPONENTS = [
     ['icon', '파일 아이콘. <DsIcon>을 넣습니다. 생략하면 아이콘 자리가 비어 있습니다.'],
     ['trailing', '이름 뒤 우측 부가 정보 — 배지·상태 (예: CSO 등급).'],
   ],
+  thumb: `<div class="file-row" style="min-width:240px"><span class="f-icon">${ic('folder','sm')}</span><span class="f-name">법무</span><span class="f-meta">Jun 28</span></div>`,
   demo: `<div class="file-row"><span class="f-icon">${ic('folder','sm')}</span><span class="f-name">법무</span><span class="f-meta">Jun 28</span></div>
   <div class="file-row selected"><span class="f-icon">${ic('document','sm')}</span><span class="f-name">계약서_최종.pdf</span><span class="f-meta">2.1 MB · Jun 28</span></div>
   <div class="file-row"><span class="f-icon">${ic('spreadsheet','sm')}</span><span class="f-name">Q3_실적.xlsx</span><span class="f-meta">1.4 MB · Jul 12</span></div>`,
@@ -675,6 +686,7 @@ export const COMPONENTS = [
     ['href', 'string', `'#'`, '링크.'],
   ],
   slots: [['default', '매칭 문맥. <mark>로 검색어를 감쌉니다.'], ['footer', '배지·날짜 등.']],
+  thumb: `<div class="sresult"><h4><a>계약서_최종.pdf</a></h4><div class="s-path">Drive / 법무 / 2026</div></div>`,
   demo: `<div class="sresult">
     <h4><a href="#">계약서_최종.pdf</a></h4>
     <div class="s-path">Drive / 법무 / 2026</div>
@@ -711,6 +723,7 @@ export const COMPONENTS = [
     ['streaming', 'boolean', 'false', 'true면 끝에 깜빡이는 커서.'],
   ],
   slots: [['default', '메시지 본문.'], ['tools', '응답 위에 들어가는 ToolCallStep 목록.']],
+  thumb: `<div class="chat" style="min-width:260px"><div class="msg msg-user"><div class="msg-bubble">계약서 요약해줘</div></div><div class="msg msg-agent"><div class="msg-body"><div class="msg-text">계약서 3건을 찾았습니다.</div></div></div></div>`,
   demo: `<div class="chat">
     <div class="msg msg-user"><div class="msg-bubble">지난달 계약서 파일 찾아서 요약해줘</div></div>
     <div class="msg msg-agent"><div class="msg-body">
@@ -773,6 +786,7 @@ export const COMPONENTS = [
     { key: 'compact', title: 'Compact', desc: 'dot 4px · 텍스트 12px — 좁은 자리. shimmer 생략.' },
     { key: 'inline',  title: 'Inline',  desc: '텍스트 뒤에 도트 — 문장 속. shimmer 생략.' },
   ],
+  thumb: `<div class="thinking"><span class="dots"><i></i><i></i><i></i></span><span class="t-label">문서를 분석하고 있어요</span></div>`,
   demo: `<div style="display:flex;flex-direction:column;gap:14px;align-items:flex-start"><div class="thinking"><span class="dots"><i></i><i></i><i></i></span><span class="t-label">문서를 분석하고 있어요</span></div><div class="thinking thinking--compact"><span class="dots"><i></i><i></i><i></i></span><span class="t-label">생성 중</span></div><div class="thinking thinking--inline"><span class="t-label">검토 의견 생성 중</span><span class="dots"><i></i><i></i><i></i></span></div></div>`,
   vue: `<DsThinkingIndicator :label="currentStep" />
 <DsThinkingIndicator size="compact" label="생성 중" />
@@ -801,6 +815,7 @@ export const COMPONENTS = [
     { key: 'done',    title: 'Done',    desc: '완료 — 결과 요약을 함께.' },
     { key: 'error',   title: 'Error',   desc: '실패 — 무엇이 안 됐는지 그대로.' },
   ],
+  thumb: `<div class="toolcall" style="min-width:240px"><span class="spinner"></span> read_document("계약서.pdf")</div>`,
   demo: `<div class="toolcall"><span class="check">${ic('confirm','sm')}</span> search_drive("계약서", June) — 3 files found</div>
   <div class="toolcall"><span class="spinner"></span> read_document("계약서_최종.pdf")</div>
   <div class="toolcall"><span class="check" style="color:var(--danger)">${ic('close','sm')}</span> extract_table("스캔본.pdf") — 텍스트 레이어 없음</div>`,
@@ -830,6 +845,7 @@ export const COMPONENTS = [
   ],
   events: [['copy', '—', '복사 클릭.'], ['download', '—', '다운로드 클릭.']],
   slots: [['default', '산출물 내용.']],
+  thumb: `<div class="artifact" style="min-width:240px"><div class="a-head"><span class="a-title">summary_report.md</span></div><div class="a-body"># 6월 계약서 요약</div></div>`,
   demo: `<div class="artifact" style="max-width:560px">
     <div class="a-head"><span class="a-title">summary_report.md</span><button class="btn btn-ghost btn-sm">Copy</button><button class="btn btn-secondary btn-sm">Download</button></div>
     <div class="a-body"># 6월 계약서 요약
@@ -865,6 +881,7 @@ export const COMPONENTS = [
     ['spin', 'boolean', 'false', '회전. loading 아이콘에 씁니다.'],
   ],
   slots: [],
+  thumb: `<div class="row" style="gap:16px;color:var(--gray-11)">${ic('search')}${ic('agent')}${ic('folder')}${ic('settings')}</div>`,
   demo: `<div class="row" style="gap:20px;color:var(--gray-11)">
     <span style="display:inline-flex;gap:8px;align-items:center;font-size:13px">
       <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg> search</span>
@@ -905,6 +922,7 @@ export const COMPONENTS = [
     { key: 'ghost',     title: 'Ghost',     desc: '기본 — 툴바·반복 요소.' },
     { key: 'secondary', title: 'Secondary', desc: '보더 있는 독립 버튼.' },
   ],
+  thumb: `<button class="row-more-demo">${ic('more')}</button>`,
   demo: `<div class="row"><button class="row-more-demo">${ic('more')}</button><button class="row-more-demo bordered">${ic('archive')}</button></div>`,
   vue: `<DsIconButton label="More"><DsIcon name="more" /></DsIconButton>
 <DsIconButton label="Archive" variant="secondary"><DsIcon name="archive" /></DsIconButton>`,
@@ -937,7 +955,7 @@ export const COMPONENTS = [
   ],
 },
 {
-  id: 'tabs', name: 'Tabs', ko: '탭', category: 'action',
+  id: 'tabs', name: 'Tabs', ko: '탭', category: 'nav',
   origin: 'wrapped', vuetifyBase: 'VTabs',
   summary: '같은 대상의 여러 단면을 전환합니다.',
   reason: { ko: 'Vuetify 기본 탭은 대문자 변환과 리플이 우리 기조와 맞지 않고, 건수 배지가 자주 필요합니다.',
@@ -959,7 +977,7 @@ export const COMPONENTS = [
   ],
 },
 {
-  id: 'breadcrumbs', name: 'Breadcrumbs', ko: '경로', category: 'action',
+  id: 'breadcrumbs', name: 'Breadcrumbs', ko: '경로', category: 'nav',
   origin: 'wrapped', vuetifyBase: 'VBreadcrumbs',
   summary: '현재 위치의 계층 경로.',
   reason: { ko: '구분자 모양과 마지막 항목 강조 규칙을 고정합니다.', en: 'Fix separator and last-item emphasis.' },
@@ -974,7 +992,7 @@ export const COMPONENTS = [
   guidelines: [['해야 할 것', '깊이가 4단계를 넘으면 중간을 … 으로 접습니다.']],
 },
 {
-  id: 'pagination', name: 'Pagination', ko: '페이지네이션', category: 'data',
+  id: 'pagination', name: 'Pagination', ko: '페이지네이션', category: 'nav',
   origin: 'wrapped', vuetifyBase: 'VPagination',
   summary: '긴 목록을 페이지로 나눕니다.',
   reason: { ko: 'Vuetify 기본은 크고 그림자가 있습니다. 조용하게 낮춥니다.', en: 'Default is large and elevated; we quiet it down.' },
@@ -990,7 +1008,7 @@ export const COMPONENTS = [
   guidelines: [['해야 할 것', '무한 스크롤이 나은 화면도 있습니다. 되돌아올 일이 많으면 페이지네이션입니다.']],
 },
 {
-  id: 'navlist', name: 'NavList', ko: '내비게이션 목록', category: 'action',
+  id: 'navlist', name: 'NavList', ko: '내비게이션 목록', category: 'nav',
   origin: 'wrapped', vuetifyBase: 'VList',
   summary: '좌측 사이드바 메뉴.',
   reason: { ko: '사이드바는 모든 화면에 나오는데 매번 다르게 만들어집니다. 아이콘·배지·활성 표시를 고정합니다.',
@@ -1011,7 +1029,7 @@ export const COMPONENTS = [
   guidelines: [['해야 할 것', '항목이 7개를 넘으면 subheader로 묶습니다.']],
 },
 {
-  id: 'stepper', name: 'Stepper', ko: '단계 표시', category: 'action',
+  id: 'stepper', name: 'Stepper', ko: '단계 표시', category: 'nav',
   origin: 'wrapped', vuetifyBase: 'VStepper',
   summary: '여러 단계로 나뉜 흐름.',
   reason: { ko: '마법사 UI를 매번 새로 만들면 단계 표시가 제각각이 됩니다.', en: 'Wizards drift without a fixed step indicator.' },
@@ -1201,6 +1219,7 @@ export const COMPONENTS = [
     { key: 'warning', title: 'Warning', desc: '주의 — 한도·권한 경고.' },
     { key: 'error',   title: 'Error',   desc: '실패 — 원인과 다음 행동을 함께.' },
   ],
+  thumb: `<div class="ds-alert-demo err" style="max-width:280px"><b>삭제하지 못했습니다</b></div>`,
   demo: `<div style="display:flex;flex-direction:column;gap:8px">
     <div class="ds-alert-demo err"><b>삭제하지 못했습니다</b><span>법무 폴더는 관리자만 삭제할 수 있습니다.</span></div>
     <div class="ds-alert-demo warn"><span>월간 실행 한도의 80%에 도달했습니다.</span></div>
@@ -1413,7 +1432,7 @@ export const COMPONENTS = [
 
 /* ══════════════ 확장 (Astryx 격차 보완) ══════════════ */
 {
-  id: 'link', name: 'Link', ko: '링크', category: 'action',
+  id: 'link', name: 'Link', ko: '링크', category: 'nav',
   origin: 'custom', vuetifyBase: null,
   summary: '본문 속 이동.',
   reason: { ko: '브랜드색·호버 밑줄·포커스 링 규칙을 고정합니다.', en: 'Fixes brand color, hover underline and focus ring.' },
@@ -1620,13 +1639,14 @@ export const COMPONENTS = [
   guidelines: [['하지 말 것','필수 정보를 넣지 않습니다 — 터치 기기에서 뜨지 않습니다.']],
 },
 {
-  id: 'commandpalette', name: 'CommandPalette', ko: '명령 팔레트', category: 'overlay',
+  id: 'commandpalette', name: 'CommandPalette', ko: '명령 팔레트', category: 'nav',
   origin: 'wrapped', vuetifyBase: 'VDialog',
   summary: '⌘K — 어디서든 검색·실행.',
   reason: { ko: '검색 + 키보드 탐색 + 실행을 하나로. 포커스 트랩은 VDialog가 처리합니다.', en: 'Search, keyboard nav and execute in one; VDialog traps focus.' },
   props: [['modelValue','boolean','false','열림.'],['items','PaletteItem[]','필수','{ id, title, group?, hint? }'],['placeholder','string','—','입력 안내.']],
   events: [['select','PaletteItem','선택 시. 팔레트는 자동으로 닫힘.']],
   slots: [],
+  thumb: `<div class="ds-palette" style="box-shadow:none;max-width:300px"><input class="ds-palette-input" placeholder="검색 또는 명령…" disabled /><div class="ds-palette-list"><button class="ds-palette-item active"><span class="pi-title">감사 로그 열기</span></button></div></div>`,
   demo: `<div class="ds-palette" style="box-shadow:none;max-width:420px"><input class="ds-palette-input" placeholder="검색 또는 명령…" disabled /><div class="ds-palette-list"><button class="ds-palette-item active"><span class="pi-title">감사 로그 열기</span><span class="pi-group">이동</span></button><button class="ds-palette-item"><span class="pi-title">새 에이전트</span><kbd class="kbd">N</kbd></button></div></div>`,
   vue: `<DsCommandPalette v-model="open" :items="commands" @select="run" />
 <!-- 전역: keydown ⌘K → open = true -->`,
