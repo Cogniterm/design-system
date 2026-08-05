@@ -117,10 +117,10 @@ const filtering = P('filtering', 'Filtering', '필터', 'core',
 const states = P('states', 'Loading & Empty & Error', '로딩 · 빈 · 에러', 'core',
   '데이터가 없거나 실패했을 때의 다섯 가지 상태.', () => `
   <div class="prose">
-    <div class="callout">
+    <p>
       <b>모든 목록·테이블·검색 화면은 다섯 상태를 전부 가집니다.</b>
       나중에 추가하는 비용이 처음부터 만드는 것보다 훨씬 큽니다.
-    </div>
+    </p>
 
     <h2>다섯 상태</h2>
     <table>
@@ -241,11 +241,11 @@ const status = P('status', 'Object Status', '객체 상태', 'core',
 const streaming = P('streaming', 'Streaming Response', '스트리밍 응답', 'agent',
   '응답이 만들어지는 동안 무엇을 보여줄지.', () => `
   <div class="prose">
-    <div class="callout">
+    <p>
       <b>원칙 1 — 로딩이 아니라 진행을 보여줍니다.</b>
       에이전트는 10~30초씩 걸립니다. 빈 스피너는 "느린 제품", 진행 중인 추론과
       도구 실행이 보이면 "일하는 제품"이 됩니다.
-    </div>
+    </p>
 
     <h2>네 단계</h2>
     <div class="demo" style="border-radius:var(--r-xl)">
@@ -278,10 +278,10 @@ const streaming = P('streaming', 'Streaming Response', '스트리밍 응답', 'a
 const evidence = P('evidence', 'Citations & Evidence', '근거 표시', 'agent',
   '무엇을 근거로 답했는지 항상 열어볼 수 있게 합니다.', () => `
   <div class="prose">
-    <div class="callout">
+    <p>
       <b>원칙 4 — 근거를 숨기지 않습니다.</b>
       접어둘 수는 있어도 없애지 않습니다. 이것이 에이전트 제품의 신뢰를 만듭니다.
-    </div>
+    </p>
 
     <h2>세 층</h2>
     <div class="demo" style="border-radius:var(--r-xl)">
@@ -355,10 +355,10 @@ const approval = P('approval', 'Human in the Loop', '사람의 승인', 'agent',
 const aiContent = P('ai-content', 'AI Content Labeling', 'AI 생성 표시', 'agent',
   '무엇이 AI가 만든 것인지 구분합니다.', () => `
   <div class="prose">
-    <div class="callout">
+    <p>
       <b>사용자가 화면의 어떤 부분을 신뢰해야 할지 알 수 있어야 합니다.</b>
       원본 데이터와 AI가 만든 내용이 같은 모양이면 구분할 수 없습니다.
-    </div>
+    </p>
 
     <h2>표시 방법</h2>
     <table>
@@ -398,11 +398,11 @@ const aiContent = P('ai-content', 'AI Content Labeling', 'AI 생성 표시', 'ag
 const recovery = P('recovery', 'Error Recovery', '실패 복구', 'agent',
   '에이전트가 실패했을 때 사용자가 빠져나갈 길.', () => `
   <div class="prose">
-    <div class="callout">
+    <p>
       <b>원칙 2 — 실패는 예외가 아니라 기본 상태 중 하나입니다.</b>
       에이전트는 도구 실패·권한 부족·모호한 요청으로 자주 멈춥니다.
       실패 화면의 품질이 제품의 품질입니다.
-    </div>
+    </p>
 
     <h2>실패 종류별 처리</h2>
     <table>

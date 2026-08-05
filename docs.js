@@ -387,7 +387,7 @@ function propsPane(c) {
         <tbody>${rows(c.slots, ['pname', 'pdesc'])}</tbody>
       </table>`
   }
-  if (!html) html = `<div class="callout">이 컴포넌트는 props가 없습니다.</div>`
+  if (!html) html = `<p>이 컴포넌트는 props가 없습니다.</p>`
   return html
 }
 
@@ -396,11 +396,11 @@ function a11yPane(c) {
   const level = `<p class="a11y-std">WCAG 2.2 AA · <a href="#/foundation/a11y">전체 기준</a></p>`
 
   if (!a) {
-    return level + `<div class="callout warn">
+    return level + `<p>
       이 컴포넌트의 접근성 문서가 아직 없습니다.
       <code>data.js</code>의 <code>A11Y</code>에 추가해주세요 —
       키보드 표, 컴포넌트가 해주는 것, 쓰는 사람이 해야 할 것.
-    </div>`
+    </p>`
   }
 
   const keys = a.keys?.length ? `
@@ -601,12 +601,12 @@ export default defineConfig({
 })</code></pre>
       <pre><code>// ② tsconfig.app.json — 타입 검사·에디터가 쓰는 별칭
 { "compilerOptions": { "paths": { "~/*": ["./src/*"] } } }</code></pre>
-      <div class="callout warn">
+      <p>
         <b>둘 다 넣어야 합니다.</b> Vite와 TypeScript는 서로의 설정을 읽지 않아서
         한쪽만 넣으면 <code>npm run build</code>가
         <code>Cannot find module '~/design'</code>으로 멈춥니다.
         <code>baseUrl</code>은 넣지 마세요 — TypeScript 6에서 막힙니다.
-      </div>
+      </p>
 
       <h2>2. 폰트 · 아이콘 설치</h2>
       <pre><code>npm install pretendard lucide-vue-next</code></pre>
@@ -629,20 +629,20 @@ export default defineNuxtConfig({
     '~/design/ds-vuetify.css',   // Vuetify 기반 컴포넌트를 쓸 때만
   ],
 })</code></pre>
-      <div class="callout warn"><b>폰트를 빠뜨리면 에러 없이 시스템 글꼴로 렌더됩니다.</b></div>
+      <p><b>폰트를 빠뜨리면 에러 없이 시스템 글꼴로 렌더됩니다.</b></p>
 
       <h2>4. Vuetify defaults · theme 연결</h2>
       <p>
         직접 쓰는 <code>&lt;v-menu&gt;</code>·<code>&lt;v-dialog&gt;</code>에도 우리 기본값이 적용되게 합니다.
         이 시스템의 컴포넌트를 안 쓰는 화면에서도 스타일이 유지되는 <b>강제 층</b>입니다.
       </p>
-      <div class="callout warn">
+      <p>
         <b><code>createVuetify</code>는 컴포넌트를 등록하지 않습니다.</b>
         손으로 쓴 <code>&lt;v-btn&gt;</code>이 <code>Failed to resolve component</code>로 비어 나온다면
         <code>vite-plugin-vuetify</code>(<code>autoImport: true</code>)를 넣거나
         <code>createVuetify({ components, directives })</code>로 직접 등록해야 합니다.
         우리 <code>Ds*</code> 컴포넌트는 각자 필요한 것을 직접 import하므로 이 설정 없이도 돕니다.
-      </div>
+      </p>
       <pre><code>import { createVuetify } from 'vuetify'
 import { dsTheme } from '~/design/theme'
 import { dsDefaults } from '~/design/defaults'
@@ -656,7 +656,7 @@ createVuetify({
   icons: lucideIconSet,   // 내부 아이콘도 Lucide로 — @mdi/font 불필요
   locale: { locale: 'ko', messages: { ko } },   // VDataTable 등 내장 문구 한국어
 })</code></pre>
-      <div class="callout warn"><b><code>icons</code>를 빠뜨리면 체크박스·화살표 등 내부 아이콘이 전부 빈 글자로 나옵니다.</b></div>
+      <p><b><code>icons</code>를 빠뜨리면 체크박스·화살표 등 내부 아이콘이 전부 빈 글자로 나옵니다.</b></p>
 
       <h2>5. 사용</h2>
       <pre><code>&lt;script setup&gt;
@@ -772,13 +772,13 @@ function pageVuetify() {
         <li><b><code>.v-*</code>를 정의하지 않습니다</b> — <code>ds.css</code>에 Vuetify 클래스 정의가 0개라 Vuetify 쪽을 덮어쓰지 않습니다. Vuetify 조정은 <code>ds-vuetify.css</code>에만 있습니다.</li>
         <li><b><code>!important</code>는 Vuetify 기반 컴포넌트에서만</b> — Standalone 컴포넌트에 <code>!important</code>가 필요해지면 구조가 잘못됐다는 신호입니다.</li>
       </ol>
-      <div class="callout warn">
+      <p>
         <b>알려진 한계 — 도입 전에 한 번 확인하세요.</b>
         <code>ds.css</code>의 클래스 이름 상당수가 <code>ds-</code> 없이 짧습니다
         (<code>.btn</code> <code>.card</code> <code>.input</code> <code>.chip</code> <code>.badge</code> 등).
         Vuetify와는 겹치지 않지만, <b>기존 앱에 같은 이름이 있으면 서로 영향을 줍니다.</b>
         넣기 전에 앱에서 같은 이름을 쓰는지 확인하세요.
-      </div>
+      </p>
       <pre><code>grep -rEo 'class="[^"]*\b(btn|card|input|field|chip|badge|check|hint|empty|chat|msg|toast|spinner|skeleton|divider)\b' src/ | sort -u</code></pre>
       <p>하나라도 나오면 그 화면부터 확인합니다. <code>ds-</code> 접두로 전면 개명하는 것이 근본 해결입니다.</p>
 
@@ -824,14 +824,14 @@ function pageCoverage() {
       자동으로 우리 색·모서리·밀도로 렌더됩니다.
     </p>
     <div class="prose">
-      <div class="callout">
+      <p>
         <b>핵심 — ${total}종을 전부 감쌀 필요가 없습니다.</b><br>
         Vuetify의 모든 컴포넌트는 <b>테마 색</b>과 <b>defaults</b>를 참조합니다.
         <code>theme.ts</code>에 우리 토큰을 한 번 주입하면
         <code>&lt;v-alert&gt;</code>·<code>&lt;v-stepper&gt;</code>·<code>&lt;v-timeline&gt;</code>처럼
         우리가 만지지 않은 컴포넌트도 같은 파랑, 같은 회색, 같은 모서리로 나옵니다.
         감싸는 것은 <b>동작을 우리 API로 단순화할 필요가 있을 때만</b> 합니다.
-      </div>
+      </p>
 
       <table>
         <thead><tr><th>분류</th><th>개수</th><th>개발자가 쓰는 법</th></tr></thead>
@@ -982,7 +982,7 @@ $('#search').addEventListener('input', (e) => {
         <div class="cc-top"><h3>${c.name}</h3><span class="cc-ko">${c.ko}</span>
           <span class="mini-badge ${c.origin}">${ORIGIN_TAG[c.origin]}</span></div>
         <p>${c.summary}</p></a>`).join('')
-      : `<div class="callout">일치하는 컴포넌트가 없습니다.</div>`) + `</div></div>`
+      : `<p>일치하는 컴포넌트가 없습니다.</p>`) + `</div></div>`
 })
 
 render()

@@ -203,12 +203,12 @@ export function fdColor() {
         ${sw('--brand-subtle', '연한 면')}
         ${sw('--on-brand', '브랜드 위 글자')}
       </div>
-      <div class="callout warn">
+      <p>
         <b>면과 글자를 나눕니다.</b>
         <code>--brand</code>는 버튼 배경처럼 <b>면</b>에만 씁니다.
         흰 배경 위 <b>글자·링크</b>에 쓰면 대비가 부족하므로
         반드시 <code>--brand-text</code>를 씁니다 (5.89:1).
-      </div>
+      </p>
       <div class="dodont">
         <div class="dd do">
           <span class="dd-tag">이럴 때만</span>
@@ -228,10 +228,10 @@ export function fdColor() {
           </ul>
         </div>
       </div>
-      <div class="callout">
+      <p>
         선택 · 활성은 <code>--sel-bg</code>(gray-4) · <code>--sel-fg</code>(gray-12)를 씁니다.
         브랜드가 흔해지면 정작 주요 버튼이 눈에 들어오지 않습니다.
-      </div>
+      </p>
 
       <h2>Gray</h2>
       ${scale(N, '--gray-')}
@@ -248,9 +248,9 @@ export function fdColor() {
           <tr><td><code>12</code></td><td>본문 텍스트 · 제목</td></tr>
         </tbody>
       </table>
-      <div class="callout">
+      <p>
         <b>보더는 이 스케일을 쓰지 않습니다</b> — 아래 알파 스케일의 시맨틱 토큰을 씁니다.
-      </div>
+      </p>
 
       <h2>Gray Alpha</h2>
       ${scale(N, '--gray-a')}
@@ -328,10 +328,10 @@ export function fdColor() {
           <tr><td>상태색</td><td>4.6~5.0:1</td><td>4.8~10.1:1</td></tr>
         </tbody>
       </table>
-      <div class="callout">
+      <p>
         <code>gray-9</code>(3.3:1)·<code>gray-10</code>(3.8:1)은 본문 기준에 미달합니다 —
         <b>의미 있는 정보를 담지 마세요.</b> placeholder·장식 메타에만 씁니다.
-      </div>
+      </p>
 
       <h2>Chart</h2>
       <div class="tok-row">
@@ -380,12 +380,12 @@ export function fdTypography() {
       크기를 키우면 화면이 커 보이고, 굵기를 바꾸면 위계만 생깁니다.
     </p>
     <div class="prose">
-      <div class="callout">
+      <p>
         <b>UI와 Prose를 구분합니다.</b>
         조작하는 면(버튼·표·사이드바)은 13~14px로 조밀하게,
         읽는 면(설명·에이전트 응답)은 15px에 줄 간격 1.8로 넉넉하게.
         둘을 같은 크기로 두면 <b>양쪽 다 어중간해집니다</b>.
-      </div>
+      </p>
 
       <h2>스케일</h2>
       <div class="typescale">
@@ -431,12 +431,12 @@ export function fdTypography() {
       </p>
 
       <h2>글꼴</h2>
-      <div class="callout">
+      <p>
         <b>설치가 필요합니다.</b> <code>npm install pretendard</code> 후
         <code>pretendard/dist/web/variable/pretendardvariable-dynamic-subset.css</code>를 등록하세요.
         빠뜨리면 에러 없이 조용히 시스템 글꼴로 렌더됩니다.
         <br><span style="color:var(--gray-9);font-size:var(--text-xs)">라이선스 SIL OFL 1.1 — 재배포 가능, 판매 금지</span>
-      </div>
+      </p>
       <table>
         <thead><tr><th>토큰</th><th>글꼴</th><th>용도</th></tr></thead>
         <tbody>
@@ -444,10 +444,10 @@ export function fdTypography() {
           <tr><td><code>--mono</code></td><td>시스템 고정폭 (SF Mono · Consolas)</td><td>코드, 툴콜, 시각, IP, 파일 크기</td></tr>
         </tbody>
       </table>
-      <div class="callout">
+      <p>
         <b>고정폭 글꼴을 쓰는 기준</b> — 세로로 자릿수를 맞춰 읽어야 하는 값.
         시각·용량·ID·코드가 여기 해당합니다. 사람 이름이나 문서 제목은 아닙니다.
-      </div>
+      </p>
 
       <h2>한글에서 주의할 것</h2>
       <ul>
@@ -542,11 +542,11 @@ export function fdSpacing() {
           <tr><td>버튼 · 입력 높이</td><td>Geist 스케일 — <code>32</code> sm / <code>40</code> 기본 / <code>48</code> lg. 필터 바 같은 밀한 자리는 sm</td></tr>
         </tbody>
       </table>
-      <div class="callout">
+      <p>
         <b>에이전트 응답은 720px을 넘기지 않습니다.</b>
         한 줄이 너무 길면 다음 줄 첫 글자를 찾기 어려워집니다.
         데이터 테이블은 반대로 넓을수록 좋습니다 — 화면 성격에 따라 다르게 잡습니다.
-      </div>
+      </p>
 
       <h2>그리드</h2>
       <p>
@@ -597,10 +597,10 @@ export function fdShape() {
         큰 면(카드·패널)은 12px로 부드럽게, 조작 요소(버튼·입력)는 8px로 또렷하게 —
         이 <b>두 단계 차이</b>가 위계를 만듭니다.
       </p>
-      <div class="callout">
+      <p>
         <b>중첩 규칙</b> — 안쪽 요소의 radius는 바깥보다 작거나 같아야 합니다.
         카드(6px) 안의 툴콜(4px)처럼. 반대가 되면 모서리가 어긋나 보입니다.
-      </div>
+      </p>
 
       <h2>Border</h2>
       <table>
@@ -767,11 +767,11 @@ export function fdIconography() {
     <div class="page-head"><h1>Iconography</h1><span class="page-ko">아이콘</span></div>
     <p class="page-lead">Lucide 하나, 크기 3개, stroke 1.5.</p>
     <div class="prose">
-      <div class="callout">
+      <p>
         <b>적용 완료</b> — <code>lucide-vue-next</code>를 등록하고
         <code>DsIcon</code> 컴포넌트와 아이콘 레지스트리(<code>vue/icons.ts</code>)를 만들었습니다.
         라이브 갤러리의 <b>Iconography</b> 섹션에서 등록된 아이콘 전체를 볼 수 있습니다.
-      </div>
+      </p>
 
       <h2>의미로 부릅니다</h2>
       <p>
@@ -960,11 +960,11 @@ export function fdState() {
           <tr><td><code>partial</code></td><td>일부만 성공</td><td>Alert(warning) + 성공한 데이터는 그대로 표시</td></tr>
         </tbody>
       </table>
-      <div class="callout">
+      <p>
         <b><code>partial</code>을 빠뜨리기 쉽습니다.</b>
         에이전트 제품에서는 "문서 10건 중 7건만 읽었다" 같은 상황이 흔합니다.
         전부 실패로 처리하면 읽은 7건이 낭비되고, 성공으로 처리하면 사용자가 속습니다.
-      </div>
+      </p>
 
       <h3>빈 상태를 나누기</h3>
       <table>
@@ -1042,10 +1042,10 @@ export function fdA11y() {
           <tr><td>브랜드 위 흰 글자</td><td>4.5:1</td><td>통과</td></tr>
         </tbody>
       </table>
-      <div class="callout warn">
+      <p>
         <b><code>gray-9</code>보다 연한 색에 의미 있는 정보를 담지 않습니다.</b>
         <code>gray-8</code> 이하는 보더와 비활성 상태 전용입니다.
-      </div>
+      </p>
 
       <h2>포커스</h2>
       <p>
@@ -1109,12 +1109,12 @@ export function fdWriting() {
     <div class="page-head"><h1>Writing</h1><span class="page-ko">UX 라이팅</span></div>
     <p class="page-lead">읽고 다음 행동이 떠오르지 않으면 실패입니다 — 명확성 &gt; 접근성 &gt; 일관성 &gt; 간결성.</p>
     <div class="prose">
-      <div class="callout">
+      <p>
         이 페이지는 <b>UX 라이팅 가이드 v6의 요약</b>입니다.
         원문 6종(원칙과 문체 · 컴포넌트별 문구 템플릿 · 표기 규칙과 금칙 표현 · 도메인 용어집 ·
         AI 적용 지침 · 텍스트 통제)은 <code>6-2. Cogniterm Design System File</code>에 있습니다.
         여기 없는 세부 규칙은 원문을 따릅니다.
-      </div>
+      </p>
 
       <h2>4대 원칙</h2>
       <table>
@@ -1153,10 +1153,10 @@ export function fdWriting() {
       </table>
 
       <h2>문체 — 하십시오체로 통일</h2>
-      <div class="callout">
+      <p>
         <b>기본 문체는 "-합니다" 계열. 해요체·이모지·감탄사 금지.</b>
         B2G 검수 환경에서 해요체는 신뢰를 떨어뜨리고, 콘솔은 밀도가 생명이며, 감사 기록은 문어체가 맞습니다.
-      </div>
+      </p>
       <table>
         <thead><tr><th>레지스터</th><th>대상</th><th>핵심 규칙</th></tr></thead>
         <tbody>
@@ -1238,11 +1238,11 @@ export function fdWordlist() {
       제품 전체에서 하나의 어휘를 씁니다.
     </p>
     <div class="prose">
-      <div class="callout">
+      <p>
         <b>여기 없는 말이 필요하면 추가하고 알립니다.</b>
         혼자 정해서 쓰면 다음 사람이 또 다르게 씁니다.
         영문 컴포넌트 이름과 달리 <b>UI 문구는 전부 한글</b>입니다.
-      </div>
+      </p>
 
       <h2>제품 개념</h2>
       ${T([
