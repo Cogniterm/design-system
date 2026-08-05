@@ -948,20 +948,6 @@ export const meta: ComponentMeta[] = [
     where: '전역 ⌘K — 문서·에이전트·명령으로 점프.',
     since: '0.1.0',
   },
-  {
-    name: 'DsDrivePicker',
-    ko: '드라이브 피커',
-    category: 'overlay',
-    origin: 'wrapped',
-    vuetifyBase: 'VDialog',
-    summary: { ko: '드라이브에서 파일을 찾아 고르는 2단 피커 — 좌 폴더 트리 + 우 목록. 검색하면 목록이 검색 결과 뷰로 바뀝니다.', en: '' },
-    reason: {
-      ko: 'Dialog·Treeview·SearchField·FileRow·Badge·EmptyState를 한 화면으로 묶은 합성 컴포넌트. 파일 고르기라는 흔한 일을 매번 새로 짜지 않게 합니다.',
-      en: 'Composes Dialog, Treeview, SearchField, FileRow, Badge and EmptyState so file-picking is not rebuilt each time.',
-    },
-    where: '채팅 첨부·업로드 대상 고르기 — 드라이브에서 파일을 찾아 선택.',
-    since: '0.1.0',
-  },
 ]
 
 /** 이름으로 찾기 — 문서 배지 자동 렌더용 */

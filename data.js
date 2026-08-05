@@ -1562,51 +1562,6 @@ export const COMPONENTS = [
   html: null,
   guidelines: [['해야 할 것','⌘K 하나로 통일 — SearchField의 shortcut과 연결.'],['해야 할 것','최근 사용을 상단에.']],
 },
-{
-  id: 'drivepicker', name: 'DrivePicker', ko: '드라이브 피커', category: 'overlay',
-  origin: 'wrapped', vuetifyBase: 'VDialog',
-  summary: '드라이브에서 파일을 찾아 고르는 2단 피커 — 좌 폴더 트리 + 우 목록. 검색하면 목록이 검색 결과 뷰로 바뀝니다.',
-  reason: { ko: 'Dialog·Treeview·SearchField·FileRow·Badge·EmptyState를 한 화면으로 묶은 합성 컴포넌트. 파일 고르기라는 흔한 일을 매번 새로 짜지 않게 합니다.',
-            en: 'Composes Dialog, Treeview, SearchField, FileRow, Badge and EmptyState so file-picking is not rebuilt each time.' },
-  props: [
-    ['modelValue','boolean','false','열림 (v-model).'],
-    ['tree','DpTreeNode[]','필수','{ id, title, path, icon?, locked?, children? } — 좌측 폴더 트리.'],
-    ['files','DpFile[]','필수','{ id, name, path, icon?, meta?, badge?, disabled?, disabledReason? }'],
-    ['title','string',`'드라이브에서 파일 추가'`,'헤더 제목.'],
-    ['confirmLabel','string',`'첨부'`,'확정 버튼 라벨.'],
-  ],
-  events: [['confirm','DpFile[]','선택을 확정하면 발생. 피커는 자동으로 닫힘.']],
-  slots: [],
-  demo: `<div class="ds-drivepicker" style="height:auto;max-width:660px;box-shadow:var(--shadow-overlay)">
-    <div class="dp-head"><span class="f-icon">${ic('drive','sm')}</span><h2 class="dp-title">AI 드라이브에서 파일 추가</h2><span class="dp-close">${ic('close','sm')}</span></div>
-    <div class="dp-body">
-      <nav class="dp-nav" style="flex:0 0 176px;width:176px">
-        <div class="file-row selected" style="height:34px"><span class="f-icon">${ic('user','sm')}</span><span class="f-name">개인</span></div>
-        <div class="file-row" style="height:34px;padding-left:26px"><span class="f-icon">${ic('folder','sm')}</span><span class="f-name">내 문서</span></div>
-        <div class="file-row" style="height:34px"><span class="f-icon">${ic('team','sm')}</span><span class="f-name">조직</span></div>
-        <div class="file-row" style="height:34px"><span class="f-icon">${ic('drive','sm')}</span><span class="f-name">공용</span></div>
-      </nav>
-      <div class="dp-main">
-        <div class="dp-search"><div class="searchfield"><span class="sf-icon">${ic('search','sm')}</span><input placeholder="드라이브 전체에서 검색 — 파일명·경로" disabled /></div></div>
-        <div class="dp-crumb"><span class="ds-bc-cur">개인 / 내 문서</span></div>
-        <div class="dp-list">
-          <div class="file-row"><input class="f-check" type="checkbox" checked disabled /><span class="f-icon">${ic('document','sm')}</span><span class="f-name">내부보고서.docx</span><span class="badge warning">S</span><span class="f-meta">나 · 1.1MB</span></div>
-          <div class="file-row"><input class="f-check" type="checkbox" disabled /><span class="f-icon">${ic('document','sm')}</span><span class="f-name">보도자료_초안.hwp</span><span class="badge warning">S</span><span class="f-meta">나 · 320KB</span></div>
-          <div class="file-row disabled"><input class="f-check" type="checkbox" disabled /><span class="f-icon">${ic('spreadsheet','sm')}</span><span class="f-name">급여명세_2026Q2.xlsx</span><span class="badge danger">C</span><span class="f-meta">처리 중</span></div>
-        </div>
-      </div>
-    </div>
-    <div class="dp-cab"><span class="dp-cab-clear">선택 해제</span><span class="dp-cab-count">1개 선택됨</span><span class="dp-spacer"></span><button class="btn btn-primary">1개 첨부</button></div>
-  </div>`,
-  vue: `<DsDrivePicker v-model="open" :tree="tree" :files="files"
-  title="AI 드라이브에서 파일 추가" @confirm="attach" />`,
-  html: null,
-  guidelines: [
-    ['해야 할 것','검색은 현재 폴더와 무관하게 드라이브 전체를 훑고, 결과마다 경로를 함께 보여줍니다.'],
-    ['해야 할 것','고를 수 없는 파일(권한·정책)은 행을 흐리게 하고 사유를 title로 설명합니다.'],
-    ['하지 말 것','색(배지)만으로 등급을 전달하지 않습니다 — 글자(C/S/O)를 항상 함께 씁니다.'],
-  ],
-},
 ]
 
 export const TEMPLATES = [
@@ -1819,7 +1774,6 @@ export const WHERE = {
   popover: '아이콘 옆 부가 설명, 짧은 미리보기 — 클릭으로 엶.',
   hovercard: '사용자·문서 이름 위 미리보기 — 부가 정보만.',
   commandpalette: '전역 ⌘K — 문서·에이전트·명령으로 점프.',
-  drivepicker: '채팅 첨부·업로드 대상 고르기 — 드라이브에서 파일을 찾아 선택.',
 }
 
 /* ============================================
@@ -2136,9 +2090,6 @@ Object.assign(A11Y, {
   commandpalette: { keys: [['⌘K','열기 (앱에서 바인딩)'],['↑ ↓','이동'],['Enter','실행'],['Esc','닫기']],
     free: ['포커스 트랩·listbox 시맨틱·활성 항목 추적'],
     yours: ['전역 단축키 등록은 앱 몫','최근 사용 상단 정렬'] },
-  drivepicker: { keys: [['Enter / Space','행 선택/해제'],['Esc','닫기']],
-    free: ['포커스 트랩·다이얼로그 이름·트리 키보드 탐색'],
-    yours: ['고를 수 없는 파일은 사유를 title로 설명','등급 배지는 색만 말고 글자(C/S/O)를 함께'] },
   icon: {
     keys: [],
     free: ['label이 없으면 aria-hidden="true" 자동 부여', 'label이 있으면 role="img"'],
@@ -2187,7 +2138,6 @@ export const VERSUS = {
   combobox: [['Autocomplete', '목록의 값만 허용하면 Autocomplete']],
   searchfield: [['Input', '검색이 아닌 일반 입력은 Input']],
   commandpalette: [['SearchField', '한 목록 안 검색은 SearchField']],
-  drivepicker: [['FileGrid', '한 폴더 안 썸네일 고르기는 그리드'], ['CommandPalette', '파일이 아니라 명령·이동이면 팔레트']],
   statusdot: [['Badge', '텍스트를 놓을 수 있으면 Badge']],
   systemmessage: [['Alert', '에러·경고는 Alert']],
 }

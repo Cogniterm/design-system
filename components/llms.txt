@@ -1,8 +1,8 @@
 # Components — Cogniterm Design System
 
-> 67 components. 32 standalone
+> 66 components. 32 standalone
 > (no Vuetify needed, import from `~/design`) and
-> 35 Vuetify-based
+> 34 Vuetify-based
 > (import from `~/design/vuetify`, also needs ds-vuetify.css).
 > Docs: https://kimjiyong995-coder.github.io/design-system/#/components
 
@@ -475,14 +475,6 @@ Each component has a standalone prompt at https://kimjiyong995-coder.github.io/d
   usage:
     <DsCommandPalette v-model="open" :items="commands" @select="run" />
     <!-- 전역: keydown ⌘K → open = true -->
-- **DsDrivePicker** (드라이브 피커) — 드라이브에서 파일을 찾아 고르는 2단 피커 — 좌 폴더 트리 + 우 목록. 검색하면 목록이 검색 결과 뷰로 바뀝니다.
-  import: ~/design/vuetify | origin: wrapped (VDialog)
-  where: 채팅 첨부·업로드 대상 고르기 — 드라이브에서 파일을 찾아 선택.
-  props: modelValue=false, tree, files, title='드라이브에서 파일 추가', confirmLabel='첨부'
-  vs: FileGrid — 한 폴더 안 썸네일 고르기는 그리드 / CommandPalette — 파일이 아니라 명령·이동이면 팔레트
-  usage:
-    <DsDrivePicker v-model="open" :tree="tree" :files="files"
-      title="AI 드라이브에서 파일 추가" @confirm="attach" />
 ### Table & List (표·목록)
 - **DsDataTable** (데이터 테이블) — 정렬·페이지네이션이 되는 데이터 목록.
   import: ~/design/vuetify | origin: wrapped (VDataTable)

@@ -17,11 +17,8 @@ import {
   DsBanner, DsProgressBar, DsSpinner, DsSnackbar, DsDialog, DsTooltip,
   DsDataTable, DsList, DsTreeview, DsTimeline, DsAccordion,
   DsNumberInput, DsCombobox, DsPopover, DsHoverCard, DsCommandPalette,
-  DsDrivePicker,
 } from '~/design/vuetify'
 import { DsIcon } from '~/design/icon'
-import type { IconName } from '~/design/icon'
-import type { DpTreeNode, DpFile } from '~/design/vuetify'
 
 const id = ref(location.hash.replace(/^#play\//, '') || 'button')
 window.addEventListener('hashchange', () => { id.value = location.hash.replace(/^#play\//, '') || 'button' })
@@ -80,49 +77,6 @@ function cycleTool() {
 }
 function search() { loading.value = true; setTimeout(() => { loading.value = false }, 900) }
 
-/* ── DrivePicker 데모 데이터 (연동 시 API 응답으로 교체) ── */
-const dpOpen = ref(false)
-const dpPicked = ref<string[]>([])
-const dpTree: DpTreeNode[] = [
-  { id: 'personal', title: '개인', path: '개인', icon: 'user', children: [
-    { id: 'p-docs', title: '내 문서', path: '개인 / 내 문서' },
-    { id: 'p-dl', title: '다운로드', path: '개인 / 다운로드' },
-    { id: 'p-hr', title: '인사', path: '개인 / 인사' },
-  ] },
-  { id: 'org', title: '조직', path: '조직', icon: 'team', children: [
-    { id: 'o-sales', title: '영업팀', path: '조직 / 영업팀', children: [
-      { id: 'o-sales-c', title: '계약서', path: '조직 / 영업팀 / 계약서' },
-    ] },
-    { id: 'o-dev', title: '개발팀', path: '조직 / 개발팀' },
-    { id: 'o-private', title: '비공개', path: '조직 / 비공개', locked: true },
-  ] },
-  { id: 'shared', title: '공용', path: '공용', icon: 'drive', children: [
-    { id: 's-notice', title: '공지사항', path: '공용 / 공지사항' },
-    { id: 's-tpl', title: '템플릿', path: '공용 / 템플릿' },
-  ] },
-]
-const CSO: Record<string, { text: string; variant: 'danger' | 'warning' | 'default'; title: string }> = {
-  C: { text: 'C', variant: 'danger',  title: 'C · 기밀 — AI 사용 제외' },
-  S: { text: 'S', variant: 'warning', title: 'S · 대외비 — 지정 자산만' },
-  O: { text: 'O', variant: 'default', title: 'O · 일반 — 제한 없음' },
-}
-const dpRaw: Array<{ id: string; name: string; icon: IconName; path: string; cso: string; meta: string; gate?: string }> = [
-  { id: 'f1', name: '계약서_검토본.pdf', icon: 'document', path: '조직 / 영업팀 / 계약서', cso: 'C', meta: '김서준 · 2.4MB', gate: '기밀(C)등급은 AI 사용에서 제외됩니다' },
-  { id: 'f2', name: '내부보고서.docx', icon: 'document', path: '개인 / 내 문서', cso: 'S', meta: '나 · 1.1MB' },
-  { id: 'f13', name: '보도자료_초안.hwp', icon: 'document', path: '개인 / 내 문서', cso: 'S', meta: '나 · 320KB' },
-  { id: 'f3', name: '회의자료.pdf', icon: 'document', path: '공용 / 공지사항', cso: 'O', meta: '이도윤 · 860KB' },
-  { id: 'f12', name: '전사공유회_발표자료.pptx', icon: 'document', path: '공용 / 공지사항', cso: 'O', meta: '이도윤 · 6.8MB' },
-  { id: 'f5', name: '제품_사양서_v3.pdf', icon: 'document', path: '조직 / 개발팀', cso: 'O', meta: '박하늘 · 3.2MB' },
-  { id: 'f6', name: '고객_리스트.xlsx', icon: 'spreadsheet', path: '조직 / 영업팀', cso: 'C', meta: '김서준 · 1.8MB', gate: '기밀(C)등급은 AI 사용에서 제외됩니다' },
-  { id: 'f4', name: '급여명세_2026Q2.xlsx', icon: 'spreadsheet', path: '개인 / 인사', cso: 'C', meta: '처리 중', gate: '처리 중인 파일은 아직 사용할 수 없습니다' },
-  { id: 'f8', name: '상표출원서_스캔.png', icon: 'file', path: '개인 / 다운로드', cso: 'S', meta: '나 · 2.9MB' },
-  { id: 'f7', name: '브랜드_가이드.pdf', icon: 'document', path: '공용 / 템플릿', cso: 'O', meta: '정디자인 · 5.1MB' },
-]
-const dpFiles: DpFile[] = dpRaw.map(f => ({
-  id: f.id, name: f.name, path: f.path, icon: f.icon, meta: f.meta,
-  badge: CSO[f.cso], disabled: !!f.gate, disabledReason: f.gate,
-}))
-function dpConfirm(files: { name: string }[]) { dpPicked.value = files.map(f => f.name) }
 </script>
 
 <template>
@@ -341,17 +295,6 @@ function dpConfirm(files: { name: string }[]) { dpPicked.value = files.map(f => 
         <DsEmptyState title="에이전트가 없습니다" description="첫 에이전트를 만들어 업무 자동화를 시작하세요.">
           <DsButton @click="clicks++">New agent{{ clicks ? ` (${clicks})` : '' }}</DsButton>
         </DsEmptyState>
-      </template>
-
-      <template v-else-if="id === 'drivepicker'">
-        <div style="display:flex;flex-direction:column;gap:10px;align-items:flex-start">
-          <DsButton @click="dpOpen = true">드라이브에서 파일 추가</DsButton>
-          <div v-if="dpPicked.length" style="font-size:13px;color:var(--gray-11)">
-            첨부됨: <b style="color:var(--gray-12)">{{ dpPicked.join(', ') }}</b>
-          </div>
-          <DsDrivePicker v-model="dpOpen" :tree="dpTree" :files="dpFiles"
-            title="AI 드라이브에서 파일 추가" @confirm="dpConfirm" />
-        </div>
       </template>
 
       <template v-else-if="id === 'dialog'">
