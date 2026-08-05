@@ -1211,6 +1211,35 @@ export const COMPONENTS = [
   ],
 },
 {
+  id: 'dotfield', name: 'DotField', ko: '도트 필드 로더', category: 'feedback',
+  origin: 'custom', vuetifyBase: null,
+  summary: '이미지·미디어 생성 대기 전용 앰비언트 로더.',
+  reason: { ko: 'Vuetify에 없습니다. 결과가 화면 그 자체(이미지·미디어)라 단계 문구도 진행률도 줄 수 없을 때, "멈춘 게 아니라 일하고 있음"만 조용히 전달합니다.',
+            en: 'Not in Vuetify. For generative waits where the result is the screen itself — no stages to narrate, no progress to show.' },
+  props: [
+    ['cols', 'number', '17', '정사각 그리드 한 변의 도트 수.'],
+    ['speed', 'number', '1.1', '모션 배속.'],
+    ['size', 'number', '380', '카드 최대 폭(px). 정사각을 유지합니다.'],
+    ['label', 'string', `'AI가 생성하는 중'`, '스크린리더용 라벨. 화면에는 보이지 않습니다.'],
+  ],
+  slots: [],
+  demo: `<div class="dotfield dotfield--css" style="max-width:180px"><div class="dotfield-grid" style="grid-template-columns:repeat(9,4px);gap:8px">${Array.from({ length: 81 }, (_, i) => {
+    const c = i % 9, r = (i / 9) | 0
+    const d = Math.hypot(c - 4, r - 4)
+    return `<i style="animation-delay:${(d * 0.15).toFixed(2)}s"></i>`
+  }).join('')}</div></div>`,
+  vue: `<DsDotField v-if="generating" label="이미지를 생성하는 중" />`,
+  html: `<!-- 정적 마크업은 골격만 — 도트별 scale·opacity는 rAF로 매 프레임 계산 -->
+<div class="dotfield" role="status" aria-label="AI가 생성하는 중">
+  <div class="dotfield-grid" aria-hidden="true"><!-- 17×17 <i> --></div>
+</div>`,
+  guidelines: [
+    ['해야 할 것', '이미지·미디어 생성처럼 결과 자체를 기다리는 전체 영역에만 씁니다. 생성이 끝나면 즉시 결과로 교체합니다.'],
+    ['하지 말 것', '에이전트 응답·툴콜 대기에 쓰지 않습니다. 단계를 말로 알릴 수 있으면 ThinkingIndicator·ToolCallStep이 그 자리입니다 (원칙 1).'],
+    ['하지 말 것', '진행률·문구·취소 버튼을 카드 안에 얹지 않습니다. 필요하면 카드 바깥에 둡니다.'],
+  ],
+},
+{
   id: 'snackbar', name: 'Snackbar', ko: '스낵바', category: 'feedback',
   origin: 'wrapped', vuetifyBase: 'VSnackbar',
   summary: '떴다가 사라지는 알림.',
@@ -1741,6 +1770,7 @@ export const WHERE = {
   banner: '화면 최상단 전역 공지 — 점검 예정, 요금제 만료.',
   progressbar: '업로드·일괄 처리 — 진행률을 아는 경우만. 모르면 ThinkingIndicator.',
   spinner: '버튼 내부, 인라인 짧은 대기(2초 이내). 에이전트 작업에는 쓰지 않습니다.',
+  dotfield: '이미지·미디어 생성 대기 — 단계 문구도 진행률도 줄 수 없는 생성형 작업 전용.',
   snackbar: '저장·삭제 결과 알림. 후속 액션은 하나까지.',
   badge: '테이블 상태 열, 목록 항목의 상태 표시. 읽기 전용.',
   skeleton: '목록·테이블의 로딩 상태. 에이전트 응답 대기에는 쓰지 않습니다.',
@@ -1957,6 +1987,12 @@ Object.assign(A11Y, {
     free: ['Vuetify가 role="progressbar" · indeterminate 처리'],
     yours: ['주변에 무엇을 기다리는지 텍스트로 함께 표시', '2초를 넘길 것 같으면 Skeleton이나 진행 표시로 교체'],
   },
+  dotfield: {
+    keys: [],
+    free: ['role="status" + aria-label 강제', '도트 그리드는 aria-hidden',
+           'prefers-reduced-motion이면 rAF 루프 대신 정지 프레임 1장'],
+    yours: ['label에 무엇을 생성 중인지 구체적으로 ("이미지를 생성하는 중")', '완료되면 즉시 결과로 교체'],
+  },
   banner: {
     keys: [['Tab', '액션으로 이동']],
     free: [],
@@ -2117,6 +2153,9 @@ export const VERSUS = {
   toast: [['Snackbar', '실제로 떠서 사라지는 동작이 필요하면 Snackbar']],
   spinner: [['ThinkingIndicator', '2초 이내면 Spinner, 에이전트 작업이면 ThinkingIndicator (원칙 1)'],
             ['Skeleton', '자리를 미리 보여줘야 하면 Skeleton']],
+  dotfield: [['ThinkingIndicator', '단계를 말로 알릴 수 있으면 ThinkingIndicator — DotField는 말할 단계가 없는 생성 대기 전용'],
+             ['ProgressBar', '진행률을 알면 ProgressBar'],
+             ['Skeleton', '결과의 자리(레이아웃)를 미리 알면 Skeleton']],
   skeleton: [['ThinkingIndicator', '에이전트 응답 대기에는 Skeleton을 쓰지 않습니다']],
   progressbar: [['ThinkingIndicator', '진행률을 모르면 ProgressBar 대신 ThinkingIndicator']],
   select: [['Autocomplete', '옵션 10개를 넘으면 Autocomplete']],

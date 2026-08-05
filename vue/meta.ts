@@ -655,6 +655,20 @@ export const meta: ComponentMeta[] = [
     since: '0.1.0',
   },
   {
+    name: 'DsDotField',
+    ko: '도트 필드 로더',
+    category: 'feedback',
+    origin: 'custom',
+    vuetifyBase: null,
+    summary: { ko: '이미지·미디어 생성 대기 전용 앰비언트 로더.', en: '' },
+    reason: {
+      ko: 'Vuetify에 없습니다. 결과가 화면 그 자체(이미지·미디어)라 단계 문구도 진행률도 줄 수 없을 때, "멈춘 게 아니라 일하고 있음"만 조용히 전달합니다.',
+      en: 'Not in Vuetify. For generative waits where the result is the screen itself — no stages to narrate, no progress to show.',
+    },
+    where: '이미지·미디어 생성 대기 — 단계 문구도 진행률도 줄 수 없는 생성형 작업 전용.',
+    since: '0.1.0',
+  },
+  {
     name: 'DsSnackbar',
     ko: '스낵바',
     category: 'feedback',

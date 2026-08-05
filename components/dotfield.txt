@@ -1,0 +1,38 @@
+# DsDotField — Cogniterm Design System
+
+import { DsDotField } from '~/design'   // Vuetify 불필요 · ds.css만
+
+## 용도
+이미지·미디어 생성 대기 — 단계 문구도 진행률도 줄 수 없는 생성형 작업 전용.
+
+## Props
+- cols: number = 17 — 정사각 그리드 한 변의 도트 수.
+- speed: number = 1.1 — 모션 배속.
+- size: number = 380 — 카드 최대 폭(px). 정사각을 유지합니다.
+- label: string = 'AI가 생성하는 중' — 스크린리더용 라벨. 화면에는 보이지 않습니다.
+
+
+## 사용 예
+```vue
+<DsDotField v-if="generating" label="이미지를 생성하는 중" />
+```
+
+## 구분
+- vs ThinkingIndicator: 단계를 말로 알릴 수 있으면 ThinkingIndicator — DotField는 말할 단계가 없는 생성 대기 전용
+- vs ProgressBar: 진행률을 알면 ProgressBar
+- vs Skeleton: 결과의 자리(레이아웃)를 미리 알면 Skeleton
+
+## 지침
+- [해야 할 것] 이미지·미디어 생성처럼 결과 자체를 기다리는 전체 영역에만 씁니다. 생성이 끝나면 즉시 결과로 교체합니다.
+- [하지 말 것] 에이전트 응답·툴콜 대기에 쓰지 않습니다. 단계를 말로 알릴 수 있으면 ThinkingIndicator·ToolCallStep이 그 자리입니다 (원칙 1).
+- [하지 말 것] 진행률·문구·취소 버튼을 카드 안에 얹지 않습니다. 필요하면 카드 바깥에 둡니다.
+
+## 접근성
+직접 처리: label에 무엇을 생성 중인지 구체적으로 ("이미지를 생성하는 중") / 완료되면 즉시 결과로 교체
+
+## 시스템 규칙 (요약)
+- 색·간격·모서리는 CSS 변수만 (var(--gray-6), var(--brand)) — hex 금지
+- primary 버튼은 화면당 하나. 선택·활성 상태는 중립(--sel-bg/--sel-fg)
+- 컨트롤 높이 32(sm)/40/48 — 필터 바·툴바는 sm
+- 목록·테이블은 default/loading/empty/error/partial 5상태
+- 전체 규칙: https://kimjiyong995-coder.github.io/design-system/llms.txt
