@@ -180,7 +180,7 @@ YOU must handle: 페이지 최상단에 두고 랜드마크(role="region")로 �
 
 ### DsButtonGroup (버튼 그룹)
 Keyboard: Tab = 그룹으로 진입 | ← → = 항목 이동 | Enter · Space = 선택
-Component handles: Vuetify가 그룹 내 단일 Tab 정지 · aria-pressed 처리
+Component handles: role=radiogroup/radio + aria-checked; 선택 항목만 Tab 정지 (roving tabindex); ← →로 항목 이동
 YOU must handle: 각 버튼의 라벨을 명확히 — 아이콘만이면 aria-label; 그룹 자체에 aria-label로 무엇을 고르는지 설명
 
 ### DsBreadcrumbs (경로)

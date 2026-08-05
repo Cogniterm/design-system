@@ -2,13 +2,13 @@
 import { ref } from 'vue'
 import { useTheme } from 'vuetify'
 import {
-  DsButton, DsInput, DsBadge, DsChip, DsAvatar, DsCard, DsDivider, DsSkeleton,
+  DsButton, DsButtonGroup, DsInput, DsBadge, DsChip, DsAvatar, DsCard, DsDivider, DsSkeleton,
   DsToast, DsEmptyState, DsChatMessage, DsStreamingText, DsThinkingIndicator, DsDotField,
   DsToolCallStep, DsAgentInput, DsCitationChip, DsArtifactPanel, DsSearchResult,
   DsFileGrid, DsFileRow, DsTreeview,
 } from '~/design'
 import {
-  DsIconButton, DsButtonGroup, DsMenu, DsTabs, DsBreadcrumbs, DsPagination,
+  DsIconButton, DsMenu, DsTabs, DsBreadcrumbs, DsPagination,
   DsNavList, DsStepper, DsSelect, DsAutocomplete, DsTextarea, DsCheckbox,
   DsRadioGroup, DsSwitch, DsSlider, DsFileInput, DsDatePicker, DsAlert,
   DsBanner, DsProgressBar, DsSpinner, DsSnackbar, DsDialog, DsTooltip,
@@ -119,7 +119,7 @@ const SECTIONS = [
 
         <div class="g-item">
           <div class="g-meta">
-            <div class="g-name">DsButtonGroup <i class="lg wrapped"></i> <code>VBtnToggle</code></div>
+            <div class="g-name">DsButtonGroup <i class="lg standalone"></i></div>
           </div>
           <div class="g-demo">
             <DsButtonGroup v-model="view" :items="[

@@ -3,7 +3,6 @@
 
 /* ── Action ── */
 export { default as DsIconButton } from './components/vuetify/DsIconButton.vue'
-export { default as DsButtonGroup } from './components/vuetify/DsButtonGroup.vue'
 export { default as DsMenu } from './components/vuetify/DsMenu.vue'
 
 /* ── Navigation ── */

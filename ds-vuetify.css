@@ -310,23 +310,6 @@
 .ds-icon-btn.is-secondary.v-btn:hover { border-color: var(--border-hover); }
 .ds-icon-btn.is-sm.v-btn { width: 28px; height: 28px; font-size: 12px; }
 
-/* ── DsButtonGroup — 세그먼티드 컨트롤 (Astryx SegmentedControl 참고)
-   회색 트랙 안에서 선택 항목만 흰 칩으로 떠 보입니다. 구분선·외곽 보더 없음. ── */
-.ds-btn-group.v-btn-toggle {
-  height: 32px; padding: 3px; border-radius: var(--r-lg);
-  background: var(--gray-3); border: none; overflow: visible; align-items: center; gap: 2px;
-}
-.ds-btn-group .v-btn {
-  height: 26px; font-size: var(--text-xs); font-weight: var(--weight-medium); color: var(--gray-11);
-  border-radius: var(--r-md); border: none; min-width: 0; padding: 0 12px;
-  transition: color .12s ease, background .12s ease, box-shadow .12s ease;
-}
-.ds-btn-group .v-btn:hover { color: var(--gray-12); background: transparent; }
-.ds-btn-group .v-btn--active {
-  background: var(--surface); color: var(--gray-12);
-  box-shadow: 0 0 0 1px var(--border);
-}
-.ds-btn-group .v-btn__overlay { display: none; }
 
 /* ── DsTabs ── */
 .ds-tab-count {

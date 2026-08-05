@@ -934,7 +934,7 @@ export const COMPONENTS = [
 },
 {
   id: 'buttongroup', name: 'ButtonGroup', ko: '버튼 그룹', category: 'action',
-  origin: 'wrapped', vuetifyBase: 'VBtnToggle',
+  origin: 'custom', vuetifyBase: null,
   summary: '서로 배타적인 보기 전환 — 세그먼티드 컨트롤.',
   reason: { ko: '라디오 버튼은 무겁고 탭은 과합니다. 그 중간 크기의 전환이 필요합니다. 다른 시스템의 SegmentedControl(Astryx)·Toggle(Geist)과 같은 물건입니다 — 회색 트랙 + 선택 항목만 흰 칩.',
             en: 'Radios are heavy, tabs too prominent. Same thing as SegmentedControl (Astryx) / Toggle (Geist): gray track, selected segment as a raised chip.' },
@@ -2059,7 +2059,7 @@ Object.assign(A11Y, {
   },
   buttongroup: {
     keys: [['Tab', '그룹으로 진입'], ['← →', '항목 이동'], ['Enter · Space', '선택']],
-    free: ['Vuetify가 그룹 내 단일 Tab 정지 · aria-pressed 처리'],
+    free: ['role=radiogroup/radio + aria-checked', '선택 항목만 Tab 정지 (roving tabindex)', '← →로 항목 이동'],
     yours: ['각 버튼의 라벨을 명확히 — 아이콘만이면 aria-label', '그룹 자체에 aria-label로 무엇을 고르는지 설명'],
   },
   breadcrumbs: {

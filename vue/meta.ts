@@ -406,8 +406,8 @@ export const meta: ComponentMeta[] = [
     name: 'DsButtonGroup',
     ko: '버튼 그룹',
     category: 'action',
-    origin: 'wrapped',
-    vuetifyBase: 'VBtnToggle',
+    origin: 'custom',
+    vuetifyBase: null,
     summary: { ko: '서로 배타적인 보기 전환 — 세그먼티드 컨트롤.', en: '' },
     reason: {
       ko: '라디오 버튼은 무겁고 탭은 과합니다. 그 중간 크기의 전환이 필요합니다. 다른 시스템의 SegmentedControl(Astryx)·Toggle(Geist)과 같은 물건입니다 — 회색 트랙 + 선택 항목만 흰 칩.',

@@ -1,5 +1,6 @@
 // 배럴 — 컴포넌트 전체 내보내기
 export { default as DsButton } from './components/DsButton.vue'
+export { default as DsButtonGroup } from './components/DsButtonGroup.vue'
 export { default as DsInput } from './components/DsInput.vue'
 export { default as DsBadge } from './components/DsBadge.vue'
 export { default as DsChip } from './components/DsChip.vue'

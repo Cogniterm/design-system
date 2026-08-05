@@ -1,6 +1,6 @@
 # DsButtonGroup — Cogniterm Design System
 
-import { DsButtonGroup } from '~/design/vuetify'   // Vuetify 필요 · ds.css + ds-vuetify.css
+import { DsButtonGroup } from '~/design'   // Vuetify 불필요 · ds.css만
 
 ## 용도
 그리드/리스트 보기 전환, 기간(일·주·월), 밀도 전환.

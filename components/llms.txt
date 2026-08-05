@@ -1,8 +1,8 @@
 # Components — Cogniterm Design System
 
-> 66 components. 33 standalone
+> 66 components. 34 standalone
 > (no Vuetify needed, import from `~/design`) and
-> 33 Vuetify-based
+> 32 Vuetify-based
 > (import from `~/design/vuetify`, also needs ds-vuetify.css).
 > Docs: https://kimjiyong995-coder.github.io/design-system/#/components
 
@@ -39,7 +39,7 @@ Each component has a standalone prompt at https://kimjiyong995-coder.github.io/d
     <DsIconButton label="More"><DsIcon name="more" /></DsIconButton>
     <DsIconButton label="Archive" variant="secondary"><DsIcon name="archive" /></DsIconButton>
 - **DsButtonGroup** (버튼 그룹) — 서로 배타적인 보기 전환 — 세그먼티드 컨트롤.
-  import: ~/design/vuetify | origin: wrapped (VBtnToggle)
+  import: ~/design | origin: custom
   where: 그리드/리스트 보기 전환, 기간(일·주·월), 밀도 전환.
   props: modelValue, items
   vs: Tabs — 내용이 통째로 바뀌면 Tabs
