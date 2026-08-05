@@ -408,10 +408,10 @@ export const meta: ComponentMeta[] = [
     category: 'action',
     origin: 'wrapped',
     vuetifyBase: 'VBtnToggle',
-    summary: { ko: '서로 배타적인 보기 전환.', en: '' },
+    summary: { ko: '서로 배타적인 보기 전환 — 세그먼티드 컨트롤.', en: '' },
     reason: {
-      ko: '라디오 버튼은 무겁고 탭은 과합니다. 그 중간 크기의 전환이 필요합니다.',
-      en: 'Radios are heavy, tabs too prominent; this is the middle weight.',
+      ko: '라디오 버튼은 무겁고 탭은 과합니다. 그 중간 크기의 전환이 필요합니다. 다른 시스템의 SegmentedControl(Astryx)·Toggle(Geist)과 같은 물건입니다 — 회색 트랙 + 선택 항목만 흰 칩.',
+      en: 'Radios are heavy, tabs too prominent. Same thing as SegmentedControl (Astryx) / Toggle (Geist): gray track, selected segment as a raised chip.',
     },
     where: '그리드/리스트 보기 전환, 기간(일·주·월), 밀도 전환.',
     since: '0.1.0',
