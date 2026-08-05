@@ -138,6 +138,11 @@ export const COMPONENTS = [
     ['src', 'string', '—', '이미지 URL. 없으면 슬롯의 이니셜을 표시합니다.'],
   ],
   slots: [['default', '이니셜 텍스트 (2글자 권장).']],
+  demos: [
+    { key: 'sm',      title: 'Small · 24px',   desc: '테이블 행·목록.' },
+    { key: 'default', title: 'Default · 32px', desc: '일반.' },
+    { key: 'lg',      title: 'Large · 40px',   desc: '프로필·헤더.' },
+  ],
   demo: `<div class="row">
     <span class="ds-avatar sm">JK</span>
     <span class="ds-avatar">JK</span>
@@ -330,6 +335,10 @@ export const COMPONENTS = [
   ],
   events: [['remove', '—', '✕ 클릭 시 발생.']],
   slots: [['default', '칩 라벨.']],
+  demos: [
+    { key: 'default', title: 'Default', desc: '거의 항상 이것 — 활성 필터도 중립 칩.' },
+    { key: 'brand',   title: 'Brand',   desc: '에이전트 관련 표시에만.' },
+  ],
   demo: `<div class="row">
     <span class="chip">design-system.pdf<button class="x" aria-label="Remove">${ic('close',12)}</button></span>
     <span class="chip">Q3 보고서<button class="x" aria-label="Remove">${ic('close',12)}</button></span>
@@ -394,6 +403,13 @@ export const COMPONENTS = [
     ['variant', `'default' | 'brand' | 'success' | 'warning' | 'danger'`, `'default'`, '상태 색 — 배경·글자·테두리로 구분.'],
   ],
   slots: [['default', '상태 텍스트.']],
+  demos: [
+    { key: 'default', title: 'Default', desc: '중립 상태 — 대기·보통.' },
+    { key: 'brand',   title: 'Brand',   desc: '진행·실행 중 — 에이전트가 움직이는 상태.' },
+    { key: 'success', title: 'Success', desc: '완료·정상.' },
+    { key: 'warning', title: 'Warning', desc: '지연·주의.' },
+    { key: 'danger',  title: 'Danger',  desc: '실패·오류.' },
+  ],
   demo: `<div class="row">
     <span class="badge">Draft</span>
     <span class="badge brand">Running</span>
@@ -428,6 +444,11 @@ export const COMPONENTS = [
     ['height', 'string', '—', 'CSS 높이.'],
   ],
   slots: [],
+  demos: [
+    { key: 'text',   title: 'Text',   desc: '글줄 자리.' },
+    { key: 'circle', title: 'Circle', desc: '아바타·아이콘 자리.' },
+    { key: 'rect',   title: 'Rect',   desc: '썸네일·카드 자리.' },
+  ],
   demo: `<div style="display:flex;gap:12px;align-items:center;max-width:380px">
     <div class="skeleton circle" style="width:32px;height:32px;flex-shrink:0"></div>
     <div style="flex:1;display:flex;flex-direction:column;gap:8px">
@@ -458,6 +479,10 @@ export const COMPONENTS = [
   ],
   events: [['action', '—', '액션 버튼 클릭.']],
   slots: [['default', '알림 문구.']],
+  demos: [
+    { key: 'success', title: 'Success', desc: '성공 결과.' },
+    { key: 'danger',  title: 'Danger',  desc: '실패 결과.' },
+  ],
   demo: `<div style="display:flex;flex-direction:column;gap:10px;align-items:flex-start">
     <div class="toast success"><span class="t-dot"></span><span class="t-body">에이전트가 생성되었습니다.</span><button class="t-action">View</button></div>
     <div class="toast danger"><span class="t-dot"></span><span class="t-body">파일 업로드에 실패했습니다 — 10MB를 초과합니다.</span><button class="t-action">Retry</button></div>
@@ -743,6 +768,11 @@ export const COMPONENTS = [
     ['size', `'default' | 'compact' | 'inline'`, `'default'`, 'compact는 dot 4px·텍스트 12px, inline은 텍스트 뒤에 도트. 둘 다 shimmer 생략.'],
   ],
   slots: [['default', 'label 대신 넣을 내용.']],
+  demos: [
+    { key: 'default', title: 'Default', desc: 'dot 6px + shimmer 라벨 — 단계 문구 자동 전환.' },
+    { key: 'compact', title: 'Compact', desc: 'dot 4px · 텍스트 12px — 좁은 자리. shimmer 생략.' },
+    { key: 'inline',  title: 'Inline',  desc: '텍스트 뒤에 도트 — 문장 속. shimmer 생략.' },
+  ],
   demo: `<div style="display:flex;flex-direction:column;gap:14px;align-items:flex-start"><div class="thinking"><span class="dots"><i></i><i></i><i></i></span><span class="t-label">문서를 분석하고 있어요</span></div><div class="thinking thinking--compact"><span class="dots"><i></i><i></i><i></i></span><span class="t-label">생성 중</span></div><div class="thinking thinking--inline"><span class="t-label">검토 의견 생성 중</span><span class="dots"><i></i><i></i><i></i></span></div></div>`,
   vue: `<DsThinkingIndicator :label="currentStep" />
 <DsThinkingIndicator size="compact" label="생성 중" />
@@ -766,6 +796,11 @@ export const COMPONENTS = [
             en: 'Not in Vuetify; the key device for showing the agent is working.' },
   props: [['status', `'running' | 'done' | 'error'`, `'running'`, '진행 중 스피너 / 완료 체크 / 실패 ✕.']],
   slots: [['default', '실행 내용. 도구 이름과 인자를 그대로 보여줍니다.']],
+  demos: [
+    { key: 'running', title: 'Running', desc: '실행 중 — 스피너.' },
+    { key: 'done',    title: 'Done',    desc: '완료 — 결과 요약을 함께.' },
+    { key: 'error',   title: 'Error',   desc: '실패 — 무엇이 안 됐는지 그대로.' },
+  ],
   demo: `<div class="toolcall"><span class="check">${ic('confirm','sm')}</span> search_drive("계약서", June) — 3 files found</div>
   <div class="toolcall"><span class="spinner"></span> read_document("계약서_최종.pdf")</div>
   <div class="toolcall"><span class="check" style="color:var(--danger)">${ic('close','sm')}</span> extract_table("스캔본.pdf") — 텍스트 레이어 없음</div>`,
@@ -866,6 +901,10 @@ export const COMPONENTS = [
   ],
   events: [['click', 'MouseEvent', '클릭 시 발생.']],
   slots: [['default', '아이콘.']],
+  demos: [
+    { key: 'ghost',     title: 'Ghost',     desc: '기본 — 툴바·반복 요소.' },
+    { key: 'secondary', title: 'Secondary', desc: '보더 있는 독립 버튼.' },
+  ],
   demo: `<div class="row"><button class="row-more-demo">${ic('more')}</button><button class="row-more-demo bordered">${ic('archive')}</button></div>`,
   vue: `<DsIconButton label="More"><DsIcon name="more" /></DsIconButton>
 <DsIconButton label="Archive" variant="secondary"><DsIcon name="archive" /></DsIconButton>`,
@@ -1156,6 +1195,12 @@ export const COMPONENTS = [
   ],
   events: [['close', '—', '닫기 클릭.']],
   slots: [['default', '본문.'], ['actions', '후속 액션 버튼.']],
+  demos: [
+    { key: 'info',    title: 'Info',    desc: '알아두면 좋은 정보.' },
+    { key: 'success', title: 'Success', desc: '완료된 결과 — 남아 있어야 하는 것.' },
+    { key: 'warning', title: 'Warning', desc: '주의 — 한도·권한 경고.' },
+    { key: 'error',   title: 'Error',   desc: '실패 — 원인과 다음 행동을 함께.' },
+  ],
   demo: `<div style="display:flex;flex-direction:column;gap:8px">
     <div class="ds-alert-demo err"><b>삭제하지 못했습니다</b><span>법무 폴더는 관리자만 삭제할 수 있습니다.</span></div>
     <div class="ds-alert-demo warn"><span>월간 실행 한도의 80%에 도달했습니다.</span></div>
@@ -1216,8 +1261,13 @@ export const COMPONENTS = [
   summary: '아주 짧은 대기 표시.',
   reason: { ko: '크기·굵기가 제각각이 되기 쉬워 고정합니다. 2초 이내 대기 전용입니다.',
             en: 'Size and stroke drift; fixed. For sub-2-second waits only.' },
-  props: [['size', 'number', '16', '지름(px).']],
+  props: [['size', 'number', '16', '지름(px).'],
+    ['variant', `'brand' | 'current'`, `'brand'`, 'current는 글자색을 따라갑니다 — primary·danger 버튼 안에서 사용.']],
   slots: [],
+  demos: [
+    { key: 'brand',   title: 'Brand',   desc: '기본 — 흰 배경 위.' },
+    { key: 'current', title: 'Current', desc: '글자색을 따라감 — primary·danger 버튼 안.' },
+  ],
   demo: `<div class="row"><span class="spinner"></span><button class="btn btn-secondary"><span class="spinner"></span> 저장 중…</button></div>`,
   vue: `<DsSpinner />
 <DsButton variant="secondary"><DsSpinner :size="13" /> 저장 중…</DsButton>`,
@@ -1270,6 +1320,10 @@ export const COMPONENTS = [
   ],
   events: [['action', '—', '액션 클릭.']],
   slots: [['default', '문구.']],
+  demos: [
+    { key: 'success', title: 'Success', desc: '저장·생성 성공.' },
+    { key: 'danger',  title: 'Danger',  desc: '실패 알림.' },
+  ],
   demo: `<div class="toast success"><span class="t-dot"></span><span class="t-body">에이전트가 생성되었습니다.</span><button class="t-action">View</button></div>`,
   vue: `<DsSnackbar v-model="open" variant="success" action="View" @action="go">
   에이전트가 생성되었습니다.
@@ -1407,6 +1461,13 @@ export const COMPONENTS = [
   reason: { ko: '아바타 모서리·탭 이름 옆처럼 배지가 들어가지 않는 자리가 있습니다.', en: 'For spots too small for a badge.' },
   props: [['status',`'neutral'|'brand'|'success'|'warning'|'danger'`,`'neutral'`,'색.'],['label','string','필수','스크린리더용 의미. 색만으로는 전달되지 않습니다.'],['pulse','boolean','false','실행 중 깜빡임.']],
   slots: [],
+  demos: [
+    { key: 'neutral', title: 'Neutral', desc: '오프라인·비활성.' },
+    { key: 'brand',   title: 'Brand',   desc: '실행 중 — pulse와 함께.' },
+    { key: 'success', title: 'Success', desc: '온라인·정상.' },
+    { key: 'warning', title: 'Warning', desc: '주의.' },
+    { key: 'danger',  title: 'Danger',  desc: '오류.' },
+  ],
   demo: `<div class="row"><span class="status-dot success"></span><span class="status-dot brand pulse"></span><span class="status-dot danger"></span><span style="font-size:var(--text-xs);color:var(--gray-9)">← 실행 중은 pulse</span></div>`,
   vue: `<DsStatusDot status="success" label="온라인" />
 <DsStatusDot status="brand" label="실행 중" pulse />`,

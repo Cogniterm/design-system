@@ -323,7 +323,7 @@ function overviewPane(c) {
   // c.demos가 있으면 그룹(variant 등)마다 제목·설명 + 독립 iframe으로 나눠 보여줍니다.
   const demoArea = c.demos
     ? c.demos.map((d) => `<section class="demo-group">
-        <h3 class="demo-group-title">${d.title}</h3>
+        <h2 class="demo-group-title">${d.title}</h2>
         ${d.desc ? `<p class="demo-group-desc">${d.desc}</p>` : ''}
         <div class="play-wrap play-wrap--rounded">
           <iframe class="play-frame" src="live/${V}#play/${c.id}/${d.key}" title="${c.name} · ${d.title} 데모" loading="lazy"></iframe>

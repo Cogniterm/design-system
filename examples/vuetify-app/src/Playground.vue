@@ -120,6 +120,14 @@ const btnVariants = [
 ] as const
 const btnGroup = computed(() => btnVariants.find(v => v.variant === group.value) ?? btnVariants[0])
 
+/* 그룹 키 선택 — 허용 목록에 없으면 기본값 (단일 #play/<id> 접근 대비) */
+// 반환은 any — 템플릿에서 각 컴포넌트의 리터럴 유니언 prop에 바로 꽂기 위함
+function gv(allowed: string[], def: string): any {
+  return allowed.includes(group.value) ? group.value : def
+}
+const badgeLabel: Record<string, string> = { default: '대기', brand: '실행 중', success: '완료', warning: '지연', danger: '실패' }
+const dotLabel: Record<string, string> = { neutral: '오프라인', brand: '실행 중', success: '온라인', warning: '지연', danger: '오류' }
+
 </script>
 
 <template>
@@ -141,7 +149,9 @@ const btnGroup = computed(() => btnVariants.find(v => v.variant === group.value)
             <div class="play-sec-cap">States</div>
             <div class="play-sec-row">
               <DsButton :variant="btnGroup.variant" disabled>Disabled</DsButton>
-              <DsButton :variant="btnGroup.variant"><DsSpinner :size="13" /> 저장 중…</DsButton>
+              <DsButton :variant="btnGroup.variant">
+                <DsSpinner :variant="btnGroup.variant === 'primary' || btnGroup.variant === 'danger' ? 'current' : 'brand'" :size="13" /> 저장 중…
+              </DsButton>
             </div>
           </div>
           <div class="play-sec">
@@ -155,9 +165,14 @@ const btnGroup = computed(() => btnVariants.find(v => v.variant === group.value)
       </template>
 
       <template v-else-if="id === 'iconbutton'">
-        <DsIconButton label="더보기"><DsIcon name="more" /></DsIconButton>
-        <DsIconButton label="보관" variant="secondary"><DsIcon name="archive" /></DsIconButton>
-        <DsIconButton label="닫기" size="sm"><DsIcon name="close" size="sm" /></DsIconButton>
+        <template v-if="gv(['ghost','secondary'], 'ghost') === 'secondary'">
+          <DsIconButton label="보관" variant="secondary"><DsIcon name="archive" /></DsIconButton>
+          <DsIconButton label="편집" variant="secondary" size="sm"><DsIcon name="edit" size="sm" /></DsIconButton>
+        </template>
+        <template v-else>
+          <DsIconButton label="더보기"><DsIcon name="more" /></DsIconButton>
+          <DsIconButton label="닫기" size="sm"><DsIcon name="close" size="sm" /></DsIconButton>
+        </template>
       </template>
 
       <template v-else-if="id === 'buttongroup'">
@@ -290,47 +305,59 @@ const btnGroup = computed(() => btnVariants.find(v => v.variant === group.value)
       </template>
 
       <template v-else-if="id === 'badge'">
-        <DsBadge>대기</DsBadge>
-        <DsBadge variant="brand">실행 중</DsBadge>
-        <DsBadge variant="success">완료</DsBadge>
-        <DsBadge variant="warning">지연</DsBadge>
-        <DsBadge variant="danger">실패</DsBadge>
+        <DsBadge :variant="gv(['default','brand','success','warning','danger'], 'default')">
+          {{ badgeLabel[gv(['default','brand','success','warning','danger'], 'default')] }}</DsBadge>
       </template>
 
       <template v-else-if="id === 'chip'">
-        <DsChip v-for="(c, i) in chips" :key="c" @remove="chips.splice(i, 1)">{{ c }}</DsChip>
-        <DsButton v-if="!chips.length" variant="ghost" size="sm"
-          @click="chips = ['계약서_최종.pdf', 'Q3 보고서']">복원</DsButton>
+        <template v-if="gv(['default','brand'], 'default') === 'brand'">
+          <DsChip variant="brand">Weekly report agent</DsChip>
+          <DsChip variant="brand">Invoice classifier</DsChip>
+        </template>
+        <template v-else>
+          <DsChip v-for="(c, i) in chips" :key="c" @remove="chips.splice(i, 1)">{{ c }}</DsChip>
+          <DsButton v-if="!chips.length" variant="ghost" size="sm"
+            @click="chips = ['계약서_최종.pdf', 'Q3 보고서']">복원</DsButton>
+        </template>
       </template>
 
       <template v-else-if="id === 'statusdot'">
-        <DsStatusDot status="success" label="온라인" />
-        <DsStatusDot status="brand" label="실행 중" pulse />
-        <DsStatusDot status="danger" label="오류" />
+        <DsStatusDot :status="gv(['neutral','brand','success','warning','danger'], 'success')"
+          :label="dotLabel[gv(['neutral','brand','success','warning','danger'], 'success')]"
+          :pulse="gv(['neutral','brand','success','warning','danger'], 'success') === 'brand'" />
       </template>
 
       <template v-else-if="id === 'skeleton'">
-        <div style="display:flex;gap:12px;align-items:center;width:300px">
+        <template v-if="gv(['text','circle','rect'], 'text') === 'circle'">
           <DsSkeleton variant="circle" width="32px" height="32px" />
-          <div style="flex:1;display:flex;flex-direction:column;gap:8px">
-            <DsSkeleton width="60%" /><DsSkeleton width="90%" />
+        </template>
+        <template v-else-if="gv(['text','circle','rect'], 'text') === 'rect'">
+          <DsSkeleton variant="rect" width="180px" height="100px" />
+        </template>
+        <template v-else>
+          <div style="display:flex;flex-direction:column;gap:8px;width:300px">
+            <DsSkeleton width="60%" /><DsSkeleton width="90%" /><DsSkeleton width="75%" />
           </div>
-        </div>
+        </template>
       </template>
 
       <template v-else-if="id === 'toast'">
-        <DsToast variant="success" action="보기">에이전트가 생성되었습니다.</DsToast>
+        <DsToast v-if="gv(['success','danger'], 'success') === 'success'" variant="success" action="보기">에이전트가 생성되었습니다.</DsToast>
+        <DsToast v-else variant="danger" action="재시도">동기화에 실패했습니다.</DsToast>
       </template>
 
       <template v-else-if="id === 'snackbar'">
         <DsButton variant="secondary" @click="snack = true">스낵바 띄우기</DsButton>
-        <DsSnackbar v-model="snack" variant="success" action="보기">저장되었습니다.</DsSnackbar>
+        <DsSnackbar v-if="gv(['success','danger'], 'success') === 'success'" v-model="snack" variant="success" action="보기">저장되었습니다.</DsSnackbar>
+        <DsSnackbar v-else v-model="snack" variant="danger" action="재시도">저장에 실패했습니다.</DsSnackbar>
       </template>
 
       <template v-else-if="id === 'alert'">
-        <div style="width:100%;display:flex;flex-direction:column;gap:8px">
-          <DsAlert variant="error" title="삭제하지 못했습니다">법무 폴더는 관리자만 삭제할 수 있습니다.</DsAlert>
-          <DsAlert variant="success" closable>파일 128건이 동기화되었습니다.</DsAlert>
+        <div style="width:100%">
+          <DsAlert v-if="gv(['info','success','warning','error'], 'error') === 'info'" variant="info" title="새 기능">이제 hwp 문서도 분석할 수 있습니다.</DsAlert>
+          <DsAlert v-else-if="gv(['info','success','warning','error'], 'error') === 'success'" variant="success" closable>파일 128건이 동기화되었습니다.</DsAlert>
+          <DsAlert v-else-if="gv(['info','success','warning','error'], 'error') === 'warning'" variant="warning" title="저장 공간 부족">드라이브 용량의 92%를 사용 중입니다.</DsAlert>
+          <DsAlert v-else variant="error" title="삭제하지 못했습니다">법무 폴더는 관리자만 삭제할 수 있습니다.</DsAlert>
         </div>
       </template>
 
@@ -349,8 +376,14 @@ const btnGroup = computed(() => btnVariants.find(v => v.variant === group.value)
       </template>
 
       <template v-else-if="id === 'spinner'">
-        <DsSpinner />
-        <DsButton variant="secondary"><DsSpinner :size="13" /> 저장 중…</DsButton>
+        <template v-if="gv(['brand','current'], 'brand') === 'current'">
+          <DsButton><DsSpinner variant="current" :size="13" /> 저장 중…</DsButton>
+          <DsButton variant="danger"><DsSpinner variant="current" :size="13" /> 삭제 중…</DsButton>
+        </template>
+        <template v-else>
+          <DsSpinner />
+          <DsButton variant="secondary"><DsSpinner :size="13" /> 저장 중…</DsButton>
+        </template>
       </template>
 
       <template v-else-if="id === 'empty'">
@@ -470,10 +503,8 @@ const btnGroup = computed(() => btnVariants.find(v => v.variant === group.value)
       </template>
 
       <template v-else-if="id === 'avatar'">
-        <DsAvatar size="sm">JK</DsAvatar>
-        <DsAvatar>JK</DsAvatar>
-        <DsAvatar size="lg">JK</DsAvatar>
-        <DsAvatar variant="brand">A</DsAvatar>
+        <DsAvatar :size="gv(['sm','default','lg'], 'default')">JK</DsAvatar>
+        <DsAvatar :size="gv(['sm','default','lg'], 'default')" variant="brand">A</DsAvatar>
       </template>
 
       <template v-else-if="id === 'card'">
@@ -525,11 +556,9 @@ const btnGroup = computed(() => btnVariants.find(v => v.variant === group.value)
       </template>
 
       <template v-else-if="id === 'thinking'">
-        <div style="display:flex;flex-direction:column;gap:16px;align-items:flex-start">
-          <DsThinkingIndicator :label="stages[stageIdx]" />
-          <DsThinkingIndicator size="compact" label="생성 중" />
-          <DsThinkingIndicator size="inline" label="검토 의견 생성 중" />
-        </div>
+        <DsThinkingIndicator v-if="gv(['default','compact','inline'], 'default') === 'default'" :label="stages[stageIdx]" />
+        <DsThinkingIndicator v-else-if="gv(['default','compact','inline'], 'default') === 'compact'" size="compact" label="생성 중" />
+        <DsThinkingIndicator v-else size="inline" label="검토 의견 생성 중" />
       </template>
 
       <template v-else-if="id === 'dotfield'">
@@ -538,10 +567,9 @@ const btnGroup = computed(() => btnVariants.find(v => v.variant === group.value)
 
       <template v-else-if="id === 'toolcall'">
         <div style="width:100%">
-          <DsToolCallStep :status="toolStatus">read_document("계약서_최종.pdf")</DsToolCallStep>
-          <DsButton variant="ghost" size="sm" style="margin-top:10px" @click="cycleTool">
-            상태 전환: {{ toolStatus }}
-          </DsButton>
+          <DsToolCallStep v-if="gv(['running','done','error'], 'running') === 'running'" status="running">read_document("계약서_최종.pdf")</DsToolCallStep>
+          <DsToolCallStep v-else-if="gv(['running','done','error'], 'running') === 'done'" status="done">search_drive("계약서", June) — 3 files found</DsToolCallStep>
+          <DsToolCallStep v-else status="error">extract_table("스캔본.pdf") — 텍스트 레이어 없음</DsToolCallStep>
         </div>
       </template>
 

@@ -393,7 +393,7 @@ Each component has a standalone prompt at https://kimjiyong995-coder.github.io/d
 - **DsSpinner** (스피너) — 아주 짧은 대기 표시.
   import: ~/design/vuetify | origin: wrapped (VProgressCircular)
   where: 버튼 내부, 인라인 짧은 대기(2초 이내). 에이전트 작업에는 쓰지 않습니다.
-  props: size=16
+  props: size=16, variant='brand'
   vs: ThinkingIndicator — 2초 이내면 Spinner, 에이전트 작업이면 ThinkingIndicator (원칙 1) / Skeleton — 자리를 미리 보여줘야 하면 Skeleton
   usage:
     <DsSpinner />

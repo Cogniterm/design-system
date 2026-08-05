@@ -197,7 +197,7 @@ body {
 .btn-ghost:hover { background: var(--gray-3); color: var(--gray-12); }
 .btn-danger { background: var(--surface); border: 1px solid var(--border-strong); color: var(--danger); }
 .btn-danger:hover { background: var(--danger-subtle); border-color: var(--danger-border); }
-.btn[disabled] { background: var(--gray-3); color: var(--gray-8); cursor: not-allowed; border: none; }
+.btn[disabled] { background: var(--gray-4); color: var(--gray-10); cursor: not-allowed; border: none; }
 .btn-sm { height: 32px; padding: 0 12px; font-size: var(--text-sm); }
 .btn-lg { height: 48px; padding: 0 20px; font-size: var(--text-lg); }
 
@@ -264,6 +264,9 @@ body {
   border-top-color: var(--brand); border-radius: 50%;
   animation: spin .8s linear infinite; flex-shrink: 0;
 }
+/* 글자색을 따라가는 스피너 — 색 있는 버튼(primary·danger) 안에서 */
+.spinner--current { border-color: color-mix(in srgb, currentColor 30%, transparent);
+  border-top-color: currentColor; }
 @keyframes spin { to { transform: rotate(360deg); } }
 .check { color: var(--success); font-family: var(--font); }
 .cite {
