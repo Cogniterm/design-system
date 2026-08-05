@@ -98,7 +98,7 @@ export const dsDefaults = {
   VDataTableServer: { density: 'comfortable', hover: true, itemsPerPage: 20 },
   VDataTableVirtual: { density: 'comfortable', hover: true },
   VDataIterator: { itemsPerPage: 20 },
-  VList: { density: 'comfortable', nav: true, rounded: 'md' },
+  VList: { density: 'comfortable', nav: true, rounded: 'lg' },
   VListItem: { ripple: false, rounded: 'md' },
   VTreeview: { density: 'comfortable', rounded: 'md' },
   VVirtualScroll: { itemHeight: 40 },
