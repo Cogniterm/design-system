@@ -22,10 +22,10 @@
 }
 .brandmark {
   display: inline-flex; align-items: center;
-  font-size: var(--text-lg); font-weight: var(--weight-semibold);
+  font-size: var(--text-base); font-weight: var(--weight-semibold);
   letter-spacing: -0.02em; color: var(--gray-12); text-decoration: none;
 }
-.brandmark span { color: var(--brand); margin-left: 5px; font-weight: var(--weight-medium); }
+.brandmark span { margin-left: 5px; font-weight: var(--weight-medium); }
 
 /* 메뉴는 화면 기준 정중앙 · 로고 왼쪽 · 유틸 오른쪽 */
 .topnav-links {
