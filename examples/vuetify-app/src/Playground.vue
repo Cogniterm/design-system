@@ -6,7 +6,7 @@ import { useTheme } from 'vuetify'
 import {
   DsButton, DsInput, DsBadge, DsChip, DsAvatar, DsCard, DsDivider, DsSkeleton,
   DsToast, DsEmptyState, DsChatMessage, DsStreamingText, DsThinkingIndicator,
-  DsToolCallStep, DsAgentInput, DsCitationChip, DsArtifactPanel, DsSearchResult,
+  DsDotField, DsToolCallStep, DsAgentInput, DsCitationChip, DsArtifactPanel, DsSearchResult,
   DsFileGrid, DsFileRow, DsLink, DsKbd, DsCode, DsStatusDot, DsTimestamp,
   DsMetaList, DsSearchField, DsSystemMessage, DsToolbar, DsVisuallyHidden,
 } from '~/design'
@@ -517,6 +517,10 @@ function dpConfirm(files: { name: string }[]) { dpPicked.value = files.map(f => 
 
       <template v-else-if="id === 'thinking'">
         <DsThinkingIndicator label="계약서 조항을 분석하는 중…" />
+      </template>
+
+      <template v-else-if="id === 'dotfield'">
+        <DsDotField label="이미지를 생성하는 중" :size="260" />
       </template>
 
       <template v-else-if="id === 'toolcall'">

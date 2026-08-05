@@ -3,7 +3,7 @@ import { ref } from 'vue'
 import { useTheme } from 'vuetify'
 import {
   DsButton, DsInput, DsBadge, DsChip, DsAvatar, DsCard, DsDivider, DsSkeleton,
-  DsToast, DsEmptyState, DsChatMessage, DsStreamingText, DsThinkingIndicator,
+  DsToast, DsEmptyState, DsChatMessage, DsStreamingText, DsThinkingIndicator, DsDotField,
   DsToolCallStep, DsAgentInput, DsCitationChip, DsArtifactPanel, DsSearchResult,
   DsFileGrid, DsFileRow,
 } from '~/design'
@@ -574,6 +574,13 @@ const SECTIONS = [
             <div class="g-name">DsThinkingIndicator <i class="lg standalone"></i></div>
           </div>
           <div class="g-demo"><DsThinkingIndicator label="계약서 조항을 분석하는 중…" /></div>
+        </div>
+
+        <div class="g-item">
+          <div class="g-meta">
+            <div class="g-name">DsDotField <i class="lg standalone"></i></div>
+          </div>
+          <div class="g-demo"><DsDotField label="이미지를 생성하는 중" :size="200" /></div>
         </div>
 
         <div class="g-item">
