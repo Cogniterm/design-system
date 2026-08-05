@@ -33,7 +33,7 @@ export const COMPONENTS = [
             en: 'Purely visual; building it ourselves avoids specificity wars with Vuetify.' },
   props: [
     ['variant', `'primary' | 'secondary' | 'ghost' | 'danger'`, `'primary'`, '시각 강도. primary는 한 화면에 하나만.'],
-    ['size', `'default' | 'sm'`, `'default'`, 'Geist 스케일 32/40. 필터 바·테이블 주변 같은 밀한 맥락은 sm.'],
+    ['size', `'default' | 'sm' | 'lg'`, `'default'`, '컨트롤 스케일 32/40/48. 필터 바·테이블 주변 같은 밀한 맥락은 sm, 랜딩·빈 상태의 대표 액션은 lg.'],
     ['disabled', 'boolean', 'false', '비활성화. 이유를 Tooltip으로 알려주는 것을 권장.'],
     ['type', `'button' | 'submit' | 'reset'`, `'button'`, '폼 안에서도 기본은 button — 누른다고 제출되지 않습니다.'],
   ],
@@ -46,19 +46,22 @@ export const COMPONENTS = [
     <button class="btn btn-danger">Delete</button>
     <button class="btn" disabled>Disabled</button>
     <button class="btn btn-primary btn-sm">Small</button>
+    <button class="btn btn-primary btn-lg">Large</button>
   </div>`,
   vue: `<DsButton variant="primary" @click="run">New agent</DsButton>
 <DsButton variant="secondary">Cancel</DsButton>
 <DsButton variant="ghost">Learn more</DsButton>
 <DsButton variant="danger" @click="remove">Delete</DsButton>
 <DsButton disabled>Disabled</DsButton>
-<DsButton size="sm">Small</DsButton>`,
+<DsButton size="sm">Small</DsButton>
+<DsButton size="lg">Large</DsButton>`,
   html: `<button class="btn btn-primary">New agent</button>
 <button class="btn btn-secondary">Cancel</button>
 <button class="btn btn-ghost">Learn more</button>
 <button class="btn btn-danger">Delete</button>
 <button class="btn" disabled>Disabled</button>
-<button class="btn btn-primary btn-sm">Small</button>`,
+<button class="btn btn-primary btn-sm">Small</button>
+<button class="btn btn-primary btn-lg">Large</button>`,
   guidelines: [
     ['해야 할 것', 'primary는 한 화면에 하나. 그 화면에서 사용자가 할 "그 행동"에만 씁니다.'],
     ['해야 할 것', '파괴적 액션은 danger를 쓰되, 기본은 조용한 외곽선 — 호버할 때만 빨간 배경이 드러납니다.'],

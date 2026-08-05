@@ -7,7 +7,7 @@ import { DsButton } from '~/design'   // Vuetify 불필요 · ds.css만
 
 ## Props
 - variant: 'primary' | 'secondary' | 'ghost' | 'danger' = 'primary' — 시각 강도. primary는 한 화면에 하나만.
-- size: 'default' | 'sm' = 'default' — Geist 스케일 32/40. 필터 바·테이블 주변 같은 밀한 맥락은 sm.
+- size: 'default' | 'sm' | 'lg' = 'default' — 컨트롤 스케일 32/40/48. 필터 바·테이블 주변 같은 밀한 맥락은 sm, 랜딩·빈 상태의 대표 액션은 lg.
 - disabled: boolean = false — 비활성화. 이유를 Tooltip으로 알려주는 것을 권장.
 - type: 'button' | 'submit' | 'reset' = 'button' — 폼 안에서도 기본은 button — 누른다고 제출되지 않습니다.
 
@@ -24,6 +24,7 @@ import { DsButton } from '~/design'   // Vuetify 불필요 · ds.css만
 <DsButton variant="danger" @click="remove">Delete</DsButton>
 <DsButton disabled>Disabled</DsButton>
 <DsButton size="sm">Small</DsButton>
+<DsButton size="lg">Large</DsButton>
 ```
 
 

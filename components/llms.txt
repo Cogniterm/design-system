@@ -30,6 +30,7 @@ Each component has a standalone prompt at https://kimjiyong995-coder.github.io/d
     <DsButton variant="danger" @click="remove">Delete</DsButton>
     <DsButton disabled>Disabled</DsButton>
     <DsButton size="sm">Small</DsButton>
+    <DsButton size="lg">Large</DsButton>
 - **DsMenu** (메뉴) — 클릭하면 열리는 드롭다운 메뉴.
   import: ~/design/vuetify | origin: wrapped (VMenu)
   where: 테이블 행 액션, 프로필 메뉴, 더보기.

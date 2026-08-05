@@ -112,12 +112,39 @@ function search() { loading.value = true; setTimeout(() => { loading.value = fal
     <div ref="root" class="play" :data-id="id">
 
       <template v-if="id === 'button'">
-        <DsButton @click="clicks++">클릭 {{ clicks }}</DsButton>
-        <DsButton variant="secondary">Secondary</DsButton>
-        <DsButton variant="ghost">Ghost</DsButton>
-        <DsButton variant="danger">Delete</DsButton>
-        <DsButton disabled>Disabled</DsButton>
-        <DsButton size="sm">Small</DsButton>
+        <div class="play-sections">
+          <div class="play-sec">
+            <div class="play-sec-cap">Variants</div>
+            <div class="play-sec-row">
+              <DsButton @click="clicks++">클릭 {{ clicks }}</DsButton>
+              <DsButton variant="secondary">Secondary</DsButton>
+              <DsButton variant="ghost">Ghost</DsButton>
+              <DsButton variant="danger">Delete</DsButton>
+            </div>
+          </div>
+          <div class="play-sec">
+            <div class="play-sec-cap">Sizes · 32 / 40 / 48</div>
+            <div class="play-sec-row">
+              <DsButton size="sm">Small</DsButton>
+              <DsButton>Default</DsButton>
+              <DsButton size="lg">Large</DsButton>
+            </div>
+          </div>
+          <div class="play-sec">
+            <div class="play-sec-cap">States</div>
+            <div class="play-sec-row">
+              <DsButton disabled>Disabled</DsButton>
+              <DsButton variant="secondary"><DsSpinner :size="13" /> 저장 중…</DsButton>
+            </div>
+          </div>
+          <div class="play-sec">
+            <div class="play-sec-cap">With icon</div>
+            <div class="play-sec-row">
+              <DsButton><DsIcon name="add" size="sm" /> 새 에이전트</DsButton>
+              <DsButton variant="secondary">내보내기 <DsIcon name="download" size="sm" /></DsButton>
+            </div>
+          </div>
+        </div>
       </template>
 
       <template v-else-if="id === 'iconbutton'">
@@ -570,5 +597,12 @@ function search() { loading.value = true; setTimeout(() => { loading.value = fal
   background: var(--gray-1);
 }
 .play-val { font-family: var(--mono); font-size: var(--text-xs); color: var(--gray-9); }
+/* 섹션형 데모 — Variants / Sizes / States 같은 그룹 나열 */
+.play-sections { display: flex; flex-direction: column; gap: 18px; width: 100%; }
+.play-sec-cap {
+  font-size: var(--text-2xs); font-weight: var(--weight-semibold); color: var(--gray-11);
+  margin-bottom: 8px; letter-spacing: .02em;
+}
+.play-sec-row { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
 .play .v-application__wrap { min-height: 0; }
 </style>
