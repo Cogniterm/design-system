@@ -46,11 +46,20 @@ function measureH() {
   })
   return h
 }
+/* 변화가 감지되면 ~300ms 동안 매 프레임 추적 — 오버레이 열림 애니메이션을
+   실시간으로 따라가 즉각 늘어납니다 (한 번만 재면 애니메이션이 끝난 뒤라 늦음) */
 let rafId = 0
+let trackUntil = 0
+let lastH = 0
+function tick() {
+  const h = measureH()
+  if (h !== lastH) { lastH = h; parent.postMessage({ t: 'ds-play-h', h }, '*') }
+  if (performance.now() < trackUntil) rafId = requestAnimationFrame(tick)
+}
 function report() {
+  trackUntil = performance.now() + 300
   cancelAnimationFrame(rafId)
-  rafId = requestAnimationFrame(() =>
-    parent.postMessage({ t: 'ds-play-h', h: measureH() }, '*'))
+  rafId = requestAnimationFrame(tick)
 }
 onMounted(() => {
   new ResizeObserver(report).observe(root.value!)
