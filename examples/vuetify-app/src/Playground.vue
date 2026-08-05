@@ -83,7 +83,7 @@ const num = ref(3); const tags = ref(['법무', '계약'])
 const sel = ref('실행 중'); const auto = ref(['법무'])
 const b1 = ref(true); const b2 = ref(false); const radio = ref('180')
 const slider = ref(70); const files = ref(null); const date = ref(null)
-const tab = ref('all'); const view = ref('list'); const page = ref(2)
+const tab = ref('all'); const view = ref('list'); const period = ref('w'); const page = ref(2)
 const nav = ref(['logs']); const step = ref(2); const listSel = ref([])
 const tree = ref([5]); const treeOpen = ref([1, 4]); const acc = ref<any>(null)
 const dlg = ref(false); const snack = ref(false); const pal = ref(false)
@@ -177,8 +177,23 @@ const dotLabel: Record<string, string> = { neutral: '오프라인', brand: '실�
       </template>
 
       <template v-else-if="id === 'buttongroup'">
-        <DsButtonGroup v-model="view" :items="[{ value: 'list', label: '리스트' }, { value: 'grid', label: '그리드' }]" />
-        <span class="play-val">{{ view }}</span>
+        <div class="play-sections">
+          <div class="play-sec">
+            <div class="play-sec-cap">Sizes · 32 / 40 / 48</div>
+            <div class="play-sec-row">
+              <DsButtonGroup v-model="view" size="sm" :items="[{ value: 'list', label: '리스트' }, { value: 'grid', label: '그리드' }]" />
+              <DsButtonGroup v-model="view" :items="[{ value: 'list', label: '리스트' }, { value: 'grid', label: '그리드' }]" />
+              <DsButtonGroup v-model="view" size="lg" :items="[{ value: 'list', label: '리스트' }, { value: 'grid', label: '그리드' }]" />
+              <span class="play-val">{{ view }}</span>
+            </div>
+          </div>
+          <div class="play-sec">
+            <div class="play-sec-cap">3개 이상</div>
+            <div class="play-sec-row">
+              <DsButtonGroup v-model="period" :items="[{ value: 'd', label: '일' }, { value: 'w', label: '주' }, { value: 'm', label: '월' }]" />
+            </div>
+          </div>
+        </div>
       </template>
 
       <template v-else-if="id === 'menu'">

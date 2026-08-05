@@ -941,6 +941,7 @@ export const COMPONENTS = [
   props: [
     ['modelValue', 'any', '—', 'v-model.'],
     ['items', '{ value, label }[]', '필수', '선택지.'],
+    ['size', `'sm' | 'default' | 'lg'`, `'default'`, '컨트롤 스케일 32/40/48. 필터 바·툴바는 sm.'],
   ],
   slots: [],
   demo: `<div class="ds-bg-demo"><span class="on">리스트</span><span>그리드</span></div>`,

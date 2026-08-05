@@ -3,7 +3,11 @@
 // 이유: 세그먼티드 컨트롤은 시각이 전부인데 Vuetify의 density·높이 계산과
 // 싸우면 트랙(32px) 안 칩(26px) 높이를 통제할 수 없습니다 (칩이 14px로 눌림).
 // 모양: 회색 트랙 + 선택 항목만 흰 칩 (Astryx SegmentedControl 참고)
-const props = defineProps<{ items: { value: any; label: string }[] }>()
+const props = withDefaults(defineProps<{
+  items: { value: any; label: string }[]
+  /** 컨트롤 스케일 32/40/48 — 필터 바·툴바는 sm */
+  size?: 'sm' | 'default' | 'lg'
+}>(), { size: 'default' })
 const model = defineModel<any>()
 
 // 라디오 그룹 관례: ← →로 선택 이동
@@ -21,7 +25,8 @@ function onKey(e: KeyboardEvent) {
 </script>
 
 <template>
-  <div class="ds-btn-group" role="radiogroup" @keydown="onKey">
+  <div class="ds-btn-group" :class="size !== 'default' && `ds-btn-group--${size}`"
+       role="radiogroup" @keydown="onKey">
     <button
       v-for="i in items" :key="i.value" type="button"
       class="ds-btn-group__seg" :class="{ 'is-on': model === i.value }"
