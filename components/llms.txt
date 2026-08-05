@@ -590,12 +590,14 @@ Each component has a standalone prompt at https://kimjiyong995-coder.github.io/d
   props: done=false
   usage:
     <DsStreamingText :done="!isStreaming">{{ text }}</DsStreamingText>
-- **DsThinkingIndicator** (추론 표시) — 에이전트가 생각하는 중임을 알립니다.
+- **DsThinkingIndicator** (추론 표시) — 에이전트가 생각하는 중임을 알립니다. (Soft Rise v1.0)
   import: ~/design | origin: custom
   where: 에이전트 대기 전부. 10초 이상이면 문구를 단계에 맞게 갱신.
-  props: label='생각하는 중…'
+  props: label='답변을 생성하고 있어요', size='default'
   usage:
     <DsThinkingIndicator :label="currentStep" />
+    <DsThinkingIndicator size="compact" label="생성 중" />
+    <DsThinkingIndicator size="inline" label="검토 의견 생성 중" />
 - **DsToolCallStep** (툴콜 단계) — 에이전트가 도구를 실행하는 과정 한 단계.
   import: ~/design | origin: custom
   where: 에이전트가 도구를 쓸 때마다. 실패한 단계도 그대로 보여줍니다.

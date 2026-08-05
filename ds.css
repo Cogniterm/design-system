@@ -355,14 +355,40 @@ td.mono { font-family: var(--mono); font-size: var(--text-xs); color: var(--gray
 .toast .t-action { all: unset; cursor: pointer; font-size: var(--text-xs); font-weight: var(--weight-medium); color: var(--brand-text); font-family: var(--font); }
 .toast .t-action:hover { text-decoration: underline; }
 
-/* ── ds-thinking (에이전트 추론 중) ── */
-.thinking { display: inline-flex; align-items: center; gap: 8px; font-size: var(--text-sm); color: var(--gray-11); }
-.thinking .dots { display: inline-flex; gap: 3px; }
-.thinking .dots i { width: 4px; height: 4px; border-radius: 50%; background: var(--gray-8);
-  animation: pulse 1.2s infinite ease-in-out; }
-.thinking .dots i:nth-child(2) { animation-delay: .2s; }
-.thinking .dots i:nth-child(3) { animation-delay: .4s; }
-@keyframes pulse { 0%,80%,100% { opacity: .3; } 40% { opacity: 1; } }
+/* ── ds-thinking (에이전트 추론 중 — Soft Rise v1.0) ──
+   도트 3개가 -4px 파동(사이클의 64%는 정지), 라벨은 브랜드 shimmer.
+   스펙: DocuRAG "AI 응답 생성 인디케이터 설계_최종본" */
+.thinking { display: inline-flex; align-items: center; gap: 11px; font-size: var(--text-sm); color: var(--gray-11); }
+.thinking .dots { display: inline-flex; gap: 5px; align-items: center; }
+.thinking .dots i { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0;
+  animation: thinkwave 1.6s cubic-bezier(.45, 0, .55, 1) infinite; }
+.thinking .dots i:nth-child(1) { background: color-mix(in srgb, var(--brand) 45%, var(--bg)); }
+.thinking .dots i:nth-child(2) { background: color-mix(in srgb, var(--brand) 72%, var(--bg)); animation-delay: .18s; }
+.thinking .dots i:nth-child(3) { background: var(--brand); animation-delay: .36s; }
+@keyframes thinkwave { 0% { transform: translateY(0); opacity: .4; }
+  18% { transform: translateY(-4px); opacity: 1; }
+  36%, 100% { transform: translateY(0); opacity: .4; } }
+.thinking .t-label { font-weight: var(--weight-medium);
+  background: linear-gradient(90deg, var(--gray-10) 20%, var(--brand-text) 50%, var(--gray-10) 80%);
+  background-size: 200% 100%; background-clip: text; -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent; color: transparent;
+  animation: shimmer 3s linear infinite, thinkfade .45s ease-out; }
+@keyframes thinkfade { from { opacity: 0; transform: translateY(3px); } to { opacity: 1; transform: translateY(0); } }
+/* compact — dot 4px / text 12px, shimmer 생략 */
+.thinking--compact { gap: 8px; font-size: var(--text-xs); }
+.thinking--compact .dots { gap: 4px; }
+.thinking--compact .dots i { width: 4px; height: 4px; }
+/* inline — 텍스트 뒤에 4px 도트, shimmer 생략 */
+.thinking--inline { gap: 7px; }
+.thinking--inline .dots { gap: 3px; }
+.thinking--inline .dots i { width: 4px; height: 4px; }
+.thinking--compact .t-label, .thinking--inline .t-label { background: none;
+  -webkit-text-fill-color: currentColor; color: inherit; font-weight: var(--weight-normal);
+  animation: thinkfade .45s ease-out; }
+@media (prefers-reduced-motion: reduce) {
+  .thinking .dots i { animation: none; opacity: .7; }
+  .thinking .t-label { background: none; -webkit-text-fill-color: currentColor; color: inherit; animation: none; }
+}
 
 /* ── ds-dotfield (도트 필드 로더 — 생성형 작업 대기) ── */
 .dotfield { display: flex; align-items: center; justify-content: center;

@@ -725,19 +725,26 @@ export const COMPONENTS = [
 {
   id: 'thinking', name: 'ThinkingIndicator', ko: '추론 표시', category: 'agent',
   origin: 'custom', vuetifyBase: null,
-  summary: '에이전트가 생각하는 중임을 알립니다.',
-  reason: { ko: 'Vuetify에 없습니다. 원칙 1 — 빈 스피너 대신 무엇을 하고 있는지 말로 보여줍니다.',
-            en: 'Not in Vuetify. Principle 1 — words, not a bare spinner.' },
-  props: [['label', 'string', `'생각하는 중…'`, '현재 하는 일. 단계가 바뀌면 갱신합니다.']],
+  summary: '에이전트가 생각하는 중임을 알립니다. (Soft Rise v1.0)',
+  reason: { ko: 'Vuetify에 없습니다. 원칙 1 — 빈 스피너 대신 무엇을 하고 있는지 말로 보여줍니다. 도트 3개가 -4px 파동, 라벨은 브랜드 shimmer.',
+            en: 'Not in Vuetify. Principle 1 — words, not a bare spinner. Three dots rise softly; the label shimmers.' },
+  props: [
+    ['label', 'string', `'답변을 생성하고 있어요'`, '현재 하는 일. 단계가 바뀌면 갱신합니다 — 바뀔 때 450ms fade-in.'],
+    ['size', `'default' | 'compact' | 'inline'`, `'default'`, 'compact는 dot 4px·텍스트 12px, inline은 텍스트 뒤에 도트. 둘 다 shimmer 생략.'],
+  ],
   slots: [['default', 'label 대신 넣을 내용.']],
-  demo: `<div class="thinking"><span class="dots"><i></i><i></i><i></i></span>계약서 조항을 분석하는 중…</div>`,
-  vue: `<DsThinkingIndicator :label="currentStep" />`,
-  html: `<div class="thinking">
-  <span class="dots"><i></i><i></i><i></i></span>
-  계약서 조항을 분석하는 중…
+  demo: `<div style="display:flex;flex-direction:column;gap:14px;align-items:flex-start"><div class="thinking"><span class="dots"><i></i><i></i><i></i></span><span class="t-label">문서를 분석하고 있어요</span></div><div class="thinking thinking--compact"><span class="dots"><i></i><i></i><i></i></span><span class="t-label">생성 중</span></div><div class="thinking thinking--inline"><span class="t-label">검토 의견 생성 중</span><span class="dots"><i></i><i></i><i></i></span></div></div>`,
+  vue: `<DsThinkingIndicator :label="currentStep" />
+<DsThinkingIndicator size="compact" label="생성 중" />
+<DsThinkingIndicator size="inline" label="검토 의견 생성 중" />`,
+  html: `<div class="thinking" role="status" aria-live="polite">
+  <span class="dots" aria-hidden="true"><i></i><i></i><i></i></span>
+  <span class="t-label">문서를 분석하고 있어요</span>
 </div>`,
   guidelines: [
-    ['해야 할 것', '10초 이상 걸리면 단계에 맞게 문구를 갱신합니다("문서를 읽는 중…" → "요약을 작성하는 중…").'],
+    ['해야 할 것', '10초 이상 걸리면 단계에 맞게 문구를 갱신합니다("문서를 분석하고 있어요" → "관련 근거를 검색하고 있어요" → "답변을 정리하고 있어요").'],
+    ['해야 할 것', '단계 전환은 최소 2.5초 간격 — 너무 빠른 문구 교체는 불안감을 줍니다. 최소 노출 500ms로 깜빡임을 막습니다.'],
+    ['해야 할 것', '단계 신호가 없을 때는 기본 문구("답변을 생성하고 있어요")를 유지합니다.'],
     ['하지 말 것', '"로딩 중…"처럼 아무 정보 없는 문구를 쓰지 않습니다.'],
   ],
 },

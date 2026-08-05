@@ -573,7 +573,7 @@ const SECTIONS = [
           <div class="g-meta">
             <div class="g-name">DsThinkingIndicator <i class="lg standalone"></i></div>
           </div>
-          <div class="g-demo"><DsThinkingIndicator label="계약서 조항을 분석하는 중…" /></div>
+          <div class="g-demo"><DsThinkingIndicator label="문서를 분석하고 있어요" /></div>
         </div>
 
         <div class="g-item">

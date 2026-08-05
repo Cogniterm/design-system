@@ -338,10 +338,10 @@ export const meta: ComponentMeta[] = [
     category: 'agent',
     origin: 'custom',
     vuetifyBase: null,
-    summary: { ko: '에이전트가 생각하는 중임을 알립니다.', en: '' },
+    summary: { ko: '에이전트가 생각하는 중임을 알립니다. (Soft Rise v1.0)', en: '' },
     reason: {
-      ko: 'Vuetify에 없습니다. 원칙 1 — 빈 스피너 대신 무엇을 하고 있는지 말로 보여줍니다.',
-      en: 'Not in Vuetify. Principle 1 — words, not a bare spinner.',
+      ko: 'Vuetify에 없습니다. 원칙 1 — 빈 스피너 대신 무엇을 하고 있는지 말로 보여줍니다. 도트 3개가 -4px 파동, 라벨은 브랜드 shimmer.',
+      en: 'Not in Vuetify. Principle 1 — words, not a bare spinner. Three dots rise softly; the label shimmers.',
     },
     where: '에이전트 대기 전부. 10초 이상이면 문구를 단계에 맞게 갱신.',
     since: '0.1.0',

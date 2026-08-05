@@ -56,6 +56,10 @@ const nav = ref(['logs']); const step = ref(2); const listSel = ref([])
 const tree = ref([]); const acc = ref<any>(null)
 const dlg = ref(false); const snack = ref(false); const pal = ref(false)
 const streaming = ref(true); const toolStatus = ref<'running' | 'done' | 'error'>('running')
+/* thinking — 단계 문구 자동 전환 (스펙: 2.6s 간격, 450ms fade-in) */
+const stages = ['문서를 분석하고 있어요', '관련 근거를 검색하고 있어요', '답변을 정리하고 있어요']
+const stageIdx = ref(0)
+onMounted(() => { window.setInterval(() => { stageIdx.value = (stageIdx.value + 1) % stages.length }, 2600) })
 const chips = ref(['계약서_최종.pdf', 'Q3 보고서'])
 const gridSel = ref(['2']); const clicks = ref(0); const sent = ref<string[]>([])
 const q = ref(''); const loading = ref(false)
@@ -516,7 +520,11 @@ function dpConfirm(files: { name: string }[]) { dpPicked.value = files.map(f => 
       </template>
 
       <template v-else-if="id === 'thinking'">
-        <DsThinkingIndicator label="계약서 조항을 분석하는 중…" />
+        <div style="display:flex;flex-direction:column;gap:16px;align-items:flex-start">
+          <DsThinkingIndicator :label="stages[stageIdx]" />
+          <DsThinkingIndicator size="compact" label="생성 중" />
+          <DsThinkingIndicator size="inline" label="검토 의견 생성 중" />
+        </div>
       </template>
 
       <template v-else-if="id === 'dotfield'">
