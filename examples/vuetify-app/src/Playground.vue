@@ -120,36 +120,70 @@ const btnVariants = [
     <div ref="root" class="play" :data-id="id">
 
       <template v-if="id === 'button'">
-        <!-- variant마다 카드 하나 — 늘어나면 btnVariants 배열에만 추가 -->
-        <div class="play-cards">
-          <div v-for="v in btnVariants" :key="v.variant" class="play-card">
-            <div class="play-card-head">
-              <span class="play-card-name">{{ v.variant }}</span>
-              <span class="play-card-desc">{{ v.desc }}</span>
-            </div>
-            <div class="play-sec">
-              <div class="play-sec-cap">Sizes · 32 / 40 / 48</div>
-              <div class="play-sec-row">
-                <DsButton :variant="v.variant" size="sm">{{ v.label }}</DsButton>
-                <DsButton :variant="v.variant">{{ v.label }}</DsButton>
-                <DsButton :variant="v.variant" size="lg">{{ v.label }}</DsButton>
+        <!-- Geist·Astryx식 분류 — 축(variant·size·state)마다 섹션, 예시마다 타일+캡션 -->
+        <div class="play-doc">
+
+          <section class="play-group">
+            <h3 class="play-h2">Variants</h3>
+            <p class="play-sub">시각 강도 4단계. primary는 한 화면에 하나만.</p>
+            <div class="play-tiles">
+              <div v-for="v in btnVariants" :key="v.variant" class="play-tile">
+                <div class="play-tile-stage"><DsButton :variant="v.variant">{{ v.label }}</DsButton></div>
+                <div class="play-tile-name">{{ v.variant }}</div>
+                <div class="play-tile-desc">{{ v.desc }}</div>
               </div>
             </div>
-            <div class="play-sec">
-              <div class="play-sec-cap">States</div>
-              <div class="play-sec-row">
-                <DsButton :variant="v.variant" disabled>Disabled</DsButton>
-                <DsButton :variant="v.variant"><DsSpinner :size="13" /> 저장 중…</DsButton>
+          </section>
+
+          <section class="play-group">
+            <h3 class="play-h2">Sizes</h3>
+            <p class="play-sub">컨트롤 스케일 32 / 40 / 48. 필터 바·툴바는 sm, 랜딩·빈 상태의 대표 액션은 lg.</p>
+            <div class="play-tiles">
+              <div class="play-tile">
+                <div class="play-tile-stage"><DsButton size="sm">새 에이전트</DsButton></div>
+                <div class="play-tile-name">sm · 32px</div>
+              </div>
+              <div class="play-tile">
+                <div class="play-tile-stage"><DsButton>새 에이전트</DsButton></div>
+                <div class="play-tile-name">default · 40px</div>
+              </div>
+              <div class="play-tile">
+                <div class="play-tile-stage"><DsButton size="lg">새 에이전트</DsButton></div>
+                <div class="play-tile-name">lg · 48px</div>
               </div>
             </div>
-            <div class="play-sec">
-              <div class="play-sec-cap">With icon</div>
-              <div class="play-sec-row">
-                <DsButton :variant="v.variant"><DsIcon :name="v.icon" size="sm" /> {{ v.label }}</DsButton>
-                <DsButton :variant="v.variant">{{ v.label }} <DsIcon name="forward" size="sm" /></DsButton>
+          </section>
+
+          <section class="play-group">
+            <h3 class="play-h2">States</h3>
+            <div class="play-tiles">
+              <div class="play-tile">
+                <div class="play-tile-stage"><DsButton disabled>새 에이전트</DsButton></div>
+                <div class="play-tile-name">disabled</div>
+                <div class="play-tile-desc">이유를 Tooltip으로 함께</div>
+              </div>
+              <div class="play-tile">
+                <div class="play-tile-stage"><DsButton variant="secondary"><DsSpinner :size="13" /> 저장 중…</DsButton></div>
+                <div class="play-tile-name">loading</div>
+                <div class="play-tile-desc">DsSpinner 조합 — 라벨은 진행형으로</div>
               </div>
             </div>
-          </div>
+          </section>
+
+          <section class="play-group">
+            <h3 class="play-h2">With icon</h3>
+            <div class="play-tiles">
+              <div class="play-tile">
+                <div class="play-tile-stage"><DsButton><DsIcon name="add" size="sm" /> 새 에이전트</DsButton></div>
+                <div class="play-tile-name">prefix</div>
+              </div>
+              <div class="play-tile">
+                <div class="play-tile-stage"><DsButton variant="secondary">내보내기 <DsIcon name="download" size="sm" /></DsButton></div>
+                <div class="play-tile-name">suffix</div>
+              </div>
+            </div>
+          </section>
+
         </div>
       </template>
 
@@ -610,21 +644,30 @@ const btnVariants = [
   margin-bottom: 8px; letter-spacing: .02em;
 }
 .play-sec-row { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
-/* variant별 카드 — 종류가 늘어나도 그리드가 받아줌 */
-.play-cards {
-  display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
-  gap: 14px; width: 100%;
+/* Geist식 문서형 데모 — 섹션 제목 + 예시 타일 그리드 */
+.play-doc { display: flex; flex-direction: column; gap: 32px; width: 100%; }
+.play-group { display: flex; flex-direction: column; }
+.play-h2 {
+  font-size: var(--text-base); font-weight: var(--weight-semibold); color: var(--gray-12);
+  margin: 0 0 4px;
 }
-.play-card {
-  display: flex; flex-direction: column; gap: 16px;
-  border: 1px solid var(--border); border-radius: var(--r-xl);
-  padding: 18px; background: var(--surface);
+.play-sub { font-size: var(--text-sm); color: var(--gray-11); margin: 0 0 14px; }
+.play-h2 + .play-tiles { margin-top: 10px; }
+.play-tiles {
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 12px; width: 100%;
 }
-.play-card-head { display: flex; align-items: baseline; gap: 10px; }
-.play-card-name {
-  font-family: var(--mono); font-size: var(--text-sm);
-  font-weight: var(--weight-semibold); color: var(--gray-12);
+.play-tile { display: flex; flex-direction: column; }
+.play-tile-stage {
+  display: flex; align-items: center; justify-content: center;
+  min-height: 96px; padding: 20px 16px;
+  border: 1px solid var(--border); border-radius: var(--r-lg);
+  background: var(--surface); margin-bottom: 8px;
 }
-.play-card-desc { font-size: var(--text-xs); color: var(--gray-11); }
+.play-tile-name {
+  font-family: var(--mono); font-size: var(--text-xs);
+  font-weight: var(--weight-medium); color: var(--gray-12);
+}
+.play-tile-desc { font-size: var(--text-xs); color: var(--gray-11); margin-top: 2px; }
 .play .v-application__wrap { min-height: 0; }
 </style>
