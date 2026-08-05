@@ -38,8 +38,8 @@ export const lucideAliases: IconAliases = {
   complete: wrap(Check),
   cancel: wrap(XCircle),
   close: wrap(X),
-  delete: wrap(XCircle),       // 입력 필드의 clear 버튼
-  clear: wrap(XCircle),
+  delete: wrap(X),             // 칩 제거 — DsChip과 같은 가벼운 X
+  clear: wrap(XCircle),        // 입력 필드의 clear 버튼
   success: wrap(CheckCircle2),
   info: wrap(Info),
   warning: wrap(AlertTriangle),

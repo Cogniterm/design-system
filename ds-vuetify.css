@@ -404,6 +404,25 @@
 .ds-stepper .v-stepper-item__avatar.v-avatar { background: var(--gray-4); color: var(--gray-11); font-size: 12px; }
 .ds-stepper .v-stepper-item--selected .v-stepper-item__avatar.v-avatar { background: var(--gray-12); color: var(--bg); }
 .ds-stepper .v-stepper-item__title { font-size: var(--text-sm); font-weight: var(--weight-medium); }
+/* 단계 내용이 없으면 빈 창을 접습니다 (머리표만 쓰는 경우) */
+.ds-stepper--headless .v-stepper-window { display: none; }
+
+/* ── VNumberInput — 값이 필드 왼쪽 끝에 붙던 문제 ──
+   NumberInput은 <input> 자체가 .v-field__input이라, 아래 "padding-inline: 0"
+   규칙(다른 필드는 .v-field가 패딩을 담당)에 값까지 끌려갑니다.
+   특이도를 한 단계 올려 다른 필드와 같은 13px를 돌려줍니다. */
+.v-number-input .v-field--variant-outlined .v-field__input { padding-inline-start: 13px; min-height: 40px; }
+/* 스텝 버튼(위·아래)은 필드 높이를 넘기지 않게 */
+.v-number-input .v-number-input__control { align-self: stretch; }
+.v-number-input .v-number-input__control .v-btn { height: 18px; min-height: 0; border-radius: 0; }
+
+/* ── VFileInput — 빈 상자로 보이던 문제 ──
+   type=file은 placeholder를 무시하므로 컴포넌트가 안내를 직접 그립니다. */
+.ds-file-ph {
+  display: inline-flex; align-items: center; gap: 6px;
+  font-size: var(--text-base); color: var(--gray-11); white-space: nowrap; pointer-events: none;
+}
+.v-file-input .v-field__prepend-inner:has(.ds-file-ph) { padding-inline-end: 0; }
 
 /* ── DsSnackbar ── */
 .ds-snackbar .v-snackbar__wrapper { min-width: 280px; border: 1px solid var(--border);

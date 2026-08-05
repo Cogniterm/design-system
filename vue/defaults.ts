@@ -8,7 +8,7 @@
    원칙:
    - elevation: 0        그림자 없음 (떠 있는 요소만 예외)
    - variant: 'outlined' 면은 1px 보더로 구분
-   - rounded: 'md'       radius 6px (큰 면은 lg/xl)
+   - rounded: 'lg'       컨트롤 radius 8px — 커스텀 .btn·.input과 같은 값 (면은 xl)
    - ripple: false       미니멀 — 물결 효과 제거
 */
 
@@ -21,13 +21,13 @@ export const dsDefaults = {
   /* ── Action ── */
   VBtn: {
     variant: 'flat',
-    rounded: 'md',
+    rounded: 'lg',
     elevation: 0,
     ripple: false,
     style: 'text-transform:none;letter-spacing:0;font-weight:500;',
   },
-  VBtnGroup: { variant: 'outlined', rounded: 'md', elevation: 0, divided: true },
-  VBtnToggle: { variant: 'outlined', rounded: 'md', elevation: 0, divided: true },
+  VBtnGroup: { variant: 'outlined', rounded: 'lg', elevation: 0, divided: true },
+  VBtnToggle: { variant: 'outlined', rounded: 'lg', elevation: 0, divided: true },
   VFab: { elevation: 0, rounded: 'md' },
   VSpeedDial: { transition: 'fade-transition' },
 
@@ -49,17 +49,17 @@ export const dsDefaults = {
   VTab: { ripple: false, style: 'text-transform:none;letter-spacing:0;font-weight:500;' },
   VBreadcrumbs: { density: 'comfortable' },
   VPagination: { variant: 'text', rounded: 'md', totalVisible: 7 },
-  VStepper: { flat: true, elevation: 0, rounded: 'xl' },
+  VStepper: { flat: true, elevation: 0, rounded: 'lg' },
 
   /* ── Data Input ── */
-  VTextField: { variant: 'outlined', density: 'comfortable', hideDetails: 'auto', rounded: 'md' },
-  VTextarea: { variant: 'outlined', density: 'comfortable', hideDetails: 'auto', rounded: 'md', autoGrow: true },
-  VSelect: { variant: 'outlined', density: 'comfortable', hideDetails: 'auto', rounded: 'md' },
-  VAutocomplete: { variant: 'outlined', density: 'comfortable', hideDetails: 'auto', rounded: 'md' },
-  VCombobox: { variant: 'outlined', density: 'comfortable', hideDetails: 'auto', rounded: 'md' },
-  VFileInput: { variant: 'outlined', density: 'comfortable', hideDetails: 'auto', rounded: 'md' },
-  VNumberInput: { variant: 'outlined', density: 'comfortable', hideDetails: 'auto', rounded: 'md' },
-  VOtpInput: { variant: 'outlined', rounded: 'md' },
+  VTextField: { variant: 'outlined', density: 'comfortable', hideDetails: 'auto', rounded: 'lg' },
+  VTextarea: { variant: 'outlined', density: 'comfortable', hideDetails: 'auto', rounded: 'lg', autoGrow: true },
+  VSelect: { variant: 'outlined', density: 'comfortable', hideDetails: 'auto', rounded: 'lg' },
+  VAutocomplete: { variant: 'outlined', density: 'comfortable', hideDetails: 'auto', rounded: 'lg' },
+  VCombobox: { variant: 'outlined', density: 'comfortable', hideDetails: 'auto', rounded: 'lg' },
+  VFileInput: { variant: 'outlined', density: 'comfortable', hideDetails: 'auto', rounded: 'lg' },
+  VNumberInput: { variant: 'outlined', density: 'comfortable', hideDetails: 'auto', rounded: 'lg' },
+  VOtpInput: { variant: 'outlined', rounded: 'lg' },
   VCheckbox: { color: 'primary', density: 'comfortable', hideDetails: 'auto', ripple: false },
   VRadio: { color: 'primary', density: 'comfortable', ripple: false },
   VRadioGroup: { color: 'primary', density: 'comfortable', hideDetails: 'auto' },
@@ -67,8 +67,8 @@ export const dsDefaults = {
   VSlider: { color: 'primary', density: 'comfortable', hideDetails: 'auto', thumbSize: 14, trackSize: 3 },
   VRangeSlider: { color: 'primary', density: 'comfortable', hideDetails: 'auto', thumbSize: 14, trackSize: 3 },
   VRating: { color: 'primary', density: 'comfortable', size: 'small' },
-  VDatePicker: { elevation: 0, color: 'primary' },
-  VTimePicker: { elevation: 0, color: 'primary' },
+  VDatePicker: { elevation: 0, color: 'primary', hideHeader: true },
+  VTimePicker: { elevation: 0, color: 'primary', hideHeader: true },
   VColorPicker: { elevation: 0, mode: 'hexa' },
   VCalendar: { color: 'primary' },
   VConfirmEdit: { color: 'primary' },
