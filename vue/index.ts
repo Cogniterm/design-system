@@ -29,6 +29,8 @@ export { default as DsMetaList } from './components/DsMetaList.vue'
 export { default as DsSearchField } from './components/DsSearchField.vue'
 export { default as DsSystemMessage } from './components/DsSystemMessage.vue'
 export { default as DsToolbar } from './components/DsToolbar.vue'
+export { default as DsTreeview } from './components/DsTreeview.vue'
+export type { DsTreeNode } from './components/DsTreeview.vue'
 export { default as DsVisuallyHidden } from './components/DsVisuallyHidden.vue'
 
 // 이 앱이 어느 시점의 디자인 시스템을 쓰는지 — 내용 지문 + 생성일

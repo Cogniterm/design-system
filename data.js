@@ -1374,23 +1374,30 @@ export const COMPONENTS = [
 },
 {
   id: 'treeview', name: 'Treeview', ko: '트리', category: 'data',
-  origin: 'wrapped', vuetifyBase: 'VTreeview',
-  summary: '계층 구조를 펼쳐서 봅니다.',
-  reason: { ko: '펼침 상태·키보드 이동·중첩 선택을 직접 만들면 깊이가 늘 때 무너집니다.',
-            en: 'Expansion state, keyboard nav and nested selection break at depth if hand-rolled.' },
+  origin: 'custom', vuetifyBase: null,
+  summary: '계층 구조를 펼쳐서 봅니다. 파일 피커에서 확정한 평탄화 렌더.',
+  reason: { ko: 'VTreeview를 쓰다가 버렸습니다 — 들여쓰기·깊이별 가이드선·30px 행을 우리 규격으로 통제할 수 없었습니다. 평탄화 렌더는 깊이만큼 가이드 셀을 붙여 들여쓰기와 연결선을 동시에 해결합니다.',
+            en: 'Dropped VTreeview — could not control indentation, per-depth guide lines, or 30px rows. The flattened renderer solves indent and connectors with per-depth guide cells.' },
   props: [
-    ['items', 'any[]', '필수', 'children으로 중첩합니다.'],
-    ['itemTitle / itemValue', 'string', "'title' / 'id'", '필드 이름.'],
-    ['opened', 'any[]', '—', '펼쳐진 노드 (v-model:opened).'],
-    ['density', "'compact' | 'comfortable'", "'comfortable'", '행 높이.'],
+    ['items', 'DsTreeNode[]', '필수', '{ id, title, icon?, locked?, children? } — children으로 중첩합니다.'],
+    ['modelValue', '(string|number)[]', '[]', '활성(선택) 노드 id (v-model).'],
+    ['opened', '(string|number)[]', '[]', '펼쳐진 노드 id (v-model:opened).'],
   ],
-  slots: [['prepend', '노드마다 앞 아이콘. <DsIcon>을 넣습니다.']],
-  demo: `<div class="ds-tree-demo"><div>${ic('expand','sm')} 법무</div><div class="ind on">2026</div><div class="ind">2025</div><div>${ic('collapse','sm')} 재무</div></div>`,
-  vue: `<DsTreeview v-model="activated" :items="[
+  slots: [['prepend', '노드 아이콘 교체. 기본은 폴더(열림/닫힘)·자물쇠. { item, expanded }를 받습니다.']],
+  demo: `<div class="cog-tree" style="width:220px">
+    <button class="cog-tree__row"><span class="cog-tree__chev">${ic('expand','sm')}</span>${ic('folderOpen','sm')}<span class="cog-tree__label" style="margin-left:4px">법무</span></button>
+    <button class="cog-tree__row is-active"><span class="cog-tree__guide"></span><span class="cog-tree__chev"></span>${ic('folderOpen','sm')}<span class="cog-tree__label" style="margin-left:4px">2026</span></button>
+    <button class="cog-tree__row"><span class="cog-tree__guide"></span><span class="cog-tree__chev"></span>${ic('folder','sm')}<span class="cog-tree__label" style="margin-left:4px">2025</span></button>
+    <button class="cog-tree__row"><span class="cog-tree__chev">${ic('collapse','sm')}</span>${ic('folder','sm')}<span class="cog-tree__label" style="margin-left:4px">재무</span></button>
+  </div>`,
+  vue: `<DsTreeview v-model="activated" v-model:opened="opened" :items="[
   { id: 1, title: '법무', children: [{ id: 2, title: '2026' }] },
 ]" />`,
   html: null,
-  guidelines: [['해야 할 것', '깊이가 3단계를 넘으면 검색을 함께 제공합니다.']],
+  guidelines: [
+    ['해야 할 것', '깊이가 3단계를 넘으면 검색을 함께 제공합니다.'],
+    ['하지 말 것', 'VTreeview로 되돌아가지 않습니다 — 들여쓰기·가이드선 통제가 안 돼 버렸습니다.'],
+  ],
 },
 {
   id: 'timeline', name: 'Timeline', ko: '타임라인', category: 'data',

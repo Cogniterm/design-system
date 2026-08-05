@@ -1,22 +1,21 @@
 # DsTreeview — Cogniterm Design System
 
-import { DsTreeview } from '~/design/vuetify'   // Vuetify 필요 · ds.css + ds-vuetify.css
+import { DsTreeview } from '~/design'   // Vuetify 불필요 · ds.css만
 
 ## 용도
 드라이브 폴더 트리, 문서 목차, 조직도.
 
 ## Props
-- items: any[] = 필수 — children으로 중첩합니다.
-- itemTitle / itemValue: string = 'title' / 'id' — 필드 이름.
-- opened: any[] — 펼쳐진 노드 (v-model:opened).
-- density: 'compact' | 'comfortable' = 'comfortable' — 행 높이.
+- items: DsTreeNode[] = 필수 — { id, title, icon?, locked?, children? } — children으로 중첩합니다.
+- modelValue: (string|number)[] = [] — 활성(선택) 노드 id (v-model).
+- opened: (string|number)[] = [] — 펼쳐진 노드 id (v-model:opened).
 
 ## Slots
-- #prepend — 노드마다 앞 아이콘. 을 넣습니다.
+- #prepend — 노드 아이콘 교체. 기본은 폴더(열림/닫힘)·자물쇠. { item, expanded }를 받습니다.
 
 ## 사용 예
 ```vue
-<DsTreeview v-model="activated" :items="[
+<DsTreeview v-model="activated" v-model:opened="opened" :items="[
   { id: 1, title: '법무', children: [{ id: 2, title: '2026' }] },
 ]" />
 ```
@@ -24,6 +23,7 @@ import { DsTreeview } from '~/design/vuetify'   // Vuetify 필요 · ds.css + ds
 
 ## 지침
 - [해야 할 것] 깊이가 3단계를 넘으면 검색을 함께 제공합니다.
+- [하지 말 것] VTreeview로 되돌아가지 않습니다 — 들여쓰기·가이드선 통제가 안 돼 버렸습니다.
 
 ## 접근성
 키보드: Tab=트리 진입 · ↑ ↓=항목 이동 · ← →=접기 · 펴기 · Enter=선택 · Home · End=처음 · 끝

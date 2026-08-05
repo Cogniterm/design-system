@@ -394,28 +394,6 @@
 .ds-list .v-list-item-subtitle { font-size: 12px; color: var(--gray-11); }
 .ds-list-meta { font-family: var(--mono); font-size: 12px; color: var(--gray-11); }
 
-/* ── DsTreeview ── */
-.ds-treeview.v-treeview { background: transparent; padding: 2px; }
-/* 주요 라벨은 14px (주요 글자 규칙) */
-.ds-treeview .v-list-item { font-size: var(--text-base); border-radius: var(--r-md); }
-.ds-treeview .v-list-item .v-list-item-title { font-size: var(--text-base); }
-/* 펼침 셰브런을 콘텐츠 아이콘(16px)과 같은 크기로 (기본 20px이라 커 보였음) */
-.ds-treeview .v-list-item__prepend .v-btn .v-icon,
-.ds-treeview .v-list-item__prepend .v-btn svg { width: 16px; height: 16px; font-size: 16px; }
-/* 컴팩트 행 — Vuetify density가 40px로 키우는 것을 30px로 (특이도로 이김) */
-.ds-treeview .v-list-item.v-list-item--one-line { min-height: 30px; }
-/* Active — 중립 채움만 (stroke 없이). */
-.ds-treeview .v-list-item--active { background: var(--sel-bg); color: var(--sel-fg); }
-/* 트리 가이드선 — 부모 셰브런 중심에 세로 연결선. z-index로 active 채움 위에도 보이게(#2).
-   레벨별 x = 셰브런 중심(측정): 루트 22 · 2단계 36 · 3단계 50 (레벨당 14px). */
-.ds-treeview .v-list-group__items { position: relative; }
-.ds-treeview .v-list-group__items::before {
-  content: ''; position: absolute; top: 1px; bottom: 1px; left: 22px; width: 1px; z-index: 1;
-  background: var(--border-strong); pointer-events: none;
-}
-.ds-treeview .v-list-group__items .v-list-group__items::before { left: 50px; }
-.ds-treeview .v-list-group__items .v-list-group__items .v-list-group__items::before { left: 78px; }
-
 /* ── DsTimeline ── */
 .ds-timeline .v-timeline-divider__dot { box-shadow: none; }
 .ds-tl-time { font-family: var(--mono); font-size: var(--text-2xs); color: var(--gray-11); }

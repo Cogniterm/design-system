@@ -38,7 +38,6 @@ export { default as DsTooltip } from './components/vuetify/DsTooltip.vue'
 /* ── Table & List ── */
 export { default as DsDataTable } from './components/vuetify/DsDataTable.vue'
 export { default as DsList } from './components/vuetify/DsList.vue'
-export { default as DsTreeview } from './components/vuetify/DsTreeview.vue'
 export { default as DsTimeline } from './components/vuetify/DsTimeline.vue'
 export { default as DsAccordion } from './components/vuetify/DsAccordion.vue'
 

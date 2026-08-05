@@ -5,14 +5,14 @@ import {
   DsButton, DsInput, DsBadge, DsChip, DsAvatar, DsCard, DsDivider, DsSkeleton,
   DsToast, DsEmptyState, DsChatMessage, DsStreamingText, DsThinkingIndicator, DsDotField,
   DsToolCallStep, DsAgentInput, DsCitationChip, DsArtifactPanel, DsSearchResult,
-  DsFileGrid, DsFileRow,
+  DsFileGrid, DsFileRow, DsTreeview,
 } from '~/design'
 import {
   DsIconButton, DsButtonGroup, DsMenu, DsTabs, DsBreadcrumbs, DsPagination,
   DsNavList, DsStepper, DsSelect, DsAutocomplete, DsTextarea, DsCheckbox,
   DsRadioGroup, DsSwitch, DsSlider, DsFileInput, DsDatePicker, DsAlert,
   DsBanner, DsProgressBar, DsSpinner, DsSnackbar, DsDialog, DsTooltip,
-  DsDataTable, DsList, DsTreeview, DsTimeline, DsAccordion,
+  DsDataTable, DsList, DsTimeline, DsAccordion,
 } from '~/design/vuetify'
 import { DsIcon } from '~/design/icon'
 import { icons } from '~/design/icons'
@@ -440,7 +440,7 @@ const SECTIONS = [
 
         <div class="g-item">
           <div class="g-meta">
-            <div class="g-name">DsTreeview <i class="lg wrapped"></i> <code>VTreeview</code></div>
+            <div class="g-name">DsTreeview <i class="lg standalone"></i></div>
           </div>
           <div class="g-demo" style="display:block;max-width:280px">
             <DsTreeview v-model="tree" :items="treeItems" />

@@ -1,8 +1,8 @@
 # Components — Cogniterm Design System
 
-> 66 components. 32 standalone
+> 66 components. 33 standalone
 > (no Vuetify needed, import from `~/design`) and
-> 34 Vuetify-based
+> 33 Vuetify-based
 > (import from `~/design/vuetify`, also needs ds-vuetify.css).
 > Docs: https://kimjiyong995-coder.github.io/design-system/#/components
 
@@ -522,12 +522,12 @@ Each component has a standalone prompt at https://kimjiyong995-coder.github.io/d
     <DsList :items="[
       { value: 'a', title: '자동 분류', subtitle: '규칙에 따라 분류', icon: 'run', meta: '켜짐' },
     ]" selectable />
-- **DsTreeview** (트리) — 계층 구조를 펼쳐서 봅니다.
-  import: ~/design/vuetify | origin: wrapped (VTreeview)
+- **DsTreeview** (트리) — 계층 구조를 펼쳐서 봅니다. 파일 피커에서 확정한 평탄화 렌더.
+  import: ~/design | origin: custom
   where: 드라이브 폴더 트리, 문서 목차, 조직도.
-  props: items, itemTitle / itemValue='title' / 'id', opened, density='comfortable'
+  props: items, modelValue=[], opened=[]
   usage:
-    <DsTreeview v-model="activated" :items="[
+    <DsTreeview v-model="activated" v-model:opened="opened" :items="[
       { id: 1, title: '법무', children: [{ id: 2, title: '2026' }] },
     ]" />
 - **DsTimeline** (타임라인) — 시간순 이력.
