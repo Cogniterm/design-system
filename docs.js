@@ -6,7 +6,7 @@ const { CATEGORIES, COMPONENTS, TEMPLATES, VUETIFY_COVERAGE, WHERE, A11Y, VERSUS
 const { FOUNDATION_PAGES, FD_RENDERERS } = await import('./foundation.js' + V)
 const { ic } = await import('./icons-svg.js' + V)
 const { componentPrompt, importPath } = await import('./ai-prompt.js' + V)
-const { pageHandover, SETUP_PROMPT } = await import('./handover.js' + V)
+const { pageWorkflow, pageQuickstart, pageEnv, SETUP_PROMPT } = await import('./workflow.js' + V)
 
 /* ═══════════ 유틸 ═══════════ */
 const $ = (s) => document.querySelector(s)
@@ -103,8 +103,46 @@ async function copyText(text) {
   } catch { return false }
 }
 
+/* 복사 결과를 알리는 토스트 — 디자인 시스템의 .toast를 그대로 씁니다.
+   시간은 DsSnackbar와 같은 규칙입니다(행동 버튼이 없으므로 3초). */
+function toast(message, variant = 'success') {
+  let host = $('.toast-host')
+  if (!host) {
+    host = document.createElement('div')
+    host.className = 'toast-host'
+    host.setAttribute('aria-live', 'polite')   // 화면을 못 보는 사람에게도 결과를 알립니다
+    document.body.appendChild(host)
+  }
+  const el = document.createElement('div')
+  el.className = `toast ${variant}`
+  el.innerHTML = `<span class="t-icon">${ic(variant === 'success' ? 'confirm' : 'warning', 'sm')}</span><span>${message}</span>`
+  host.appendChild(el)
+  setTimeout(() => el.remove(), 3000)
+}
+
 function enhance() {
   const content = $('#content')
+
+  /* 코드 블록 복사 — 본문의 모든 <pre>에 버튼을 답니다.
+     탭이 있는 코드 카드(.codewrap)와 세팅 프롬프트(.ho-prompt)는 자기 버튼이
+     따로 있으므로 건너뜁니다. 두 개가 겹쳐 붙는 것을 막습니다. */
+  content.querySelectorAll('pre').forEach((pre) => {
+    if (pre.closest('.codewrap, .ho-prompt, .code-box')) return
+    const box = document.createElement('div')
+    box.className = 'code-box'
+    pre.parentNode.insertBefore(box, pre)
+    box.appendChild(pre)
+    const btn = document.createElement('button')
+    btn.type = 'button'
+    btn.className = 'code-copy'
+    btn.innerHTML = `${ic('copy', 'sm')} 복사`
+    btn.setAttribute('aria-label', '코드 복사')
+    btn.addEventListener('click', () => {
+      copyText(pre.innerText).then((ok) =>
+        toast(ok ? '코드를 복사했습니다' : '복사하지 못했습니다 — 직접 선택하세요', ok ? 'success' : 'danger'))
+    })
+    box.appendChild(btn)
+  })
 
   // 토큰 견본 — 클릭하면 이름 복사
   content.querySelectorAll('[data-tok]').forEach((b) => {
@@ -112,6 +150,7 @@ function enhance() {
       copyText(b.dataset.tok).then((ok) => {
         b.classList.add(ok ? 'copied' : 'copy-failed')
         setTimeout(() => b.classList.remove('copied', 'copy-failed'), 1200)
+        toast(ok ? `${b.dataset.tok} 복사했습니다` : '복사하지 못했습니다', ok ? 'success' : 'danger')
       })
     })
   })
@@ -167,7 +206,8 @@ window.addEventListener('hashchange', render)
 
 /* ═══════════ LNB — 섹션 내비게이션 ═══════════ */
 const DOCS_LINKS = [
-  ['start', '시작하기'], ['handover', '인수인계'], ['install', '설치 · 사용법'],
+  ['start', '시작하기'], ['quickstart', '빠른 시작'], ['workflow', '워크플로우'],
+  ['env', '개발 환경'], ['install', '설치 · 사용법'],
   ['vuetify', 'Vuetify와의 관계'], ['coverage', 'Vuetify 커버리지'],
   ['principles', '디자인 원칙'],
 ]
@@ -292,13 +332,14 @@ function renderComponent(id, tab) {
   const c = byId(id)
   if (!c) return renderCatalog()
 
-  const tabs = [['overview', 'Overview'], ['properties', 'Properties'],
+  const tabs = [['overview', 'Overview'], ['usage', '언제 쓰나'], ['properties', 'Properties'],
                 ['guidelines', 'Guidelines'], ['a11y', 'Accessibility']]
   const tabsHtml = tabs.map(([t, label]) =>
     `<a href="#/components/${id}?tab=${t}" class="${tab === t ? 'on' : ''}">${label}</a>`).join('')
 
   let pane = ''
-  if (tab === 'properties') pane = propsPane(c)
+  if (tab === 'usage') pane = usagePane(c)
+  else if (tab === 'properties') pane = propsPane(c)
   else if (tab === 'a11y') pane = a11yPane(c)
   else if (tab === 'guidelines') pane = guidelinesPane(c)
   else pane = overviewPane(c)
@@ -318,13 +359,72 @@ function renderComponent(id, tab) {
   // AI 프롬프트 — 이 페이지 전체를 프롬프트 하나로 (components/<id>.txt와 동일)
   $('#aiCopy')?.addEventListener('click', function () {
     const SITE = location.origin + location.pathname.replace(/index\.html$/, '').replace(/\/$/, '')
-    copyText(componentPrompt(c, { WHERE, VERSUS, A11Y, SITE })).then((ok) => {
-      this.innerHTML = ok ? `${ic('confirm', 'sm')} 복사됨` : `${ic('warning', 'sm')} 복사 실패 — 직접 선택하세요`
-      setTimeout(() => { this.innerHTML = `${ic('ai', 'sm')} AI 프롬프트 복사` }, 1600)
-    })
+    copyText(componentPrompt(c, { WHERE, VERSUS, A11Y, SITE })).then((ok) =>
+      toast(ok ? 'AI 프롬프트를 복사했습니다 — 그대로 붙여넣으세요' : '복사하지 못했습니다 — 직접 선택하세요',
+        ok ? 'success' : 'danger'))
   })
 
   wireCodeTabs()
+}
+
+/* "언제 쓰나" — 사람도 AI도 고를 수 있게, 상황을 먼저 말합니다.
+
+   새 데이터를 만들지 않고 이미 있는 것을 다시 엮습니다:
+     reason      왜 이 컴포넌트가 따로 있는가
+     WHERE       실제로 어느 화면에 놓이는가
+     demos       종류가 여럿이면 각각 언제 고르는가
+     VERSUS      비슷한 것과 헷갈릴 때의 갈림길
+     guidelines  해야 할 것 · 하지 말 것
+   한곳에 흩어져 있으면 "이 상황에 무엇을 쓰지"라는 질문에 답이 안 됩니다. */
+function usagePane(c) {
+  const where = WHERE[c.id]
+  const vs = VERSUS[c.id] || []
+  const dos = (c.guidelines || []).filter((g) => g[0] === '해야 할 것')
+  const donts = (c.guidelines || []).filter((g) => g[0] === '하지 말 것')
+  const imp = importPath(c)
+
+  const section = (title, body) => body ? `<h2>${title}</h2>${body}` : ''
+
+  return `<div class="prose">
+    ${section('한 줄로', `<p><b>${c.summary}</b> ${c.reason?.ko ?? ''}</p>`)}
+
+    ${section('이런 화면에 씁니다', where ? `<p>${where}</p>` : '')}
+
+    ${section('종류를 고르는 기준', c.demos?.length
+      ? `<table><thead><tr><th>종류</th><th>이럴 때 고릅니다</th></tr></thead><tbody>` +
+        c.demos.map((d) => `<tr><td><b>${d.title}</b></td><td>${d.desc}</td></tr>`).join('') +
+        `</tbody></table>`
+      : '')}
+
+    ${section('비슷한 것과 헷갈릴 때', vs.length
+      ? `<table><thead><tr><th>이것 대신</th><th>갈림길</th></tr></thead><tbody>` +
+        vs.map(([o, r]) => `<tr><td><b>${o}</b></td><td>${r}</td></tr>`).join('') +
+        `</tbody></table>`
+      : '')}
+
+    ${section('지킬 것', (dos.length || donts.length)
+      ? `<table><thead><tr><th></th><th>내용</th></tr></thead><tbody>` +
+        dos.map(([, x]) => `<tr><td>해야 할 것</td><td>${x}</td></tr>`).join('') +
+        donts.map(([, x]) => `<tr><td>하지 말 것</td><td>${x}</td></tr>`).join('') +
+        `</tbody></table>`
+      : '')}
+
+    <h2>AI에게 시킬 때</h2>
+    <p>
+      이 페이지의 내용을 그대로 프롬프트로 만들려면 위의
+      <b>AI 프롬프트 복사</b> 버튼을 누르세요. 아래 파일과 같은 내용입니다.
+    </p>
+    <table>
+      <thead><tr><th>파일</th><th>담긴 것</th></tr></thead>
+      <tbody>
+        <tr><td><a href="components/${c.id}.txt" target="_blank"><code>/components/${c.id}.txt</code></a></td>
+            <td>이 컴포넌트 하나 — props · 종류 · 주의사항 · 접근성</td></tr>
+        <tr><td><a href="components/llms.txt" target="_blank"><code>/components/llms.txt</code></a></td>
+            <td>66종 색인 — 무엇을 쓸지 고를 때 먼저</td></tr>
+      </tbody>
+    </table>
+    <pre><code>import { Ds${c.name.replace(/^Ds/, '')} } from '${imp}'</code></pre>
+  </div>`
 }
 
 function overviewPane(c) {
@@ -467,10 +567,8 @@ function wireCodeTabs() {
     const copy = wrap.querySelector('.copy')
     if (copy) copy.addEventListener('click', () => {
       const visible = [...wrap.querySelectorAll('[data-pane]')].find((p) => !p.hidden)
-      copyText(visible.innerText).then((ok) => {
-        copy.textContent = ok ? 'Copied ✓' : '복사 실패'
-        setTimeout(() => { copy.textContent = 'Copy' }, 1500)
-      })
+      copyText(visible.innerText).then((ok) =>
+        toast(ok ? '코드를 복사했습니다' : '복사하지 못했습니다 — 직접 선택하세요', ok ? 'success' : 'danger'))
     })
   })
 }
@@ -524,17 +622,17 @@ function renderFoundation(id) {
 
 /* ═══════════ Docs 페이지 ═══════════ */
 function renderDocsPage(id) {
-  const pages = { start: pageStart, handover: () => pageHandover(ic), install: pageInstall,
-                  vuetify: pageVuetify, coverage: pageCoverage, principles: pagePrinciples,
-                  tokens: pageTokens }
+  const pages = { start: pageStart, quickstart: () => pageQuickstart(ic),
+                  workflow: () => pageWorkflow(ic), env: () => pageEnv(ic),
+                  install: pageInstall, vuetify: pageVuetify, coverage: pageCoverage,
+                  principles: pagePrinciples, tokens: pageTokens }
   $('#content').innerHTML = (pages[id] || pageStart)()
 
   /* 인수인계 페이지의 세팅 프롬프트 — 화면에 보이는 것과 같은 문자열을 넘깁니다 */
   $('#hoCopy')?.addEventListener('click', function () {
-    copyText(SETUP_PROMPT).then((ok) => {
-      this.innerHTML = ok ? `${ic('confirm', 'sm')} 복사됨` : `${ic('warning', 'sm')} 복사 실패 — 직접 선택하세요`
-      setTimeout(() => { this.innerHTML = `${ic('copy', 'sm')} 복사` }, 1600)
-    })
+    copyText(SETUP_PROMPT).then((ok) =>
+      toast(ok ? '세팅 프롬프트를 복사했습니다 — AI 도구에 붙여넣으세요' : '복사하지 못했습니다 — 직접 선택하세요',
+        ok ? 'success' : 'danger'))
   })
 
   wireCodeTabs()
@@ -549,8 +647,8 @@ function pageStart() {
       <h1>Cogniterm Design System</h1>
       <p>AI 에이전트 제품을 위한 미니멀 디자인 시스템. Vue 3 · Vuetify 3.11.</p>
       <div class="hero-actions">
-        <a class="btn btn-primary" href="#/docs/handover">${ic('forward', 'sm')} 처음 맡았다면</a>
-        <a class="btn btn-secondary" href="#/docs/install">이미 있는 프로젝트에 넣기</a>
+        <a class="btn btn-primary" href="#/docs/quickstart">${ic('forward', 'sm')} 빠른 시작</a>
+        <a class="btn btn-secondary" href="#/docs/workflow">워크플로우 익히기</a>
       </div>
       <div class="hero-stats">
         <div class="hero-stat"><b>${total}</b><span>컴포넌트</span></div>
@@ -565,7 +663,9 @@ function pageStart() {
       <table>
         <thead><tr><th>상황</th><th>읽을 문서</th></tr></thead>
         <tbody>
-          <tr><td>이 일을 처음 맡았다</td><td><a href="#/docs/handover">인수인계</a> — 환경 세팅부터 작업 순서까지</td></tr>
+          <tr><td>일단 설치부터 하고 싶다</td><td><a href="#/docs/quickstart">빠른 시작</a> — 붙여넣고 5분</td></tr>
+          <tr><td>이 일을 처음 맡았다</td><td><a href="#/docs/workflow">워크플로우</a> — 매일의 작업 순서까지</td></tr>
+          <tr><td>무슨 기술 위에서 도는지 알고 싶다</td><td><a href="#/docs/env">개발 환경</a> — Vue · Vuetify · Vite</td></tr>
           <tr><td>이미 있는 프로젝트에 넣는다</td><td><a href="#/docs/install">설치 · 사용법</a> — 파일 복사 → CSS 등록</td></tr>
           <tr><td>무엇이 Vuetify 기반인지 알고 싶다</td><td><a href="#/docs/vuetify">Vuetify와의 관계</a> · <a href="#/docs/coverage">커버리지</a></td></tr>
           <tr><td>왜 이렇게 만들었는지 알고 싶다</td><td><a href="#/docs/principles">디자인 원칙</a></td></tr>

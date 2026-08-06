@@ -24,7 +24,7 @@ import { createHash } from 'node:crypto'
    하나라도 빠지면 그 파일만 낡은 채로 남습니다. */
 const ASSETS = [
   'ds.css', 'ds-vuetify.css', 'docs.css',
-  'docs.js', 'data.js', 'foundation.js', 'icons-svg.js', 'ai-prompt.js', 'handover.js',
+  'docs.js', 'data.js', 'foundation.js', 'icons-svg.js', 'ai-prompt.js', 'workflow.js',
 ]
 
 /* 해시에는 넣지만 index.html에 <script>·<link>로 실려 있지는 않은 것.

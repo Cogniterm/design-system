@@ -285,7 +285,12 @@
   letter-spacing: -0.015em; line-height: var(--leading-tight);
   color: var(--gray-12); margin: 64px 0 14px;
 }
-.prose > h2:first-child { margin-top: 0; }
+/* 첫 h2도 위 여백이 필요합니다. 0으로 두면 바로 위의 리드 문단(.page-lead)에
+   그대로 붙어, 제목이 문단의 한 줄처럼 읽힙니다.
+   섹션 사이(64px)만큼은 아니지만 문단과는 확실히 떨어뜨립니다. */
+.prose > h2:first-child { margin-top: 40px; }
+/* 히어로 아래처럼 이미 큰 여백이 있는 자리에서는 겹치지 않게 줄입니다 */
+.hero + .prose > h2:first-child { margin-top: 24px; }
 .prose h3 {
   font-size: var(--text-lg); font-weight: var(--weight-semibold);
   color: var(--gray-12); margin: 30px 0 10px; letter-spacing: -0.01em;
@@ -958,6 +963,34 @@
 
 /* 복사 실패 표시 — 사내 IP로 열면 브라우저가 클립보드를 막습니다 */
 [data-tok].copy-failed { outline: 1px solid var(--danger); }
+
+/* ── 코드 블록 복사 버튼 ──
+   본문 안의 모든 <pre>에 붙습니다. 평소에는 옅게 두고 블록에 마우스가 오면 드러납니다 —
+   읽는 동안 버튼이 글을 방해하지 않게. 키보드로 탭해서 오면 항상 보입니다. */
+.code-box { position: relative; }
+.code-copy {
+  position: absolute; top: 8px; right: 8px;
+  display: inline-flex; align-items: center; gap: 5px;
+  height: 28px; padding: 0 10px;
+  border: 1px solid var(--border); border-radius: var(--r-md);
+  background: var(--surface); color: var(--gray-11);
+  font-size: var(--text-2xs); font-family: var(--font); cursor: pointer;
+  opacity: 0; transition: opacity .12s ease, color .12s ease, border-color .12s ease;
+}
+.code-box:hover .code-copy,
+.code-copy:focus-visible { opacity: 1; }
+.code-copy:hover { color: var(--gray-12); border-color: var(--border-hover); }
+.code-copy:focus-visible { outline: none; box-shadow: var(--focus-ring); }
+
+/* ── 복사 알림 토스트 ──
+   화면 오른쪽 아래에 쌓입니다. 생김새는 디자인 시스템의 .toast 그대로입니다. */
+.toast-host {
+  position: fixed; right: 20px; bottom: 20px; z-index: 300;
+  display: flex; flex-direction: column; gap: 8px; align-items: flex-end;
+  pointer-events: none;
+}
+.toast-host .toast { pointer-events: auto; animation: toast-in .16s ease-out; }
+@keyframes toast-in { from { opacity: 0; transform: translateY(6px); } }
 
 /* ── 인수인계 — 세팅 프롬프트 상자 ──
    길어서 접히지 않으면 페이지를 다 차지합니다. 높이를 제한하고 안에서 스크롤합니다. */

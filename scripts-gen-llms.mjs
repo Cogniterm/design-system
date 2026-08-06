@@ -35,9 +35,19 @@ writeFileSync('components/llms.txt', `# Components — Cogniterm Design System
 > (import from \`~/design/vuetify\`, also needs ds-vuetify.css).
 > Docs: ${SITE}/#/components
 
-## Per-component prompt files
-Each component has a standalone prompt at ${SITE}/components/<id>.txt
-(e.g. /components/button.txt) — fetch just the one you need.
+## How to use these files when building a screen
+Read in this order. Do not skip step 1 — picking the wrong component is the
+most common failure, and the index below is what prevents it.
+
+1. This file — scan the category list at the bottom and pick candidates.
+2. ${SITE}/components/<id>.txt — the picked component, one file each
+   (e.g. /components/button.txt). It carries when to use it, which variant to
+   pick, what it is confused with, props, and keyboard behaviour.
+3. ${SITE}/patterns/llms.txt — only when composing a whole screen or an agent flow.
+4. ${SITE}/foundation/llms.txt — only when you need a colour, spacing or type token.
+
+If two components look interchangeable, the "confused with" section of each
+<id>.txt states the deciding question. Answer it before writing code.
 
 ## Rules
 - Import from the correct barrel. Mixing them breaks builds in apps without Vuetify.

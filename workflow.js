@@ -1,11 +1,11 @@
 /* ============================================
-   handover.js — 인수인계 문서
+   handover.js — 워크플로우 문서
    ============================================
    전제: 이 업무(코드로 화면을 만들어 코드로 넘기는 디자인)를 하던 사람이
    떠나고, 다른 사람이 이어받습니다. 디자인 시스템 자체를 고치는 권한은
    그대로 두고, 그 시스템으로 화면을 만드는 일만 넘깁니다.
 
-   문서 사이트의 Docs → 인수인계 페이지가 이 파일 하나를 씁니다.
+   문서 사이트의 Docs → 워크플로우 페이지가 이 파일 하나를 씁니다.
    설치 명령·설정 파일 내용은 examples/vuetify-app의 실제 값과 같아야 합니다.
    버전을 올리면 SETUP의 표와 프롬프트를 함께 고치세요. */
 
@@ -140,12 +140,12 @@ App.vue를 아래로 바꾸고 npm run dev 로 띄운다.
 
 세팅이 끝나면 각 단계의 확인 결과를 표로 정리해서 보고해라.`
 
-export function pageHandover(ic) {
+export function pageWorkflow(ic) {
   const dep = (only) => DEPS.filter((d) => d[3] === only)
     .map(([n, v, why]) => `<tr><td><code>${n}</code></td><td><code>${v}</code></td><td>${why}</td></tr>`).join('')
 
   return `
-    <div class="page-head"><h1>인수인계</h1></div>
+    <div class="page-head"><h1>워크플로우</h1><span class="page-ko">코드로 디자인하기</span></div>
     <p class="page-lead">
       코드로 화면을 만들어 코드로 넘기는 일을 이어받는 사람을 위한 문서입니다.
       환경 세팅부터 매일의 작업 순서, 막혔을 때 볼 곳까지 한 번에 담았습니다.
@@ -437,7 +437,7 @@ createApp(App)
       </table>
 
       <h2>7. 넘겨받은 날 확인할 목록</h2>
-      <p>여기까지 모두 예라면 인수인계는 끝난 것입니다.</p>
+      <p>여기까지 모두 예라면 워크플로우는 끝난 것입니다.</p>
       <table>
         <thead><tr><th></th><th>확인</th></tr></thead>
         <tbody>
@@ -450,5 +450,201 @@ createApp(App)
           <tr><td>7</td><td>Templates에 있는 예제 화면을 하나 열어 봤다</td></tr>
         </tbody>
       </table>
+    </div>`
+}
+
+/* ═══════════════════════════════════════════════════════════
+   빠른 시작 — 명령 한 덩어리로 끝내고 싶은 사람용
+   ═══════════════════════════════════════════════════════════
+   Carbon·Astryx·Polaris 모두 "Get started"와 별도로 "Quick start"를
+   두고 있습니다. 읽을 시간이 없는 사람이 붙여넣고 확인만 하게 하는 자리입니다. */
+export const QUICK_INSTALL = `# 1. 프로젝트 만들기
+npm create vite@latest my-app -- --template vue-ts && cd my-app
+
+# 2. 한 번에 설치 (제품에 실리는 것 + 개발 도구)
+npm i vue vuetify@3.11.6 lucide-vue-next pretendard
+npm i -D vite @vitejs/plugin-vue vite-plugin-vuetify typescript vue-tsc
+
+# 3. 디자인 시스템 복사 (<DS> = 디자인 시스템 저장소 경로)
+cp -r <DS>/vue/ src/design/ && cp <DS>/ds.css <DS>/ds-vuetify.css src/design/
+
+# 4. 실행
+npm run dev`
+
+export function pageQuickstart(ic) {
+  return `
+    <div class="page-head"><h1>빠른 시작</h1><span class="page-ko">Quick start</span></div>
+    <p class="page-lead">
+      붙여넣고 5분. 설명 없이 명령만 있습니다.
+      왜 이렇게 하는지는 <a href="#/docs/env">개발 환경</a>과
+      <a href="#/docs/workflow">워크플로우</a>에 있습니다.
+    </p>
+
+    <div class="prose">
+      <h2>먼저 있어야 하는 것</h2>
+      <p>Node.js 20 이상 하나면 됩니다. <code>node -v</code>로 확인하세요.</p>
+
+      <h2>1 · 설치</h2>
+      <p>네 줄입니다. <code>&lt;DS&gt;</code>에 디자인 시스템 저장소 경로를 넣으세요.</p>
+      <pre><code>${QUICK_INSTALL.replace(/[<>&]/g, (m) => ({ '<': '&lt;', '>': '&gt;', '&': '&amp;' }[m]))}</code></pre>
+
+      <h2>2 · 설정 세 곳</h2>
+      <p>여기까지 하면 화면이 뜹니다. 한 곳이라도 빠지면 3장의 증상 표를 보세요.</p>
+      <pre><code>// vite.config.ts
+import { defineConfig } from 'vite'
+import vue from '@vitejs/plugin-vue'
+import vuetify from 'vite-plugin-vuetify'
+import { fileURLToPath, URL } from 'node:url'
+
+export default defineConfig({
+  plugins: [vue(), vuetify({ autoImport: true, styles: 'none' })],
+  resolve: { alias: { '~': fileURLToPath(new URL('./src', import.meta.url)) } },
+})</code></pre>
+      <pre><code>// tsconfig.json — compilerOptions 안에
+"baseUrl": ".",
+"paths": { "~/*": ["./src/*"] }</code></pre>
+      <pre><code>/* src/vuetify-layer.css — 새로 만듭니다 */
+@import 'vuetify/dist/vuetify.css' layer(vuetify);</code></pre>
+
+      <h2>3 · main.ts</h2>
+      <pre><code>import { createApp } from 'vue'
+import { createVuetify } from 'vuetify'
+import './vuetify-layer.css'
+import 'pretendard/dist/web/variable/pretendardvariable-dynamic-subset.css'
+import { dsTheme } from '~/design/theme'
+import { dsDefaults } from '~/design/defaults'
+import { lucideIconSet } from '~/design/vuetify-icons'
+import { dsLocale, dsDate } from '~/design/locale'
+import '~/design/ds.css'
+import '~/design/ds-vuetify.css'
+import App from './App.vue'
+
+createApp(App)
+  .use(createVuetify({
+    theme: dsTheme, defaults: dsDefaults as any,
+    icons: lucideIconSet as any, locale: dsLocale as any, date: dsDate as any,
+  }))
+  .mount('#app')</code></pre>
+
+      <h2>4 · 됐는지 확인</h2>
+      <table>
+        <thead><tr><th>확인</th><th>맞는 모습</th></tr></thead>
+        <tbody>
+          <tr><td>버튼 색</td><td>브랜드 파랑 <code>#1F7FF0</code></td></tr>
+          <tr><td>셀렉트 드롭다운</td><td>모서리 8px · 그림자 있음 · 항목 높이 34px</td></tr>
+          <tr><td>글꼴</td><td>Pretendard</td></tr>
+          <tr><td>타입</td><td><code>npx vue-tsc --noEmit</code> 통과</td></tr>
+        </tbody>
+      </table>
+      <p>
+        AI 도구에 통째로 맡기려면 <a href="#/docs/workflow">워크플로우</a>의
+        세팅 프롬프트를 복사해 붙여넣으세요. 위 내용을 단계마다 확인하며 진행합니다.
+      </p>
+    </div>`
+}
+
+/* ═══════════════════════════════════════════════════════════
+   개발 환경 — 무엇 위에서 도는가
+   ═══════════════════════════════════════════════════════════
+   "이게 무슨 도구로 만든 건가"라는 오해를 없애는 자리입니다.
+   Figma 파일이 아니라 도는 코드라는 점, 그래서 개발팀과 같은 것을 쓴다는 점. */
+export function pageEnv(ic) {
+  const row = ([n, v, why]) =>
+    `<tr><td><code>${n}</code></td><td><code>${v}</code></td><td>${why}</td></tr>`
+
+  return `
+    <div class="page-head"><h1>개발 환경</h1><span class="page-ko">무엇 위에서 도는가</span></div>
+    <p class="page-lead">
+      이 디자인 시스템은 그림 파일이 아니라 <b>실제로 도는 코드</b>입니다.
+      디자인과 개발이 같은 것을 씁니다 — 그래서 넘길 때 옮겨 그릴 것이 없습니다.
+    </p>
+
+    <div class="prose">
+      <h2>한 줄 요약</h2>
+      <p>
+        <b>Vue 3 + Vuetify 3 + Vite</b> 위에서 돕니다.
+        컴포넌트 66종 중 35종은 우리가 직접 만들었고(Standalone),
+        31종은 Vuetify를 감싼 것입니다(Vuetify 기반).
+        직접 만든 35종은 Vuetify 없이도 돕니다.
+      </p>
+
+      <h2>왜 이 조합인가</h2>
+      <table>
+        <thead><tr><th>고른 것</th><th>이유</th></tr></thead>
+        <tbody>
+          <tr>
+            <td><b>Vue 3</b></td>
+            <td>제품 프런트엔드가 Vue입니다. 디자인이 다른 프레임워크를 쓰면 넘길 때 다시 만들어야 합니다.</td>
+          </tr>
+          <tr>
+            <td><b>Vuetify 3</b></td>
+            <td>달력·드롭다운 위치 계산·키보드 이동·한글 조합 입력처럼 직접 만들면 오래 걸리고 자주 틀리는 것들을 가져다 씁니다. 대신 생김새는 전부 우리 값으로 덮습니다.</td>
+          </tr>
+          <tr>
+            <td><b>Vite</b></td>
+            <td>고치면 바로 화면에 반영됩니다. 디자인을 만지면서 확인하는 일이 잦아 이 속도가 중요합니다.</td>
+          </tr>
+          <tr>
+            <td><b>Lucide</b></td>
+            <td>아이콘. Vuetify 내부 아이콘(체크·화살표)까지 같은 것으로 갈아끼워 두 벌이 섞이지 않게 합니다.</td>
+          </tr>
+          <tr>
+            <td><b>Pretendard</b></td>
+            <td>한글·영문·숫자가 한 벌로 어울리는 본문 글꼴. 섞어 쓰면 숫자만 튀어 보입니다.</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h2>넘기는 것은 무엇인가</h2>
+      <p>
+        시안이 아니라 <b>도는 화면과 그 코드</b>를 넘깁니다.
+        개발자는 받은 코드를 제품에 붙이고, 데이터를 연결하고, 상태를 잇습니다.
+        색·여백·글자 크기를 다시 재거나 옮겨 그릴 일이 없습니다.
+      </p>
+      <table>
+        <thead><tr><th>흔한 방식</th><th>여기서는</th></tr></thead>
+        <tbody>
+          <tr><td>시안 이미지를 넘기고 개발자가 다시 만든다</td><td>도는 코드를 그대로 넘긴다</td></tr>
+          <tr><td>간격·색을 개발자가 눈으로 재서 맞춘다</td><td>토큰 이름이 코드에 이미 들어 있다</td></tr>
+          <tr><td>상호작용은 말로 설명한다</td><td>눌러 보면 그대로 동작한다</td></tr>
+        </tbody>
+      </table>
+
+      <h2>패키지 목록</h2>
+      <p>제품에 함께 실려 나갑니다.</p>
+      <table>
+        <thead><tr><th>패키지</th><th>버전</th><th>맡은 일</th></tr></thead>
+        <tbody>${DEPS.filter((d) => d[3] === '필수').map(row).join('')}</tbody>
+      </table>
+      <p>개발할 때만 쓰고 제품에는 실리지 않습니다.</p>
+      <table>
+        <thead><tr><th>패키지</th><th>버전</th><th>맡은 일</th></tr></thead>
+        <tbody>${DEPS.filter((d) => d[3] === '개발용').map(row).join('')}</tbody>
+      </table>
+      <p>
+        <code>vuetify</code>만 <code>^</code> 없이 못박습니다.
+        마이너 버전이 올라가면 내부 클래스 이름이 바뀌어,
+        우리가 덮어쓰던 규칙이 조용히 안 먹은 적이 있습니다.
+      </p>
+
+      <h2>파일이 어디에 놓이는가</h2>
+      <pre><code>my-app/
+├─ src/
+│  ├─ design/          ← 디자인 시스템 사본. 직접 고치지 않습니다
+│  │  ├─ ds.css            토큰과 Standalone 컴포넌트
+│  │  ├─ ds-vuetify.css    Vuetify 생김새 덮어쓰기
+│  │  ├─ theme.ts          색
+│  │  ├─ defaults.ts       컴포넌트 기본값
+│  │  ├─ locale.ts         한국어
+│  │  └─ components/       컴포넌트 66종
+│  ├─ vuetify-layer.css ← Vuetify 스타일 진입점 (레이어)
+│  ├─ main.ts
+│  └─ (여기부터 내가 만드는 화면)
+├─ vite.config.ts
+└─ tsconfig.json</code></pre>
+      <p>
+        <code>src/design/</code>만 디자인 시스템 것이고, 나머지는 내 프로젝트입니다.
+        시스템이 갱신되면 이 폴더만 다시 복사합니다.
+      </p>
     </div>`
 }
