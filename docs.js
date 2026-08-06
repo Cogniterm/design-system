@@ -6,6 +6,7 @@ const { CATEGORIES, COMPONENTS, TEMPLATES, VUETIFY_COVERAGE, WHERE, A11Y, VERSUS
 const { FOUNDATION_PAGES, FD_RENDERERS } = await import('./foundation.js' + V)
 const { ic } = await import('./icons-svg.js' + V)
 const { componentPrompt, importPath } = await import('./ai-prompt.js' + V)
+const { pageHandover, SETUP_PROMPT } = await import('./handover.js' + V)
 
 /* ═══════════ 유틸 ═══════════ */
 const $ = (s) => document.querySelector(s)
@@ -166,8 +167,9 @@ window.addEventListener('hashchange', render)
 
 /* ═══════════ LNB — 섹션 내비게이션 ═══════════ */
 const DOCS_LINKS = [
-  ['start', '시작하기'], ['install', '설치 · 사용법'], ['vuetify', 'Vuetify와의 관계'],
-  ['coverage', 'Vuetify 커버리지'], ['principles', '디자인 원칙'],
+  ['start', '시작하기'], ['handover', '인수인계'], ['install', '설치 · 사용법'],
+  ['vuetify', 'Vuetify와의 관계'], ['coverage', 'Vuetify 커버리지'],
+  ['principles', '디자인 원칙'],
 ]
 
 /* 섹션 머리표 — 지금 어느 섹션에 있는지 LNB 최상단에 고정합니다 */
@@ -522,29 +524,33 @@ function renderFoundation(id) {
 
 /* ═══════════ Docs 페이지 ═══════════ */
 function renderDocsPage(id) {
-  const pages = { start: pageStart, install: pageInstall, vuetify: pageVuetify,
-                  coverage: pageCoverage, principles: pagePrinciples, tokens: pageTokens }
+  const pages = { start: pageStart, handover: () => pageHandover(ic), install: pageInstall,
+                  vuetify: pageVuetify, coverage: pageCoverage, principles: pagePrinciples,
+                  tokens: pageTokens }
   $('#content').innerHTML = (pages[id] || pageStart)()
+
+  /* 인수인계 페이지의 세팅 프롬프트 — 화면에 보이는 것과 같은 문자열을 넘깁니다 */
+  $('#hoCopy')?.addEventListener('click', function () {
+    copyText(SETUP_PROMPT).then((ok) => {
+      this.innerHTML = ok ? `${ic('confirm', 'sm')} 복사됨` : `${ic('warning', 'sm')} 복사 실패 — 직접 선택하세요`
+      setTimeout(() => { this.innerHTML = `${ic('copy', 'sm')} 복사` }, 1600)
+    })
+  })
+
   wireCodeTabs()
 }
 
 function pageStart() {
   const total = COMPONENTS.length
   const wrapped = COMPONENTS.filter((c) => c.origin === 'wrapped').length
-  const entry = (href, icon, title, desc) => `
-    <a class="entry" href="${href}">
-      <span class="en-ic">${ic(icon, 'lg')}</span>
-      <h3>${title}</h3><p>${desc}</p>
-    </a>`
 
   return `
     <div class="hero">
       <h1>Cogniterm Design System</h1>
       <p>AI 에이전트 제품을 위한 미니멀 디자인 시스템. Vue 3 · Vuetify 3.11.</p>
       <div class="hero-actions">
-        <a class="btn btn-primary" href="#/docs/install">${ic('forward', 'sm')} 설치하기</a>
-        <a class="btn btn-secondary" href="#/components">컴포넌트 ${total}종 보기</a>
-        <a class="btn btn-ghost" href="live/" target="_blank" rel="noopener">라이브 갤러리 ${ic('externalLink', 'sm')}</a>
+        <a class="btn btn-primary" href="#/docs/handover">${ic('forward', 'sm')} 처음 맡았다면</a>
+        <a class="btn btn-secondary" href="#/docs/install">이미 있는 프로젝트에 넣기</a>
       </div>
       <div class="hero-stats">
         <div class="hero-stat"><b>${total}</b><span>컴포넌트</span></div>
@@ -556,16 +562,15 @@ function pageStart() {
 
     <div class="prose">
       <h2>어디서 시작하나</h2>
-    </div>
-    <div class="entry-grid">
-      ${entry('#/docs/install', 'download', '설치 · 사용법', '파일 복사 → CSS 등록 → 끝. 개발자 기준 10분.')}
-      ${entry('#/foundation/overview', 'settings', 'Foundation', '색 · 타이포 · 여백 · 밀도 — 컴포넌트 이전의 결정 ' + FOUNDATION_PAGES.length + '가지')}
-      ${entry('#/components', 'gridView', 'Components', total + '종. props · 접근성 · 비슷한 것과의 구분')}
-      ${entry('#/docs/vuetify', 'link', 'Vuetify와의 관계', '무엇이 Vuetify 기반이고 무엇이 아닌지')}
-      ${entry('#/foundation/wordlist', 'chat', '용어집', '한국어 UI 문안 통일표')}
-    </div>
-
-    <div class="prose">
+      <table>
+        <thead><tr><th>상황</th><th>읽을 문서</th></tr></thead>
+        <tbody>
+          <tr><td>이 일을 처음 맡았다</td><td><a href="#/docs/handover">인수인계</a> — 환경 세팅부터 작업 순서까지</td></tr>
+          <tr><td>이미 있는 프로젝트에 넣는다</td><td><a href="#/docs/install">설치 · 사용법</a> — 파일 복사 → CSS 등록</td></tr>
+          <tr><td>무엇이 Vuetify 기반인지 알고 싶다</td><td><a href="#/docs/vuetify">Vuetify와의 관계</a> · <a href="#/docs/coverage">커버리지</a></td></tr>
+          <tr><td>왜 이렇게 만들었는지 알고 싶다</td><td><a href="#/docs/principles">디자인 원칙</a></td></tr>
+        </tbody>
+      </table>
       <h2>AI에게 시킬 때</h2>
       <table>
         <thead><tr><th>파일</th><th>언제 쓰나</th></tr></thead>

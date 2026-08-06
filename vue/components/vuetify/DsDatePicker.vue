@@ -72,6 +72,14 @@ function applyPreset (days: number) {
 function clear () {
   model.value = props.mode === 'range' ? [] : null
 }
+
+/* 하루만 고르는 모드는 고른 순간 닫습니다 — 더 할 일이 없는데 달력이 남아 있으면
+   다음 필드를 누를 때 달력 두 개가 겹쳐 열려, 어느 쪽을 조작하는지 알 수 없습니다.
+   (시작일·종료일을 나란히 둔 화면에서 실제로 겹쳤습니다.)
+   기간(range)은 두 번 골라야 완성되므로 열어 둡니다. */
+function onPick () {
+  if (props.mode === 'single') open.value = false
+}
 </script>
 
 <template>
@@ -114,6 +122,7 @@ function clear () {
         <DsCalendar
           v-model="model" :mode="mode"
           :min="min" :max="max" :disable-past="disablePast" :disable-future="disableFuture"
+          @update:model-value="onPick"
         />
       </div>
     </VMenu>

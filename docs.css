@@ -959,6 +959,22 @@
 /* 복사 실패 표시 — 사내 IP로 열면 브라우저가 클립보드를 막습니다 */
 [data-tok].copy-failed { outline: 1px solid var(--danger); }
 
+/* ── 인수인계 — 세팅 프롬프트 상자 ──
+   길어서 접히지 않으면 페이지를 다 차지합니다. 높이를 제한하고 안에서 스크롤합니다. */
+.ho-prompt {
+  border: 1px solid var(--border); border-radius: var(--r-xl);
+  overflow: hidden; margin: 14px 0 18px; background: var(--surface);
+}
+.ho-prompt-head {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 10px 14px; border-bottom: 1px solid var(--border);
+  font-size: var(--text-sm); font-weight: var(--weight-medium); color: var(--gray-12);
+}
+.ho-prompt pre {
+  margin: 0; border: 0; border-radius: 0;
+  max-height: 380px; overflow: auto;
+}
+
 /* ── 라이브 플레이그라운드 ── */
 .play-wrap {
   border: 1px solid var(--border);
