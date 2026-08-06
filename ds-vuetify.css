@@ -910,28 +910,42 @@
 .v-selection-control-group { gap: 4px; }
 .v-selection-control__input::before { display: none; }   /* 머티리얼 원형 하이라이트 */
 
-/* 체크박스 선택 상태 — 브랜드 면 + 흰 체크 (Geist 방식).
-   머티리얼은 체크 글리프만 색을 바꿔 선택 여부가 멀리서 안 읽힙니다.
-   면이 차야 목록에서 선택된 행이 한눈에 보입니다.
-   .v-checkbox-btn은 VCheckbox·테이블 선택·리스트 체크에 모두 붙습니다. */
-.v-checkbox-btn .v-selection-control__input > .v-icon { color: var(--gray-9); }
+/* 체크박스 상자 — 선택 여부와 상관없이 늘 이 한 줄이 그립니다 ────────
+   .v-checkbox-btn은 VCheckbox·테이블 선택 열·드롭다운의 다중 선택에 모두 붙으므로,
+   여기 한 곳만 맞추면 Vuetify가 그리는 모든 체크박스가 DsCheckbox와 같아집니다.
+
+   전에는 상자를 "미선택 = Square 글리프 / 선택 = CSS 면"으로 나눠 그렸습니다.
+   둘이 아예 다른 그림이라 체크할 때마다 상자가 13.3px → 16px으로 커지고
+   모서리가 1.3px → 4px으로 둥글어졌습니다. 이게 어색하게 보이던 정체입니다.
+   이제 글리프는 표식(체크·대시)만 맡고, 상자는 여기서만 그립니다.
+
+   치수는 DsCheckbox(.ds-check__box)와 같습니다: 16px · r-sm · 1px 보더. */
 .v-checkbox-btn .v-selection-control__input::before {
   display: block; width: 16px; height: 16px; top: 50%; left: 50%;
-  transform: translate(-50%, -50%); border-radius: var(--r-sm);
-  background: var(--brand); opacity: 0;
-  transition: opacity .12s ease;
+  transform: translate(-50%, -50%);
+  border-radius: var(--r-sm);
+  border: 1px solid var(--border-strong);
+  background: var(--surface); opacity: 1;
+  transition: background .12s ease, border-color .12s ease;
 }
-/* 부분 선택(indeterminate)은 aria-checked="mixed"가 안쪽 input에 붙습니다 — :has로 잡습니다 */
+.v-checkbox-btn:hover .v-selection-control__input::before { border-color: var(--border-hover); }
+/* 선택·부분 선택 — 브랜드 면. 부분 선택은 aria-checked="mixed"가 안쪽 input에 붙습니다 */
 .v-checkbox-btn.v-selection-control--dirty .v-selection-control__input::before,
-.v-checkbox-btn .v-selection-control__input:has(input[aria-checked="mixed"])::before { opacity: 1; }
-/* 면 위의 글리프 — 체크·대시는 흰색으로, 사각형 아이콘보다 작게 */
-.v-checkbox-btn.v-selection-control--dirty .v-selection-control__input > .v-icon,
-.v-checkbox-btn .v-selection-control__input:has(input[aria-checked="mixed"]) > .v-icon {
-  color: var(--on-brand); position: relative; z-index: 1; font-size: 12px;
+.v-checkbox-btn .v-selection-control__input:has(input[aria-checked="mixed"])::before,
+.v-checkbox-btn:hover.v-selection-control--dirty .v-selection-control__input::before {
+  background: var(--brand); border-color: var(--brand);
 }
-/* 비활성 — 면도 글리프도 회색 */
-.v-checkbox-btn.v-selection-control--disabled .v-selection-control__input::before { background: var(--gray-6); }
-.v-checkbox-btn.v-selection-control--disabled .v-selection-control__input > .v-icon { color: var(--gray-9); }
+/* 면 위의 표식 — 상자와 같은 16px에 그려 DsCheckbox와 같은 비율이 됩니다 */
+.v-checkbox-btn .v-selection-control__input > .v-icon {
+  color: var(--on-brand); position: relative; z-index: 1; font-size: 16px;
+}
+/* 비활성 — 면을 채우지 않고 '연한 상자 + 회색 잉크'로 낮춥니다 (DsCheckbox와 같은 언어).
+   중간 회색으로 채우면 테두리가 사라져 빈 상자가 채워진 상자로 읽힙니다. */
+.v-checkbox-btn.v-selection-control--disabled .v-selection-control__input::before,
+.v-checkbox-btn.v-selection-control--disabled.v-selection-control--dirty .v-selection-control__input::before {
+  background: var(--gray-3); border-color: var(--gray-6);
+}
+.v-checkbox-btn.v-selection-control--disabled .v-selection-control__input > .v-icon { color: var(--gray-10); }
 /* 포커스 — 면 바깥으로 링 (::before를 상자로 쓰므로 wrapper에 그립니다) */
 .v-checkbox-btn.v-selection-control--focus-visible .v-selection-control__input {
   border-radius: var(--r-sm); box-shadow: var(--focus-ring);

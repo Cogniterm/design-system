@@ -18,7 +18,7 @@ import {
   ChevronUp, ChevronDown, ChevronLeft, ChevronRight,
   ChevronsLeft, ChevronsRight, ChevronsUpDown,
   X, XCircle, Check, CheckCircle2, Info, AlertTriangle, AlertCircle,
-  Loader2, Square, Circle, CircleDot,
+  Loader2, Circle, CircleDot,
   ArrowUp, ArrowDown, Menu, Pencil, Star, StarHalf,
   Paperclip, Plus, Minus, Calendar, Pipette, Upload, EllipsisVertical,
   Palette, Command, ArrowBigUp, Option, CornerDownLeft,
@@ -31,6 +31,24 @@ import { icons as semantic } from './icons'
    크기는 VIcon의 font-size(1em)를 따라가고, 선 굵기는 시스템 표준 1.5. */
 const wrap = (C: unknown): FunctionalComponent =>
   () => h(C as FunctionalComponent, { size: '1em', strokeWidth: 1.5, 'aria-hidden': 'true' })
+
+/* 체크박스 표식 — DsCheckbox(.ds-check__mark)와 같은 경로·같은 굵기입니다.
+
+   Lucide의 Check를 쓰면 24 뷰박스가 상자 크기로 축소되면서 선이 얇아지고
+   폭도 달라집니다. 그러면 직접 만든 체크박스와 Vuetify가 그리는 체크박스가
+   나란히 놓였을 때 서로 다르게 보입니다 — 같은 부품이 자리에 따라 달라지는,
+   계속 잡아 온 그 문제입니다. 표식을 한 벌로 맞춥니다. */
+const mark = (d: string): FunctionalComponent => () =>
+  h('svg', {
+    viewBox: '0 0 16 16', width: '1em', height: '1em', fill: 'none',
+    stroke: 'currentColor', 'stroke-width': 2,
+    'stroke-linecap': 'round', 'stroke-linejoin': 'round', 'aria-hidden': 'true',
+  }, [h('path', { d })])
+
+/* 미선택 상태는 글리프를 쓰지 않습니다 — 빈 자리만 둡니다.
+   상자는 선택 여부와 무관하게 CSS가 한 번만 그립니다(ds-vuetify.css). */
+const blank: FunctionalComponent = () =>
+  h('svg', { width: '1em', height: '1em', 'aria-hidden': 'true' })
 
 /* Vuetify 3가 내부에서 쓰는 별칭 전부 */
 export const lucideAliases: IconAliases = {
@@ -46,11 +64,13 @@ export const lucideAliases: IconAliases = {
   error: wrap(AlertCircle),
   prev: wrap(ChevronLeft),
   next: wrap(ChevronRight),
-  /* 체크박스 — 선택하면 브랜드 면이 채워지므로(ds-vuetify.css) 상자가 아니라
-     글리프만 얹습니다. 미선택은 빈 사각형 그대로. */
-  checkboxOn: wrap(Check),
-  checkboxOff: wrap(Square),
-  checkboxIndeterminate: wrap(Minus),
+  /* 체크박스 — 상자는 CSS가 그리고(ds-vuetify.css), 여기서는 그 위에 얹을
+     표식만 줍니다. 전에는 선택 = Check 글리프, 미선택 = Square 글리프였는데,
+     둘이 아예 다른 그림이라 켜고 끌 때 상자 크기(16 ↔ 13.3px)와
+     모서리(4 ↔ 1.3px)와 선 굵기가 함께 변했습니다. */
+  checkboxOn: mark('M3.5 8.5 6.5 11.5 12.5 5'),
+  checkboxOff: blank,
+  checkboxIndeterminate: mark('M4 8h8'),
   delimiter: wrap(Circle),     // 캐러셀 점
   sortAsc: wrap(ArrowUp),
   sortDesc: wrap(ArrowDown),
