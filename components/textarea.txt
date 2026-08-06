@@ -11,6 +11,7 @@ import { DsTextarea } from '~/design/vuetify'   // Vuetify 필요 · ds.css + ds
 - hint: string — 보조 설명.
 - error: string — 에러 메시지.
 - rows: number = 3 — 초기 줄 수. 내용이 늘면 자동 확장.
+- size: 'sm' | 'default' = 'default' — 컨트롤 스케일 32 / 40px. 필터 바·툴바는 sm.
 
 
 ## 사용 예

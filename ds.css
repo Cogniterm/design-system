@@ -240,7 +240,9 @@ body {
 .btn-lg { height: 48px; padding: 0 20px; font-size: var(--text-lg); }
 
 /* ── ds-input ── */
-.field { display: flex; flex-direction: column; gap: 6px; width: 300px; max-width: 100%; }
+/* 폭은 담는 그릇이 정하고, 편한 입력 폭(300px)에서 멈춥니다.
+   width를 300px로 고정하면 팝오버·좁은 칸에서 그릇보다 넓게 잡혀 레이아웃이 깨집니다. */
+.field { display: flex; flex-direction: column; gap: 6px; width: 100%; max-width: 300px; }
 .field label { font-size: var(--text-sm); font-weight: var(--weight-medium); }
 .input {
   all: unset; box-sizing: border-box; height: 40px; padding: 0 14px;
@@ -251,6 +253,7 @@ body {
 .input::placeholder { color: var(--gray-11); }
 .input:hover { border-color: var(--border-hover); }
 .input:focus { border-color: var(--brand); box-shadow: 0 0 0 3.5px var(--brand-subtle); }
+.input.sm { height: 32px; padding: 0 12px; font-size: var(--text-sm); }
 .input.error { border-color: var(--danger); }
 /* 에러 상태의 포커스 링은 브랜드가 아니라 위험색 — 상태가 링 색으로도 읽혀야 합니다 */
 .input.error:focus { border-color: var(--danger); box-shadow: 0 0 0 3.5px var(--danger-subtle); }
@@ -367,11 +370,13 @@ body {
 }
 .ds-radio__mark input { position: absolute; inset: 0; width: 100%; height: 100%; margin: 0; opacity: 0; cursor: pointer; }
 .ds-radio__row:hover .ds-radio__mark:not(.is-on) { border-color: var(--border-hover); }
-/* 선택 — 링을 브랜드색으로 굵히고 가운데에 점. 면은 그대로 흽니다 */
+/* 선택 — 링을 브랜드색으로 굵히고 안쪽을 점으로 채웁니다.
+   점 크기는 비율이 아니라 "링 안쪽에서 1.5px 띄운 나머지 전부"입니다.
+   비율(%)로 잡으면 작은 크기에서 점이 사라지듯 작아집니다. */
 .ds-radio__mark.is-on { border-width: 2px; border-color: var(--brand); }
 .ds-radio__mark.is-on::after {
-  content: ''; width: 44%; height: 44%; border-radius: 50%;
-  background: var(--brand);
+  content: ''; width: calc(100% - 3px); height: calc(100% - 3px);
+  border-radius: 50%; background: var(--brand);
 }
 .ds-radio__mark:has(input:focus-visible) { box-shadow: var(--focus-ring); }
 .ds-radio__text { display: flex; flex-direction: column; gap: 1px; font-size: var(--text-base); color: var(--gray-12); }
@@ -500,11 +505,13 @@ td.mono { font-family: var(--mono); font-size: var(--text-xs); color: var(--gray
 .skeleton.text { height: 13px; }
 .skeleton.circle { border-radius: 50%; }
 
-/* ── ds-toast ── */
+/* ── ds-toast ──
+   테두리를 따로 두지 않습니다 — --shadow-overlay의 첫 겹(0 0 0 1px)이 이미 윤곽입니다.
+   둘 다 쓰면 1px 선이 두 겹으로 겹쳐 가장자리가 지저분해집니다. */
 .toast { display: inline-flex; align-items: center; gap: 10px; min-width: 280px;
-  border: 1px solid var(--border); border-radius: var(--r-lg); background: var(--surface);
+  border: 0; border-radius: var(--r-lg); background: var(--surface);
   padding: 12px 14px; font-size: var(--text-sm);
-  box-shadow: var(--shadow-overlay); }   /* 다크에서도 보이도록 토큰으로 */
+  box-shadow: var(--shadow-overlay); }
 
 /* 앞머리는 점 대신 상태 아이콘 — 색+형태로 성공/실패가 동시에 읽힘 (Geist·Astryx 참고) */
 .toast .t-icon { display: inline-flex; flex-shrink: 0; align-items: center; }
@@ -780,6 +787,8 @@ td.mono { font-family: var(--mono); font-size: var(--text-xs); color: var(--gray
   background: var(--surface);
   transition: border-color .16s ease, box-shadow .16s ease;
 }
+.searchfield.sm { height: 32px; padding: 0 8px 0 10px; min-width: 200px; gap: 6px; }
+.searchfield.sm input { font-size: var(--text-sm); }
 .searchfield.focused { border-color: var(--brand); box-shadow: 0 0 0 3.5px var(--brand-subtle); }
 .searchfield .sf-icon { display: inline-flex; color: var(--gray-9); flex-shrink: 0; }
 .searchfield input {

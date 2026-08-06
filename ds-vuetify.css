@@ -24,8 +24,9 @@
 .ds-vtable .v-data-table-footer { border-top: 1px solid var(--border); font-size: var(--text-xs); }
 
 /* ── DsDialog — VDialog 내부 면 ── */
+/* 테두리 없이 그림자만 — --shadow-overlay 첫 겹이 윤곽입니다 (이중 stroke 방지) */
 .ds-dialog-panel {
-  background: var(--surface); border: 1px solid var(--border);
+  background: var(--surface); border: 0;
   border-radius: var(--r-xl); overflow: hidden; font-family: var(--font);
 }
 .ds-dialog-head {
@@ -259,8 +260,8 @@
 .v-progress-linear { border-radius: 0; }
 .v-progress-linear__background { opacity: .12; }
 
-/* ── VSnackbar ── */
-.v-snackbar__wrapper { border: 1px solid var(--border); background: var(--surface);
+/* ── VSnackbar ── 테두리 없이 그림자만 (DsToast와 동일 — 이중 stroke 방지) */
+.v-snackbar__wrapper { border: 0; background: var(--surface);
   color: var(--gray-12); font-size: var(--text-sm); box-shadow: var(--shadow-overlay); }
 
 
@@ -268,7 +269,7 @@
 /* 드롭다운 리스트(Select·Autocomplete·Combobox)는 테두리 없이 그림자만 — 필터 팝오버와 통일 */
 .v-overlay__content > .v-list { box-shadow: var(--shadow-overlay); }
 .v-overlay__content > .v-card,
-.v-overlay__content > .v-sheet { border: 1px solid var(--border); box-shadow: var(--shadow-overlay); }
+.v-overlay__content > .v-sheet { border: 0; box-shadow: var(--shadow-overlay); }
 
 
 /* ── VSelectionControl (체크박스·라디오·스위치 공통) ── */
@@ -407,7 +408,8 @@
 .ds-stepper--headless .v-stepper-window { display: none; }
 
 /* ── VNumberInput — 높이만 다른 필드와 맞춥니다 (좌우 여백은 공통 변수가 처리) ── */
-.v-number-input .v-field--variant-outlined .v-field__input { min-height: 40px; }
+.v-number-input.v-input--density-comfortable .v-field--variant-outlined .v-field__input { min-height: 40px; }
+.v-number-input.v-input--density-compact .v-field--variant-outlined .v-field__input { min-height: 32px; }
 /* 스텝 버튼 기둥이 40px을 1px 넘겨 필드만 41px이 되던 것 */
 .v-number-input .v-number-input__control { align-self: center; height: 38px; }
 .v-number-input .v-number-input__control .v-btn { height: 18px; min-height: 0; border-radius: 0; }
@@ -478,8 +480,10 @@
 .v-field.v-field--variant-outlined.v-field--focused .v-field__outline { --v-field-border-width: 1px; }
 .v-input--density-comfortable .v-field__input { min-height: 40px; padding-top: 0; padding-bottom: 0; }
 .v-input--density-compact .v-field__input { min-height: 32px; padding-top: 0; padding-bottom: 0; }
-.ds-vselect--sm { width: auto; }
-.ds-vselect--sm .v-field { font-size: var(--text-sm); }
+/* 크기 sm — 감싼 필드 전체 공통 (Select·Textarea·Autocomplete·Combobox·NumberInput·FileInput).
+   높이는 Vuetify density=compact가 32px로 잡고, 글자만 한 단계 줄입니다. */
+.ds-vfield--sm .v-field { font-size: var(--text-sm); }
+.ds-vfield--sm.ds-vselect { width: auto; }
 .v-field__field { align-items: center; }
 .v-field__prepend-inner, .v-field__append-inner { align-items: center; padding-top: 0; }
 /* 텍스트에어리어(여러 줄)는 위 규칙(padding 0 + 중앙 정렬)에서 첫 줄이 상단 경계에 붙어
@@ -699,6 +703,20 @@
 .ds-palette-item .pi-group {
   margin-left: auto; font-size: var(--text-xs); color: var(--gray-11); font-family: var(--mono);
 }
+.ds-palette-item .kbd { margin-left: auto; }
+/* 섹션 머리 — DsMenu의 .ds-menu-label과 동일 규격 */
+.ds-palette-label {
+  padding: 7px 10px 4px; font-size: var(--text-2xs);
+  font-weight: var(--weight-semibold); color: var(--gray-11);
+}
+.ds-palette-list > .ds-palette-label:first-child { padding-top: 4px; }
+/* 조작법 바 — 키보드 도구라 방법을 화면에 남깁니다 */
+.ds-palette-foot {
+  display: flex; align-items: center; gap: 14px;
+  padding: 8px 12px; border-top: 1px solid var(--border-subtle);
+  font-size: var(--text-2xs); color: var(--gray-11);
+}
+.ds-palette-foot span { display: inline-flex; align-items: center; gap: 4px; }
 
 
 /* ── DsNumberInput 스텝 버튼 ── */

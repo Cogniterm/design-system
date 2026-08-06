@@ -11,6 +11,7 @@ import { DsFileInput } from '~/design/vuetify'   // Vuetify 필요 · ds.css + d
 - accept: string — 허용 확장자.
 - multiple: boolean = false — 여러 개 선택.
 - error: string — 에러 메시지.
+- size: 'sm' | 'default' = 'default' — 컨트롤 스케일 32 / 40px. 필터 바·툴바는 sm.
 
 
 ## 사용 예

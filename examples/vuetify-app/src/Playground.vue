@@ -262,12 +262,29 @@ const badgeLabel: Record<string, string> = { default: '대기', brand: '실행�
       </template>
 
       <template v-else-if="id === 'input'">
-        <DsInput v-model="txt" label="워크스페이스 이름" placeholder="Acme Inc." hint="모든 멤버에게 표시됩니다." />
-        <DsInput v-model="email" label="이메일" error="올바른 이메일 주소를 입력하세요." />
+        <div class="play-sections">
+          <div class="play-sec">
+            <div class="play-sec-cap">Sizes · 32 / 40</div>
+            <div class="play-sec-row" style="align-items:flex-end">
+              <DsInput v-model="txt" size="sm" label="sm — 필터 바·툴바" placeholder="Acme Inc." />
+              <DsInput v-model="txt" label="default" placeholder="Acme Inc." />
+            </div>
+          </div>
+          <div class="play-sec">
+            <div class="play-sec-cap">States</div>
+            <div class="play-sec-row" style="align-items:flex-start">
+              <DsInput v-model="txt" label="워크스페이스 이름" placeholder="Acme Inc." hint="모든 멤버에게 표시됩니다." />
+              <DsInput v-model="email" label="이메일" error="올바른 이메일 주소를 입력하세요." />
+            </div>
+          </div>
+        </div>
       </template>
 
       <template v-else-if="id === 'textarea'">
-        <div style="width:320px"><DsTextarea v-model="memo" label="메모" placeholder="줄이 늘면 자동으로 커집니다" /></div>
+        <div style="display:flex;gap:12px;align-items:flex-start">
+          <div style="width:220px"><DsTextarea v-model="memo" size="sm" label="sm" placeholder="줄이 늘면 자동으로 커집니다" /></div>
+          <div style="width:220px"><DsTextarea v-model="memo" label="default" placeholder="줄이 늘면 자동으로 커집니다" /></div>
+        </div>
       </template>
 
       <template v-else-if="id === 'select'">
@@ -299,7 +316,10 @@ const badgeLabel: Record<string, string> = { default: '대기', brand: '실행�
       </template>
 
       <template v-else-if="id === 'numberinput'">
-        <DsNumberInput v-model="num" label="재시도 횟수" :min="0" :max="10" hint="↑↓ 키도 동작합니다" style="width:180px" />
+        <div class="play-sec-row" style="align-items:flex-end">
+          <DsNumberInput v-model="num" size="sm" label="sm" :min="0" :max="10" style="width:150px" />
+          <DsNumberInput v-model="num" label="default" :min="0" :max="10" hint="↑↓ 키도 동작합니다" style="width:180px" />
+        </div>
       </template>
 
       <template v-else-if="id === 'checkbox'">
@@ -361,7 +381,15 @@ const badgeLabel: Record<string, string> = { default: '대기', brand: '실행�
       </template>
 
       <template v-else-if="id === 'searchfield'">
-        <DsSearchField v-model="q" shortcut="⌘K" :loading="loading" @search="search" />
+        <div class="play-sections">
+          <div class="play-sec">
+            <div class="play-sec-cap">Sizes · 32 / 40</div>
+            <div class="play-sec-row">
+              <DsSearchField v-model="q" size="sm" placeholder="sm — 필터 바·툴바" />
+              <DsSearchField v-model="q" shortcut="⌘K" :loading="loading" @search="search" />
+            </div>
+          </div>
+        </div>
         <span v-if="q" class="play-val">"{{ q }}"</span>
       </template>
 

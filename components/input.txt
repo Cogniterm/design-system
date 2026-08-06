@@ -12,6 +12,7 @@ import { DsInput } from '~/design'   // Vuetify 불필요 · ds.css만
 - error: string — 에러 메시지. 있으면 에러 상태가 됩니다.
 - placeholder: string — 입력 예시.
 - type: string = 'text' — HTML input type.
+- size: 'sm' | 'default' = 'default' — 컨트롤 스케일 32 / 40px. 필터 바·툴바는 sm.
 
 
 ## 사용 예

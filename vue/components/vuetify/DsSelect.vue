@@ -25,7 +25,7 @@ const msgId = `ds-field-msg-${uid}`
 </script>
 
 <template>
-  <div class="field ds-vselect" :class="{ 'ds-vselect--sm': size === 'sm' }">
+  <div class="field ds-vselect" :class="{ 'ds-vfield--sm': size === 'sm' }">
     <label v-if="label" :for="fieldId">{{ label }}</label>
     <VSelect :id="fieldId" :aria-describedby="error ? msgId : undefined"
       v-model="model"

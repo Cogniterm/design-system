@@ -5,13 +5,15 @@ withDefaults(defineProps<{
   placeholder?: string
   shortcut?: string      // 예: '⌘K' — 포커스 전에만 표시
   loading?: boolean
-}>(), { placeholder: '검색…' })
+  /** 컨트롤 스케일 — sm 32px / default 40px. 필터 바·툴바는 sm. */
+  size?: 'sm' | 'default'
+}>(), { placeholder: '검색…', size: 'default' })
 const model = defineModel<string>({ default: '' })
 const focused = ref(false)
 const emit = defineEmits<{ search: [q: string] }>()
 </script>
 <template>
-  <div class="searchfield" :class="{ focused }">
+  <div class="searchfield" :class="[{ focused }, size === 'sm' && 'sm']">
     <span class="sf-icon" aria-hidden="true">
       <svg v-if="!loading" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
       <span v-else class="spinner" style="width:14px;height:14px"></span>

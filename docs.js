@@ -965,24 +965,116 @@ function pageTokens() {
     </div>`
 }
 
-/* ═══════════ 검색 ═══════════ */
-$('#search').addEventListener('input', (e) => {
-  const q = e.target.value.trim().toLowerCase()
-  if (!q) { render(); return }
-  const hits = COMPONENTS.filter((c) =>
-    c.name.toLowerCase().includes(q) || c.ko.includes(q) || c.summary.toLowerCase().includes(q))
-  /* .content는 3단 그리드입니다. page-main으로 감싸지 않으면 제목·설명·결과가
-     각각 다른 단으로 흩어집니다 (다른 페이지는 enhance()가 감싸줍니다). */
-  $('#content').innerHTML = `<div class="page-main">
-    <div class="page-head"><h1>Search</h1></div>
-    <p class="page-lead">"${esc(e.target.value)}" — ${hits.length}개</p>
-    <div class="cat-grid" style="margin-top:24px">` +
-    (hits.length ? hits.map((c) => `
-      <a class="cat-card" href="#/components/${c.id}">
-        <div class="cc-top"><h3>${c.name}</h3><span class="cc-ko">${c.ko}</span>
-          <span class="mini-badge ${c.origin}">${ORIGIN_TAG[c.origin]}</span></div>
-        <p>${c.summary}</p></a>`).join('')
-      : `<p>일치하는 컴포넌트가 없습니다.</p>`) + `</div></div>`
+/* ═══════════ 검색 — 커맨드 팔레트 (⌘K) ═══════════
+   전에는 입력할 때마다 본문을 결과 페이지로 갈아치웠습니다. 읽던 화면이 사라지고
+   컴포넌트만 찾을 수 있었습니다. 지금은 화면 위에 팔레트를 띄우고,
+   Foundation·Docs·Templates까지 한 번에 훑습니다. (DsCommandPalette와 같은 규격) */
+const PALETTE_ITEMS = [
+  ...COMPONENTS.map((c) => ({
+    group: 'Components', title: `${c.name} · ${c.ko}`, hint: ORIGIN_TAG[c.origin],
+    href: `#/components/${c.id}`, keys: `${c.name} ${c.ko} ${c.summary}`,
+  })),
+  ...FOUNDATION_PAGES.map(([id, ko, en]) => ({
+    group: 'Foundation', title: `${en} · ${ko}`,
+    href: `#/foundation/${id}`, keys: `${en} ${ko}`,
+  })),
+  ...DOCS_LINKS.map(([id, ko]) => ({
+    group: 'Docs', title: ko, href: `#/docs/${id}`, keys: `${ko} ${id}`,
+  })),
+  ...TEMPLATES.map((t) => ({
+    group: 'Templates', title: `${t.name} · ${t.ko}`,
+    href: `#/templates`, keys: `${t.name} ${t.ko} ${t.desc}`,
+  })),
+]
+
+const pal = $('#palette')
+let palResults = []
+let palActive = 0
+
+function palOpen() {
+  pal.innerHTML = `
+    <div class="ds-palette" role="dialog" aria-modal="true" aria-label="검색">
+      <input id="palInput" class="ds-palette-input" placeholder="컴포넌트 · 파운데이션 · 문서 검색…"
+        role="combobox" aria-expanded="true" aria-controls="palList" autocomplete="off" />
+      <div id="palList" class="ds-palette-list" role="listbox"></div>
+      <div class="ds-palette-foot">
+        <span><kbd class="kbd">↑</kbd><kbd class="kbd">↓</kbd> 이동</span>
+        <span><kbd class="kbd">↵</kbd> 선택</span>
+        <span><kbd class="kbd">Esc</kbd> 닫기</span>
+      </div>
+    </div>`
+  pal.hidden = false
+  document.body.style.overflow = 'hidden'
+  palRender('')
+  const input = $('#palInput')
+  input.focus()
+  input.addEventListener('input', () => palRender(input.value))
+  input.addEventListener('keydown', palKey)
+}
+
+function palClose() {
+  pal.hidden = true
+  pal.innerHTML = ''
+  document.body.style.overflow = ''
+}
+
+function palRender(q) {
+  const s = q.trim().toLowerCase()
+  palResults = (s ? PALETTE_ITEMS.filter((i) => i.keys.toLowerCase().includes(s)) : PALETTE_ITEMS).slice(0, 40)
+  palActive = 0
+  const list = $('#palList')
+  if (!palResults.length) {
+    list.innerHTML = `<div class="ds-palette-empty">'${esc(q)}'와 일치하는 항목이 없습니다. 검색어를 줄여 보세요.</div>`
+    return
+  }
+  // 그룹 머리글로 묶습니다 — 무엇을 찾았는지 종류가 먼저 읽힙니다
+  let html = ''
+  let lastGroup = null
+  palResults.forEach((i, n) => {
+    if (i.group !== lastGroup) { html += `<div class="ds-palette-label">${i.group}</div>`; lastGroup = i.group }
+    html += `<button type="button" class="ds-palette-item${n === 0 ? ' active' : ''}" role="option"
+      aria-selected="${n === 0}" data-n="${n}">
+      <span class="pi-title">${esc(i.title)}</span>
+      ${i.hint ? `<span class="pi-group">${i.hint}</span>` : ''}</button>`
+  })
+  list.innerHTML = html
+  list.querySelectorAll('.ds-palette-item').forEach((b) => {
+    b.addEventListener('mouseenter', () => palMove(+b.dataset.n, true))
+    b.addEventListener('click', () => palPick(+b.dataset.n))
+  })
+}
+
+function palMove(n, absolute) {
+  const items = pal.querySelectorAll('.ds-palette-item')
+  if (!items.length) return
+  palActive = Math.min(Math.max(absolute ? n : palActive + n, 0), items.length - 1)
+  items.forEach((b, i) => {
+    b.classList.toggle('active', i === palActive)
+    b.setAttribute('aria-selected', String(i === palActive))
+  })
+  items[palActive].scrollIntoView({ block: 'nearest' })
+}
+
+function palPick(n) {
+  const hit = palResults[n ?? palActive]
+  if (!hit) return
+  palClose()
+  location.hash = hit.href
+}
+
+function palKey(e) {
+  if (e.key === 'ArrowDown') { e.preventDefault(); palMove(1) }
+  else if (e.key === 'ArrowUp') { e.preventDefault(); palMove(-1) }
+  else if (e.key === 'Enter') { e.preventDefault(); palPick() }
+  else if (e.key === 'Escape') { e.preventDefault(); palClose() }
+}
+
+$('#searchBtn').addEventListener('click', palOpen)
+pal.addEventListener('click', (e) => { if (e.target === pal) palClose() })
+// ⌘K · Ctrl+K — 어디서든 (입력 중일 때는 가로채지 않습니다)
+window.addEventListener('keydown', (e) => {
+  if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') { e.preventDefault(); pal.hidden ? palOpen() : palClose() }
+  else if (e.key === 'Escape' && !pal.hidden) palClose()
 })
 
 render()

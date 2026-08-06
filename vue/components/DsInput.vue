@@ -7,7 +7,9 @@ withDefaults(defineProps<{
   error?: string        // 에러 메시지 — 있으면 에러 상태 (원칙 2: 에러는 기본 상태)
   placeholder?: string
   type?: string
-}>(), { type: 'text' })
+  /** 컨트롤 스케일 — sm 32px / default 40px. 필터 바·툴바는 sm. */
+  size?: 'sm' | 'default'
+}>(), { type: 'text', size: 'default' })
 const model = defineModel<string>()
 
 /* disabled·required·name·autocomplete 같은 속성이 바깥 <div>가 아니라
@@ -28,7 +30,7 @@ const msgId = `ds-input-msg-${uid}`
       :id="inputId"
       v-model="model"
       class="input"
-      :class="{ error: !!error }"
+      :class="[{ error: !!error }, size === 'sm' && 'sm']"
       :type="type"
       :placeholder="placeholder"
       :aria-invalid="error ? 'true' : undefined"

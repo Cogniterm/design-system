@@ -9,6 +9,7 @@ import { DsCombobox } from '~/design/vuetify'   // Vuetify 필요 · ds.css + ds
 - modelValue: string[] = [] — v-model — 칩 배열.
 - items: string[] — 제안 목록.
 - label / hint / error: string — 필드 공통.
+- size: 'sm' | 'default' = 'default' — 컨트롤 스케일 32 / 40px. 필터 바·툴바는 sm.
 
 
 ## 사용 예

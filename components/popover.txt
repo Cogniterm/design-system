@@ -8,9 +8,7 @@ import { DsPopover } from '~/design/vuetify'   // Vuetify 필요 · ds.css + ds-
 ## Props
 - location: string = 'bottom start' — 열리는 방향.
 - width: number | string = 280 — 패널 폭.
-- variant: 'prose' | 'list' = 'prose' — 담는 내용. 설명·짧은 폼이면 prose,
-  선택지 목록(다중 선택 필터 등)이면 list. list는 메뉴 패널과 같은 4px 인셋이라
-  행 hover 면이 가장자리까지 닿습니다. 이때 내용에 별도 패딩을 덧대지 마세요.
+- variant: 'prose' | 'list' = 'prose' — 담는 내용. 설명·짧은 폼이면 prose, 선택지 목록이면 list(메뉴와 같은 4px 인셋).
 
 ## Slots
 - #activator — 여는 요소. v-bind 필수.
@@ -32,8 +30,7 @@ import { DsPopover } from '~/design/vuetify'   // Vuetify 필요 · ds.css + ds-
 
 ## 지침
 - [하지 말 것] 확인이 필요한 입력은 Popover가 아니라 Dialog.
-- [하지 말 것] 내용을 패딩 있는 래퍼로 한 번 더 감싸지 않습니다. 패널이 인셋을 이미 갖고 있어
-  두 배가 됩니다. 목록을 담을 땐 variant="list"로 바꾸세요.
+- [하지 말 것] 내용을 패딩 있는 래퍼로 다시 감싸지 않습니다. 패널이 인셋을 이미 갖고 있어 두 배가 됩니다. 목록을 담을 땐 variant="list".
 
 ## 접근성
 키보드: Enter/Space=열기 · Esc=닫기 · Tab=내용 순회

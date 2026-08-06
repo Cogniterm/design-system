@@ -5,7 +5,9 @@ import { useId } from 'vue'
 import { VTextarea } from 'vuetify/components'
 withDefaults(defineProps<{
   label?: string; hint?: string; error?: string; placeholder?: string; rows?: number
-}>(), { rows: 3 })
+  /** 컨트롤 스케일 — sm 32px / default 40px. 필터 바·툴바는 sm. */
+  size?: 'sm' | 'default'
+}>(), { rows: 3, size: 'default' })
 const model = defineModel<string>()
 /* 소비자가 준 속성(disabled·required·name·error-messages 등)이 바깥 <div>가 아니라
    진짜 Vuetify 컴포넌트에 붙게 합니다. 이게 없으면 조용히 무시됩니다. */
@@ -17,10 +19,10 @@ const fieldId = `ds-field-${uid}`
 const msgId = `ds-field-msg-${uid}`
 </script>
 <template>
-  <div class="field ds-vfield">
+  <div class="field ds-vfield" :class="{ 'ds-vfield--sm': size === 'sm' }">
     <label v-if="label" :for="fieldId">{{ label }}</label>
     <VTextarea :id="fieldId" :aria-describedby="error || hint ? msgId : undefined" v-model="model" :rows="rows" :placeholder="placeholder" :error="!!error"
-      variant="outlined" density="comfortable" hide-details="auto" auto-grow v-bind="$attrs" />
+      variant="outlined" :density="size === 'sm' ? 'compact' : 'comfortable'" hide-details="auto" auto-grow v-bind="$attrs" />
     <div v-if="error" :id="msgId" class="hint error">{{ error }}</div>
     <div v-else-if="hint" :id="msgId" class="hint">{{ hint }}</div>
   </div>
