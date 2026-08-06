@@ -423,7 +423,25 @@ const badgeLabel: Record<string, string> = { default: '대기', brand: '실행�
       </template>
 
       <template v-else-if="id === 'switch'">
-        <DsSwitch v-model="b2" label="에이전트 활성화" hint="끄면 예약된 실행도 중단됩니다." />
+        <div class="play-sections">
+          <div class="play-sec">
+            <div class="play-sec-cap">Sizes · 32 / 40 / 48</div>
+            <div class="play-sec-row" style="flex-direction:column;align-items:flex-start;gap:14px">
+              <DsSwitch v-model="b2" size="sm" label="sm — 촘촘한 목록·테이블 행" />
+              <DsSwitch v-model="b2" label="default — 설정 화면" />
+              <DsSwitch v-model="b2" size="lg" label="lg — 터치가 주가 되는 화면" />
+            </div>
+          </div>
+          <div class="play-sec">
+            <div class="play-sec-cap">States</div>
+            <div class="play-sec-row" style="flex-direction:column;align-items:flex-start;gap:14px">
+              <DsSwitch v-model="b2" label="에이전트 활성화" hint="끄면 예약된 실행도 중단됩니다." />
+              <DsSwitch :model-value="false" label="꺼짐" />
+              <DsSwitch :model-value="true" label="켜짐 · 잠김" disabled />
+              <DsSwitch :model-value="false" label="꺼짐 · 잠김" disabled />
+            </div>
+          </div>
+        </div>
       </template>
 
       <template v-else-if="id === 'radiogroup'">

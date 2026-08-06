@@ -332,7 +332,7 @@ function renderComponent(id, tab) {
   const c = byId(id)
   if (!c) return renderCatalog()
 
-  const tabs = [['overview', 'Overview'], ['usage', '언제 쓰나'], ['properties', 'Properties'],
+  const tabs = [['overview', 'Overview'], ['usage', 'Usage'], ['properties', 'Properties'],
                 ['guidelines', 'Guidelines'], ['a11y', 'Accessibility']]
   const tabsHtml = tabs.map(([t, label]) =>
     `<a href="#/components/${id}?tab=${t}" class="${tab === t ? 'on' : ''}">${label}</a>`).join('')

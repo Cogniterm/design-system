@@ -10,7 +10,7 @@ withDefaults(defineProps<{
 }>(), { size: 16, variant: 'brand' })
 </script>
 <template>
-  <VProgressCircular class="ds-spinner" indeterminate
+  <VProgressCircular class="ds-spinner" :class="variant === 'current' && 'ds-spinner--current'" indeterminate
     :color="variant === 'brand' ? 'primary' : undefined"
     :size="size" :width="2" />
 </template>
