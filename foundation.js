@@ -205,9 +205,17 @@ export function fdColor() {
       </div>
       <p>
         <b>면과 글자를 나눕니다.</b>
-        <code>--brand</code>는 버튼 배경처럼 <b>면</b>에만 씁니다.
-        흰 배경 위 <b>글자·링크</b>에 쓰면 대비가 부족하므로
+        <code>--brand</code>(<code>#1F7FF0</code>)는 브랜드 원색이며 버튼 배경·점·포커스 링처럼
+        <b>면</b>에만 씁니다. 흰 배경 위 <b>글자·링크</b>에 쓰면 대비가 부족하므로
         반드시 <code>--brand-text</code>를 씁니다 (5.89:1).
+      </p>
+      <p>
+        <b>브랜드 원색을 그대로 쓰기로 한 결정입니다.</b>
+        흰 라벨을 얹으면 3.92:1로 WCAG AA(4.5:1)에 미달합니다 —
+        색 일치를 우선한 선택이며, 무결성 검사에도 예외로 기록해 두었습니다.
+        비텍스트 UI 기준(3:1)은 통과하므로 점·포커스 링·보더는 문제가 없습니다.
+        접근성이 요구되는 화면에서는 primary 버튼 대신 secondary를 쓰거나
+        라벨을 크게(18px 이상) 잡으면 기준을 충족합니다.
       </p>
       <div class="dodont">
         <div class="dd do">
@@ -324,7 +332,7 @@ export function fdColor() {
           <tr><td>본문 (<code>gray-12</code>)</td><td>16.4:1</td><td>16.3:1</td></tr>
           <tr><td>보조 텍스트 (<code>gray-11</code>)</td><td>5.9:1</td><td>9.1:1</td></tr>
           <tr><td>링크 (<code>brand-text</code>)</td><td>5.9:1</td><td>7.8:1</td></tr>
-          <tr><td>버튼 라벨 (<code>on-brand</code> on <code>brand</code>)</td><td>4.7:1</td><td>6.0:1</td></tr>
+          <tr><td>버튼 라벨 (<code>on-brand</code> on <code>brand</code>)</td><td><b>3.9:1 — 미달(승인된 예외)</b></td><td>6.0:1</td></tr>
           <tr><td>상태색</td><td>4.6~5.0:1</td><td>4.8~10.1:1</td></tr>
         </tbody>
       </table>

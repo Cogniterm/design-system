@@ -918,7 +918,7 @@ function pageTokens() {
         <div class="brand-chip" style="background:var(--brand-subtle);color:var(--brand)">subtle</div>
       </div>
       <p>
-        라이트 <code>#1B72D9</code> / 다크 <code>#4593F5</code>.
+        라이트 <code>#1F7FF0</code> / 다크 <code>#4593F5</code>.
         어두운 배경에서는 원색이 가라앉아 보여 한 톤 밝은 변형을 씁니다.
         글자·링크에는 한 단계 더 어두운 <code>--brand-text</code>(<code>#0F62C4</code>)를 씁니다 —
         원색을 흰 배경 위 글자로 쓰면 대비가 AA에 못 미칩니다.

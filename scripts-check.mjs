@@ -227,6 +227,15 @@ if (scaleOk) {
     const l1 = lum(a), l2 = lum(b)
     return (Math.max(l1, l2) + 0.05) / (Math.min(l1, l2) + 0.05)
   }
+  /* 승인된 예외 — 검사를 지우지 않고 여기에 사유와 함께 남깁니다.
+     지우면 왜 미달인지 아무도 모르게 되고, 나중에 실수로 더 나빠져도 안 보입니다.
+     accepted: 미달을 알고도 택한 값 (실패 대신 경고로 보고) */
+  const ACCEPTED = {
+    // 브랜드 원색(#1F7FF0)을 그대로 쓰기로 한 결정. 색 일치 > AA.
+    // 비텍스트 기준(3:1)은 통과하므로 점·포커스 링·보더는 문제없고,
+    // 흰 라벨을 얹는 primary 버튼만 3.92:1로 AA에 미달합니다.
+    'light 버튼 라벨 on-brand': '브랜드 원색 유지 결정 (2026-08-06)',
+  }
   // [설명, 앞색, 뒷색, 최소비] — 본문 4.5, UI 3
   const PAIRS = [
     ['본문 gray-12', '--gray-12', '--bg', 4.5],
@@ -245,7 +254,11 @@ if (scaleOk) {
       // 토큰 이름이 바뀌면 조용히 건너뛰지 않고 실패시킵니다 — 검사가 사라지는 게 더 위험합니다
       if (!a || !b) { fails.push(`${theme} ${label}: 토큰을 찾을 수 없음 (${!a ? fg : bg})`); continue }
       const r = ratio(a, b)
-      if (r < min) fails.push(`${theme} ${label}: ${r.toFixed(2)}:1 (최소 ${min})`)
+      if (r < min) {
+        const key = `${theme} ${label}`
+        if (ACCEPTED[key]) warn.push(`대비 예외 — ${key}: ${r.toFixed(2)}:1 (최소 ${min}) · ${ACCEPTED[key]}`)
+        else fails.push(`${key}: ${r.toFixed(2)}:1 (최소 ${min})`)
+      }
     }
   }
   /* 위는 "토큰끼리" 검사입니다. 실제로 화면에 나오는 건 스타일시트가 어느 회색을
