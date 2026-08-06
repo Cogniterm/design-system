@@ -294,12 +294,27 @@
 /* 필드 안 칩도 DsChip과 같은 규격입니다 — 같은 물건이 자리에 따라 달라 보이면 안 됩니다.
    (28px · pill · 12px · 1px 보더. 전에는 22px에 r-md라 둥글기까지 달랐습니다.)
    sm 필드(32px)에서는 한 단계 줄입니다. */
+/* 칩은 필드 크기를 따라갑니다.
+
+   28px 하나로 고정해 두었더니, 기본 필드가 40px에서 32px로 바뀐 뒤에는
+   32px 상자 안에 28px 칩이 들어가 위아래 여백이 2px씩밖에 안 남았습니다.
+   두 줄이 되면 필요한 높이(28+6+28+8=70)가 필드가 내주는 높이를 넘어
+   칩이 서로 붙어 보였습니다 — "여백 없이 쌓인다"의 정체입니다.
+
+     필드 32(compact)     칩 22   두 줄 22+5+22+8 = 57
+     필드 36(comfortable) 칩 24   두 줄 24+5+24+8 = 61
+     필드 40(default)     칩 28   두 줄 28+6+28+10 = 80 */
 .v-field .v-chip.v-chip {
-  height: 28px; min-height: 28px; --v-chip-height: 28px;
+  height: 22px; min-height: 22px; --v-chip-height: 22px;
   border-radius: var(--r-full); font-size: var(--text-xs); font-weight: var(--weight-medium);
-  padding-inline: 11px 7px; border: 1px solid var(--border); color: var(--gray-12);
+  padding-inline: 9px 6px; border: 1px solid var(--border); color: var(--gray-12);
 }
-.ds-vfield--sm .v-field .v-chip.v-chip { height: 22px; min-height: 22px; --v-chip-height: 22px; padding-inline: 9px 6px; }
+.v-input--density-comfortable .v-field .v-chip.v-chip {
+  height: 24px; min-height: 24px; --v-chip-height: 24px; padding-inline: 10px 7px;
+}
+.v-input--density-default .v-field .v-chip.v-chip {
+  height: 28px; min-height: 28px; --v-chip-height: 28px; padding-inline: 11px 7px;
+}
 /* 닫기 × 는 글자에서 띄웁니다 — DsChip의 gap 6px과 같은 간격 */
 .v-field .v-chip.v-chip .v-chip__close { margin-inline-start: 6px; }
 .v-field .v-chip.v-chip .v-chip__close .v-icon { font-size: 15px; }
@@ -708,7 +723,7 @@
      comfortable  36
      default      40 */
 .v-input--density-compact .v-field__input {
-  min-height: 32px; padding-top: 3px; padding-bottom: 3px;
+  min-height: 32px; padding-top: 4px; padding-bottom: 4px;
 }
 .v-input--density-comfortable .v-field__input {
   min-height: 36px; padding-top: 4px; padding-bottom: 4px;
@@ -716,9 +731,11 @@
 .v-input--density-default .v-field__input {
   min-height: 40px; padding-top: 5px; padding-bottom: 5px;
 }
+/* 칩이 줄바꿈될 때의 줄 간격 — 칩보다 촘촘하면 두 줄이 한 덩어리로 보입니다 */
+.v-field__input { row-gap: 5px; column-gap: 6px; }
 /* 칩 사이 간격 — DsChip을 나란히 놓을 때와 같은 6px입니다.
    Vuetify 기본은 가로 2px이라 칩끼리 거의 붙어 보였습니다. */
-.v-field__input { row-gap: 6px; column-gap: 6px; }
+
 /* 크기 sm — 감싼 필드 전체 공통 (Select·Textarea·Autocomplete·Combobox·NumberInput·FileInput).
    높이는 Vuetify density=compact가 32px로 잡고, 글자만 한 단계 줄입니다. */
 .ds-vfield--sm .v-field { font-size: var(--text-sm); }
@@ -792,11 +809,18 @@
 .v-list-item::after { border: 0; }
 /* 링을 항목 "안쪽"에 그립니다. 바깥 링(--focus-ring)은 요소 밖으로 4px 번지는데,
    메뉴 패널의 안쪽 여백이 딱 4px이라 링이 패널 모서리를 넘어 삐져나갑니다.
-   같은 브랜드 2px 링이되 방향만 안으로 돌린 것입니다. */
-.v-list-item:focus-visible {
+   같은 브랜드 2px 링이되 방향만 안으로 돌린 것입니다.
+
+   지금 값인 항목(--active)은 제외합니다. Vuetify는 메뉴를 열 때 선택된 항목에
+   포커스를 직접 넣는데, 브라우저는 그것도 키보드 포커스로 봅니다(:focus-visible).
+   그래서 마우스로 열었을 뿐인데 첫 항목에 링이 그려져 있었습니다.
+   지금 값은 브랜드 글자색으로 이미 구분되므로 링이 없어도 읽힙니다.
+   화살표로 다른 항목에 가면 그 항목은 --active가 아니라서 링이 나옵니다. */
+.v-list-item:focus-visible:not(.v-list-item--active) {
   outline: none; border-radius: var(--r-md);
   box-shadow: inset 0 0 0 2px var(--brand);
 }
+.v-list-item--active:focus-visible { outline: none; }
 
 /* 파괴적 목록 항목 — DsMenu의 --danger와 같은 규약입니다.
    Vuetify 목록(VList·VMenu 안의 v-list-item)에서도 글자와 아이콘이 함께 빨갛습니다. */
