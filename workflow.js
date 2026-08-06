@@ -475,20 +475,56 @@ export function pageQuickstart(ic) {
   return `
     <div class="page-head"><h1>빠른 시작</h1><span class="page-ko">Quick start</span></div>
     <p class="page-lead">
-      붙여넣고 5분. 설명 없이 명령만 있습니다.
+      두 갈래입니다. 아무것도 설치돼 있지 않다면 <b>한 줄</b>로 끝내고,
+      Node.js가 이미 있다면 아래 명령을 순서대로 실행하세요.
       왜 이렇게 하는지는 <a href="#/docs/env">개발 환경</a>과
       <a href="#/docs/workflow">워크플로우</a>에 있습니다.
     </p>
 
     <div class="prose">
-      <h2>먼저 있어야 하는 것</h2>
-      <p>Node.js 20 이상 하나면 됩니다. <code>node -v</code>로 확인하세요.</p>
+      <h2>A · 완전 처음이라면 — 한 줄</h2>
+      <p>
+        <b>VS Code 말고는 아무것도 없어도 됩니다.</b> Node.js가 없으면 설치하고,
+        Git이 없어도 되고, 프로젝트 생성·패키지 설치·설정 파일·화면 띄우기까지
+        한 번에 끝냅니다. VS Code에서 터미널을 열고(<code>Ctrl</code> +
+        <code>&#96;</code>) 자기 운영체제 줄을 붙여넣으세요.
+      </p>
+      <h3>Windows</h3>
+      <pre><code>irm https://Cogniterm.github.io/design-system/setup/setup.ps1 -OutFile setup.ps1
+powershell -ExecutionPolicy Bypass -File .setup.ps1</code></pre>
+      <h3>macOS · Linux</h3>
+      <pre><code>curl -fsSL https://Cogniterm.github.io/design-system/setup/setup.sh | bash</code></pre>
+      <p>
+        7단계가 차례로 지나가고 마지막에 브라우저가 열립니다. 3~5분 걸립니다.
+        폴더 이름은 <code>my-app</code>입니다 — 바꾸려면 실행 전에
+        <code>$env:DS_APP_NAME='이름'</code>(Windows) 또는
+        <code>DS_APP_NAME=이름</code>(macOS)을 지정하세요.
+      </p>
+      <table>
+        <thead><tr><th>단계</th><th>하는 일</th></tr></thead>
+        <tbody>
+          <tr><td>1</td><td>Node.js 확인 — 없으면 winget · Homebrew로 설치</td></tr>
+          <tr><td>2</td><td>디자인 시스템 내려받기 (Git 없이 압축본으로)</td></tr>
+          <tr><td>3</td><td>Vite + Vue + TypeScript 프로젝트 생성</td></tr>
+          <tr><td>4</td><td>패키지 9종 설치</td></tr>
+          <tr><td>5</td><td>디자인 시스템 파일을 <code>src/design/</code>에 복사</td></tr>
+          <tr><td>6</td><td>설정 파일 5개 넣기</td></tr>
+          <tr><td>7</td><td>개발 서버 실행</td></tr>
+        </tbody>
+      </table>
+      <p>
+        같은 이름의 폴더가 이미 있으면 아무것도 하지 않고 멈춥니다 —
+        기존 작업물을 덮어쓰지 않습니다.
+      </p>
 
-      <h2>1 · 설치</h2>
+      <h2>B · Node.js가 이미 있다면 — 손으로</h2>
+      <p>Node.js 20 이상이 필요합니다. <code>node -v</code>로 확인하세요.</p>
+
+      <h3>1 · 설치</h3>
       <p>네 줄입니다. <code>&lt;DS&gt;</code>에 디자인 시스템 저장소 경로를 넣으세요.</p>
       <pre><code>${QUICK_INSTALL.replace(/[<>&]/g, (m) => ({ '<': '&lt;', '>': '&gt;', '&': '&amp;' }[m]))}</code></pre>
 
-      <h2>2 · 설정 세 곳</h2>
+      <h3>2 · 설정 세 곳</h3>
       <p>여기까지 하면 화면이 뜹니다. 한 곳이라도 빠지면 3장의 증상 표를 보세요.</p>
       <pre><code>// vite.config.ts
 import { defineConfig } from 'vite'
@@ -506,7 +542,7 @@ export default defineConfig({
       <pre><code>/* src/vuetify-layer.css — 새로 만듭니다 */
 @import 'vuetify/dist/vuetify.css' layer(vuetify);</code></pre>
 
-      <h2>3 · main.ts</h2>
+      <h3>3 · main.ts</h3>
       <pre><code>import { createApp } from 'vue'
 import { createVuetify } from 'vuetify'
 import './vuetify-layer.css'
@@ -526,7 +562,7 @@ createApp(App)
   }))
   .mount('#app')</code></pre>
 
-      <h2>4 · 됐는지 확인</h2>
+      <h2>됐는지 확인</h2>
       <table>
         <thead><tr><th>확인</th><th>맞는 모습</th></tr></thead>
         <tbody>

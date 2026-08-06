@@ -1,0 +1,14 @@
+{
+  "compilerOptions": {
+    "target": "ESNext", "module": "ESNext", "moduleResolution": "bundler",
+    "strict": true, "jsx": "preserve", "skipLibCheck": true, "noEmit": true,
+    "types": ["vite/client"],
+
+    /* '~' 별칭 — vite.config.ts의 resolve.alias와 같은 값이어야 합니다.
+       한쪽만 넣으면 개발 서버는 뜨는데 타입 검사가 모듈을 못 찾습니다.
+       baseUrl은 쓰지 않습니다 — TypeScript 7에서 없어집니다. 경로를
+       "./src/*"처럼 tsconfig 기준 상대경로로 적으면 baseUrl이 필요 없습니다. */
+    "paths": { "~/*": ["./src/*"] }
+  },
+  "include": ["src/**/*.ts", "src/**/*.vue"]
+}

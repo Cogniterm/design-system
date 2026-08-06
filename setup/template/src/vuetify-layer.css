@@ -1,0 +1,6 @@
+/* Vuetify 스타일의 유일한 진입점입니다.
+
+   레이어에 넣으면 파일 순서와 무관하게 우선순위가 고정됩니다 —
+   레이어에 속하지 않은 우리 CSS가 레이어 안의 Vuetify를 항상 이깁니다.
+   'vuetify/styles'가 아니라 dist/vuetify.css여야 컴포넌트 CSS까지 들어옵니다. */
+@import 'vuetify/dist/vuetify.css' layer(vuetify);
