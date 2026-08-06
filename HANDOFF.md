@@ -80,7 +80,7 @@ export default defineConfig({
 ```ts
 import { createVuetify } from 'vuetify'
 import { ko } from 'vuetify/locale'
-import 'vuetify/styles'
+import './vuetify-layer.css'   // ← 'vuetify/styles' 대신 (아래 2-4 참고)
 import 'pretendard/dist/web/variable/pretendardvariable-dynamic-subset.css'
 
 import { dsTheme } from '~/design/theme'
@@ -103,6 +103,37 @@ createApp(App).use(vuetify).mount('#app')
 > `src/shims.d.ts`에 `declare module 'vuetify/styles'` 한 줄을 넣으면 지나갑니다.
 
 Nuxt라면 CSS는 `nuxt.config.ts`의 `css: []`에, `createVuetify`는 플러그인에 둡니다.
+
+### 2-4. Vuetify 스타일은 layer로 감쌉니다 — 빠뜨리면 우리 스타일이 밀립니다
+
+`src/vuetify-layer.css` 한 장을 만들고, `vuetify/styles` 대신 이걸 불러옵니다.
+
+```css
+/* src/vuetify-layer.css */
+@import 'vuetify/dist/vuetify.css' layer(vuetify);
+```
+
+```ts
+// vite.config.ts — 컴포넌트별 CSS 자동 주입을 끕니다
+vuetify({ autoImport: true, styles: 'none' })
+```
+
+**왜 필요한가.** 레이어가 없으면 "선택자 무게가 같을 때 누가 이기는가"를 **파일 순서**가
+정합니다. `vite-plugin-vuetify`는 컴포넌트 CSS를 그 컴포넌트가 import되는 시점에 끼워
+넣기 때문에 우리 `ds-vuetify.css`보다 **뒤에 오는 일이 잦고**, 그때마다 Vuetify가 이깁니다.
+실제로 포커스 테두리(1px→2px)·드롭다운 그림자·리스트 항목 여백·필드 들여쓰기가
+이 이유로 우리 값이 안 먹었고, 그때마다 선택자에 클래스를 덧붙여 특이도를 올려야 했습니다.
+
+레이어에 넣으면 순서와 무관해집니다 — **레이어 밖(unlayered) 선언이 레이어 안을 항상
+이기므로**, 우리 CSS는 특이도를 올리지 않아도 Vuetify를 덮습니다.
+
+주의 두 가지:
+- `vuetify/styles`가 아니라 **`vuetify/dist/vuetify.css`** 여야 합니다. 전자는 기본·유틸만
+  담고 있어 컴포넌트가 통째로 무너집니다.
+- 우리 규칙이 **너무 넓으면** 이제 Vuetify의 조건부 규칙까지 덮습니다.
+  예: `.v-icon { opacity: 1 }`은 "정렬된 열에서만 보이는" 테이블 정렬 아이콘까지
+  항상 보이게 만들었습니다(지금은 `:not(.v-data-table-header__sort-icon)`으로 좁혀 뒀습니다).
+  새 규칙은 대상을 좁게 잡으세요.
 
 > `createVuetify`는 **컴포넌트를 등록하지 않습니다.** 손으로 쓴 `<v-btn>`이
 > `Failed to resolve component`로 비어 나오면 `vite-plugin-vuetify`(`autoImport: true`)를

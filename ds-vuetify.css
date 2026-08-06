@@ -154,7 +154,10 @@
 
 /* ── VIcon — Lucide 컴포넌트 아이콘 ── */
 .v-icon svg { width: 1em; height: 1em; display: block; }
-.v-icon { opacity: 1; }
+/* Vuetify가 아이콘을 흐리게(medium-emphasis) 처리하는 것을 되돌립니다.
+   단, 정렬 아이콘처럼 "평소엔 숨고 필요할 때만 보이는" 아이콘은 예외입니다 —
+   ds-vuetify.css는 layer 밖이라 이 규칙이 Vuetify의 조건부 규칙을 전부 이깁니다. */
+.v-icon:not(.v-data-table-header__sort-icon) { opacity: 1; }
 /* 셀렉트 화살표 — 열리면 뒤집기 (mdi 폰트 회전 규칙을 svg에도) */
 .v-select--active-menu .v-select__menu-icon,
 .v-autocomplete--active-menu .v-autocomplete__menu-icon { transform: rotate(180deg); }
