@@ -1420,7 +1420,7 @@ export const COMPONENTS = [
     ['modelValue', 'boolean', 'false', 'v-model로 열고 닫습니다.'],
     ['variant', "'success' | 'danger'", "'success'", '결과 종류.'],
     ['action', 'string', '—', '후속 액션 라벨. 하나까지.'],
-    ['timeout', 'number', '4000', '자동 닫힘(ms).'],
+    ['timeout', 'number', '내용에 따라', '자동 닫힘(ms). 주지 않으면 행동 버튼이 없을 때 3000, 있을 때 6000입니다 — 되돌리기를 누르려는 순간 사라지지 않게.'],
   ],
   events: [['action', '—', '액션 클릭.']],
   slots: [['default', '문구.']],

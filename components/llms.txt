@@ -397,7 +397,7 @@ Each component has a standalone prompt at https://Cogniterm.github.io/design-sys
 - **DsSnackbar** (스낵바) — 떴다가 사라지는 알림.
   import: ~/design/vuetify | origin: wrapped (VSnackbar)
   where: 저장·삭제 결과 알림. 후속 액션은 하나까지.
-  props: modelValue=false, variant='success', action, timeout=4000
+  props: modelValue=false, variant='success', action, timeout=내용에 따라
   vs: Toast — 같은 생김새입니다 — Snackbar가 Toast를 그대로 그립니다. 띄우고 없애는 동작이 필요하면 Snackbar / Alert — 지나가도 되면 Snackbar, 남아야 하면 Alert
   usage:
     <DsSnackbar v-model="open" variant="success" action="View" @action="go">
