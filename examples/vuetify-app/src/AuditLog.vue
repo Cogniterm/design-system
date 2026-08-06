@@ -54,7 +54,7 @@ const LEVEL_META: Record<Level, { label: string; variant: 'default'|'brand'|'suc
 const q = ref('')
 const levelFilter = ref<Level | null>(null)
 const actorFilter = ref<string>('전체')
-const density = ref<'compact' | 'comfortable' | 'spacious'>('compact')
+const density = ref<'sm' | 'default' | 'lg'>('sm')
 const loading = ref(false)
 const selected = ref<Log | null>(null)
 /* 다이얼로그는 열림/닫힘(boolean)을 받습니다.
@@ -155,7 +155,7 @@ function exportCsv() { toast.value = { msg: '내보내지 못했습니다. 감�
           </div>
           <span style="flex:1"></span>
           <DsTooltip text="행 높이를 바꿉니다 (원칙 3 — 밀도는 선택)">
-            <DsSelect v-model="density" :items="['compact', 'comfortable', 'spacious']" size="sm" style="width:150px" />
+            <DsSelect v-model="density" :items="['sm', 'default', 'lg']" size="sm" style="width:150px" />
           </DsTooltip>
         </div>
 
@@ -187,7 +187,7 @@ function exportCsv() { toast.value = { msg: '내보내지 못했습니다. 감�
 
         <!-- ═══ 테이블 ═══ -->
         <div v-else class="tbl">
-          <DsDataTable :headers="headers" :items="rows" :density="density">
+          <DsDataTable :headers="headers" :items="rows" :size="density">
             <template #item.time="{ item }">
               <span class="mono-cell">{{ (item as any).time }}</span>
             </template>

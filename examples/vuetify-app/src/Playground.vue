@@ -98,10 +98,18 @@ const q = ref(''); const loading = ref(false)
 const now = ref(Date.now() - 2 * 36e5)
 
 const tableRows = [
-  { name: 'Weekly report agent', status: 'brand', label: '실행중', at: '2h ago' },
-  { name: 'Invoice classifier', status: 'success', label: '완료', at: '1d ago' },
-  { name: 'Drive sync', status: 'danger', label: '실패', at: '3d ago' },
+  { name: 'Weekly report agent', status: 'brand', label: '실행중', docs: 1284, at: '2h ago' },
+  { name: 'Invoice classifier', status: 'success', label: '완료', docs: 92, at: '1d ago' },
+  { name: 'Drive sync', status: 'danger', label: '실패', docs: 7, at: '3d ago' },
 ]
+/* numeric: true — 숫자 열은 오른쪽 정렬 + 자릿수 고정폭으로 자동 처리됩니다 */
+const tableCols = [
+  { title: '이름', key: 'name' },
+  { title: '상태', key: 'status' },
+  { title: '문서 수', key: 'docs', numeric: true },
+  { title: '수정', key: 'at' },
+]
+const tableSel = ref<any[]>([])
 const palItems = [
   { id: 'a', title: '감사 로그 열기', group: '이동' },
   { id: 'b', title: '새 에이전트', hint: 'N' },
@@ -533,13 +541,23 @@ const badgeLabel: Record<string, string> = { default: '대기', brand: '실행�
       </template>
 
       <template v-else-if="id === 'datatable'">
-        <div style="width:100%"><DsDataTable :headers="[
-          { title: '이름', key: 'name' }, { title: '상태', key: 'status' }, { title: '수정', key: 'at' }]"
-          :items="tableRows" density="compact">
-          <template #item.status="{ item }">
-            <DsBadge :variant="(item as any).status">{{ (item as any).label }}</DsBadge>
-          </template>
-        </DsDataTable></div>
+        <div style="width:100%">
+          <DsDataTable
+            v-model:selected="tableSel"
+            :headers="tableCols"
+            :items="group === 'empty' ? [] : tableRows"
+            :size="gv(['sm','default','lg'], 'default')"
+            :striped="group === 'striped'"
+            :selectable="group === 'selectable'"
+            :loading="group === 'loading'"
+            hide-default-footer
+            item-value="name"
+          >
+            <template #item.status="{ item }">
+              <DsBadge :variant="(item as any).status">{{ (item as any).label }}</DsBadge>
+            </template>
+          </DsDataTable>
+        </div>
       </template>
 
       <template v-else-if="id === 'list'">

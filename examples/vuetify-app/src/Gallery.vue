@@ -416,7 +416,7 @@ const SECTIONS = [
             <div class="g-name">DsDataTable <i class="lg wrapped"></i> <code>VDataTable</code></div>
           </div>
           <div class="g-demo" style="display:block">
-            <DsDataTable :headers="tableHeaders" :items="tableRows" density="compact">
+            <DsDataTable :headers="tableHeaders" :items="tableRows" size="sm">
               <template #item.status="{ item }">
                 <DsBadge :variant="(item as any).status">{{ (item as any).label }}</DsBadge>
               </template>

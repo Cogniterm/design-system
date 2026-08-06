@@ -6,10 +6,15 @@ import { DsDataTable } from '~/design/vuetify'   // Vuetify 필요 · ds.css + d
 감사 로그, 에이전트 목록, 실행 이력 — 열이 고정된 데이터.
 
 ## Props
-- headers: any[] = 필수 — Vuetify VDataTable의 headers 형식 그대로.
+- headers: any[] = 필수 — VDataTable headers 형식. numeric: true를 주면 그 열은 오른쪽 정렬 + 자릿수 고정폭이 됩니다.
 - items: any[] = 필수 — 행 데이터.
-- density: 'compact' | 'comfortable' | 'spacious' = 'comfortable' — 행 높이 34 / 42 / 50px (원칙 3).
+- size: 'sm' | 'default' | 'lg' = 'default' — 행 높이 34 / 42 / 50px (원칙 3).
+- striped: boolean = false — 홀짝 행에 옅은 면. 열이 많아 눈이 행을 놓칠 때만.
+- sticky: boolean = false — 헤더 고정 — height와 함께 씁니다.
+- bordered: boolean = true — 바깥 테두리·모서리. 이미 테두리가 있는 카드 안에서는 false.
+- selectable: boolean = false — 행 선택 체크박스 열 (v-model:selected).
 - loading: boolean = false — 로딩 표시.
+- emptyText: string = '표시할 데이터가 없습니다.' — 행이 없을 때 문구.
 
 ## Slots
 - #(VDataTable의 모든 슬롯) — item.* 등 Vuetify 슬롯이 그대로 전달됩니다.
@@ -28,6 +33,8 @@ import { DsDataTable } from '~/design/vuetify'   // Vuetify 필요 · ds.css + d
 - vs FileRow: 파일이면 FileRow
 
 ## 지침
+- [해야 할 것] 숫자 열에는 numeric: true를 줍니다 — 오른쪽 정렬 + 자릿수 고정폭이라야 크기를 눈으로 비교할 수 있습니다.
+- [하지 말 것] striped를 기본으로 쓰지 않습니다. 줄무늬는 정보가 아니라 장식이고, 대부분의 표는 hover만으로 충분합니다.
 - [해야 할 것] 드라이브·목록처럼 훑는 화면은 compact, 그 외는 comfortable (원칙 3).
 - [해야 할 것] 행 액션은 호버 시에만 드러내 기본 화면을 조용하게 유지합니다.
 

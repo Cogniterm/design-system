@@ -581,12 +581,26 @@ export const COMPONENTS = [
   reason: { ko: '정렬, 페이지네이션, 행 선택, 가상 스크롤을 직접 만드는 것은 비현실적입니다. VDataTable을 그대로 쓰고 시각만 우리 것으로 덮습니다.',
             en: 'Sorting, pagination, selection, virtualization are impractical to rebuild; keep VDataTable and restyle.' },
   props: [
-    ['headers', 'any[]', '필수', 'Vuetify VDataTable의 headers 형식 그대로.'],
+    ['headers', 'any[]', '필수', 'VDataTable headers 형식. numeric: true를 주면 그 열은 오른쪽 정렬 + 자릿수 고정폭이 됩니다.'],
     ['items', 'any[]', '필수', '행 데이터.'],
-    ['density', `'compact' | 'comfortable' | 'spacious'`, `'comfortable'`, '행 높이 34 / 42 / 50px (원칙 3).'],
+    ['size', `'sm' | 'default' | 'lg'`, `'default'`, '행 높이 34 / 42 / 50px (원칙 3).'],
+    ['striped', 'boolean', 'false', '홀짝 행에 옅은 면. 열이 많아 눈이 행을 놓칠 때만.'],
+    ['sticky', 'boolean', 'false', '헤더 고정 — height와 함께 씁니다.'],
+    ['bordered', 'boolean', 'true', '바깥 테두리·모서리. 이미 테두리가 있는 카드 안에서는 false.'],
+    ['selectable', 'boolean', 'false', '행 선택 체크박스 열 (v-model:selected).'],
     ['loading', 'boolean', 'false', '로딩 표시.'],
+    ['emptyText', 'string', `'표시할 데이터가 없습니다.'`, '행이 없을 때 문구.'],
   ],
   slots: [['(VDataTable의 모든 슬롯)', 'item.* 등 Vuetify 슬롯이 그대로 전달됩니다.']],
+  demos: [
+    { key: 'default',    title: 'Default',    desc: '기본 — 42px 행, 행에 hover하면 지금 보는 줄이 드러납니다.' },
+    { key: 'sm',         title: 'Small',      desc: '34px 행 — 한 화면에 더 많이 보여야 하는 감사 로그·이력.' },
+    { key: 'lg',         title: 'Large',      desc: '50px 행 — 행마다 아바타·배지가 여럿 들어갈 때.' },
+    { key: 'striped',    title: 'Striped',    desc: '홀짝 행에 옅은 면. 열이 많아 눈이 행을 놓칠 때만 씁니다.' },
+    { key: 'selectable', title: 'Selectable', desc: '체크박스 열. 선택한 행은 브랜드 면으로 남습니다.' },
+    { key: 'loading',    title: 'Loading',    desc: '헤더는 남기고 본문 자리에 진행 표시 — 표가 사라졌다 나타나지 않게.' },
+    { key: 'empty',      title: 'Empty',      desc: '행이 없을 때. 문구는 emptyText로 바꿉니다.' },
+  ],
   thumb: `<div class="table-wrap" style="min-width:300px"><table><thead><tr><th>Name</th><th>Status</th></tr></thead><tbody><tr><td>Weekly report agent</td><td><span class="badge brand"><span class="dot"></span>Running</span></td></tr><tr><td>Invoice classifier</td><td><span class="badge success"><span class="dot"></span>Completed</span></td></tr></tbody></table></div>`,
   demo: `<div class="table-wrap"><table>
     <thead><tr><th>Name</th><th>Status</th><th>Owner</th><th>Updated</th></tr></thead>
@@ -609,6 +623,8 @@ export const COMPONENTS = [
   </tbody>
 </table></div>`,
   guidelines: [
+    ['해야 할 것', '숫자 열에는 numeric: true를 줍니다 — 오른쪽 정렬 + 자릿수 고정폭이라야 크기를 눈으로 비교할 수 있습니다.'],
+    ['하지 말 것', 'striped를 기본으로 쓰지 않습니다. 줄무늬는 정보가 아니라 장식이고, 대부분의 표는 hover만으로 충분합니다.'],
     ['해야 할 것', '드라이브·목록처럼 훑는 화면은 compact, 그 외는 comfortable (원칙 3).'],
     ['해야 할 것', '행 액션은 호버 시에만 드러내 기본 화면을 조용하게 유지합니다.'],
   ],

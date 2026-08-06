@@ -4,23 +4,61 @@
    ds.css 다음에 로드하세요.
    ============================================ */
 
-/* ── DsDataTable — VDataTable 시각 조정 ── */
-.ds-vtable .v-table { background: var(--surface); font-family: var(--font); }
-/* 헤더는 배경 없이 — 아래 보더 한 줄과 글자 색만으로 구분합니다.
+/* ── DsDataTable — VDataTable 시각 조정 ─────────────────────
+   기조: 면을 칠하지 않고 보더 한 줄과 글자 색으로 구조를 만듭니다.
    면을 칠하면 표가 무거워지고, 여러 표가 겹칠 때 회색 층이 쌓입니다. */
+.ds-vtable { border: 1px solid var(--border); border-radius: var(--r-xl); overflow: hidden; }
+.ds-vtable--flat { border: 0; border-radius: 0; }
+.ds-vtable .v-table { background: var(--surface); font-family: var(--font); }
+
+/* 헤더 — 배경 없이 아래 보더 한 줄 */
 .ds-vtable .v-table__wrapper > table > thead > tr > th {
-  background: transparent; color: var(--gray-11);
+  background: var(--surface); color: var(--gray-11);
   font-size: var(--text-xs); font-weight: var(--weight-medium); letter-spacing: 0;
   border-bottom: 1px solid var(--border-strong);
+  white-space: nowrap;
 }
 .ds-vtable .v-table__wrapper > table > tbody > tr > td {
   font-size: var(--text-sm); color: var(--gray-12);
   border-bottom: 1px solid var(--border-subtle);
 }
-.ds-vtable .v-table__wrapper > table > tbody > tr:hover > td { background: transparent; }
-.ds-vtable[data-density="compact"] .v-table__wrapper > table > tbody > tr > td { height: 34px; }
-.ds-vtable[data-density="comfortable"] .v-table__wrapper > table > tbody > tr > td { height: 42px; }
-.ds-vtable[data-density="spacious"] .v-table__wrapper > table > tbody > tr > td { height: 50px; }
+/* 마지막 행의 밑줄은 지웁니다 — 바깥 테두리와 겹쳐 두 줄로 보입니다 */
+.ds-vtable .v-table__wrapper > table > tbody > tr:last-child > td { border-bottom: 0; }
+
+/* 행 hover — 지금 어느 행을 보고 있는지. 전에는 transparent로 지워 두어
+   hover가 아예 없었습니다(넓은 표에서 줄을 놓치기 쉬웠습니다). */
+.ds-vtable .v-table__wrapper > table > tbody > tr:hover > td { background: var(--gray-2); }
+/* 선택된 행 — 브랜드 면 (연하게). hover보다 우선합니다 */
+.ds-vtable .v-table__wrapper > table > tbody > tr.v-data-table__selected > td,
+.ds-vtable .v-table__wrapper > table > tbody > tr.v-data-table__selected:hover > td {
+  background: var(--brand-subtle);
+}
+
+/* 크기 — 다른 컨트롤과 같은 sm / default / lg */
+.ds-vtable[data-size="sm"] .v-table__wrapper > table > tbody > tr > td { height: 34px; }
+.ds-vtable[data-size="default"] .v-table__wrapper > table > tbody > tr > td { height: 42px; }
+.ds-vtable[data-size="lg"] .v-table__wrapper > table > tbody > tr > td { height: 50px; }
+.ds-vtable[data-size="sm"] .v-table__wrapper > table > thead > tr > th { height: 34px; }
+
+/* 얼룩말 행 — 열이 많아 눈이 행을 놓칠 때만. hover·선택이 위에 얹힙니다 */
+.ds-vtable--striped .v-table__wrapper > table > tbody > tr:nth-child(2n) > td { background: var(--gray-1); }
+.ds-vtable--striped .v-table__wrapper > table > tbody > tr:nth-child(2n):hover > td { background: var(--gray-2); }
+
+/* 고정 헤더 — 스크롤해도 열 이름이 남습니다 */
+.ds-vtable--sticky .v-table__wrapper > table > thead > tr > th { z-index: 2; }
+
+/* 숫자 열 — 오른쪽 정렬 + 자릿수 고정폭이라 크기를 눈으로 비교할 수 있습니다 */
+.ds-vtable .v-data-table__td--align-end,
+.ds-vtable th.v-data-table__th--align-end { text-align: right; font-variant-numeric: tabular-nums; }
+
+/* 선택 열 — 체크박스만 들어가므로 폭을 줄입니다 */
+.ds-vtable .v-data-table__th--select-row,
+.ds-vtable .v-data-table__td--select-row { width: 44px; padding-inline: 12px 0; }
+
+/* 빈 상태 */
+.ds-vtable-empty { padding: 40px 16px; text-align: center; font-size: var(--text-sm); color: var(--gray-11); }
+
+/* 푸터(페이지네이션) */
 .ds-vtable .v-data-table-footer { border-top: 1px solid var(--border); font-size: var(--text-xs); }
 
 /* ── DsDialog — VDialog 내부 면 ── */
