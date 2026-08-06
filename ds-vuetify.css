@@ -279,7 +279,17 @@
 /* 입력 안 태그(Combobox·Autocomplete의 chips) — 알약형 큰 칩 대신 컴팩트한 태그로.
    필드 높이(40px) 안에 여유 있게 들어가도록 22px·모서리 6px, 닫기 아이콘도 축소.
    (vite-plugin-vuetify가 칩 CSS를 나중에 주입하므로 특이도를 올려 확실히 이김) */
-.v-field .v-chip.v-chip { height: 22px; min-height: 22px; --v-chip-height: 22px; border-radius: var(--r-md); font-size: var(--text-xs); padding-inline: 8px; }
+/* 필드 안 칩도 DsChip과 같은 규격입니다 — 같은 물건이 자리에 따라 달라 보이면 안 됩니다.
+   (28px · pill · 12px · 1px 보더. 전에는 22px에 r-md라 둥글기까지 달랐습니다.)
+   sm 필드(32px)에서는 한 단계 줄입니다. */
+.v-field .v-chip.v-chip {
+  height: 28px; min-height: 28px; --v-chip-height: 28px;
+  border-radius: var(--r-full); font-size: var(--text-xs); font-weight: var(--weight-medium);
+  padding-inline: 11px 7px; border: 1px solid var(--border); color: var(--gray-12);
+}
+.ds-vfield--sm .v-field .v-chip.v-chip { height: 22px; min-height: 22px; --v-chip-height: 22px; padding-inline: 9px 6px; }
+/* 닫기 × 는 글자에서 띄웁니다 — DsChip의 gap 6px과 같은 간격 */
+.v-field .v-chip.v-chip .v-chip__close { margin-inline-start: 6px; }
 .v-field .v-chip.v-chip .v-chip__close .v-icon { font-size: 15px; }
 .v-field .v-chip.v-chip .v-avatar { display: none; }
 
@@ -660,8 +670,9 @@
 .v-timeline .v-timeline-divider__line { background: var(--gray-5); }
 
 /* ── VPagination ── */
-.v-pagination__item .v-btn--size-default { min-width: 30px; height: 30px; padding: 0 6px; }
-.v-pagination__prev .v-btn, .v-pagination__next .v-btn { min-width: 30px; height: 30px; }
+/* 시스템 컨트롤 규격(32px · radius 8px)에 맞춥니다 — 옆에 오는 버튼·필드와 높이가 어긋나 있었습니다 */
+.v-pagination__item .v-btn--size-default { min-width: 32px; height: 32px; padding: 0 6px; border-radius: var(--r-lg); }
+.v-pagination__prev .v-btn, .v-pagination__next .v-btn { min-width: 32px; height: 32px; border-radius: var(--r-lg); }
 
 /* ── VProgressLinear ── */
 .v-progress-linear__determinate { transition: width .24s ease; }

@@ -439,8 +439,12 @@ body {
   display: flex; align-items: center; gap: 8px; background: var(--gray-2);
   font-family: var(--mono);
 }
+/* CSS로 그리는 스피너 — Standalone 컴포넌트(ToolCallStep 등)는 Vuetify를 못 쓰므로
+   DsSpinner(VProgressCircular) 대신 이걸 씁니다. 두 벌이 되는 건 어쩔 수 없지만
+   보이는 규격은 같게 맞춥니다: 16px · 선 2px · 브랜드색.
+   1.5px 같은 소수는 배율 1배 화면에서 변마다 다르게 반올림돼 링이 일그러집니다. */
 .spinner {
-  width: 12px; height: 12px; border: 1.5px solid var(--gray-6);
+  width: 16px; height: 16px; border: 2px solid var(--gray-6);
   border-top-color: var(--brand); border-radius: 50%;
   animation: spin .8s linear infinite; flex-shrink: 0;
 }
