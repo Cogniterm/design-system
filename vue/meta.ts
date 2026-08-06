@@ -214,8 +214,8 @@ export const meta: ComponentMeta[] = [
     vuetifyBase: null,
     summary: { ko: '작업 결과를 잠깐 알리는 알림.', en: '' },
     reason: {
-      ko: 'VSnackbar를 쓸 수도 있지만 큐 관리를 우리가 하고 싶고 시각이 단순합니다.',
-      en: 'We manage the queue ourselves; visuals are simple.',
+      ko: '알림의 생김새를 한 곳에 둡니다 — Snackbar가 이걸 그대로 씁니다. 면은 뒤집습니다(라이트=어두운 면, 다크=밝은 면): 화면 위에 잠깐 떠 있다 사라지는 물건이라 본문과 같은 면이면 눈에 들어오지 않습니다.',
+      en: 'The single visual source for notifications — Snackbar renders this. Surface is inverted so it reads as floating above the page.',
     },
     where: 'Snackbar의 시각 부분. 큐 관리가 필요하면 Snackbar를 쓰세요.',
     since: '0.1.0',
@@ -676,8 +676,8 @@ export const meta: ComponentMeta[] = [
     vuetifyBase: 'VSnackbar',
     summary: { ko: '떴다가 사라지는 알림.', en: '' },
     reason: {
-      ko: 'Toast는 생김새만 담당합니다. 실제로 떠서 시간이 지나면 사라지는 동작이 필요합니다.',
-      en: 'DsToast is visual only; this adds real appearance and timeout behavior.',
+      ko: '"언제 뜨고 언제 사라지는가"만 담당합니다 — 화면 구석 배치·타이머·전환을 Vuetify가 처리합니다. 생김새는 DsToast를 그대로 렌더하므로 둘이 어긋나지 않습니다.',
+      en: 'Owns only when it appears and disappears (placement, timer, transition). Visuals are DsToast, so the two cannot drift.',
     },
     where: '저장·삭제 결과 알림. 후속 액션은 하나까지.',
     since: '0.1.0',

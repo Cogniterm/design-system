@@ -24,7 +24,7 @@ import { DsSnackbar } from '~/design/vuetify'   // Vuetify 필요 · ds.css + ds
 ```
 
 ## 구분
-- vs Toast: Toast는 생김새만, Snackbar는 표시·타이머까지 담당
+- vs Toast: 같은 생김새입니다 — Snackbar가 Toast를 그대로 그립니다. 띄우고 없애는 동작이 필요하면 Snackbar
 - vs Alert: 지나가도 되면 Snackbar, 남아야 하면 Alert
 
 ## 지침

@@ -144,6 +144,12 @@
   --info-subtle:    color-mix(in srgb, var(--info) 5%, var(--bg));
   --info-border:    color-mix(in srgb, var(--info) 24%, transparent);
 
+  /* 뒤집힌 면(--gray-12) 위에 얹는 상태색 — 토스트·툴팁처럼 배경이 반전된 곳.
+     현재 테마의 상태색을 그대로 쓰면 어두운 면에 어두운 초록이 얹혀 안 보입니다.
+     그래서 "반대 테마의 값"을 씁니다. */
+  --success-on-inverse: #46a758;
+  --danger-on-inverse:  #e5484d;
+
   /* ── Data Visualization ──────────────
      차트 계열 색. 브랜드에서 시작해 색상환을 돌되 명도를 맞춰
      인접 계열이 구분되게 했습니다. 상태색과 겹치지 않는 색만 씁니다. */
@@ -224,6 +230,9 @@
   --on-brand: #0b1220;
 
   --success: #46a758; --warning: #f0b429; --danger: #e5484d; --favorite: #f5c518;
+  /* 다크에서는 뒤집힌 면이 밝으므로 어두운 상태색을 씁니다 */
+  --success-on-inverse: #17803d;
+  --danger-on-inverse:  #d93036;
 
   /* 차트 — 다크 배경에서 채도가 죽지 않게 한 톤 밝게 */
   --chart-1: #4593F5;

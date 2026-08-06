@@ -62,6 +62,12 @@
   --info-subtle:    color-mix(in srgb, var(--info) 5%, var(--bg));
   --info-border:    color-mix(in srgb, var(--info) 24%, transparent);
 
+  /* 뒤집힌 면(--gray-12) 위에 얹는 상태색 — 토스트·툴팁처럼 배경이 반전된 곳.
+     현재 테마의 상태색을 그대로 쓰면 어두운 면에 어두운 초록이 얹혀 안 보입니다.
+     그래서 "반대 테마의 값"을 씁니다. */
+  --success-on-inverse: #46a758;
+  --danger-on-inverse:  #e5484d;
+
   /* ── Data Visualization ──────────────
      차트 계열 색. 브랜드에서 시작해 색상환을 돌되 명도를 맞춰
      인접 계열이 구분되게 했습니다. 상태색과 겹치지 않는 색만 씁니다. */
@@ -142,6 +148,9 @@
   --on-brand: #0b1220;
 
   --success: #46a758; --warning: #f0b429; --danger: #e5484d; --favorite: #f5c518;
+  /* 다크에서는 뒤집힌 면이 밝으므로 어두운 상태색을 씁니다 */
+  --success-on-inverse: #17803d;
+  --danger-on-inverse:  #d93036;
 
   /* 차트 — 다크 배경에서 채도가 죽지 않게 한 톤 밝게 */
   --chart-1: #4593F5;
@@ -505,27 +514,37 @@ td.mono { font-family: var(--mono); font-size: var(--text-xs); color: var(--gray
 .skeleton.text { height: 13px; }
 .skeleton.circle { border-radius: 50%; }
 
-/* ── ds-toast ──
-   테두리를 따로 두지 않습니다 — --shadow-overlay의 첫 겹(0 0 0 1px)이 이미 윤곽입니다.
-   둘 다 쓰면 1px 선이 두 겹으로 겹쳐 가장자리가 지저분해집니다. */
+/* ── ds-toast ──────────────────────────────
+   면을 뒤집습니다 — 라이트에서는 어두운 면, 다크에서는 밝은 면.
+   화면 위에 잠깐 떠 있다 사라지는 알림이라, 본문과 같은 면이면 눈에 안 들어옵니다.
+   툴팁도 같은 규칙을 씁니다(반전 면).
+   테두리는 두지 않습니다 — --shadow-overlay의 첫 겹(0 0 0 1px)이 이미 윤곽이라
+   둘 다 쓰면 1px 선이 두 겹으로 겹칩니다. */
 .toast { display: inline-flex; align-items: center; gap: 10px; min-width: 280px;
-  border: 0; border-radius: var(--r-lg); background: var(--surface);
+  border: 0; border-radius: var(--r-lg);
+  background: var(--gray-12); color: var(--bg);
   padding: 12px 14px; font-size: var(--text-sm);
   box-shadow: var(--shadow-overlay); }
 
-/* 앞머리는 점 대신 상태 아이콘 — 색+형태로 성공/실패가 동시에 읽힘 (Geist·Astryx 참고) */
+/* 앞머리는 점 대신 상태 아이콘 — 색+형태로 성공/실패가 동시에 읽힘 (Geist·Astryx 참고).
+   반전 면 위라 상태색도 반전 값을 씁니다. */
 .toast .t-icon { display: inline-flex; flex-shrink: 0; align-items: center; }
-.toast.success .t-icon { color: var(--success); }
-.toast.danger .t-icon { color: var(--danger); }
+.toast.success .t-icon { color: var(--success-on-inverse); }
+.toast.danger .t-icon { color: var(--danger-on-inverse); }
 .toast .t-body { flex: 1; }
 .toast .t-action {
   all: unset; box-sizing: border-box; cursor: pointer; flex-shrink: 0;
   height: 24px; padding: 0 8px; border-radius: var(--r-sm);
   font-size: var(--text-xs); font-weight: var(--weight-medium);
-  color: var(--gray-11); border: 1px solid var(--border-strong);
+  color: var(--bg); border: 1px solid color-mix(in srgb, var(--bg) 30%, transparent);
   font-family: var(--font); display: inline-flex; align-items: center;
+  transition: background .16s ease, border-color .16s ease;
 }
-.toast .t-action:hover { background: var(--gray-2); color: var(--gray-12); border-color: var(--border-hover); }
+.toast .t-action:hover {
+  background: color-mix(in srgb, var(--bg) 14%, transparent);
+  border-color: color-mix(in srgb, var(--bg) 45%, transparent);
+}
+.toast .t-action:focus-visible { outline: none; box-shadow: 0 0 0 2px var(--gray-12), 0 0 0 4px var(--bg); }
 
 /* ── ds-thinking (에이전트 추론 중 — Soft Rise v1.0) ──
    도트 3개가 -4px 파동(사이클의 64%는 정지), 라벨은 브랜드 shimmer.
