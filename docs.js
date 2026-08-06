@@ -259,7 +259,7 @@ function renderSidebar(section, activeId) {
     for (const cat of CATEGORIES) {
       const items = COMPONENTS.filter((c) => c.category === cat.id)
       if (!items.length) continue
-      body += `<div class="nav-title">${cat.name} · ${cat.ko}</div>` + items.map((c) => {
+      body += `<div class="nav-title">${cat.name}</div>` + items.map((c) => {
         const tag = c.origin === 'wrapped' ? '<span class="vtag">V</span>' : ''
         return `<a href="#/components/${c.id}" class="${activeId === c.id ? 'on' : ''}">${c.name}${tag}</a>`
       }).join('')
@@ -362,7 +362,7 @@ function renderComponent(id, tab) {
 
   const cat = CATEGORIES.find((x) => x.id === c.category)
   $('#content').innerHTML =
-    crumb({ label: 'Components', href: '#/components' }, { label: cat ? cat.ko : '' }, { label: c.name }) + `
+    crumb({ label: 'Components', href: '#/components' }, { label: cat ? cat.name : '' }, { label: c.name }) + `
     <div class="page-head">
       <h1>${c.name}</h1>
       ${originBadge(c)}
@@ -402,7 +402,7 @@ function usagePane(c) {
   const section = (title, body) => body ? `<h2>${title}</h2>${body}` : ''
 
   return `<div class="prose">
-    ${section('한 줄로', `<p><b>${c.summary}</b> ${c.reason?.ko ?? ''}</p>`)}
+    ${section('왜 이 컴포넌트인가', c.reason?.ko ? `<p>${c.reason.ko}</p>` : '')}
 
     ${section('이런 화면에 씁니다', where ? `<p>${where}</p>` : '')}
 

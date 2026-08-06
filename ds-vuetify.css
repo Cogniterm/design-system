@@ -390,6 +390,15 @@
 .ds-icon-btn.is-secondary.v-btn { border: 1px solid var(--border-strong); background: var(--surface); }
 .ds-icon-btn.is-secondary.v-btn:hover { border-color: var(--border-hover); }
 .ds-icon-btn.is-sm.v-btn { width: 28px; height: 28px; font-size: 12px; }
+/* brand — 채운 원형. 입력창의 '보내기'처럼 그 자리의 유일한 주 동작에만 씁니다.
+   원형인 이유: 옆의 사각 ghost 버튼들과 섞이지 않게 하려는 것이고, 그래서
+   한 줄에 하나만 있을 때 성립합니다. */
+.ds-icon-btn.is-brand.v-btn {
+  border-radius: var(--r-full); background: var(--brand); color: var(--on-brand);
+}
+.ds-icon-btn.is-brand.v-btn:hover { background: var(--brand-hover); color: var(--on-brand); }
+.ds-icon-btn.is-brand.v-btn:active { background: var(--brand-active); }
+.ds-icon-btn.is-brand.v-btn.v-btn--disabled { background: var(--gray-3); color: var(--gray-9); opacity: 1; }
 
 
 /* ── DsTabs ── */
