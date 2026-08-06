@@ -145,7 +145,7 @@ export function pageWorkflow(ic) {
     .map(([n, v, why]) => `<tr><td><code>${n}</code></td><td><code>${v}</code></td><td>${why}</td></tr>`).join('')
 
   return `
-    <div class="page-head"><h1>워크플로우</h1><span class="page-ko">코드로 디자인하기</span></div>
+    <div class="page-head"><h1>워크플로우</h1></div>
     <p class="page-lead">
       코드로 화면을 만들어 코드로 넘기는 일을 이어받는 사람을 위한 문서입니다.
       환경 세팅부터 매일의 작업 순서, 막혔을 때 볼 곳까지 한 번에 담았습니다.
@@ -473,7 +473,7 @@ npm run dev`
 
 export function pageQuickstart(ic) {
   return `
-    <div class="page-head"><h1>빠른 시작</h1><span class="page-ko">Quick start</span></div>
+    <div class="page-head"><h1>빠른 시작</h1></div>
     <p class="page-lead">
       두 갈래입니다. 아무것도 설치돼 있지 않다면 <b>한 줄</b>로 끝내고,
       Node.js가 이미 있다면 아래 명령을 순서대로 실행하세요.
@@ -589,7 +589,7 @@ export function pageEnv(ic) {
     `<tr><td><code>${n}</code></td><td><code>${v}</code></td><td>${why}</td></tr>`
 
   return `
-    <div class="page-head"><h1>개발 환경</h1><span class="page-ko">무엇 위에서 도는가</span></div>
+    <div class="page-head"><h1>개발 환경</h1></div>
     <p class="page-lead">
       이 디자인 시스템은 그림 파일이 아니라 <b>실제로 도는 코드</b>입니다.
       디자인과 개발이 같은 것을 씁니다 — 그래서 넘길 때 옮겨 그릴 것이 없습니다.

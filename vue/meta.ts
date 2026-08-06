@@ -851,6 +851,20 @@ export const meta: ComponentMeta[] = [
     since: '0.1.0',
   },
   {
+    name: 'DsTableOfContents',
+    ko: '목차',
+    category: 'nav',
+    origin: 'custom',
+    vuetifyBase: null,
+    summary: { ko: '긴 문서 옆에서 지금 어느 절을 보고 있는지 알려 줍니다.', en: '' },
+    reason: {
+      ko: 'Vuetify에 대응 컴포넌트가 없습니다. 스크롤 위치를 절과 잇는 처리가 핵심이라 직접 만듭니다.',
+      en: 'No Vuetify equivalent; the value is in mapping scroll position to sections.',
+    },
+    where: '긴 문서·설정 화면의 본문 옆. 절이 3개 이상일 때.',
+    since: '0.1.0',
+  },
+  {
     name: 'DsToolbar',
     ko: '툴바',
     category: 'action',

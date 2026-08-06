@@ -1110,13 +1110,22 @@
 /* 손잡이가 트랙 안에서 움직이는 거리 — 트랙 너비에서 손잡이와 양쪽 여백을 뺀 값.
    Vuetify 기본값은 트랙 크기를 바꾸면 어긋나므로 여기서 다시 계산합니다. */
 .v-switch .v-selection-control__wrapper { width: var(--sw-w); height: var(--sw-h); }
+/* 손잡이 여백은 양쪽 2px입니다 — 글로벌 값과 같습니다.
+     Ant 44x22·손잡이18 → 2px   Radix 44x24·20 → 2px
+     Carbon 48x24·18 → 3px      iOS 51x31·27 → 2px
+   손잡이 크기를 트랙 높이 - 4로 잡아 두었으므로, 트랙 안에서 정확히
+   가운데 놓으면 위아래가 자동으로 2px이 됩니다. 좌우도 같은 2px이어야
+   원이 트랙 안에 고르게 앉습니다.
+
+   전에는 여기에 +2px을 더하고 있었습니다. 그만큼 좌우만 4px이 되어
+   위아래(2px)와 어긋났고, 원이 트랙 가운데에 떠 있는 것처럼 보였습니다. */
 .v-switch .v-selection-control__input {
   width: var(--sw-thumb); height: var(--sw-thumb);
-  transform: translateX(calc((var(--sw-h) - var(--sw-w)) / 2 + 2px));
+  transform: translateX(calc((var(--sw-h) - var(--sw-w)) / 2));
   transition: transform .16s ease;
 }
 .v-switch .v-selection-control--dirty .v-selection-control__input {
-  transform: translateX(calc((var(--sw-w) - var(--sw-h)) / 2 - 2px));
+  transform: translateX(calc((var(--sw-w) - var(--sw-h)) / 2));
 }
 .v-switch .v-label { padding-inline-start: 10px; }
 /* 비활성 — 면을 죽이고 손잡이는 그대로 둡니다 (켜짐·꺼짐은 계속 읽혀야 합니다) */

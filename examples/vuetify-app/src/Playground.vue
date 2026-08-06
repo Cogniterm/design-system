@@ -8,7 +8,7 @@ import {
   DsToast, DsEmptyState, DsChatMessage, DsStreamingText, DsThinkingIndicator,
   DsDotField, DsToolCallStep, DsAgentInput, DsCitationChip, DsArtifactPanel, DsSearchResult,
   DsFileGrid, DsFileRow, DsLink, DsKbd, DsCode, DsTimestamp,
-  DsMetaList, DsSearchField, DsSystemMessage, DsToolbar, DsVisuallyHidden,
+  DsMetaList, DsSearchField, DsSystemMessage, DsToolbar, DsTableOfContents, DsVisuallyHidden,
   DsTreeview,
 } from '~/design'
 import {
@@ -110,6 +110,7 @@ const txt = ref(''); const email = ref('ujin@'); const memo = ref('')
 const num = ref(3); const tags = ref(['법무', '계약'])
 const sel = ref('실행 중'); const auto = ref(['법무', '재무', '인사', '영업'])
 const b1 = ref(true); const b2 = ref(false); const radio = ref('180')
+const TOC_ITEMS = [{ id: 'toc-a', label: '개요' }, { id: 'toc-b', label: '설치' }, { id: 'toc-c', label: '사용법' }]
 const slider = ref(70); const files = ref(null); const date = ref(null)
 /* Autocomplete 데모 — 칩이 여러 개 쌓인 모습을 바로 보여 주려고 미리 채웁니다 */
 const FOLDERS = ['법무', '재무', '인사', '영업', '기술', '연구', '총무']
@@ -259,6 +260,22 @@ const badgeLabel: Record<string, string> = { default: '대기', brand: '실행�
 
       <template v-else-if="id === 'link'">
         <span>자세한 내용은 <DsLink href="#play/link">감사 로그 문서</DsLink>를 참고하세요.</span>
+      </template>
+
+      <template v-else-if="id === 'tableofcontents'">
+        <div style="display:flex;gap:32px">
+          <div style="width:190px">
+            <DsTableOfContents :items="TOC_ITEMS" />
+          </div>
+          <div style="max-width:360px;color:var(--gray-11);font-size:13px;line-height:1.7">
+            <h2 id="toc-a" style="font-size:16px;color:var(--gray-12);margin-bottom:6px">개요</h2>
+            <p style="margin-bottom:28px">목차는 본문 옆에 붙어 지금 어느 절을 보고 있는지 알려 줍니다.</p>
+            <h2 id="toc-b" style="font-size:16px;color:var(--gray-12);margin-bottom:6px">설치</h2>
+            <p style="margin-bottom:28px">항목을 누르면 그 자리로 이동하고 표시도 함께 옮깁니다.</p>
+            <h2 id="toc-c" style="font-size:16px;color:var(--gray-12);margin-bottom:6px">사용법</h2>
+            <p>절이 3개 이상일 때만 씁니다.</p>
+          </div>
+        </div>
       </template>
 
       <template v-else-if="id === 'toolbar'">

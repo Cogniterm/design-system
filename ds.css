@@ -762,6 +762,26 @@ td.mono { font-family: var(--mono); font-size: var(--text-xs); color: var(--gray
 .artifact .a-body { padding: 16px; font-size: var(--text-sm); font-family: var(--mono); color: var(--gray-11);
   white-space: pre; overflow-x: auto; }
 
+/* ── ds-toc — 본문 옆 목차 ──────────────────────────────
+   왼쪽 선 하나로 흐름을 만들고, 지금 절만 선과 글자를 진하게 합니다.
+   면을 칠하지 않는 이유: 목차는 읽는 대상이 아니라 위치 표시라
+   본문보다 조용해야 합니다. */
+.ds-toc { display: flex; flex-direction: column; }
+.ds-toc a {
+  display: block; padding: 5px 0 5px 14px;
+  border-left: 2px solid var(--gray-a3);
+  font-size: var(--text-sm); line-height: var(--leading-ui);
+  /* gray-11 — 보조 글자의 표준값. gray-10은 흰 배경에서 3.78:1로 AA에 못 미칩니다 */
+  color: var(--gray-11); text-decoration: none;
+  transition: color .16s ease, border-color .16s ease;
+}
+.ds-toc a:hover { color: var(--gray-12); border-left-color: var(--gray-a6); }
+.ds-toc a.on {
+  color: var(--gray-12); font-weight: var(--weight-medium);
+  border-left-color: var(--gray-12);
+}
+.ds-toc a:focus-visible { outline: none; box-shadow: var(--focus-ring); border-radius: var(--r-sm); }
+
 /* ── ds-icon ── */
 .ds-icon { flex-shrink: 0; vertical-align: -0.125em; }
 .ds-icon.is-spin { animation: spin .8s linear infinite; }

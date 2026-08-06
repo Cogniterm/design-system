@@ -104,7 +104,7 @@ export function fdOverview() {
     </a>`).join('')
 
   return `
-    <div class="page-head"><h1>Foundation</h1><span class="page-ko">파운데이션</span></div>
+    <div class="page-head"><h1>Foundation</h1></div>
     <p class="page-lead">컴포넌트 이전의 결정들.</p>
     <div class="cat-grid" style="margin-top:30px">${cards}</div>`
 }
@@ -112,7 +112,7 @@ export function fdOverview() {
 /* ════════════════════════════════════════ */
 export function fdTokens() {
   return `
-    <div class="page-head"><h1>Design Tokens</h1><span class="page-ko">토큰</span></div>
+    <div class="page-head"><h1>Design Tokens</h1></div>
     <p class="page-lead">
       모든 색·간격·모서리 값의 단일 원본입니다. 값은 한 방향으로만 흐릅니다.
     </p>
@@ -187,7 +187,7 @@ export function fdColor() {
   const N = [1,2,3,4,5,6,7,8,9,10,11,12]
 
   return `
-    <div class="page-head"><h1>Color</h1><span class="page-ko">컬러</span></div>
+    <div class="page-head"><h1>Color</h1></div>
     <p class="page-lead">
       브랜드 1 · 회색 12 · 알파 12 · 보더 4 · 상태 4×3 · 차트 6.
       <b>모든 토큰을 클릭하면 이름이 복사됩니다.</b>
@@ -382,7 +382,7 @@ export function fdTypography() {
     ['2xs', '11px', '600', '마이크로 라벨 · 배지', 'font-size:11px;font-weight:600'],
   ]
   return `
-    <div class="page-head"><h1>Typography</h1><span class="page-ko">타이포그래피</span></div>
+    <div class="page-head"><h1>Typography</h1></div>
     <p class="page-lead">
       Pretendard 9단계. <b>위계는 크기보다 굵기와 색으로</b> 만듭니다 —
       크기를 키우면 화면이 커 보이고, 굵기를 바꾸면 위계만 생깁니다.
@@ -494,7 +494,7 @@ export function fdTypography() {
 export function fdSpacing() {
   const scale = [0, 4, 8, 12, 16, 24, 32, 48, 64]
   return `
-    <div class="page-head"><h1>Spacing &amp; Layout</h1><span class="page-ko">스페이싱 · 레이아웃</span></div>
+    <div class="page-head"><h1>Spacing &amp; Layout</h1></div>
     <p class="page-lead">
       4px 배수 9단계. 그림자가 없는 시스템에서는 <b>여백이 구조를 만듭니다</b> —
       가까이 있으면 한 덩어리, 멀면 다른 덩어리입니다.
@@ -585,7 +585,7 @@ export function fdSpacing() {
 /* ════════════════════════════════════════ */
 export function fdShape() {
   return `
-    <div class="page-head"><h1>Radius &amp; Border</h1><span class="page-ko">라디우스 · 보더</span></div>
+    <div class="page-head"><h1>Radius &amp; Border</h1></div>
     <p class="page-lead">
       <b>1px 보더가 이 시스템의 유일한 구분 장치입니다.</b>
       그림자를 안 쓰기로 한 순간, 보더가 그 역할을 전부 떠맡습니다.
@@ -652,7 +652,7 @@ export function fdShape() {
 /* ════════════════════════════════════════ */
 export function fdElevation() {
   return `
-    <div class="page-head"><h1>Elevation</h1><span class="page-ko">엘리베이션</span></div>
+    <div class="page-head"><h1>Elevation</h1></div>
     <p class="page-lead">
       <b>이 시스템에는 elevation 단계가 없습니다.</b>
       그림자는 "떠 있는 것"에만, 그것도 한 종류만 씁니다.
@@ -704,7 +704,7 @@ export function fdElevation() {
 /* ════════════════════════════════════════ */
 export function fdDensity() {
   return `
-    <div class="page-head"><h1>Density</h1><span class="page-ko">밀도</span></div>
+    <div class="page-head"><h1>Density</h1></div>
     <p class="page-lead">
       같은 시스템으로 챗(여유롭게)과 드라이브 목록(조밀하게)을 다 만듭니다.
       <b>밀도는 토큰으로 제어하고 컴포넌트에 하드코딩하지 않습니다.</b>
@@ -772,7 +772,7 @@ export function fdDensity() {
 /* ════════════════════════════════════════ */
 export function fdIconography() {
   return `
-    <div class="page-head"><h1>Iconography</h1><span class="page-ko">아이콘</span></div>
+    <div class="page-head"><h1>Iconography</h1></div>
     <p class="page-lead">Lucide 하나, 크기 3개, stroke 1.5.</p>
     <div class="prose">
       <p>
@@ -887,7 +887,7 @@ export function fdIconography() {
 /* ════════════════════════════════════════ */
 export function fdMotion() {
   return `
-    <div class="page-head"><h1>Motion</h1><span class="page-ko">모션</span></div>
+    <div class="page-head"><h1>Motion</h1></div>
     <p class="page-lead">
       <b>거의 움직이지 않습니다.</b> 움직인다면 짧고, 이유가 있어야 합니다.
       업무 도구에서 애니메이션은 대부분 대기 시간입니다.
@@ -953,7 +953,7 @@ export function fdMotion() {
 /* ════════════════════════════════════════ */
 export function fdState() {
   return `
-    <div class="page-head"><h1>State</h1><span class="page-ko">상태</span></div>
+    <div class="page-head"><h1>State</h1></div>
     <p class="page-lead">화면 상태 5종 + 인터랙션 상태 6종. 처음부터 전부.</p>
     <div class="prose">
       <h2>화면 상태 5종</h2>
@@ -1033,7 +1033,7 @@ export function fdState() {
 /* ════════════════════════════════════════ */
 export function fdA11y() {
   return `
-    <div class="page-head"><h1>Accessibility</h1><span class="page-ko">접근성</span></div>
+    <div class="page-head"><h1>Accessibility</h1></div>
     <p class="page-lead">
       기준은 <b>WCAG 2.2 AA</b>입니다.
       미니멀은 대비가 낮아지기 쉬워서, 이 시스템에서는 특히 지켜야 합니다.
@@ -1114,7 +1114,7 @@ export function fdA11y() {
 /* ════════════════════════════════════════ */
 export function fdWriting() {
   return `
-    <div class="page-head"><h1>Writing</h1><span class="page-ko">UX 라이팅</span></div>
+    <div class="page-head"><h1>Writing</h1></div>
     <p class="page-lead">읽고 다음 행동이 떠오르지 않으면 실패입니다 — 명확성 &gt; 접근성 &gt; 일관성 &gt; 간결성.</p>
     <div class="prose">
       <p>
@@ -1240,7 +1240,7 @@ export function fdWordlist() {
   </table>`
 
   return `
-    <div class="page-head"><h1>Word List</h1><span class="page-ko">용어집</span></div>
+    <div class="page-head"><h1>Word List</h1></div>
     <p class="page-lead">
       같은 것을 화면마다 다르게 부르면 사용자는 <b>다른 것이라고 생각합니다</b>.
       제품 전체에서 하나의 어휘를 씁니다.

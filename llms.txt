@@ -4,7 +4,7 @@
 > Hierarchy comes from spacing, type weight and 1px borders — not shadows or decoration.
 > No shadows, 1px borders, radius 4/6/8/12, Pretendard, brand blue #1B72D9
 > (#4593F5 in dark), Radix Slate gray 1-12. Light + dark via [data-theme="dark"].
-> 66 components, 17 patterns, 14 foundation pages.
+> 67 components, 17 patterns, 14 foundation pages.
 > Docs: https://Cogniterm.github.io/design-system
 
 ## Read the section you need — not everything

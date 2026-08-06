@@ -1,6 +1,6 @@
 # Components — Cogniterm Design System
 
-> 66 components. 35 standalone
+> 67 components. 36 standalone
 > (no Vuetify needed, import from `~/design`) and
 > 31 Vuetify-based
 > (import from `~/design/vuetify`, also needs ds-vuetify.css).

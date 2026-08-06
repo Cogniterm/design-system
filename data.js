@@ -1630,6 +1630,32 @@ export const COMPONENTS = [
   guidelines: [['하지 말 것','에러를 시스템 메시지로 흘리지 않습니다 — Alert로.']],
 },
 {
+  id: 'tableofcontents', name: 'TableOfContents', ko: '목차', category: 'nav',
+  origin: 'custom',
+  summary: '긴 문서 옆에서 지금 어느 절을 보고 있는지 알려 줍니다.',
+  reason: { ko: 'Vuetify에 대응 컴포넌트가 없습니다. 스크롤 위치를 절과 잇는 처리가 핵심이라 직접 만듭니다.',
+            en: 'No Vuetify equivalent; the value is in mapping scroll position to sections.' },
+  props: [
+    ['items', 'TocItem[]', '필수', '{ id, label } 목록. id는 본문 제목의 id와 같아야 합니다.'],
+    ['scrollTarget', 'HTMLElement | null', 'null', '스크롤을 감지할 대상. 기본은 창 전체.'],
+  ],
+  events: [],
+  slots: [],
+  thumb: `<nav class="ds-toc" style="width:190px"><span style="display:block;padding:5px 0 5px 14px;border-left:2px solid var(--gray-a3);font-size:13px;color:var(--gray-10)">개요</span><span style="display:block;padding:5px 0 5px 14px;border-left:2px solid var(--gray-12);font-size:13px;color:var(--gray-12);font-weight:500">설치</span><span style="display:block;padding:5px 0 5px 14px;border-left:2px solid var(--gray-a3);font-size:13px;color:var(--gray-10)">사용법</span></nav>`,
+  demo: `<nav class="ds-toc" style="width:190px"><span style="display:block;padding:5px 0 5px 14px;border-left:2px solid var(--gray-a3);font-size:13px;color:var(--gray-10)">개요</span><span style="display:block;padding:5px 0 5px 14px;border-left:2px solid var(--gray-12);font-size:13px;color:var(--gray-12);font-weight:500">설치</span><span style="display:block;padding:5px 0 5px 14px;border-left:2px solid var(--gray-a3);font-size:13px;color:var(--gray-10)">사용법</span></nav>`,
+  vue: `<DsTableOfContents :items="[
+  { id: 'overview', label: '개요' },
+  { id: 'install', label: '설치' },
+  { id: 'usage', label: '사용법' },
+]" />`,
+  html: null,
+  guidelines: [
+    ['해야 할 것', '절이 3개 이상일 때만 씁니다. 목록이 본문보다 짧으면 도움이 되지 않습니다.'],
+    ['해야 할 것', '누르면 그 자리로 이동하고 표시도 함께 옮깁니다 — 스크롤 감지만 믿으면 마지막 절이 끝내 켜지지 않습니다.'],
+    ['하지 말 것', '제목을 다시 쓰지 않습니다. 목차의 글자는 본문 제목과 같아야 눈으로 이을 수 있습니다.'],
+  ],
+},
+{
   id: 'toolbar', name: 'Toolbar', ko: '툴바', category: 'action',
   origin: 'custom', vuetifyBase: null,
   summary: '컨트롤 줄 정렬 규약.',
@@ -1940,6 +1966,7 @@ export const WHERE = {
   metalist: '상세 패널의 키-값 — 이벤트·문서·에이전트 속성.',
   searchfield: '목록 상단·GNB 검색. 전역이면 CommandPalette와 연동.',
   systemmessage: '대화 스트림 속 시스템 안내 — 요약됨·초기화됨.',
+  tableofcontents: '긴 문서·설정 화면의 본문 옆. 절이 3개 이상일 때.',
   toolbar: '테이블 위 컨트롤 줄, 상세 헤더 액션 줄.',
   visuallyhidden: '아이콘·시각 정보에 보조기기용 설명을 붙일 때.',
   numberinput: '재시도 횟수·한도·개수 — 스텝이 필요한 숫자.',
@@ -2198,6 +2225,12 @@ Object.assign(A11Y, {
     free: ['VMenu가 포커스 가두기·Esc·바깥 클릭 처리'],
     yours: ['고른 날짜를 필드에 글자로도 보이기 — 달력을 닫으면 격자는 사라집니다',
             'label을 필드에 연결하고, 에러는 aria-describedby로 함께 읽히게'],
+  },
+  tableofcontents: {
+    keys: [['Tab', '항목 이동'], ['Enter', '그 절로 이동']],
+    free: [],
+    yours: ['<nav aria-label="목차">로 감싸 건너뛸 수 있게', '지금 절에 aria-current="location"',
+            '목차 글자를 본문 제목과 같게 — 다르면 무엇으로 이동하는지 알 수 없습니다'],
   },
   searchresult: {
     keys: [['Tab', '결과 제목으로 이동']],

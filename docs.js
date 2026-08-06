@@ -179,23 +179,39 @@ function enhance() {
     toc.innerHTML = hs.map((h) => `<a href="#${h.id}" data-toc="${h.id}">${h.textContent}</a>`).join('')
     content.appendChild(toc)
 
+    const links = [...toc.querySelectorAll('a')]
+    const mark = (id) => links.forEach((l) => l.classList.toggle('on', l.dataset.toc === id))
+
+    /* 스크롤만으로는 마지막 항목이 켜지지 않습니다.
+       스크롤이 끝까지 내려가도 마지막 제목이 화면 위쪽 띠(-10%~-80%)까지
+       올라오지 못하기 때문입니다. 문서가 짧을수록 확실히 그렇습니다.
+       그래서 두 가지를 더 봅니다: 눌렀을 때와, 바닥에 닿았을 때. */
+
     // 해시 라우터와 충돌하지 않게 — 목차 링크는 scrollIntoView로 처리
-    toc.querySelectorAll('a').forEach((a) => {
+    let clickedAt = 0
+    links.forEach((a) => {
       a.addEventListener('click', (e) => {
         e.preventDefault()
+        mark(a.dataset.toc)
+        // 부드러운 스크롤이 끝날 때까지는 스크롤 감지가 표시를 뺏지 않게 합니다
+        clickedAt = Date.now()
         document.getElementById(a.dataset.toc)?.scrollIntoView({ behavior: 'smooth', block: 'start' })
       })
     })
 
-    const links = toc.querySelectorAll('a')
     const obs = new IntersectionObserver((es) => {
-      es.forEach((e) => {
-        if (e.isIntersecting) {
-          links.forEach((l) => l.classList.toggle('on', l.dataset.toc === e.target.id))
-        }
-      })
+      if (Date.now() - clickedAt < 700) return
+      es.forEach((e) => { if (e.isIntersecting) mark(e.target.id) })
     }, { rootMargin: '-10% 0px -80% 0px' })
     hs.forEach((h) => obs.observe(h))
+
+    /* 바닥에 닿으면 마지막 항목 — 더 내려갈 곳이 없으면 그것이 지금 보는 절입니다 */
+    const onScroll = () => {
+      if (Date.now() - clickedAt < 700) return
+      const el = document.scrollingElement
+      if (el.scrollHeight - el.scrollTop - el.clientHeight < 4) mark(hs[hs.length - 1].id)
+    }
+    window.addEventListener('scroll', onScroll, { passive: true })
   }
 }
 
@@ -222,7 +238,7 @@ const LNB_HEAD = {
 
 function renderSidebar(section, activeId) {
   const sec = LNB_HEAD[section] ? section : 'docs'
-  const [en, ko, sub] = LNB_HEAD[sec]
+  const [en] = LNB_HEAD[sec]
 
   let body = ''
 
@@ -233,7 +249,7 @@ function renderSidebar(section, activeId) {
 
   else if (sec === 'foundation') {
     body = FOUNDATION_PAGES.map(([id, k, e]) =>
-      `<a href="#/foundation/${id}" class="${activeId === id ? 'on' : ''}">${k}<span class="nav-en">${e}</span></a>`).join('')
+      `<a href="#/foundation/${id}" class="${activeId === id ? 'on' : ''}">${e}</a>`).join('')
   }
 
   else if (sec === 'components') {
@@ -259,9 +275,7 @@ function renderSidebar(section, activeId) {
 
   $('#sidebar').innerHTML = `
     <div class="lnb-head">
-      <div class="lnb-eyebrow">${en}</div>
-      <b class="lnb-title">${ko}</b>
-      <div class="lnb-sub">${sub}</div>
+      <b class="lnb-title">${en}</b>
     </div>
     <div class="sidebar-body">${body}</div>`
 }
@@ -310,7 +324,7 @@ function renderCatalog() {
   const total = COMPONENTS.length
   const wrapped = COMPONENTS.filter((c) => c.origin === 'wrapped').length
   let html = crumb({ label: 'Components' }) + `
-    <div class="page-head"><h1>Components</h1><span class="page-ko">컴포넌트</span></div>
+    <div class="page-head"><h1>Components</h1></div>
     <p class="page-lead">
       ${total}종 — Standalone ${total - wrapped} · Vuetify 기반 ${wrapped}.
       Standalone은 Vuetify 없이 돕니다.
@@ -348,7 +362,7 @@ function renderComponent(id, tab) {
   $('#content').innerHTML =
     crumb({ label: 'Components', href: '#/components' }, { label: cat ? cat.ko : '' }, { label: c.name }) + `
     <div class="page-head">
-      <h1>${c.name}</h1><span class="page-ko">${c.ko}</span>
+      <h1>${c.name}</h1>
       ${originBadge(c)}
       <button class="btn btn-secondary btn-sm ai-copy" id="aiCopy">${ic('ai', 'sm')} AI 프롬프트 복사</button>
     </div>
@@ -576,7 +590,7 @@ function wireCodeTabs() {
 /* ═══════════ 템플릿 ═══════════ */
 function renderTemplates() {
   $('#content').innerHTML = crumb({ label: 'Templates' }) + `
-    <div class="page-head"><h1>Templates</h1><span class="page-ko">페이지 템플릿</span></div>
+    <div class="page-head"><h1>Templates</h1></div>
     <p class="page-lead">완성 화면. 새 화면은 여기서 복제해 시작합니다.</p>
     <div class="tpl-grid">
       <a class="tpl-card live" href="live/" target="_blank" rel="noopener">
@@ -645,7 +659,6 @@ function pageStart() {
   return `
     <div class="hero">
       <h1>Cogniterm Design System</h1>
-      <p>AI 에이전트 제품을 위한 미니멀 디자인 시스템. Vue 3 · Vuetify 3.11.</p>
       <div class="hero-actions">
         <a class="btn btn-primary" href="#/docs/quickstart">${ic('forward', 'sm')} 빠른 시작</a>
         <a class="btn btn-secondary" href="#/docs/workflow">워크플로우 익히기</a>
@@ -1017,7 +1030,7 @@ function pagePrinciples() {
 function pageTokens() {
   const sw = (n) => `<div class="swatch" style="background:var(--gray-${n})"><span>${n}</span></div>`
   return `
-    <div class="page-head"><h1>Tokens</h1><span class="page-ko">토큰</span></div>
+    <div class="page-head"><h1>Tokens</h1></div>
     <p class="page-lead">
       모든 색·간격·모서리 값의 단일 원본입니다.
       컴포넌트는 반드시 CSS 변수로만 참조하고 값을 하드코딩하지 않습니다.

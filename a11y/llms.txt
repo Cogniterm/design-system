@@ -238,6 +238,11 @@ Keyboard: Enter · Space = 달력 열기 | ← → ↑ ↓ = 날짜 이동 | Pag
 Component handles: VMenu가 포커스 가두기·Esc·바깥 클릭 처리
 YOU must handle: 고른 날짜를 필드에 글자로도 보이기 — 달력을 닫으면 격자는 사라집니다; label을 필드에 연결하고, 에러는 aria-describedby로 함께 읽히게
 
+### DsTableOfContents (목차)
+Keyboard: Tab = 항목 이동 | Enter = 그 절로 이동
+Component handles: —
+YOU must handle: <nav aria-label="목차">로 감싸 건너뛸 수 있게; 지금 절에 aria-current="location"; 목차 글자를 본문 제목과 같게 — 다르면 무엇으로 이동하는지 알 수 없습니다
+
 ### DsSearchResult (검색 결과)
 Keyboard: Tab = 결과 제목으로 이동
 Component handles: —
