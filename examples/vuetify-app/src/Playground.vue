@@ -45,14 +45,38 @@ window.addEventListener('message', (e) => { if (e.data?.t === 'ds-theme') applyT
    Vuetify 오버레이는 루트 밖 .v-overlay-container에 렌더링돼 scrollHeight에 안 잡힙니다.
    그대로 두면 iframe이 짧아서 메뉴가 잘려 보입니다. */
 const root = ref<HTMLElement>()
+/* 열린 오버레이(메뉴·셀렉트 목록·달력 …)만큼 iframe을 늘립니다.
+
+   ── 위로 뒤집혀 열리던 문제 ──
+   iframe은 내용 높이에 맞춰져 있어 필드 아래에 남는 공간이 거의 없습니다.
+   그러면 Vuetify가 "아래가 좁다"고 판단해 메뉴를 위로 뒤집어 엽니다.
+   그런데 iframe은 아래로만 늘릴 수 있으니, 위로 열린 메뉴는 위쪽이
+   그대로 잘리고 그림자도 보이지 않았습니다.
+
+   해결은 뒤집힌 뒤에 합니다. 위로 열렸다면 "아래로 열렸을 때 필요했을"
+   높이만큼 아래에 자리를 만들어 줍니다. Vuetify는 창 크기가 바뀌면 위치를
+   다시 계산하므로(locationStrategies의 resize 처리), 자리가 생긴 것을 보고
+   스스로 아래로 되돌립니다.
+
+   덕분에 아무것도 열지 않은 동안에는 데모가 내용만큼만 차지합니다 —
+   미리 300px씩 비워 두면 셀렉트 문서마다 회색 여백이 남습니다. */
+const SHADOW_ROOM = 44   // 그림자가 패널 아래로 40px까지 번집니다 (0 12px 28px)
 function measureH() {
   let h = (root.value?.scrollHeight ?? 0) + 2
+  let tallest = 0
   document.querySelectorAll<HTMLElement>('.v-overlay__content').forEach((el) => {
     const r = el.getBoundingClientRect()
-    // 여유 44px — 그림자가 패널 아래로 40px까지 번집니다(0 12px 28px).
-    // 24px이던 때는 그림자 아랫부분이 iframe 밖으로 잘려 "그림자가 없다"로 보였습니다.
-    if (r.height > 0) h = Math.max(h, Math.ceil(r.bottom) + 44)
+    if (r.height <= 0) return
+    tallest = Math.max(tallest, r.height)
+    h = Math.max(h, Math.ceil(r.bottom) + SHADOW_ROOM)
   })
+  // 열려 있는 활성자 아래로 패널이 들어갈 자리를 확보 — 위로 뒤집힌 경우의 복구
+  if (tallest > 0) {
+    document.querySelectorAll<HTMLElement>('[aria-expanded="true"]').forEach((el) => {
+      const a = el.getBoundingClientRect()
+      if (a.height > 0) h = Math.max(h, Math.ceil(a.bottom + tallest) + SHADOW_ROOM)
+    })
+  }
   return h
 }
 /* 변화가 감지되면 ~300ms 동안 매 프레임 추적 — 오버레이 열림 애니메이션을
@@ -72,6 +96,8 @@ function report() {
 }
 onMounted(() => {
   new ResizeObserver(report).observe(root.value!)
+  // 창이 늘어나면 Vuetify가 위치를 다시 잡습니다 — 그 결과를 다시 재야 합니다
+  window.addEventListener('resize', report)
   // 오버레이 열림·닫힘·이동 감지 (포지셔닝이 몇 프레임 뒤에 끝나 transitionend도 함께)
   new MutationObserver(report).observe(document.body,
     { childList: true, subtree: true, attributes: true, attributeFilter: ['style', 'class'] })
