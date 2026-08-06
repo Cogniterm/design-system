@@ -7,8 +7,9 @@ withDefaults(defineProps<{
   error?: string        // 에러 메시지 — 있으면 에러 상태 (원칙 2: 에러는 기본 상태)
   placeholder?: string
   type?: string
-  /** 컨트롤 스케일 — sm 32px / default 40px. 필터 바·툴바는 sm. */
-  size?: 'sm' | 'default'
+  /** 컨트롤 스케일 — 기본 32 / md 36 / lg 40 (sm은 32의 다른 이름).
+   * 기본이 가장 작은 이유: 컨트롤은 대부분 툴바·필터 바·표 안에 줄지어 놓입니다. */
+  size?: 'sm' | 'default' | 'md' | 'lg'
 }>(), { type: 'text', size: 'default' })
 const model = defineModel<string>()
 
@@ -30,7 +31,7 @@ const msgId = `ds-input-msg-${uid}`
       :id="inputId"
       v-model="model"
       class="input"
-      :class="[{ error: !!error }, size === 'sm' && 'sm']"
+      :class="[{ error: !!error }, size !== 'default' && size]"
       :type="type"
       :placeholder="placeholder"
       :aria-invalid="error ? 'true' : undefined"

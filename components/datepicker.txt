@@ -12,7 +12,7 @@ import { DsDatePicker } from '~/design/vuetify'   // Vuetify 필요 · ds.css + 
 - hint: string — 보조 설명.
 - error: string — 에러 메시지. 있으면 에러 상태.
 - placeholder: string = '날짜 선택' — 비었을 때 문구.
-- size: 'sm' | 'default' = 'default' — 32 / 40px — 필터 바·툴바는 sm.
+- size: 'sm' | 'default' = 'default' — 32 / 36 / 40px — 필터 바·툴바는 sm.
 - clearable: boolean = false — 지우기 버튼.
 - presets: [string, number][] — 기간 프리셋. 예: [['최근 7일', 7]].
 - min · max · disablePast · disableFuture: — — Calendar와 같습니다.

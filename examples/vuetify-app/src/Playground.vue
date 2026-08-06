@@ -189,7 +189,7 @@ const badgeLabel: Record<string, string> = { default: '대기', brand: '실행�
         <!-- 그룹(variant) 하나만 렌더 — 문서 페이지가 그룹마다 iframe을 따로 띄웁니다 -->
         <div class="play-sections">
           <div class="play-sec">
-            <div class="play-sec-cap">Sizes · 32 / 40 / 48</div>
+            <div class="play-sec-cap">Sizes · 32 / 36 / 40</div>
             <div class="play-sec-row">
               <DsButton :variant="btnGroup.variant" size="sm">{{ btnGroup.label }}</DsButton>
               <DsButton :variant="btnGroup.variant">{{ btnGroup.label }}</DsButton>
@@ -229,7 +229,7 @@ const badgeLabel: Record<string, string> = { default: '대기', brand: '실행�
       <template v-else-if="id === 'buttongroup'">
         <div class="play-sections">
           <div class="play-sec">
-            <div class="play-sec-cap">Sizes · 32 / 40 / 48</div>
+            <div class="play-sec-cap">Sizes · 32 / 36 / 40</div>
             <div class="play-sec-row">
               <DsButtonGroup v-model="view" size="sm" :items="[{ value: 'list', label: '리스트' }, { value: 'grid', label: '그리드' }]" />
               <DsButtonGroup v-model="view" :items="[{ value: 'list', label: '리스트' }, { value: 'grid', label: '그리드' }]" />
@@ -315,7 +315,7 @@ const badgeLabel: Record<string, string> = { default: '대기', brand: '실행�
       <template v-else-if="id === 'input'">
         <div class="play-sections">
           <div class="play-sec">
-            <div class="play-sec-cap">Sizes · 32 / 40</div>
+            <div class="play-sec-cap">Sizes · 32 / 36 / 40</div>
             <div class="play-sec-row" style="align-items:flex-end">
               <DsInput v-model="txt" size="sm" label="sm — 필터 바·툴바" placeholder="Acme Inc." />
               <DsInput v-model="txt" label="default" placeholder="Acme Inc." />
@@ -341,7 +341,7 @@ const badgeLabel: Record<string, string> = { default: '대기', brand: '실행�
       <template v-else-if="id === 'select'">
         <div class="play-sections">
           <div class="play-sec">
-            <div class="play-sec-cap">Sizes · 32 / 40</div>
+            <div class="play-sec-cap">Sizes · 32 / 36 / 40</div>
             <div class="play-sec-row" style="align-items:flex-end">
               <DsSelect v-model="sel" size="sm" label="sm — 필터 바·툴바" :items="['대기', '실행 중', '완료', '실패']" style="width:190px" />
               <DsSelect v-model="sel" label="default" :items="['대기', '실행 중', '완료', '실패']" style="width:190px" />
@@ -373,7 +373,7 @@ const badgeLabel: Record<string, string> = { default: '대기', brand: '실행�
             </div>
           </div>
           <div class="play-sec">
-            <div class="play-sec-cap">Sizes · 32 / 40</div>
+            <div class="play-sec-cap">Sizes · 32 / 36 / 40</div>
             <div class="play-sec-row" style="width:280px;flex-direction:column;align-items:stretch">
               <DsAutocomplete v-model="autoSm" size="sm" multiple :items="FOLDERS" />
               <DsAutocomplete v-model="autoOne" :items="FOLDERS" />
@@ -425,7 +425,7 @@ const badgeLabel: Record<string, string> = { default: '대기', brand: '실행�
       <template v-else-if="id === 'switch'">
         <div class="play-sections">
           <div class="play-sec">
-            <div class="play-sec-cap">Sizes · 32 / 40 / 48</div>
+            <div class="play-sec-cap">Sizes · 32 / 36 / 40</div>
             <div class="play-sec-row" style="flex-direction:column;align-items:flex-start;gap:14px">
               <DsSwitch v-model="b2" size="sm" label="sm — 촘촘한 목록·테이블 행" />
               <DsSwitch v-model="b2" label="default — 설정 화면" />
@@ -517,7 +517,7 @@ const badgeLabel: Record<string, string> = { default: '대기', brand: '실행�
             </div>
           </div>
           <div class="play-sec">
-            <div class="play-sec-cap">Sizes · 32 / 40</div>
+            <div class="play-sec-cap">Sizes · 32 / 36 / 40</div>
             <div class="play-sec-row" style="width:260px;flex-direction:column;align-items:stretch">
               <DsDatePicker v-model="date" size="sm" />
               <DsDatePicker v-model="date" />
@@ -542,7 +542,7 @@ const badgeLabel: Record<string, string> = { default: '대기', brand: '실행�
       <template v-else-if="id === 'searchfield'">
         <div class="play-sections">
           <div class="play-sec">
-            <div class="play-sec-cap">Sizes · 32 / 40</div>
+            <div class="play-sec-cap">Sizes · 32 / 36 / 40</div>
             <div class="play-sec-row">
               <DsSearchField v-model="q" size="sm" placeholder="sm — 필터 바·툴바" />
               <DsSearchField v-model="q" shortcut="⌘K" :loading="loading" @search="search" />

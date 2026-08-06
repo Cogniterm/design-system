@@ -6,7 +6,7 @@
 const props = withDefaults(defineProps<{
   items: { value: any; label: string }[]
   /** 컨트롤 스케일 32/40/48 — 필터 바·툴바는 sm */
-  size?: 'sm' | 'default' | 'lg'
+  size?: 'sm' | 'default' | 'md' | 'lg'
 }>(), { size: 'default' })
 const model = defineModel<any>()
 

@@ -584,11 +584,22 @@
 .ds-stepper--headless .v-stepper-window { display: none; }
 
 /* ── VNumberInput — 높이만 다른 필드와 맞춥니다 (좌우 여백은 공통 변수가 처리) ── */
-.v-number-input.v-input--density-comfortable .v-field--variant-outlined .v-field__input { min-height: 40px; }
 .v-number-input.v-input--density-compact .v-field--variant-outlined .v-field__input { min-height: 32px; }
+.v-number-input.v-input--density-comfortable .v-field--variant-outlined .v-field__input { min-height: 36px; }
+.v-number-input.v-input--density-default .v-field--variant-outlined .v-field__input { min-height: 40px; }
 /* 스텝 버튼 기둥이 40px을 1px 넘겨 필드만 41px이 되던 것 */
-.v-number-input .v-number-input__control { align-self: center; height: 38px; }
-.v-number-input .v-number-input__control .v-btn { height: 18px; min-height: 0; border-radius: 0; }
+/* 증감 버튼 기둥 — 필드 높이를 그대로 따라갑니다.
+   38px으로 못박아 두어 필드가 32px이 돼도 기둥이 더 높았고, 그만큼 필드가
+   눌려 늘어나 숫자 입력만 옆 컨트롤보다 6px 큰 상태로 남아 있었습니다.
+   버튼 두 개가 기둥을 반씩 나눕니다. */
+/* 증감 버튼 기둥 — 필드 안쪽 높이(필드 높이 - 위아래 2px)에 맞춥니다.
+   38px으로 못박아 두어 필드가 32px이 돼도 기둥이 더 높았고, 그만큼 필드가
+   늘어나 숫자 입력만 옆 컨트롤보다 6px 컸습니다. 크기마다 값을 줍니다.
+   stretch로 두면 반대로 기둥이 필드를 밀어 올려 41px이 됩니다. */
+.v-number-input .v-number-input__control { align-self: center; height: 30px; }
+.v-number-input.v-input--density-comfortable .v-number-input__control { height: 34px; }
+.v-number-input.v-input--density-default .v-number-input__control { height: 38px; }
+.v-number-input .v-number-input__control .v-btn { height: 50%; min-height: 0; border-radius: 0; }
 
 /* ── VFileInput — 빈 상자로 보이던 문제 ──
    type=file은 placeholder를 무시하므로 컴포넌트가 안내를 직접 그립니다. */
@@ -668,9 +679,12 @@
 
 /* ── VBtn — Geist 버튼 치수에 맞춤 ── */
 .v-btn { min-width: 0; }
-.v-btn--size-default { height: 40px; padding: 0 16px; font-size: var(--text-base); }
+/* 크기 세 단계 — 32(기본) · 36 · 40. Standalone .btn과 같은 값입니다.
+   Vuetify의 이름(small·default·large)에 우리 값을 얹습니다. */
 .v-btn--size-small { height: 32px; padding: 0 12px; font-size: var(--text-sm); }
-.v-btn--size-large { height: 48px; padding: 0 20px; font-size: var(--text-lg); }
+.v-btn--size-default { height: 32px; padding: 0 12px; font-size: var(--text-sm); }
+.v-btn--size-comfortable { height: 36px; padding: 0 14px; font-size: var(--text-sm); }
+.v-btn--size-large { height: 40px; padding: 0 16px; font-size: var(--text-base); }
 .v-btn--variant-flat.bg-primary,
 .v-btn--variant-flat.text-primary { color: var(--on-brand); }
 .v-btn--variant-elevated { box-shadow: none; }
@@ -689,11 +703,18 @@
    순간 위아래 줄이 필드 테두리에 그대로 붙습니다. 여백을 조금 남겨 두면
    줄이 늘어도 칩과 테두리 사이가 유지됩니다.
    한 줄일 때 높이는 min-height가 잡으므로 40 · 32px 그대로입니다. */
-.v-input--density-comfortable .v-field__input {
-  min-height: 40px; padding-top: 5px; padding-bottom: 5px;
-}
+/* 필드 높이 — Vuetify의 density 이름에 우리 값을 얹습니다.
+     compact      32  기본
+     comfortable  36
+     default      40 */
 .v-input--density-compact .v-field__input {
   min-height: 32px; padding-top: 3px; padding-bottom: 3px;
+}
+.v-input--density-comfortable .v-field__input {
+  min-height: 36px; padding-top: 4px; padding-bottom: 4px;
+}
+.v-input--density-default .v-field__input {
+  min-height: 40px; padding-top: 5px; padding-bottom: 5px;
 }
 /* 칩 사이 간격 — DsChip을 나란히 놓을 때와 같은 6px입니다.
    Vuetify 기본은 가로 2px이라 칩끼리 거의 붙어 보였습니다. */
@@ -708,7 +729,8 @@
    글자 윗부분이 잘렸음 → 상단 정렬 + 상하 여백을 줘서 값·placeholder가 온전히 보이게. */
 .v-textarea .v-field__field { align-items: flex-start; }
 .v-textarea .v-field__input,
-.v-input--density-comfortable .v-textarea .v-field__input { padding-top: 9px; padding-bottom: 9px; min-height: 40px; }
+.v-input--density-compact .v-textarea .v-field__input { padding-top: 7px; padding-bottom: 7px; min-height: 32px; }
+.v-input--density-comfortable .v-textarea .v-field__input { padding-top: 8px; padding-bottom: 8px; min-height: 36px; }
 
 .v-input__details { padding-inline: 2px; min-height: 0; padding-top: 6px; }
 .v-messages { opacity: 1; }

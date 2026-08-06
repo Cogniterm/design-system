@@ -10,7 +10,7 @@ import { DsAutocomplete } from '~/design/vuetify'   // Vuetify 필요 · ds.css 
 - items: any[] = 필수 — 옵션.
 - multiple: boolean = false — 다중 선택 시 칩으로 표시됩니다.
 - error: string — 에러 메시지.
-- size: 'sm' | 'default' = 'default' — 컨트롤 스케일 32 / 40px. 필터 바·툴바는 sm.
+- size: 'sm' | 'default' = 'default' — 컨트롤 스케일 — 기본 32 / md 36 / lg 40 (sm은 32의 다른 이름).
 
 
 ## 사용 예

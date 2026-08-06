@@ -9,9 +9,9 @@ withDefaults(defineProps<{
   label?: string
   multiple?: boolean
   error?: string
-  /** 컨트롤 스케일 — sm 32px / default 40px. 필터 바·툴바는 sm.
+  /** 컨트롤 스케일 — 기본 32 / md 36 / lg 40 (sm은 32의 다른 이름)
       다른 컨트롤(Button·Checkbox 등)과 같은 prop 이름을 씁니다. */
-  size?: 'sm' | 'default'
+  size?: 'sm' | 'default' | 'md' | 'lg'
 }>(), { size: 'default' })
 const model = defineModel<any>()
 /* 소비자가 준 속성(disabled·required·name·error-messages 등)이 바깥 <div>가 아니라
@@ -33,7 +33,7 @@ const msgId = `ds-field-msg-${uid}`
       :multiple="multiple"
       :error="!!error"
       variant="outlined"
-      :density="size === 'sm' ? 'compact' : 'comfortable'"
+      :density="size === 'lg' ? 'default' : size === 'md' ? 'comfortable' : 'compact'"
       hide-details="auto"
     v-bind="$attrs" />
     <div v-if="error" :id="msgId" class="hint error">{{ error }}</div>

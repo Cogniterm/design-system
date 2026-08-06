@@ -5,8 +5,8 @@ import { useId } from 'vue'
 import { VCombobox } from 'vuetify/components'
 withDefaults(defineProps<{
   items?: string[]; label?: string; hint?: string; error?: string; placeholder?: string
-  /** 컨트롤 스케일 — sm 32px / default 40px. 필터 바·툴바는 sm. */
-  size?: 'sm' | 'default'
+  /** 컨트롤 스케일 — 기본 32 / md 36 / lg 40 (sm은 32의 다른 이름) */
+  size?: 'sm' | 'default' | 'md' | 'lg'
 }>(), { size: 'default' })
 const model = defineModel<string[]>({ default: () => [] })
 /* 소비자가 준 속성(disabled·required·name·error-messages 등)이 바깥 <div>가 아니라
@@ -22,7 +22,7 @@ const msgId = `ds-field-msg-${uid}`
   <div class="field ds-vfield" :class="{ 'ds-vfield--sm': size === 'sm' }">
     <label v-if="label" :for="fieldId">{{ label }}</label>
     <VCombobox :id="fieldId" :aria-describedby="error || hint ? msgId : undefined" v-model="model" :items="items ?? []" :error="!!error" :placeholder="placeholder"
-      multiple chips closable-chips variant="outlined" :density="size === 'sm' ? 'compact' : 'comfortable'" hide-details="auto" v-bind="$attrs" />
+      multiple chips closable-chips variant="outlined" :density="size === 'lg' ? 'default' : size === 'md' ? 'comfortable' : 'compact'" hide-details="auto" v-bind="$attrs" />
     <div v-if="error" :id="msgId" class="hint error">{{ error }}</div>
     <div v-else-if="hint" :id="msgId" class="hint">{{ hint }}</div>
   </div>

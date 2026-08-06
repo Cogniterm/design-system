@@ -5,15 +5,16 @@ withDefaults(defineProps<{
   placeholder?: string
   shortcut?: string      // 예: '⌘K' — 포커스 전에만 표시
   loading?: boolean
-  /** 컨트롤 스케일 — sm 32px / default 40px. 필터 바·툴바는 sm. */
-  size?: 'sm' | 'default'
+  /** 컨트롤 스케일 — 기본 32 / md 36 / lg 40 (sm은 32의 다른 이름).
+   * 기본이 가장 작은 이유: 컨트롤은 대부분 툴바·필터 바·표 안에 줄지어 놓입니다. */
+  size?: 'sm' | 'default' | 'md' | 'lg'
 }>(), { placeholder: '검색…', size: 'default' })
 const model = defineModel<string>({ default: '' })
 const focused = ref(false)
 const emit = defineEmits<{ search: [q: string] }>()
 </script>
 <template>
-  <div class="searchfield" :class="[{ focused }, size === 'sm' && 'sm']">
+  <div class="searchfield" :class="[{ focused }, size !== 'default' && size]">
     <span class="sf-icon" aria-hidden="true">
       <svg v-if="!loading" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
       <span v-else class="spinner" style="width:14px;height:14px"></span>

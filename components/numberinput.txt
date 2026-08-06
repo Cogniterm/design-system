@@ -9,7 +9,7 @@ import { DsNumberInput } from '~/design/vuetify'   // Vuetify 필요 · ds.css +
 - modelValue: number — v-model.
 - min / max / step: number = — / — / 1 — 범위.
 - label / hint / error: string — 필드 공통.
-- size: 'sm' | 'default' = 'default' — 컨트롤 스케일 32 / 40px. 필터 바·툴바는 sm.
+- size: 'sm' | 'default' = 'default' — 컨트롤 스케일 — 기본 32 / md 36 / lg 40 (sm은 32의 다른 이름).
 
 
 ## 사용 예

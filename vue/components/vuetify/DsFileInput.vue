@@ -8,8 +8,8 @@ withDefaults(defineProps<{
   label?: string; hint?: string; error?: string; accept?: string; multiple?: boolean
   /** 비어 있을 때 필드 안에 보이는 안내 */
   placeholder?: string
-  /** 컨트롤 스케일 — sm 32px / default 40px. 필터 바·툴바는 sm. */
-  size?: 'sm' | 'default'
+  /** 컨트롤 스케일 — 기본 32 / md 36 / lg 40 (sm은 32의 다른 이름) */
+  size?: 'sm' | 'default' | 'md' | 'lg'
 }>(), { placeholder: '파일 선택 또는 드래그', size: 'default' })
 const model = defineModel<any>()
 /* <input type="file">은 placeholder 속성을 브라우저가 무시합니다.
@@ -31,7 +31,7 @@ const msgId = `ds-field-msg-${uid}`
   <div class="field ds-vfield" :class="{ 'ds-vfield--sm': size === 'sm' }">
     <label v-if="label" :for="fieldId">{{ label }}</label>
     <VFileInput :id="fieldId" :aria-describedby="error || hint ? msgId : undefined" v-model="model" :accept="accept" :multiple="multiple" :error="!!error"
-      variant="outlined" :density="size === 'sm' ? 'compact' : 'comfortable'" hide-details="auto" prepend-icon=""
+      variant="outlined" :density="size === 'lg' ? 'default' : size === 'md' ? 'comfortable' : 'compact'" hide-details="auto" prepend-icon=""
       v-bind="$attrs">
       <template v-if="isEmpty" #prepend-inner>
         <span class="ds-file-ph"><DsIcon name="attach" size="sm" />{{ placeholder }}</span>
