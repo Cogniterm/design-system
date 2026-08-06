@@ -629,7 +629,9 @@ const badgeLabel: Record<string, string> = { default: '대기', brand: '실행�
       <template v-else-if="id === 'spinner'">
         <template v-if="gv(['brand','current'], 'brand') === 'current'">
           <DsButton><DsSpinner variant="current" :size="13" /> 저장 중…</DsButton>
-          <DsButton variant="danger"><DsSpinner variant="current" :size="13" /> 삭제 중…</DsButton>
+          <DsButton variant="primary" loading>저장 중…</DsButton>
+          <DsButton variant="danger" loading>삭제 중…</DsButton>
+          <DsButton variant="secondary" loading>불러오는 중…</DsButton>
         </template>
         <template v-else>
           <DsSpinner />

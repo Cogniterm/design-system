@@ -1151,7 +1151,16 @@
 /* 색 있는 버튼(primary·danger) 안에서는 밑줄 링도 글자색을 따릅니다.
    회색(--gray-4) 링이 파란 면 위에 그대로 남아, 도는 호 뒤에 회색 자국이
    붙어 다니는 것처럼 보였습니다 — 잔상의 정체입니다. */
-.ds-spinner--current .v-progress-circular__underlay { stroke: currentColor; opacity: .3; }
+/* 종류별 색 — 호(overlay)와 밑줄(underlay)을 함께 정합니다.
+   밑줄만 회색으로 남으면 도는 호 뒤에 자국이 붙어 다니는 것처럼 보입니다. */
+.ds-spinner--current .v-progress-circular__overlay { stroke: currentColor; }
+.ds-spinner--current .v-progress-circular__underlay { stroke: currentColor; opacity: .25; }
+/* 색이 채워진 면 위 — 흰 호에 반투명 흰 밑줄 */
+.ds-spinner--on-brand .v-progress-circular__overlay { stroke: var(--on-brand); }
+.ds-spinner--on-brand .v-progress-circular__underlay { stroke: var(--on-brand); opacity: .35; }
+/* 조용한 진행 */
+.ds-spinner--muted .v-progress-circular__overlay { stroke: var(--gray-9); }
+.ds-spinner--muted .v-progress-circular__underlay { stroke: var(--gray-5); opacity: 1; }
 
 /* ── 칩 ── */
 .v-chip { font-weight: var(--weight-medium); }

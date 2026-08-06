@@ -140,6 +140,11 @@
   --warning-subtle: color-mix(in srgb, var(--warning) 6%, var(--bg));
   --warning-border: color-mix(in srgb, var(--warning) 30%, transparent);
   --danger-subtle:  color-mix(in srgb, var(--danger) 6%, var(--bg));
+  /* 에러 포커스 링 — 면(--danger-subtle)보다 진합니다.
+     6%짜리 면을 링에 그대로 쓰면 흰 배경에서 거의 안 보였습니다.
+     면은 넓게 깔려 6%로도 읽히지만, 링은 3.5px 띠라 더 진해야 같은 세기로 읽힙니다.
+     브랜드 링(#EBF3FE)과 비슷한 눈에 띔을 목표로 잡았습니다. */
+  --danger-ring: color-mix(in srgb, var(--danger) 16%, var(--bg));
   --danger-border:  color-mix(in srgb, var(--danger) 28%, transparent);
   --info-subtle:    color-mix(in srgb, var(--info) 5%, var(--bg));
   --info-border:    color-mix(in srgb, var(--info) 24%, transparent);

@@ -70,6 +70,11 @@ const currentVersion = (() => { try { return readFileSync(versionPath, 'utf8') }
 // 날짜까지 비교하면 내용이 그대로여도 다음 날 CI가 실패합니다 — 지문만 봅니다
 const stampOf = (t) => t.match(/DS_VERSION = '([^']*)'/)?.[1] ?? ''
 
+/* index.html 밖에도 스탬프를 남깁니다.
+   index.html은 GitHub Pages가 캐시하므로, 브라우저가 "지금 진짜 최신이 무엇인지"를
+   따로 물어볼 곳이 필요합니다. index.html의 인라인 스크립트가 이 파일을 읽습니다. */
+const versionJson = JSON.stringify({ stamp, builtAt: new Date().toISOString().slice(0, 10) }) + '\n'
+
 if (check) {
   if (stampOf(currentVersion) !== stamp) {
     console.error(`실패 — vue/version.ts가 낡았습니다 (있어야 할 값: ${stamp}). node scripts-stamp.mjs 를 돌리세요.`)
@@ -83,6 +88,7 @@ if (check) {
   console.log(`통과 — 캐시 스탬프 최신 (${stamp})`)
 } else {
   if (stampOf(currentVersion) !== stamp) writeFileSync(versionPath, version)
+  writeFileSync('version.json', versionJson)
   if (stamped === html) console.log(`변경 없음 — 스탬프 그대로 (${stamp})`)
   else {
     writeFileSync('index.html', stamped)

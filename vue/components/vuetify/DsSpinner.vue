@@ -5,12 +5,19 @@
 import { VProgressCircular } from 'vuetify/components'
 withDefaults(defineProps<{
   size?: number
-  /** brand: 브랜드색(기본) · current: 글자색을 따라감 — 색 있는 버튼(primary·danger) 안에서 사용 */
-  variant?: 'brand' | 'current'
+  /** 어디에 얹느냐로 고릅니다 — 바탕색과 같은 색을 쓰면 아예 안 보입니다.
+   *  brand    흰 바탕·회색 바탕 (기본)
+   *  on-brand 색이 채워진 면 — primary·danger 버튼 안
+   *  current  글자색을 따라감 — secondary·ghost 버튼, 본문 안
+   *  muted    조용히 — 배경 갱신처럼 눈에 덜 띄어야 할 때 */
+  variant?: 'brand' | 'on-brand' | 'current' | 'muted'
 }>(), { size: 16, variant: 'brand' })
+
+const COLOR = { brand: 'primary', 'on-brand': undefined, current: undefined, muted: undefined } as const
 </script>
 <template>
-  <VProgressCircular class="ds-spinner" :class="variant === 'current' && 'ds-spinner--current'" indeterminate
-    :color="variant === 'brand' ? 'primary' : undefined"
-    :size="size" :width="2" />
+  <VProgressCircular
+    class="ds-spinner" :class="`ds-spinner--${variant}`" indeterminate
+    :color="COLOR[variant]" :size="size" :width="2"
+    role="status" aria-label="진행 중" />
 </template>
