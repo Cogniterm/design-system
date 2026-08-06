@@ -120,6 +120,16 @@ If two components look interchangeable, the "confused with" section of each
   usage:
     <DsLink href="/docs/audit">감사 로그 문서</DsLink>
     <DsLink href="https://…" external>외부 문서<template #icon>​</template></DsLink>
+- **DsTableOfContents** (목차) — 긴 문서 옆에서 지금 어느 절을 보고 있는지 알려 줍니다.
+  import: ~/design | origin: custom
+  where: 긴 문서·설정 화면의 본문 옆. 절이 3개 이상일 때.
+  props: items, scrollTarget=null
+  usage:
+    <DsTableOfContents :items="[
+      { id: 'overview', label: '개요' },
+      { id: 'install', label: '설치' },
+      { id: 'usage', label: '사용법' },
+    ]" />
 - **DsCommandPalette** (명령 팔레트) — ⌘K — 어디서든 검색·실행.
   import: ~/design/vuetify | origin: wrapped (VDialog)
   where: 전역 ⌘K — 문서·에이전트·명령으로 점프.

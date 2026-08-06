@@ -98,14 +98,13 @@ export function fdOverview() {
     <a class="cat-card" href="#/foundation/${id}">
       <div class="thumb"><div class="thumb-inner">${THUMBS[id] || ''}</div></div>
       <div class="cat-body">
-        <div class="cc-top"><h3>${en}</h3><span class="cc-ko">${ko}</span></div>
+        <div class="cc-top"><h3>${en}</h3></div>
         <p>${DESC[id] || ''}</p>
       </div>
     </a>`).join('')
 
   return `
     <div class="page-head"><h1>Foundation</h1></div>
-    <p class="page-lead">컴포넌트 이전의 결정들.</p>
     <div class="cat-grid" style="margin-top:30px">${cards}</div>`
 }
 

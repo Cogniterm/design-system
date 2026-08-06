@@ -229,11 +229,13 @@ const DOCS_LINKS = [
 ]
 
 /* 섹션 머리표 — 지금 어느 섹션에 있는지 LNB 최상단에 고정합니다 */
+/* 사이드바 머리에 쓰는 이름. 목록 위에는 "여기가 어디인가"만 있으면 되므로
+   영문 한 줄만 둡니다 — 국문 병기와 부연 설명은 같은 말의 반복이었습니다. */
 const LNB_HEAD = {
-  docs:       ['Docs', '문서', '설치부터 Vuetify 연동까지'],
-  foundation: ['Foundation', '파운데이션', '컴포넌트 이전의 결정들'],
-  components: ['Components', '컴포넌트', `${COMPONENTS.length}종 · Standalone ${COMPONENTS.filter((c) => c.origin === 'custom').length} · Vuetify ${COMPONENTS.filter((c) => c.origin === 'wrapped').length}`],
-  templates:  ['Templates', '템플릿', '페이지 템플릿과 라이브 예제'],
+  docs:       ['Docs'],
+  foundation: ['Foundation'],
+  components: ['Components'],
+  templates:  ['Templates'],
 }
 
 function renderSidebar(section, activeId) {
@@ -313,7 +315,7 @@ function catCard(c) {
       <div class="thumb" inert><div class="thumb-inner">${unlinkDemo(c.thumb || c.demo)}</div></div>
       <div class="cat-body">
         <div class="cc-top">
-          <h3>${c.name}</h3><span class="cc-ko">${c.ko}</span>
+          <h3>${c.name}</h3>
           <span class="mini-badge ${c.origin}">${ORIGIN_TAG[c.origin]}</span>
         </div>
       </div>
@@ -334,7 +336,7 @@ function renderCatalog() {
     const items = COMPONENTS.filter((c) => c.category === cat.id)
     if (!items.length) continue
     html += `<div class="cat-group">
-      <div class="cat-head"><h2>${cat.name}</h2><span>${cat.ko} · ${items.length}종</span></div>
+      <div class="cat-head"><h2>${cat.name}</h2><span>${items.length}종</span></div>
       <div class="cat-grid">${items.map(catCard).join('')}</div>
     </div>`
   }
