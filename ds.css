@@ -356,13 +356,26 @@ body {
 .ds-check.is-disabled .ds-check__label { color: var(--gray-9); }
 
 /* ── ds-radio ──────────────────────────────
-   원과 안쪽 점을 모두 CSS로 그립니다. 점은 상자의 37.5%로 고정이라
-   크기를 바꿔도 비율이 유지됩니다 (아이콘 글리프로는 안 되던 부분).
-   선택 표시는 체크박스와 같은 언어 — 브랜드 면 + 반전 표식. */
+   원과 안쪽 점을 모두 CSS로 그립니다.
+
+   치수는 전부 정수(px)입니다. 소수(1.5px 테두리·1.5px 여백)를 쓰면
+   배율 1배 화면에서 브라우저가 반 픽셀을 그릴 수 없어 변마다 다르게 반올림합니다 —
+   링 두께가 들쭉날쭉해지고 점이 중앙에서 밀려 "깨져" 보입니다.
+   상자·점을 모두 짝수로 잡아 여백까지 정수로 떨어지게 했습니다.
+
+   점 크기는 상자의 50% — Material Design 3(20/10) · Ant Design(16/8) ·
+   Bootstrap과 같은 값입니다. 전에는 고정 여백 방식이라 상자가 커질수록
+   비율이 커졌습니다(50% → 56% → 65%). lg에서 특히 커 보이던 원인입니다.
+
+     크기      상자   링   점    비율   여백
+     sm        14    2    6     43%    2px
+     default   16    2    8     50%    2px
+     lg        20    2    10    50%    3px
+*/
 /* 텍스트 입력용 .field(고정 300px)를 쓰지 않습니다 — 선택지 폭은 내용이 정합니다 */
-.ds-radio { --rb: 16px; --rb-gap: 9px; display: inline-flex; flex-direction: column; gap: 8px; }
-.ds-radio--sm { --rb: 14px; --rb-gap: 8px; }
-.ds-radio--lg { --rb: 20px; --rb-gap: 10px; }
+.ds-radio { --rb: 16px; --rb-dot: 8px; --rb-gap: 9px; display: inline-flex; flex-direction: column; gap: 8px; }
+.ds-radio--sm { --rb: 14px; --rb-dot: 6px; --rb-gap: 8px; }
+.ds-radio--lg { --rb: 20px; --rb-dot: 10px; --rb-gap: 10px; }
 .ds-radio__group-label { font-size: var(--text-sm); font-weight: var(--weight-medium); }
 .ds-radio__group { display: flex; flex-direction: column; gap: 10px; }
 .ds-radio__group.is-inline { flex-direction: row; flex-wrap: wrap; gap: 18px; }
@@ -373,7 +386,7 @@ body {
 .ds-radio__mark {
   position: relative; flex: none; display: inline-flex; align-items: center; justify-content: center;
   width: var(--rb); height: var(--rb); border-radius: 50%;
-  border: 1.5px solid var(--border-strong); background: var(--surface);
+  border: 1px solid var(--border-strong); background: var(--surface);
   margin-top: 1px;   /* 첫 줄 글자의 중앙에 맞춤 */
   transition: border-color .12s ease;
 }
@@ -384,7 +397,7 @@ body {
    비율(%)로 잡으면 작은 크기에서 점이 사라지듯 작아집니다. */
 .ds-radio__mark.is-on { border-width: 2px; border-color: var(--brand); }
 .ds-radio__mark.is-on::after {
-  content: ''; width: calc(100% - 3px); height: calc(100% - 3px);
+  content: ''; width: var(--rb-dot); height: var(--rb-dot);
   border-radius: 50%; background: var(--brand);
 }
 .ds-radio__mark:has(input:focus-visible) { box-shadow: var(--focus-ring); }
