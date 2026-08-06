@@ -443,6 +443,13 @@
 
 /* ── 오버레이 그림자 통일 (머티리얼 elevation 제거) ── */
 .v-overlay__content { box-shadow: none; }
+/* Select 계열은 껍데기(.v-*__content)에도 머티리얼 그림자를 따로 겁니다.
+   그대로 두면 우리 그림자와 두 겹으로 겹쳐 드롭다운만 무겁게 보입니다.
+   Vuetify 규칙이 (0,1,0)이라 위 규칙과 동률인데 플러그인이 우리 파일 뒤에
+   주입하므로, 클래스를 겹쳐 특이도를 올려야 이깁니다. */
+.v-overlay__content.v-select__content,
+.v-overlay__content.v-autocomplete__content,
+.v-overlay__content.v-combobox__content { box-shadow: none; }
 .v-overlay__content > .v-card,
 .v-overlay__content > .v-list,
 .v-overlay__content > .v-sheet,
