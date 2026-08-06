@@ -108,9 +108,14 @@ onMounted(() => {
 /* ── 공유 상태 ── */
 const txt = ref(''); const email = ref('ujin@'); const memo = ref('')
 const num = ref(3); const tags = ref(['법무', '계약'])
-const sel = ref('실행 중'); const auto = ref(['법무'])
+const sel = ref('실행 중'); const auto = ref(['법무', '재무', '인사', '영업'])
 const b1 = ref(true); const b2 = ref(false); const radio = ref('180')
 const slider = ref(70); const files = ref(null); const date = ref(null)
+/* Autocomplete 데모 — 칩이 여러 개 쌓인 모습을 바로 보여 주려고 미리 채웁니다 */
+const FOLDERS = ['법무', '재무', '인사', '영업', '기술', '연구', '총무']
+const autoOne = ref('법무')
+const autoSm = ref(['법무', '재무'])
+const autoErr = ref(null)
 /* 달력 데모용 값 — 캡처마다 달라지지 않게 고정 날짜를 씁니다 */
 const d1 = new Date(2026, 7, 11); const d2 = new Date(2026, 7, 18)
 /* 기간 값은 [시작, 종료]가 아니라 사이 날짜를 전부 담은 배열입니다 (Vuetify 규약) */
@@ -354,7 +359,34 @@ const badgeLabel: Record<string, string> = { default: '대기', brand: '실행�
       </template>
 
       <template v-else-if="id === 'autocomplete'">
-        <DsAutocomplete v-model="auto" label="폴더" multiple :items="['법무', '재무', '인사', '영업', '기술']" style="width:280px" />
+        <div class="play-sections">
+          <div class="play-sec">
+            <div class="play-sec-cap">Single</div>
+            <div class="play-sec-row" style="width:280px">
+              <DsAutocomplete v-model="autoOne" label="폴더" :items="FOLDERS" />
+            </div>
+          </div>
+          <div class="play-sec">
+            <div class="play-sec-cap">Multiple · 칩이 늘면 줄이 늘어납니다</div>
+            <div class="play-sec-row" style="width:280px">
+              <DsAutocomplete v-model="auto" label="폴더" multiple :items="FOLDERS" />
+            </div>
+          </div>
+          <div class="play-sec">
+            <div class="play-sec-cap">Sizes · 32 / 40</div>
+            <div class="play-sec-row" style="width:280px;flex-direction:column;align-items:stretch">
+              <DsAutocomplete v-model="autoSm" size="sm" multiple :items="FOLDERS" />
+              <DsAutocomplete v-model="autoOne" :items="FOLDERS" />
+            </div>
+          </div>
+          <div class="play-sec">
+            <div class="play-sec-cap">States</div>
+            <div class="play-sec-row" style="width:280px;flex-direction:column;align-items:stretch">
+              <DsAutocomplete v-model="autoErr" label="폴더" :items="FOLDERS" error="폴더를 선택하세요." />
+              <DsAutocomplete v-model="autoOne" label="잠긴 필드" :items="FOLDERS" disabled />
+            </div>
+          </div>
+        </div>
       </template>
 
       <template v-else-if="id === 'combobox'">

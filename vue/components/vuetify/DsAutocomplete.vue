@@ -8,6 +8,9 @@ withDefaults(defineProps<{ items: any[]; label?: string; multiple?: boolean; err
   size?: 'sm' | 'default'
 }>(), { size: 'default' })
 const model = defineModel<any>()
+/* 칩은 다중 선택에서만 씁니다. 하나만 고르는 필드에서 값 하나를 칩으로
+   감싸면 "지울 수 있는 여러 개 중 하나"처럼 읽혀서, 실제로는 바꿔야 하는데
+   지우려 듭니다. 단일 선택은 고른 값을 그냥 글자로 둡니다. */
 /* 소비자가 준 속성(disabled·required·name·error-messages 등)이 바깥 <div>가 아니라
    진짜 Vuetify 컴포넌트에 붙게 합니다. 이게 없으면 조용히 무시됩니다. */
 defineOptions({ inheritAttrs: false })
@@ -22,7 +25,8 @@ const msgId = `ds-field-msg-${uid}`
     <label v-if="label" :for="fieldId">{{ label }}</label>
     <VAutocomplete :id="fieldId" :aria-describedby="error ? msgId : undefined" v-model="model" :items="items" :multiple="multiple" :error="!!error"
       :placeholder="placeholder" variant="outlined" :density="size === 'sm' ? 'compact' : 'comfortable'"
-      hide-details="auto" chips closable-chips v-bind="$attrs" />
+      hide-details="auto"
+      :chips="multiple" :closable-chips="multiple" v-bind="$attrs" />
     <div v-if="error" :id="msgId" class="hint error">{{ error }}</div>
   </div>
 </template>

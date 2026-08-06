@@ -1099,11 +1099,20 @@ export const COMPONENTS = [
     ['size', `'sm' | 'default'`, `'default'`, '컨트롤 스케일 32 / 40px. 필터 바·툴바는 sm.'],
   ],
   slots: [],
+  demos: [
+    { key: 'single',   title: 'Single',   desc: '하나만 고를 때 — 고른 값이 글자로 남습니다.' },
+    { key: 'multiple', title: 'Multiple', desc: '여러 개 — 고른 값이 칩으로 쌓이고, 넘치면 줄이 늘어납니다.' },
+    { key: 'sizes',    title: 'Sizes',    desc: '32 / 40px — 다른 입력 컨트롤과 같은 두 단계. 필터 바·툴바는 sm.' },
+    { key: 'states',   title: 'States',   desc: '에러 · 비활성 — 입력 필드와 같은 언어.' },
+  ],
   demo: `<div class="field"><label>폴더</label><div class="input" style="display:flex;gap:6px;align-items:center"><span class="chip" style="height:20px">법무<button class="x">${ic('close',12)}</button></span><span style="color:var(--gray-9);font-size:13px">검색…</span></div></div>`,
   vue: `<DsAutocomplete v-model="folders" label="폴더" multiple
   :items="['법무', '재무', '인사', '영업']" />`,
   html: null,
-  guidelines: [['해야 할 것', '옵션이 10개를 넘으면 Select 대신 이것을 씁니다.']],
+  guidelines: [
+    ['해야 할 것', '옵션이 10개를 넘으면 Select 대신 이것을 씁니다.'],
+    ['해야 할 것', '다중 선택에서 칩이 늘어나면 필드가 세로로 자랍니다 — 옆 컨트롤과 위쪽을 맞춰(align-items: flex-start) 배치합니다.'],
+  ],
 },
 {
   id: 'checkbox', name: 'Checkbox', ko: '체크박스', category: 'input',

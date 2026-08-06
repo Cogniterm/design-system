@@ -24,6 +24,7 @@ import { DsAutocomplete } from '~/design/vuetify'   // Vuetify 필요 · ds.css 
 
 ## 지침
 - [해야 할 것] 옵션이 10개를 넘으면 Select 대신 이것을 씁니다.
+- [해야 할 것] 다중 선택에서 칩이 늘어나면 필드가 세로로 자랍니다 — 옆 컨트롤과 위쪽을 맞춰(align-items: flex-start) 배치합니다.
 
 ## 접근성
 키보드: Tab=필드로 이동 · 글자 입력=검색 · ↑ ↓=결과 이동 · Enter=선택 · Backspace=마지막 칩 제거 · Esc=닫기
