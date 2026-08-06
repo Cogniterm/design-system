@@ -350,29 +350,32 @@ body {
 .ds-radio__group { display: flex; flex-direction: column; gap: 10px; }
 .ds-radio__group.is-inline { flex-direction: row; flex-wrap: wrap; gap: 18px; }
 .ds-radio__row { display: inline-flex; align-items: flex-start; gap: var(--rb-gap); cursor: pointer; }
+/* 라디오는 체크박스와 표현이 다릅니다 — 면을 채우지 않고 "링 + 안쪽 점"입니다.
+   체크박스는 켜짐/꺼짐이라 면을 채우고, 라디오는 여럿 중 하나를 고르는 것이라
+   점의 위치로 어느 것인지 읽습니다. 표준 라디오의 생김새이기도 합니다. */
 .ds-radio__mark {
   position: relative; flex: none; display: inline-flex; align-items: center; justify-content: center;
   width: var(--rb); height: var(--rb); border-radius: 50%;
-  border: 1px solid var(--border-strong); background: var(--surface);
+  border: 1.5px solid var(--border-strong); background: var(--surface);
   margin-top: 1px;   /* 첫 줄 글자의 중앙에 맞춤 */
-  transition: background .12s ease, border-color .12s ease;
+  transition: border-color .12s ease;
 }
 .ds-radio__mark input { position: absolute; inset: 0; width: 100%; height: 100%; margin: 0; opacity: 0; cursor: pointer; }
 .ds-radio__row:hover .ds-radio__mark:not(.is-on) { border-color: var(--border-hover); }
-.ds-radio__mark.is-on { background: var(--brand); border-color: var(--brand); }
-/* 안쪽 점 — 상자의 37.5% (16px → 6px) */
+/* 선택 — 링을 브랜드색으로 굵히고 가운데에 점. 면은 그대로 흽니다 */
+.ds-radio__mark.is-on { border-width: 2px; border-color: var(--brand); }
 .ds-radio__mark.is-on::after {
-  content: ''; width: 37.5%; height: 37.5%; border-radius: 50%;
-  background: var(--on-brand);
+  content: ''; width: 44%; height: 44%; border-radius: 50%;
+  background: var(--brand);
 }
 .ds-radio__mark:has(input:focus-visible) { box-shadow: var(--focus-ring); }
 .ds-radio__text { display: flex; flex-direction: column; gap: 1px; font-size: var(--text-base); color: var(--gray-12); }
 .ds-radio--sm .ds-radio__text { font-size: var(--text-sm); }
 .ds-radio__hint { font-size: var(--text-xs); color: var(--gray-11); }
 .ds-radio__row.is-disabled { pointer-events: none; }
-.ds-radio__row.is-disabled .ds-radio__mark { background: var(--gray-4); border-color: transparent; }
-.ds-radio__row.is-disabled .ds-radio__mark.is-on { background: var(--gray-6); }
-.ds-radio__row.is-disabled .ds-radio__mark.is-on::after { background: var(--gray-10); }
+.ds-radio__row.is-disabled .ds-radio__mark { background: var(--gray-3); border-color: var(--gray-6); }
+.ds-radio__row.is-disabled .ds-radio__mark.is-on { border-color: var(--gray-8); }
+.ds-radio__row.is-disabled .ds-radio__mark.is-on::after { background: var(--gray-8); }
 .ds-radio__row.is-disabled .ds-radio__text { color: var(--gray-9); }
 
 /* ── ds-card ── */
