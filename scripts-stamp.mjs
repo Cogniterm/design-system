@@ -27,8 +27,18 @@ const ASSETS = [
   'docs.js', 'data.js', 'foundation.js', 'icons-svg.js', 'ai-prompt.js',
 ]
 
+/* 해시에는 넣지만 index.html에 <script>·<link>로 실려 있지는 않은 것.
+   플레이그라운드 iframe은 docs.js가 live/?v=<스탬프>로 부릅니다.
+
+   전에는 여기서 live/가 빠져 있었습니다. 그래서 데모 앱만 고치고 문서
+   파일은 안 건드린 배포에서는 스탬프가 그대로였고, 브라우저가 옛날
+   플레이그라운드를 계속 썼습니다 — 고쳤는데도 안 고쳐진 것처럼 보입니다.
+   live/index.html에는 번들 파일 이름(내용 해시 포함)이 적혀 있어서,
+   데모 앱이 조금이라도 바뀌면 이 파일도 반드시 바뀝니다. */
+const HASH_ONLY = ['live/index.html']
+
 const hash = createHash('sha256')
-for (const f of ASSETS) hash.update(readFileSync(f))
+for (const f of [...ASSETS, ...HASH_ONLY]) hash.update(readFileSync(f))
 const stamp = hash.digest('hex').slice(0, 8)
 
 const html = readFileSync('index.html', 'utf8')
