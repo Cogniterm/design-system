@@ -142,6 +142,38 @@ vuetify({ autoImport: true, styles: 'none' })
 > 넣거나 `createVuetify({ components, directives })`로 직접 등록합니다.
 > 우리 `Ds*`는 각자 필요한 것을 직접 import하므로 이 설정 없이도 돕니다.
 
+#### Tailwind를 함께 쓴다면 — 레이어 순서를 직접 선언하세요
+
+Tailwind(또는 shadcn 계열)를 같이 쓰는 앱이라면 축이 하나 더 생깁니다. Vuetify가
+만들어 내는 클래스 이름이 Tailwind의 유틸리티 이름과 **그대로 겹치기** 때문입니다.
+
+```css
+/* 앱 CSS 맨 위 — 레이어는 '선언한 순서'가 곧 우선순위입니다 */
+@layer theme, base, vuetify, vuetify-utilities, components, utilities;
+```
+
+`vuetify-utilities`가 함정입니다. Vuetify는 테마에 등록된 색 이름마다
+`bg-*` · `text-*` · `border-*` 유틸리티를 **런타임에** `@layer vuetify-utilities`로
+찍어냅니다. CSS 파일을 아무리 뒤져도 안 나오고, 위 목록에 미리 적어 두지 않으면
+"나중에 등장한 레이어"가 되어 Tailwind를 이깁니다.
+
+겹치는 이름 — 값이 우연히 같으면 조용히 지나가다가, 다른 곳에서 터집니다.
+
+| 클래스 | Vuetify가 주는 값 | Tailwind 의도 |
+|---|---|---|
+| `bg-secondary` · `text-secondary` | 테마 `secondary` | `--secondary` 토큰 |
+| `bg-primary` · `bg-background` · `bg-surface` | 테마 색 | 토큰 색 |
+| `rounded-sm` · `rounded-md` · `rounded-lg` · `rounded-xl` | 4 / 8 / 12px 고정 | `--radius` 계산값 |
+| `border-primary` 등 | 테마 색 | 토큰 색 |
+
+Tailwind의 preflight도 레이어 안(`layer(base)`)에 넣으세요. 레이어 밖에 두면
+form 리셋(`border-radius: 0`)이 `rounded-md`를 이겨 입력·버튼 모서리가 각져 나옵니다.
+
+실제 사고(DocuRAG, 2026-08-06): 레이어 선언에 `vuetify-utilities`가 빠져 있어
+테마의 `secondary`(#60646c)가 `.bg-secondary`를 덮었고, secondary 버튼이 전 화면에서
+진회색+흰 글자로 나왔습니다. 같은 원인으로 `input`의 `rounded-md`도 무효였습니다.
+증상이 색과 모양으로 따로 보여서 한 번에 찾지 못했습니다.
+
 ### 2-4. 사용
 
 ```vue
