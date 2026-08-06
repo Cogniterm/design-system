@@ -139,7 +139,7 @@ const SECTIONS = [
               </template>
               <div class="ds-menu-item">이름 바꾸기</div>
               <div class="ds-menu-item">복제</div>
-              <div class="ds-menu-item" style="color:var(--danger)">삭제</div>
+              <div class="ds-menu-item ds-menu-item--danger">삭제</div>
             </DsMenu>
           </div>
         </div>

@@ -96,7 +96,9 @@
   cursor: pointer; user-select: none; white-space: nowrap;
   transition: background .12s ease, color .12s ease;
 }
-/* 앞머리 아이콘은 muted (docs=.lic · Vue=DsIcon svg 모두 직계 자식) */
+/* 앞머리 아이콘 — 중립 항목에서만 눌러 둡니다(글자가 먼저 읽히게).
+   뜻이 있는 색(파괴적·선택됨)일 때는 아래에서 글자와 같은 색으로 되돌립니다.
+   글자만 빨갛고 아이콘이 회색이면 경고가 반만 전달됩니다. */
 .ds-menu-item > svg { flex: none; color: var(--gray-11); }
 .ds-menu-item:hover,
 .ds-menu-item:focus-visible { background: var(--gray-3); outline: none; }
@@ -113,9 +115,11 @@
 .ds-menu-item--selected { color: var(--brand-text); font-weight: var(--weight-medium); }
 .ds-menu-item--selected > svg { color: var(--brand); }
 
-/* 파괴적 동작 */
+/* 파괴적 동작 — 글자와 아이콘이 함께 빨갛습니다 */
 .ds-menu-item--danger { color: var(--danger); }
-.ds-menu-item--danger > svg { color: var(--danger); }
+.ds-menu-item--danger > svg,
+.ds-menu-item--danger .ds-icon,
+.ds-menu-item--danger .v-icon { color: var(--danger); }
 .ds-menu-item--danger:hover,
 .ds-menu-item--danger:focus-visible { background: var(--danger-subtle); }
 
@@ -611,9 +615,30 @@
    그대로 두면 우리 그림자와 두 겹으로 겹쳐 드롭다운만 무겁게 보입니다.
    Vuetify 규칙이 (0,1,0)이라 위 규칙과 동률인데 플러그인이 우리 파일 뒤에
    주입하므로, 클래스를 겹쳐 특이도를 올려야 이깁니다. */
+/* 셀렉트 계열은 오버레이 껍데기가 내용물을 잘라 냅니다 ────────────
+   Vuetify 원본:
+     .v-select__content { overflow: hidden }                  ← 자름
+     .v-menu > .v-overlay__content.v-select__content { border-radius: 4px }
+
+   안쪽 .v-list는 8px 모서리와 그림자를 갖고 있는데, 껍데기가 4px으로
+   잘라 내기 때문에 모서리 네 곳이 깎여 각지게 보이고, 그림자는 껍데기
+   경계에서 통째로 사라집니다. Menu(DsMenu)에는 이 껍데기 클래스가 붙지
+   않아서 혼자만 멀쩡했습니다 — 다른 드롭다운만 깨져 보이던 이유입니다.
+
+   껍데기는 아무것도 그리지 않고 아무것도 자르지 않게 둡니다.
+   모양(모서리·그림자·스크롤)은 안쪽 .v-list가 전부 책임집니다. */
 .v-overlay__content.v-select__content,
 .v-overlay__content.v-autocomplete__content,
-.v-overlay__content.v-combobox__content { box-shadow: none; }
+.v-overlay__content.v-combobox__content {
+  overflow: visible;
+  border-radius: var(--r-lg);
+  box-shadow: none;
+  background: transparent;
+}
+/* 껍데기가 자르지 않으므로 스크롤은 목록이 직접 맡습니다 */
+.v-overlay__content.v-select__content > .v-list,
+.v-overlay__content.v-autocomplete__content > .v-list,
+.v-overlay__content.v-combobox__content > .v-list { overflow-y: auto; }
 .v-overlay__content > .v-card,
 .v-overlay__content > .v-list,
 .v-overlay__content > .v-sheet,
@@ -729,6 +754,15 @@
   outline: none; border-radius: var(--r-md);
   box-shadow: inset 0 0 0 2px var(--brand);
 }
+
+/* 파괴적 목록 항목 — DsMenu의 --danger와 같은 규약입니다.
+   Vuetify 목록(VList·VMenu 안의 v-list-item)에서도 글자와 아이콘이 함께 빨갛습니다. */
+.v-list-item--danger, .v-list-item.text-error {
+  color: var(--danger);
+}
+.v-list-item--danger .v-icon, .v-list-item--danger .ds-icon,
+.v-list-item.text-error .v-icon, .v-list-item.text-error .ds-icon { color: var(--danger); }
+.v-list-item--danger:hover { background: var(--danger-subtle); }
 
 /* 다중 선택의 체크박스 열 — 항목 높이에 맞게 축소 */
 .v-overlay__content .v-list-item .v-selection-control {

@@ -248,7 +248,7 @@ const badgeLabel: Record<string, string> = { default: '대기', brand: '실행�
           </template>
           <div class="ds-menu-item"><DsIcon name="edit" size="sm" />이름 바꾸기</div>
           <div class="ds-menu-item"><DsIcon name="copy" size="sm" />복제</div>
-          <div class="ds-menu-item" style="color:var(--danger)"><DsIcon name="delete" size="sm" />삭제</div>
+          <div class="ds-menu-item ds-menu-item--danger"><DsIcon name="delete" size="sm" />삭제</div>
         </DsMenu>
       </template>
 
