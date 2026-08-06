@@ -478,8 +478,8 @@
 .v-field.v-field--variant-outlined.v-field--focused .v-field__outline { --v-field-border-width: 1px; }
 .v-input--density-comfortable .v-field__input { min-height: 40px; padding-top: 0; padding-bottom: 0; }
 .v-input--density-compact .v-field__input { min-height: 32px; padding-top: 0; padding-bottom: 0; }
-.ds-vselect--dense { width: auto; }
-.ds-vselect--dense .v-field { font-size: var(--text-sm); }
+.ds-vselect--sm { width: auto; }
+.ds-vselect--sm .v-field { font-size: var(--text-sm); }
 .v-field__field { align-items: center; }
 .v-field__prepend-inner, .v-field__append-inner { align-items: center; padding-top: 0; }
 /* 텍스트에어리어(여러 줄)는 위 규칙(padding 0 + 중앙 정렬)에서 첫 줄이 상단 경계에 붙어
@@ -651,6 +651,18 @@
   font-size: var(--text-sm); color: var(--gray-11); line-height: var(--leading-prose);
   box-shadow: var(--shadow-overlay); font-family: var(--font);
 }
+/* 옵션 목록을 담을 때 — 메뉴 패널과 같은 규격(4px 인셋 + UI 타이포).
+   기본값(prose)의 14/16 패딩과 1.8 행간은 설명문 기준입니다. 그 안에 목록을 넣으면
+   ① 소비자가 덧댄 래퍼 패딩과 겹쳐 인셋이 두 배가 되고,
+   ② 행 hover 면이 패널 가장자리에서 떠 목록으로 읽히지 않으며,
+   ③ 글자가 gray-11·행간 1.8이라 메뉴 항목보다 흐리고 성깁니다. */
+.ds-popover--list {
+  padding: 4px;
+  font-size: var(--text-sm);
+  color: var(--gray-12);
+  line-height: var(--leading-ui);
+}
+
 .ds-hovercard { max-width: 320px; }
 
 /* ── DsCommandPalette ── */

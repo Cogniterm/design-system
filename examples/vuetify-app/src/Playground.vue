@@ -271,7 +271,23 @@ const badgeLabel: Record<string, string> = { default: '대기', brand: '실행�
       </template>
 
       <template v-else-if="id === 'select'">
-        <DsSelect v-model="sel" label="상태" :items="['대기', '실행 중', '완료', '실패']" style="width:200px" />
+        <div class="play-sections">
+          <div class="play-sec">
+            <div class="play-sec-cap">Sizes · 32 / 40</div>
+            <div class="play-sec-row" style="align-items:flex-end">
+              <DsSelect v-model="sel" size="sm" label="sm — 필터 바·툴바" :items="['대기', '실행 중', '완료', '실패']" style="width:190px" />
+              <DsSelect v-model="sel" label="default" :items="['대기', '실행 중', '완료', '실패']" style="width:190px" />
+            </div>
+          </div>
+          <div class="play-sec">
+            <div class="play-sec-cap">States</div>
+            <div class="play-sec-row" style="align-items:flex-start">
+              <DsSelect v-model="sel" :items="['대기', '실행 중', '완료', '실패']" style="width:190px" />
+              <DsSelect v-model="sel" :items="['대기', '실행 중', '완료', '실패']" error="상태를 선택하세요." style="width:190px" />
+              <DsSelect v-model="sel" :items="['대기', '실행 중', '완료', '실패']" disabled style="width:190px" />
+            </div>
+          </div>
+        </div>
       </template>
 
       <template v-else-if="id === 'autocomplete'">

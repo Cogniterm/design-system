@@ -143,7 +143,7 @@ function exportCsv() { toast.value = { msg: '내보내지 못했습니다. 감�
         <!-- ═══ 필터 바 ═══ -->
         <div class="filters">
           <DsInput v-model="q" placeholder="동작·대상·수행자 검색…" />
-          <DsSelect v-model="actorFilter" :items="actors" dense style="width:180px" />
+          <DsSelect v-model="actorFilter" :items="actors" size="sm" style="width:180px" />
           <div class="lvl-chips">
             <button
               v-for="(m, k) in LEVEL_META" :key="k"
@@ -155,7 +155,7 @@ function exportCsv() { toast.value = { msg: '내보내지 못했습니다. 감�
           </div>
           <span style="flex:1"></span>
           <DsTooltip text="행 높이를 바꿉니다 (원칙 3 — 밀도는 선택)">
-            <DsSelect v-model="density" :items="['compact', 'comfortable', 'spacious']" dense style="width:150px" />
+            <DsSelect v-model="density" :items="['compact', 'comfortable', 'spacious']" size="sm" style="width:150px" />
           </DsTooltip>
         </div>
 

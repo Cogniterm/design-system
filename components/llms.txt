@@ -132,7 +132,7 @@ Each component has a standalone prompt at https://Cogniterm.github.io/design-sys
 - **DsSelect** (선택) — 옵션 목록에서 하나 또는 여러 개를 고릅니다.
   import: ~/design/vuetify | origin: wrapped (VSelect)
   where: 옵션 10개 이하의 선택. 그 이상은 Autocomplete.
-  props: modelValue, items, label, multiple=false, dense=false, error
+  props: modelValue, items, label, multiple=false, size='default', error
   vs: Autocomplete — 옵션 10개를 넘으면 Autocomplete
   usage:
     <DsSelect v-model="status" label="Status"

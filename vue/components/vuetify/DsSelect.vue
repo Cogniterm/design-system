@@ -9,8 +9,10 @@ withDefaults(defineProps<{
   label?: string
   multiple?: boolean
   error?: string
-  dense?: boolean          // 필터 바·툴바 — 32px (밀한 맥락은 sm)
-}>(), { dense: false })
+  /** 컨트롤 스케일 — sm 32px / default 40px. 필터 바·툴바는 sm.
+      다른 컨트롤(Button·Checkbox 등)과 같은 prop 이름을 씁니다. */
+  size?: 'sm' | 'default'
+}>(), { size: 'default' })
 const model = defineModel<any>()
 /* 소비자가 준 속성(disabled·required·name·error-messages 등)이 바깥 <div>가 아니라
    진짜 Vuetify 컴포넌트에 붙게 합니다. 이게 없으면 조용히 무시됩니다. */
@@ -23,7 +25,7 @@ const msgId = `ds-field-msg-${uid}`
 </script>
 
 <template>
-  <div class="field ds-vselect" :class="{ 'ds-vselect--dense': dense }">
+  <div class="field ds-vselect" :class="{ 'ds-vselect--sm': size === 'sm' }">
     <label v-if="label" :for="fieldId">{{ label }}</label>
     <VSelect :id="fieldId" :aria-describedby="error ? msgId : undefined"
       v-model="model"
@@ -31,7 +33,7 @@ const msgId = `ds-field-msg-${uid}`
       :multiple="multiple"
       :error="!!error"
       variant="outlined"
-      :density="dense ? 'compact' : 'comfortable'"
+      :density="size === 'sm' ? 'compact' : 'comfortable'"
       hide-details="auto"
     v-bind="$attrs" />
     <div v-if="error" :id="msgId" class="hint error">{{ error }}</div>

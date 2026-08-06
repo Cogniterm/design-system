@@ -332,9 +332,14 @@ body {
 .ds-check__label { font-size: var(--text-base); color: var(--gray-12); cursor: pointer; }
 .ds-check--sm .ds-check__label { font-size: var(--text-sm); }
 .ds-check__hint { margin-left: calc(var(--cb) + var(--cb-gap)); }
+/* 비활성 — 면을 채우지 않고 '연한 상자 + 회색 잉크'로 낮춥니다 (라디오와 같은 언어).
+   면을 중간 회색으로 채우면 두 가지가 망가집니다:
+   ① 테두리가 사라져 '빈 상자'가 '채워진 상자'로 읽히고(상태가 뒤집힘),
+   ② 회색 면 위의 회색 표식이 2.2:1까지 떨어져 탁한 덩어리로 뭉갭니다.
+   여기서는 상자 모양을 그대로 두고 채도만 죽여, 표식 대비를 3:1로 회복합니다. */
 .ds-check.is-disabled { pointer-events: none; }
-.ds-check.is-disabled .ds-check__box { background: var(--gray-4); border-color: transparent; }
-.ds-check.is-disabled .ds-check__box.is-on { background: var(--gray-6); }
+.ds-check.is-disabled .ds-check__box,
+.ds-check.is-disabled .ds-check__box.is-on { background: var(--gray-3); border-color: var(--gray-6); }
 .ds-check.is-disabled .ds-check__mark { stroke: var(--gray-10); }
 .ds-check.is-disabled .ds-check__label { color: var(--gray-9); }
 

@@ -315,7 +315,7 @@ export const COMPONENTS = [
     ['items', 'any[]', '필수', '옵션 목록.'],
     ['label', 'string', '—', '필드 라벨.'],
     ['multiple', 'boolean', 'false', '다중 선택.'],
-    ['dense', 'boolean', 'false', '32px — 필터 바·툴바.'],
+    ['size', `'sm' | 'default'`, `'default'`, '컨트롤 스케일 32 / 40px. 필터 바·툴바는 sm.'],
     ['error', 'string', '—', '에러 메시지.'],
   ],
   slots: [],
