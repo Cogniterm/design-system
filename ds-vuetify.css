@@ -353,11 +353,8 @@
 .ds-vfield .v-field--focused .v-field__outline__notch::before, .ds-vfield .v-field--focused .v-field__outline__notch::after { border-color: var(--brand); }
 
 /* ── DsCheckbox · DsSwitch · DsRadioGroup ── */
-.ds-check .v-label, .ds-switch .v-label, .ds-radio .v-label { font-size: var(--text-sm); color: var(--gray-12); opacity: 1; }
+.ds-switch .v-label { font-size: var(--text-sm); color: var(--gray-12); opacity: 1; }
 .ds-check-hint { margin-left: 32px; margin-top: -4px; }
-.ds-radio-label { display: flex; flex-direction: column; gap: 1px; }
-.ds-radio-hint { font-size: 12px; color: var(--gray-11); }
-.ds-radio .v-selection-control-group { gap: 2px; }
 
 /* ── DsSlider ── */
 .ds-slider-label { display: flex; justify-content: space-between; align-items: baseline; }

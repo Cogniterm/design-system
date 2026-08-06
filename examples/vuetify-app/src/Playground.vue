@@ -4,7 +4,7 @@
 import { computed, onMounted, ref, watch } from 'vue'
 import { useTheme } from 'vuetify'
 import {
-  DsButton, DsButtonGroup, DsCheckbox, DsInput, DsBadge, DsChip, DsAvatar, DsCard, DsDivider, DsSkeleton,
+  DsButton, DsButtonGroup, DsCheckbox, DsRadioGroup, DsInput, DsBadge, DsChip, DsAvatar, DsCard, DsDivider, DsSkeleton,
   DsToast, DsEmptyState, DsChatMessage, DsStreamingText, DsThinkingIndicator,
   DsDotField, DsToolCallStep, DsAgentInput, DsCitationChip, DsArtifactPanel, DsSearchResult,
   DsFileGrid, DsFileRow, DsLink, DsKbd, DsCode, DsTimestamp,
@@ -14,7 +14,7 @@ import {
 import {
   DsIconButton, DsMenu, DsTabs, DsBreadcrumbs, DsPagination,
   DsNavList, DsStepper, DsSelect, DsAutocomplete, DsTextarea,
-  DsRadioGroup, DsSwitch, DsSlider, DsFileInput, DsDatePicker, DsAlert,
+  DsSwitch, DsSlider, DsFileInput, DsDatePicker, DsAlert,
   DsBanner, DsProgressBar, DsSpinner, DsSnackbar, DsDialog, DsTooltip,
   DsDataTable, DsList, DsTimeline, DsAccordion,
   DsNumberInput, DsCombobox, DsPopover, DsHoverCard, DsCommandPalette,
@@ -313,10 +313,23 @@ const badgeLabel: Record<string, string> = { default: '대기', brand: '실행�
       </template>
 
       <template v-else-if="id === 'radiogroup'">
-        <DsRadioGroup v-model="radio" label="보존 기간" :items="[
-          { value: '90', label: '90일', hint: '기본값' },
-          { value: '180', label: '180일', hint: '현재 설정' },
-          { value: '365', label: '365일', hint: '엔터프라이즈' }]" />
+        <div class="play-sections">
+          <div class="play-sec">
+            <div class="play-sec-cap">Sizes · 14 / 16 / 20</div>
+            <div class="play-sec-row" style="gap:24px;align-items:flex-start">
+              <DsRadioGroup :model-value="'a'" size="sm" inline :items="[{ value: 'a', label: 'Small' }]" />
+              <DsRadioGroup :model-value="'a'" inline :items="[{ value: 'a', label: 'Default' }]" />
+              <DsRadioGroup :model-value="'a'" size="lg" inline :items="[{ value: 'a', label: 'Large' }]" />
+            </div>
+          </div>
+          <div class="play-sec">
+            <div class="play-sec-cap">설명이 있는 선택지</div>
+            <DsRadioGroup v-model="radio" label="보존 기간" :items="[
+              { value: '90', label: '90일', hint: '기본값' },
+              { value: '180', label: '180일', hint: '현재 설정' },
+              { value: '365', label: '365일', hint: '엔터프라이즈', disabled: true }]" />
+          </div>
+        </div>
       </template>
 
       <template v-else-if="id === 'slider'">

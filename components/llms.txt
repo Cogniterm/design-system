@@ -1,8 +1,8 @@
 # Components — Cogniterm Design System
 
-> 65 components. 34 standalone
+> 65 components. 35 standalone
 > (no Vuetify needed, import from `~/design`) and
-> 31 Vuetify-based
+> 30 Vuetify-based
 > (import from `~/design/vuetify`, also needs ds-vuetify.css).
 > Docs: https://Cogniterm.github.io/design-system/#/components
 
@@ -179,9 +179,9 @@ Each component has a standalone prompt at https://Cogniterm.github.io/design-sys
     <DsSwitch v-model="enabled" label="에이전트 활성화"
       hint="끄면 예약된 실행도 중단됩니다." />
 - **DsRadioGroup** (라디오 그룹) — 여러 선택지 중 하나.
-  import: ~/design/vuetify | origin: wrapped (VRadioGroup)
+  import: ~/design | origin: custom
   where: 배타적 설정 — 보존 기간, 공개 범위.
-  props: modelValue, label, items, inline=false
+  props: modelValue, label, items, inline=false, size='default', disabled=false
   usage:
     <DsRadioGroup v-model="retention" label="보존 기간" :items="[
       { value: '90', label: '90일', hint: '기본값' },

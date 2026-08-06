@@ -1,6 +1,6 @@
 # DsRadioGroup — Cogniterm Design System
 
-import { DsRadioGroup } from '~/design/vuetify'   // Vuetify 필요 · ds.css + ds-vuetify.css
+import { DsRadioGroup } from '~/design'   // Vuetify 불필요 · ds.css만
 
 ## 용도
 배타적 설정 — 보존 기간, 공개 범위.
@@ -10,6 +10,8 @@ import { DsRadioGroup } from '~/design/vuetify'   // Vuetify 필요 · ds.css + 
 - label: string — 그룹 라벨.
 - items: { value, label, hint? }[] = 필수 — 선택지.
 - inline: boolean = false — 가로 배치.
+- size: 'sm' | 'default' | 'lg' = 'default' — 원 14 / 16 / 20px.
+- disabled: boolean = false — 그룹 전체 비활성. 항목별로는 items[].disabled.
 
 
 ## 사용 예
