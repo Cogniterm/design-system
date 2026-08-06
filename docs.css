@@ -503,7 +503,7 @@
 }
 .cat-head span { font-size: var(--text-xs); color: var(--gray-9); }
 
-.cat-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(236px, 1fr)); gap: 14px; }
+.cat-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(272px, 1fr)); gap: 16px; }
 .cat-card {
   border: 1px solid var(--border); border-radius: var(--r-xl);
   text-decoration: none; color: var(--gray-12);
@@ -514,28 +514,31 @@
 .cat-card:hover { border-color: var(--border-hover); }
 .cat-card:hover .thumb { background: var(--gray-2); }
 
-/* 썸네일 — 실제 컴포넌트를 축소해 미리 보여줍니다 */
+/* 썸네일 — 카드의 주인공입니다. 실제 컴포넌트를 그대로 보여줍니다.
+   전에는 100px 높이에 0.7배로 줄여 두어 무엇인지 알아보기 어려웠고,
+   대신 설명 문장이 카드의 절반을 차지했습니다. 높이를 156px로 키우고
+   축소도 0.92배까지 풀어 컴포넌트 자체가 읽히게 했습니다. */
 .thumb {
-  height: 100px; overflow: hidden; position: relative;
+  height: 156px; overflow: hidden; position: relative;
   background: var(--gray-1); border-bottom: 1px solid var(--border);
   display: flex; align-items: center; justify-content: center;
+  padding: 16px;
   transition: background .16s ease;
 }
 .thumb-inner {
-  transform: scale(.7); transform-origin: center;
+  transform: scale(.92); transform-origin: center;
   pointer-events: none; display: flex; align-items: center; justify-content: center;
+  max-width: 100%;
 }
-.cat-body { padding: 14px 16px 16px; }
+/* 이름 줄 — 카드에서 설명 문장을 뺐습니다. 무엇인지는 썸네일이 말하고,
+   자세한 설명은 들어가면 첫 줄에 있습니다. */
+.cat-body { padding: 12px 14px; }
 .cat-card .cc-top { display: flex; align-items: center; gap: 6px; }
 .cat-card h3 {
   font-size: var(--text-base); font-weight: var(--weight-semibold);
   color: var(--gray-12);
 }
 .cat-card .cc-ko { font-size: var(--text-2xs); color: var(--gray-9); }
-.cat-card p {
-  font-size: var(--text-xs); color: var(--gray-10);
-  margin-top: 6px; line-height: var(--leading-ui);
-}
 .mini-badge {
   margin-left: auto; flex-shrink: 0;
   font-size: 10px; font-weight: var(--weight-semibold);
@@ -620,13 +623,9 @@
 /* ══════════════════════════════════════
    접근성 탭
    ══════════════════════════════════════ */
-.kbd {
-  font-family: var(--mono); font-size: var(--text-2xs);
-  font-weight: var(--weight-medium);
-  background: var(--gray-3); color: var(--gray-12);
-  border: 1px solid var(--border); border-radius: var(--r-sm);
-  padding: 3px 7px; white-space: nowrap;
-}
+/* .kbd는 ds.css에 있습니다 — 여기서 다시 정의하면 값이 갈립니다.
+   전에는 여백(2px 6px vs 3px 7px)과 보더 색이 서로 달랐고,
+   docs.css가 나중에 실려 문서 사이트에서만 다른 키캡이 보였습니다. */
 .a11y-split { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
 .a11-col { border: 1px solid var(--border); border-radius: var(--r-xl); padding: 17px 19px; }
 .a11-col.free { border-color: var(--success-border); }

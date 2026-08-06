@@ -238,6 +238,15 @@ function crumb(...parts) {
    카드 전체가 이미 <a>인데 그 안에 또 <a>가 들어가면 HTML 규칙상 중첩이 안 돼서,
    브라우저가 카드 링크를 그 자리에서 끊어버립니다 — 카드 절반이 클릭이 안 되고
    데모를 누르면 빈 "#"으로 튀어 홈으로 돌아갑니다. 클래스는 그대로 두어 모양은 유지합니다. */
+/* 방향키·엔터 키캡 — 글자(↑ ↓ ↵)로 찍으면 글꼴에 따라 모양이 갈립니다.
+   윈도우 기본 고정폭 글꼴에는 ↵ 글리프가 없어 다른 글꼴로 대체되고,
+   그 결과 세 키의 굵기와 크기가 서로 달라집니다. SVG로 고정합니다. */
+const KBD_SVG = (path) =>
+  `<kbd class="kbd"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">${path}</svg></kbd>`
+const KBD_UP = KBD_SVG('<path d="M12 19V5M5 12l7-7 7 7"/>')
+const KBD_DOWN = KBD_SVG('<path d="M12 5v14M19 12l-7 7-7-7"/>')
+const KBD_ENTER = KBD_SVG('<path d="M9 10l-5 5 5 5"/><path d="M20 4v7a4 4 0 0 1-4 4H4"/>')
+
 const unlinkDemo = (html) => String(html)
   .replace(/<a\b([^>]*)>/gi, (_, attrs) => `<span${attrs.replace(/\s*href="[^"]*"/gi, '')}>`)
   .replace(/<\/a>/gi, '</span>')
@@ -251,7 +260,6 @@ function catCard(c) {
           <h3>${c.name}</h3><span class="cc-ko">${c.ko}</span>
           <span class="mini-badge ${c.origin}">${ORIGIN_TAG[c.origin]}</span>
         </div>
-        <p>${c.summary}</p>
       </div>
     </a>`
 }
@@ -998,8 +1006,8 @@ function palOpen() {
         role="combobox" aria-expanded="true" aria-controls="palList" autocomplete="off" />
       <div id="palList" class="ds-palette-list" role="listbox"></div>
       <div class="ds-palette-foot">
-        <span><kbd class="kbd">↑</kbd><kbd class="kbd">↓</kbd> 이동</span>
-        <span><kbd class="kbd">↵</kbd> 선택</span>
+        <span>${KBD_UP}${KBD_DOWN} 이동</span>
+        <span>${KBD_ENTER} 선택</span>
         <span><kbd class="kbd">Esc</kbd> 닫기</span>
       </div>
     </div>`

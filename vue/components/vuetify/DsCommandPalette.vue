@@ -84,10 +84,18 @@ function pick(i: PaletteItem) { emit('select', i); open.value = false }
           </button>
         </template>
       </div>
-      <!-- 조작법 — 키보드로 쓰는 물건이라 방법을 화면에 남깁니다 -->
+      <!-- 조작법 — 키보드로 쓰는 물건이라 방법을 화면에 남깁니다.
+           키캡 안 화살표는 SVG입니다: 글자 ↑ ↓ ↵는 글꼴에 따라 모양이 갈립니다. -->
       <div class="ds-palette-foot">
-        <span><kbd class="kbd">↑</kbd><kbd class="kbd">↓</kbd> 이동</span>
-        <span><kbd class="kbd">↵</kbd> 선택</span>
+        <span>
+          <kbd class="kbd"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M5 12l7-7 7 7" /></svg></kbd>
+          <kbd class="kbd"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M19 12l-7 7-7-7" /></svg></kbd>
+          이동
+        </span>
+        <span>
+          <kbd class="kbd"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 10l-5 5 5 5" /><path d="M20 4v7a4 4 0 0 1-4 4H4" /></svg></kbd>
+          선택
+        </span>
         <span><kbd class="kbd">Esc</kbd> 닫기</span>
       </div>
     </div>

@@ -49,7 +49,9 @@ function measureH() {
   let h = (root.value?.scrollHeight ?? 0) + 2
   document.querySelectorAll<HTMLElement>('.v-overlay__content').forEach((el) => {
     const r = el.getBoundingClientRect()
-    if (r.height > 0) h = Math.max(h, Math.ceil(r.bottom) + 24)
+    // 여유 44px — 그림자가 패널 아래로 40px까지 번집니다(0 12px 28px).
+    // 24px이던 때는 그림자 아랫부분이 iframe 밖으로 잘려 "그림자가 없다"로 보였습니다.
+    if (r.height > 0) h = Math.max(h, Math.ceil(r.bottom) + 44)
   })
   return h
 }
@@ -817,6 +819,12 @@ const badgeLabel: Record<string, string> = { default: '대기', brand: '실행�
 /* iframe 안이라 스크롤바가 보이면 데모가 잘려 보입니다.
    높이는 부모에게 정확히 보고하므로 스크롤은 필요 없습니다. */
 html, body { overflow: hidden; }
+/* 무대 색을 body에 둡니다. 드롭다운이 열리면 iframe이 세로로 늘어나는데,
+   색이 .play에만 있으면 늘어난 부분만 흰색으로 남아 무대가 중간에서
+   끊깁니다 — 메뉴가 잘린 것처럼 보이던 정체가 이것이었습니다. */
+html, body { background: var(--gray-1); }
+/* Vuetify의 .v-application이 테마 배경(흰색)으로 body를 덮으므로 여기에도 겁니다 */
+.v-application, .v-application__wrap { background: var(--gray-1); }
 .play {
   display: flex; flex-wrap: wrap; gap: 12px; align-items: center;
   padding: 20px 24px; min-height: 64px;
