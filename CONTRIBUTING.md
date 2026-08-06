@@ -60,7 +60,7 @@ npm run dev
 - [ ] `node scripts-gen-meta.mjs` 실행 (meta.ts 재생성)
 - [ ] 라이브 갤러리에 추가해 실제 Vuetify 위에서 확인
 
-### 문서를 손으로 적지 않습니다
+### 문서를 직접 적지 않습니다
 
 `vue/meta.ts`는 `data.js`에서 **자동 생성**됩니다. 직접 고치지 마세요.
 

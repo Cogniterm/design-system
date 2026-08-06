@@ -137,7 +137,7 @@ vuetify({ autoImport: true, styles: 'none' })
   항상 보이게 만들었습니다(지금은 `:not(.v-data-table-header__sort-icon)`으로 좁혀 뒀습니다).
   새 규칙은 대상을 좁게 잡으세요.
 
-> `createVuetify`는 **컴포넌트를 등록하지 않습니다.** 손으로 쓴 `<v-btn>`이
+> `createVuetify`는 **컴포넌트를 등록하지 않습니다.** 직접 쓴 `<v-btn>`이
 > `Failed to resolve component`로 비어 나오면 `vite-plugin-vuetify`(`autoImport: true`)를
 > 넣거나 `createVuetify({ components, directives })`로 직접 등록합니다.
 > 우리 `Ds*`는 각자 필요한 것을 직접 import하므로 이 설정 없이도 돕니다.
@@ -272,7 +272,7 @@ Vuetify는 CSS 변수를 못 받으므로 `vue/theme.ts`에 같은 값이 한 �
 
 ### 수동 (기억해야 하는 것)
 
-1. **자동 생성물은 손으로 고치지 않습니다** — `vue/meta.ts`, 모든 `llms.txt`,
+1. **자동 생성물은 직접 고치지 않습니다** — `vue/meta.ts`, 모든 `llms.txt`,
    `components/*.txt`. 고쳤으면 `node scripts-gen-meta.mjs && node scripts-gen-llms.mjs`.
    안 돌리고 커밋하면 CI가 "생성물이 낡았다"며 실패시킵니다.
    문서 사이트의 CSS·JS를 고쳤다면 `node scripts-stamp.mjs`도 함께 돌립니다
@@ -303,7 +303,7 @@ Vuetify는 CSS 변수를 못 받으므로 `vue/theme.ts`에 같은 값이 한 �
 | 아이콘이 안 나옴 | 이름이 레지스트리에 없음 | `vue/icons.ts` **와** `icons-svg.js` 양쪽에 같은 이름으로 추가 (한쪽만 고치면 CI가 실패) |
 | 다크 모드가 일부만 바뀜 | Vuetify 테마와 `data-theme` 중 하나만 전환 | 둘 다 전환해야 합니다 (아래) |
 | `npm run build`가 `Cannot find module '~/design'` | Vite 별칭만 넣고 tsconfig `paths`를 안 넣음 | 2-2의 ① ② 둘 다 |
-| 손으로 쓴 `<v-btn>`이 비어 나옴 | `createVuetify`는 컴포넌트를 등록하지 않음 | `vite-plugin-vuetify` 또는 직접 등록 |
+| 직접 쓴 `<v-btn>`이 비어 나옴 | `createVuetify`는 컴포넌트를 등록하지 않음 | `vite-plugin-vuetify` 또는 직접 등록 |
 
 ```ts
 // 다크 전환은 두 곳을 함께

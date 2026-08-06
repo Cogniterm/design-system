@@ -213,10 +213,10 @@ export function pageWorkflow(ic) {
         <pre id="hoPrompt"><code>${SETUP_PROMPT.replace(/[<>&]/g, (m) => ({ '<': '&lt;', '>': '&gt;', '&': '&amp;' }[m]))}</code></pre>
       </div>
       <p>
-        AI 없이 손으로 하겠다면 3장을 순서대로 따라가면 됩니다. 내용은 같습니다.
+        AI 없이 수동으로 하겠다면 3장을 순서대로 따라가면 됩니다. 내용은 같습니다.
       </p>
 
-      <h2>3. 손으로 세팅하기</h2>
+      <h2>3. 수동으로 세팅하기</h2>
 
       <h3>3-1. 먼저 있어야 하는 것</h3>
       <table>
@@ -419,7 +419,7 @@ createApp(App)
             <td>3-5 두 곳 모두</td>
           </tr>
           <tr>
-            <td>손으로 쓴 <code>&lt;v-btn&gt;</code>이 비어 나옴</td>
+            <td>직접 쓴 <code>&lt;v-btn&gt;</code>이 비어 나옴</td>
             <td><code>createVuetify</code>는 컴포넌트를 등록하지 않음</td>
             <td><code>vite-plugin-vuetify</code> 확인</td>
           </tr>
@@ -517,7 +517,7 @@ powershell -ExecutionPolicy Bypass -File .setup.ps1</code></pre>
         기존 작업물을 덮어쓰지 않습니다.
       </p>
 
-      <h2>B · Node.js가 이미 있다면 — 손으로</h2>
+      <h2>B · Node.js가 이미 있다면 — 수동 설정</h2>
       <p>Node.js 20 이상이 필요합니다. <code>node -v</code>로 확인하세요.</p>
 
       <h3>1 · 설치</h3>

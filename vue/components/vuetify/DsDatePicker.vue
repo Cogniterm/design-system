@@ -38,7 +38,7 @@ const msgId = `ds-dp-msg-${uid}`
 
 defineOptions({ inheritAttrs: false })
 
-/* 화면에 보이는 글자는 Intl로 찍습니다 — 손으로 "YYYY.MM.DD"를 조립하면
+/* 화면에 보이는 글자는 Intl로 찍습니다 — 직접 "YYYY.MM.DD"를 조립하면
    한 자리 월·일에서 어긋나고 로케일을 바꿀 때 같이 못 따라갑니다. */
 const fmt = new Intl.DateTimeFormat('ko-KR', { year: 'numeric', month: 'long', day: 'numeric' })
 const one = (d: any) => (d ? fmt.format(new Date(d)) : '')

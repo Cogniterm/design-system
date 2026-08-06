@@ -864,9 +864,9 @@
 .v-expansion-panels--variant-accordion > :last-child { border-radius: 0 0 var(--r-xl) var(--r-xl); }
 
 /* ── VStepper ── */
+/* 스테퍼 치수는 아래 "스테퍼" 블록 한 곳에서만 정합니다 — 전에는 여기와
+   아래 두 곳에 나뉘어 있었습니다. 여기는 색만 맡습니다. */
 .v-stepper-header { box-shadow: none; border-bottom: 1px solid var(--border); height: auto; padding: 8px; }
-.v-stepper-item { padding: 10px 14px; opacity: 1; }
-.v-stepper-item__avatar.v-avatar { width: 22px; height: 22px; }
 .v-stepper-item--selected .v-stepper-item__title { color: var(--gray-12); }
 .v-stepper-item__title { color: var(--gray-11); }
 .v-divider--vertical { border-color: var(--border); }
@@ -1130,10 +1130,20 @@
 .v-pagination .v-btn__content { font-family: var(--font); }
 
 /* ── 스테퍼 ── */
-.v-stepper-item { opacity: 1; padding: 10px 14px; }
-.v-stepper-item__avatar.v-avatar { width: 22px; height: 22px; font-size: var(--text-2xs); }
-.v-stepper-item__title { font-size: var(--text-sm); }
+/* ── 스테퍼 ────────────────────────────────────────────────
+   번호와 글자 사이에 10px을 둡니다. Vuetify 기본은 두 요소가 거의 붙어
+   있어서, 번호가 글자의 첫 글자처럼 읽혔습니다("1단계"가 아니라 "1단계"로).
+   원과 글자는 다른 종류의 정보라 떨어져 있어야 각각으로 읽힙니다.
+   10px은 아이콘과 라벨 사이(메뉴 항목 등)에서 쓰는 값과 같습니다. */
+.v-stepper-item { opacity: 1; padding: 10px 14px; gap: 10px; }
+.v-stepper-item__avatar.v-avatar {
+  width: 22px; height: 22px; font-size: var(--text-2xs);
+  margin-inline-end: 0;   /* 간격은 위의 gap 한 곳에서만 정합니다 */
+}
+.v-stepper-item__title { font-size: var(--text-sm); line-height: var(--leading-ui); }
 .v-stepper-item__subtitle { font-size: var(--text-xs); color: var(--gray-11); }
+/* 세로 스테퍼에서도 같은 간격 */
+.v-stepper--vertical .v-stepper-item { gap: 10px; }
 
 /* ── 타임라인 ── */
 .v-timeline-divider__dot { box-shadow: none; }

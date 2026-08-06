@@ -751,7 +751,7 @@ export default defineNuxtConfig({
       </p>
       <p>
         <b><code>createVuetify</code>는 컴포넌트를 등록하지 않습니다.</b>
-        손으로 쓴 <code>&lt;v-btn&gt;</code>이 <code>Failed to resolve component</code>로 비어 나온다면
+        직접 쓴 <code>&lt;v-btn&gt;</code>이 <code>Failed to resolve component</code>로 비어 나온다면
         <code>vite-plugin-vuetify</code>(<code>autoImport: true</code>)를 넣거나
         <code>createVuetify({ components, directives })</code>로 직접 등록해야 합니다.
         우리 <code>Ds*</code> 컴포넌트는 각자 필요한 것을 직접 import하므로 이 설정 없이도 돕니다.

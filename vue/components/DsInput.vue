@@ -18,7 +18,7 @@ const model = defineModel<string>()
 defineOptions({ inheritAttrs: false })
 
 /* 라벨 클릭하면 입력으로 포커스가 가고, 스크린 리더가 라벨과 오류를 함께 읽도록
-   id로 묶습니다. id를 손으로 넘기지 않아도 되게 컴포넌트마다 하나씩 만듭니다. */
+   id로 묶습니다. id를 직접 넘기지 않아도 되게 컴포넌트마다 하나씩 만듭니다. */
 const uid = useId()
 const inputId = `ds-input-${uid}`
 const msgId = `ds-input-msg-${uid}`

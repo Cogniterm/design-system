@@ -82,7 +82,7 @@ export const dsDefaults = {
   VProgressCircular: { color: 'primary', width: 2, size: 20 },
   VSkeletonLoader: { elevation: 0, color: 'surface' },
   /* timeout은 DsSnackbar가 내용에 따라 정합니다(행동 버튼 없으면 3초, 있으면 6초).
-     손으로 쓴 <v-snackbar>를 위한 기본값만 여기 둡니다. */
+     직접 쓴 <v-snackbar>를 위한 기본값만 여기 둡니다. */
   VSnackbar: { rounded: 'xl', location: 'bottom right', timeout: 3000 },
   VSnackbarQueue: { elevation: 0, rounded: 'xl', location: 'bottom right' },
   VEmptyState: { size: 48 },
