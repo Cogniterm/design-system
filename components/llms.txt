@@ -1,8 +1,8 @@
 # Components — Cogniterm Design System
 
-> 65 components. 35 standalone
+> 66 components. 35 standalone
 > (no Vuetify needed, import from `~/design`) and
-> 30 Vuetify-based
+> 31 Vuetify-based
 > (import from `~/design/vuetify`, also needs ds-vuetify.css).
 > Docs: https://Cogniterm.github.io/design-system/#/components
 
@@ -200,12 +200,21 @@ Each component has a standalone prompt at https://Cogniterm.github.io/design-sys
   usage:
     <DsFileInput v-model="file" label="문서 업로드"
       accept=".pdf,.docx" hint="PDF·DOCX · 최대 10MB" :error="sizeError" />
-- **DsDatePicker** (날짜 선택) — 달력에서 날짜를 고릅니다.
+- **DsCalendar** (달력) — 화면에 펼쳐 두는 달력 격자.
   import: ~/design/vuetify | origin: wrapped (VDatePicker)
-  where: 감사 로그 기간 필터, 스케줄 설정.
-  props: modelValue, label
+  where: 예약 화면, 늘 펼쳐 두는 기간 필터 패널.
+  props: modelValue, mode='single', min, max, disablePast=false, disableFuture=false
   usage:
-    <DsDatePicker v-model="date" label="시작일" />
+    <DsCalendar v-model="range" mode="range" disable-future />
+- **DsDatePicker** (날짜 선택) — 필드를 눌러 달력에서 날짜를 고릅니다.
+  import: ~/design/vuetify | origin: wrapped (VMenu + VDatePicker)
+  where: 폼 안의 날짜 한 칸 — 계약 만료일, 감사 로그 기간 필터.
+  props: modelValue, mode='single', label, hint, error, placeholder='날짜 선택', size='default', clearable=false, presets, min · max · disablePast · disableFuture
+  usage:
+    <DsDatePicker
+      v-model="period" mode="range" label="조회 기간"
+      :presets="[['최근 7일', 7], ['최근 30일', 30], ['최근 90일', 90]]"
+      disable-future clearable />
 - **DsSearchField** (검색 입력) — 검색 전용 입력 — 돋보기 · 지우기 · 단축키 힌트 · 로딩.
   import: ~/design | origin: custom
   where: 목록 상단·GNB 검색. 전역이면 CommandPalette와 연동.

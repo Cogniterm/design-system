@@ -228,10 +228,15 @@ Keyboard: Tab = 필드로 이동 | Enter · Space = 파일 선택 창 열기
 Component handles: 네이티브 <input type="file"> 사용
 YOU must handle: 허용 형식·최대 크기를 hint에 미리 표시; 드래그 앤 드롭만 제공하지 않기 — 버튼도 함께; 업로드 진행률을 aria-live로
 
+### DsCalendar (달력)
+Keyboard: Tab = 달력 진입 | ← → ↑ ↓ = 날짜 이동 | PageUp · PageDown = 월 이동 | Enter = 선택
+Component handles: Vuetify가 role="grid" · 요일 헤더 · 날짜 읽기 문자열 처리
+YOU must handle: createVuetify에 locale ko와 date ko-KR을 함께 설정 — 하나만 넣으면 절반만 번역됩니다; 기간 선택이면 시작·종료를 각각 라벨링
+
 ### DsDatePicker (날짜 선택)
-Keyboard: Tab = 달력 진입 | ← → ↑ ↓ = 날짜 이동 | PageUp · PageDown = 월 이동 | Enter = 선택 | Esc = 닫기
-Component handles: Vuetify가 role="grid" · 로케일 · 요일 헤더 처리
-YOU must handle: locale을 ko로 설정 (createVuetify의 locale); 선택한 날짜를 텍스트로도 표시; 기간 선택이면 시작·종료를 각각 라벨링
+Keyboard: Enter · Space = 달력 열기 | ← → ↑ ↓ = 날짜 이동 | PageUp · PageDown = 월 이동 | Enter = 선택 | Esc = 닫기 · 필드로 복귀
+Component handles: VMenu가 포커스 가두기·Esc·바깥 클릭 처리
+YOU must handle: 고른 날짜를 필드에 글자로도 보이기 — 달력을 닫으면 격자는 사라집니다; label을 필드에 연결하고, 에러는 aria-describedby로 함께 읽히게
 
 ### DsSearchResult (검색 결과)
 Keyboard: Tab = 결과 제목으로 이동

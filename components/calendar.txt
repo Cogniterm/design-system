@@ -1,0 +1,37 @@
+# DsCalendar — Cogniterm Design System
+
+import { DsCalendar } from '~/design/vuetify'   // Vuetify 필요 · ds.css + ds-vuetify.css
+
+## 용도
+예약 화면, 늘 펼쳐 두는 기간 필터 패널.
+
+## Props
+- modelValue: Date | Date[] — v-model. mode에 따라 하나 또는 배열.
+- mode: 'single' | 'multiple' | 'range' = 'single' — 하루 · 여러 날 · 기간.
+- min: string | Date — 고를 수 있는 가장 이른 날.
+- max: string | Date — 고를 수 있는 가장 늦은 날.
+- disablePast: boolean = false — 지난 날짜 차단 — 예약처럼 앞날만 고를 때.
+- disableFuture: boolean = false — 앞날 차단 — 감사 로그처럼 지난 기간만 고를 때.
+
+
+## 사용 예
+```vue
+<DsCalendar v-model="range" mode="range" disable-future />
+```
+
+
+## 지침
+- [해야 할 것] 늘 보여야 하는 달력에만 씁니다. 폼 안의 날짜 한 칸은 DatePicker입니다 — 달력이 폼 높이를 세 배로 만듭니다.
+- [해야 할 것] createVuetify에 locale ko와 date ko-KR을 넣습니다. 없으면 요일이 S M T W T F S로 남습니다.
+- [하지 말 것] 오늘을 선택과 같은 브랜드 면으로 칠하지 않습니다 — 고르지도 않은 날이 골라진 것처럼 보입니다.
+
+## 접근성
+키보드: Tab=달력 진입 · ← → ↑ ↓=날짜 이동 · PageUp · PageDown=월 이동 · Enter=선택
+직접 처리: createVuetify에 locale ko와 date ko-KR을 함께 설정 — 하나만 넣으면 절반만 번역됩니다 / 기간 선택이면 시작·종료를 각각 라벨링
+
+## 시스템 규칙 (요약)
+- 색·간격·모서리는 CSS 변수만 (var(--gray-6), var(--brand)) — hex 금지
+- primary 버튼은 화면당 하나. 선택·활성 상태는 중립(--sel-bg/--sel-fg)
+- 컨트롤 높이 32(sm)/40/48 — 필터 바·툴바는 sm
+- 목록·테이블은 default/loading/empty/error/partial 5상태
+- 전체 규칙: https://Cogniterm.github.io/design-system/llms.txt

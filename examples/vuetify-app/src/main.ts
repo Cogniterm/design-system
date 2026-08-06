@@ -8,10 +8,15 @@ import 'pretendard/dist/web/variable/pretendardvariable-dynamic-subset.css'
 import { dsTheme } from '~/design/theme'
 import { lucideIconSet } from '~/design/vuetify-icons'
 import { dsDefaults } from '~/design/defaults'
+import { dsLocale, dsDate } from '~/design/locale'
 import '~/design/ds.css'
 import '~/design/ds-vuetify.css'
 import App from './App.vue'
 
 createApp(App)
-  .use(createVuetify({ theme: dsTheme, defaults: dsDefaults as any, icons: lucideIconSet as any }))
+  .use(createVuetify({
+    theme: dsTheme, defaults: dsDefaults as any, icons: lucideIconSet as any,
+    // 없으면 달력 요일이 "S M T W T F S"로, 페이지네이션 안내가 영어로 남습니다
+    locale: dsLocale as any, date: dsDate as any,
+  }))
   .mount('#app')

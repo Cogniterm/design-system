@@ -14,7 +14,7 @@ import {
 import {
   DsIconButton, DsMenu, DsTabs, DsBreadcrumbs, DsPagination,
   DsNavList, DsStepper, DsSelect, DsAutocomplete, DsTextarea,
-  DsSwitch, DsSlider, DsFileInput, DsDatePicker, DsAlert,
+  DsSwitch, DsSlider, DsFileInput, DsCalendar, DsDatePicker, DsAlert,
   DsBanner, DsProgressBar, DsSpinner, DsSnackbar, DsDialog, DsTooltip,
   DsDataTable, DsList, DsTimeline, DsAccordion,
   DsNumberInput, DsCombobox, DsPopover, DsHoverCard, DsCommandPalette,
@@ -83,6 +83,16 @@ const num = ref(3); const tags = ref(['법무', '계약'])
 const sel = ref('실행 중'); const auto = ref(['법무'])
 const b1 = ref(true); const b2 = ref(false); const radio = ref('180')
 const slider = ref(70); const files = ref(null); const date = ref(null)
+/* 달력 데모용 값 — 캡처마다 달라지지 않게 고정 날짜를 씁니다 */
+const d1 = new Date(2026, 7, 11); const d2 = new Date(2026, 7, 18)
+/* 기간 값은 [시작, 종료]가 아니라 사이 날짜를 전부 담은 배열입니다 (Vuetify 규약) */
+const span = (a: Date, b: Date) => {
+  const out = []; const d = new Date(a)
+  while (d <= b) { out.push(new Date(d)); d.setDate(d.getDate() + 1) }
+  return out
+}
+const dRange = ref(span(d1, d2)); const dMulti = ref([d1, new Date(2026, 7, 14), d2])
+const dpRange = ref(span(d1, d2)); const dpPreset = ref([]); const dpClear = ref(d1)
 const tab = ref('all'); const view = ref('list'); const period = ref('w'); const page = ref(2)
 const nav = ref(['logs']); const step = ref(2); const listSel = ref([])
 const tree = ref([5]); const treeOpen = ref([1, 4]); const acc = ref<any>(null)
@@ -384,8 +394,71 @@ const badgeLabel: Record<string, string> = { default: '대기', brand: '실행�
         <div style="width:300px"><DsFileInput v-model="files" label="문서 업로드" hint="PDF·DOCX · 최대 10MB" /></div>
       </template>
 
+      <template v-else-if="id === 'calendar'">
+        <div class="play-sections">
+          <div class="play-sec">
+            <div class="play-sec-cap">Single</div>
+            <div class="play-sec-row"><DsCalendar v-model="date" /></div>
+          </div>
+          <div class="play-sec">
+            <div class="play-sec-cap">Range</div>
+            <div class="play-sec-row"><DsCalendar v-model="dRange" mode="range" /></div>
+          </div>
+          <div class="play-sec">
+            <div class="play-sec-cap">Multiple</div>
+            <div class="play-sec-row"><DsCalendar v-model="dMulti" mode="multiple" /></div>
+          </div>
+          <div class="play-sec">
+            <div class="play-sec-cap">Bounded · 지난 날짜 차단</div>
+            <div class="play-sec-row"><DsCalendar v-model="date" disable-past /></div>
+          </div>
+        </div>
+      </template>
+
       <template v-else-if="id === 'datepicker'">
-        <DsDatePicker v-model="date" />
+        <div class="play-sections">
+          <div class="play-sec">
+            <div class="play-sec-cap">Default</div>
+            <div class="play-sec-row" style="width:260px">
+              <DsDatePicker v-model="date" label="계약 만료일" />
+            </div>
+          </div>
+          <div class="play-sec">
+            <div class="play-sec-cap">Range</div>
+            <div class="play-sec-row" style="width:320px">
+              <DsDatePicker v-model="dpRange" mode="range" label="조회 기간" />
+            </div>
+          </div>
+          <div class="play-sec">
+            <div class="play-sec-cap">Presets</div>
+            <div class="play-sec-row" style="width:320px">
+              <DsDatePicker
+                v-model="dpPreset" mode="range" label="조회 기간" disable-future
+                :presets="[['최근 7일', 7], ['최근 30일', 30], ['최근 90일', 90]]"
+                hint="프리셋을 고르면 달력을 열지 않아도 됩니다" />
+            </div>
+          </div>
+          <div class="play-sec">
+            <div class="play-sec-cap">Sizes · 32 / 40</div>
+            <div class="play-sec-row" style="width:260px;flex-direction:column;align-items:stretch">
+              <DsDatePicker v-model="date" size="sm" />
+              <DsDatePicker v-model="date" />
+            </div>
+          </div>
+          <div class="play-sec">
+            <div class="play-sec-cap">Clearable</div>
+            <div class="play-sec-row" style="width:260px">
+              <DsDatePicker v-model="dpClear" clearable />
+            </div>
+          </div>
+          <div class="play-sec">
+            <div class="play-sec-cap">States</div>
+            <div class="play-sec-row" style="width:260px;flex-direction:column;align-items:stretch">
+              <DsDatePicker v-model="date" label="시작일" error="시작일을 골라 주세요" />
+              <DsDatePicker v-model="date" label="잠긴 필드" disabled />
+            </div>
+          </div>
+        </div>
       </template>
 
       <template v-else-if="id === 'searchfield'">

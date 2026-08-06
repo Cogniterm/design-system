@@ -19,6 +19,7 @@ export { default as DsTextarea } from './components/vuetify/DsTextarea.vue'
 export { default as DsSwitch } from './components/vuetify/DsSwitch.vue'
 export { default as DsSlider } from './components/vuetify/DsSlider.vue'
 export { default as DsFileInput } from './components/vuetify/DsFileInput.vue'
+export { default as DsCalendar } from './components/vuetify/DsCalendar.vue'
 export { default as DsDatePicker } from './components/vuetify/DsDatePicker.vue'
 
 /* ── Feedback & Status ── */

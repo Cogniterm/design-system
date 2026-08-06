@@ -86,6 +86,7 @@ import 'pretendard/dist/web/variable/pretendardvariable-dynamic-subset.css'
 import { dsTheme } from '~/design/theme'
 import { dsDefaults } from '~/design/defaults'
 import { lucideIconSet } from '~/design/vuetify-icons'
+import { dsLocale, dsDate } from '~/design/locale'
 import '~/design/ds.css'
 import '~/design/ds-vuetify.css'
 
@@ -93,7 +94,8 @@ const vuetify = createVuetify({
   theme: dsTheme,
   defaults: dsDefaults,
   icons: lucideIconSet,                        // 빠뜨리면 내부 아이콘이 전부 깨집니다
-  locale: { locale: 'ko', messages: { ko } },  // 테이블 등 내장 문구 한국어
+  locale: dsLocale,                            // 내장 문구 한국어 (테이블·페이지네이션 …)
+  date: dsDate,                                // 날짜 표기 한국어 — 없으면 달력 요일이 S M T W T F S
 })
 
 createApp(App).use(vuetify).mount('#app')

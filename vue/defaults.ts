@@ -124,6 +124,10 @@ export const dsDefaults = {
 import { createVuetify } from 'vuetify'
 import { dsTheme } from '~/design/theme'
 import { dsDefaults } from '~/design/defaults'
+import { dsLocale, dsDate } from '~/design/locale'
 
-createVuetify({ theme: dsTheme, defaults: dsDefaults })
+createVuetify({ theme: dsTheme, defaults: dsDefaults, locale: dsLocale, date: dsDate })
+
+locale과 date를 빠뜨리면 Vuetify 내부 문구가 영어로 남습니다 —
+달력 요일이 S M T W T F S로, 페이지네이션 안내가 영문으로 나옵니다.
 */

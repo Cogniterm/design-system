@@ -58,7 +58,8 @@ css: [
 // vuetify 설정
 import { dsTheme } from '~/design/theme'
 import { dsDefaults } from '~/design/defaults'
-createVuetify({ theme: dsTheme, defaults: dsDefaults })
+import { dsLocale, dsDate } from '~/design/locale'
+createVuetify({ theme: dsTheme, defaults: dsDefaults, locale: dsLocale, date: dsDate })
 ```
 
 기존 화면은 바뀌지 않습니다. `src/design/` 밖의 파일을 건드리지 않으므로

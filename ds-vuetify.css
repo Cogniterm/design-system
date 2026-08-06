@@ -413,10 +413,123 @@
 .ds-slider-val { font-family: var(--mono); font-size: var(--text-xs); color: var(--gray-11); font-weight: 400; }
 .ds-slider .v-slider-track__background { background: var(--gray-5); }
 
-/* ── DsDatePicker ── */
-.ds-datepicker .v-date-picker { border: 1px solid var(--border); border-radius: var(--r-lg); background: var(--surface); }
-.ds-dp-label { display: block; font-size: var(--text-sm); font-weight: var(--weight-medium); margin-bottom: 6px; }
-.ds-datepicker .v-date-picker-month__day .v-btn { font-size: var(--text-xs); }
+/* ── Calendar · DatePicker ─────────────────────────────────
+   달력 격자는 한 벌뿐입니다. 펼쳐 두면 Calendar, 필드에 딸려 뜨면 DatePicker이고
+   둘 다 아래 규칙을 그대로 씁니다 — 자리에 따라 날짜 칸 크기가 달라지지 않습니다.
+   (예전에는 이 규칙이 세 곳에 흩어져 32px·30px로 갈려 있었습니다.)
+
+   치수: 칸 36px · 안의 원 32px · 여백 2px씩. 모두 정수입니다 —
+   소수를 쓰면 배율 1배 화면에서 칸마다 다르게 반올림돼 격자가 어긋납니다. */
+.v-date-picker { font-size: var(--text-sm); background: transparent; }
+/* 머리글(선택한 날짜를 크게 보여 주는 띠)은 씁니다 — 달력 위에 또 제목이 오면
+   같은 정보가 두 번 나옵니다. 고른 날짜는 필드에 이미 글자로 보입니다. */
+.v-date-picker .v-date-picker-header { display: none; }
+
+/* 연·월 줄 — Vuetify 기본은 화살표가 두 쌍입니다(‹ 8월 › ‹ 2026년 ›).
+   어느 화살표가 무엇을 넘기는지 눈으로 구분되지 않아, 연도 화살표는 접고
+   월 화살표 한 쌍만 남깁니다. 연도는 버튼을 눌러 목록에서 고릅니다.
+   순서도 한국어 어순(2026년 8월)으로 뒤집습니다. */
+.v-date-picker-controls { padding: 8px 6px 4px; min-height: 0; gap: 2px; }
+.v-date-picker-controls__year { order: -1; }
+.v-date-picker-controls__year .v-btn--icon { display: none; }
+.v-date-picker-controls__month-btn,
+.v-date-picker-controls .v-btn {
+  font-size: var(--text-sm); font-weight: var(--weight-medium);
+  height: 32px; min-width: 32px; padding: 0 8px; border-radius: var(--r-md);
+}
+.v-date-picker-controls .v-icon { font-size: 16px; }
+
+/* 날짜 격자 */
+.v-date-picker-month { padding: 0 8px 8px; }
+.v-date-picker-month__weekday {
+  width: 36px; height: 28px;
+  font-size: var(--text-2xs); font-weight: var(--weight-medium); color: var(--gray-11);
+}
+.v-date-picker-month__day { width: 36px; height: 36px; }
+.v-date-picker-month__day .v-btn {
+  width: 32px; height: 32px; min-width: 32px;
+  font-size: var(--text-sm); font-weight: 400; border-radius: var(--r-md);
+}
+.v-date-picker-month__day .v-btn:hover { background: var(--gray-3); }
+/* 오늘 — 면을 칠하지 않고 테두리로만 표시합니다.
+   선택과 같은 언어(브랜드 면)를 쓰면 고르지도 않은 날이 골라진 것처럼 보입니다. */
+.v-date-picker-month__day--current .v-btn { border: 1px solid var(--border-strong); }
+/* 이웃 달 날짜 — 격자 모양을 유지하려고 보여 주되 눈에 덜 걸리게 */
+.v-date-picker-month__day--adjacent { opacity: .45; }
+/* 고를 수 없는 날 (min·max 밖) */
+.v-date-picker-month__day .v-btn--disabled { opacity: .35; }
+
+/* 기간 선택 ─────────────────────────────────────────────
+   Vuetify는 기간에 별도 클래스를 주지 않습니다. 시작~종료 사이의 날을
+   전부 --selected로 표시할 뿐이라, 손대지 않으면 기간 전체가 진한 브랜드
+   덩어리가 되어 정작 시작과 끝이 어디인지 보이지 않습니다.
+
+   그래서 사이는 옅은 면으로 눕히고 양 끝만 원색으로 세웁니다.
+   양 끝은 "앞에 선택이 없는 날"과 "뒤에 선택이 없는 날"로 찾습니다 —
+   클래스가 없으니 이웃 관계로 알아내는 수밖에 없습니다.
+
+   면은 칸(36px)에 칠하고 글자 원은 안의 버튼(32px)에 둡니다.
+   버튼에 칠하면 칸 사이 4px이 비어 띠가 끊깁니다. */
+.ds-calendar--range .v-date-picker-month__day--selected { background: var(--brand-subtle); }
+/* 가운데 날짜만 눕힙니다. Vuetify가 선택된 날에 .bg-primary(!important)를 붙이므로
+   같은 무게로 되받아야 합니다 — 양 끝은 그대로 두어 원색으로 남습니다.
+   가운데 = 앞에도 뒤에도 선택된 날이 있는 날. */
+.ds-calendar--range .v-date-picker-month__day--selected + .v-date-picker-month__day--selected:has(+ .v-date-picker-month__day--selected) .v-btn {
+  background: transparent !important; color: var(--brand-text) !important;
+}
+/* 시작 — 앞에 선택된 날이 없는 날 */
+.ds-calendar--range .v-date-picker-month__day--selected:not(.v-date-picker-month__day--selected + .v-date-picker-month__day--selected) {
+  border-start-start-radius: var(--r-md); border-end-start-radius: var(--r-md);
+}
+/* 종료 — 뒤에 선택된 날이 없는 날 */
+.ds-calendar--range .v-date-picker-month__day--selected:not(:has(+ .v-date-picker-month__day--selected)) {
+  border-start-end-radius: var(--r-md); border-end-end-radius: var(--r-md);
+}
+
+/* 연도 고르기 화면 */
+.v-date-picker-years { padding-inline: 8px; }
+.v-date-picker-years .v-btn { border-radius: var(--r-md); font-size: var(--text-sm); }
+
+/* ── Calendar — 펼쳐 두는 달력 ── */
+.ds-calendar .v-date-picker {
+  border: 1px solid var(--border); border-radius: var(--r-xl);
+  background: var(--surface); width: fit-content;
+}
+
+/* ── DatePicker — 필드 + 달력 ──────────────────────────────
+   필드는 DsInput의 .input을 그대로 씁니다. 아래는 <input>이 아니라 <button>이라서
+   필요한 차이(내용 정렬·빈 값 색)만 더합니다. */
+.ds-dp-field {
+  display: flex; align-items: center; gap: 8px;
+  text-align: left; cursor: pointer;
+}
+.ds-dp-field.is-empty .ds-dp-value { color: var(--gray-11); }
+.ds-dp-field .ds-dp-icon { display: flex; color: var(--gray-9); flex-shrink: 0; }
+.ds-dp-value { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+/* 열려 있는 동안은 포커스 링과 같은 모습으로 둡니다 —
+   패널에 포커스가 넘어가도 어느 필드가 열려 있는지 남아야 합니다. */
+.ds-dp-field.is-open { border-color: var(--brand); box-shadow: 0 0 0 3.5px var(--brand-subtle); }
+.ds-dp-field.is-open.error { border-color: var(--danger); box-shadow: 0 0 0 3.5px var(--danger-subtle); }
+.ds-dp-clear { display: flex; color: var(--gray-11); border-radius: var(--r-sm); flex-shrink: 0; }
+.ds-dp-clear:hover { color: var(--gray-12); }
+
+/* 떠 있는 패널 — Menu의 드롭다운과 같은 그림자·모서리 */
+.ds-dp-panel {
+  display: flex; background: var(--surface);
+  border-radius: var(--r-lg); box-shadow: var(--shadow-overlay); overflow: hidden;
+}
+.ds-dp-panel .ds-calendar .v-date-picker { border: 0; border-radius: 0; }
+
+/* 프리셋 — 기간 선택에서 "최근 7일"을 두 번 클릭으로 만들지 않게 */
+.ds-dp-presets {
+  display: flex; flex-direction: column; gap: 2px;
+  padding: 8px; border-right: 1px solid var(--border-subtle); min-width: 116px;
+}
+.ds-dp-preset {
+  text-align: left; font-size: var(--text-sm); color: var(--gray-12);
+  padding: 7px 10px; border-radius: var(--r-md); white-space: nowrap;
+}
+.ds-dp-preset:hover { background: var(--gray-3); }
 
 /* ── DsAlert ── */
 .ds-alert.v-alert { font-size: var(--text-sm); border-radius: var(--r-md); }
@@ -677,14 +790,6 @@
 /* ── VProgressLinear ── */
 .v-progress-linear__determinate { transition: width .24s ease; }
 
-/* ── VDatePicker ── */
-.v-date-picker-controls { padding: 10px 12px; min-height: 0; }
-.v-date-picker-month__day .v-btn { width: 32px; height: 32px; font-size: var(--text-sm); }
-.v-date-picker-month__weekday { font-size: var(--text-2xs); color: var(--gray-11); }
-.v-date-picker-header { display: none; }
-.v-date-picker-controls .v-btn { height: 30px; min-width: 30px; padding: 0 6px; }
-.v-date-picker-controls .v-icon { font-size: 16px; }
-
 /* ── VSnackbar ── */
 .v-snackbar__content { padding: 13px 15px; font-size: var(--text-sm); }
 .v-snackbar__actions { margin-inline-end: 6px; }
@@ -883,13 +988,6 @@
 .v-expansion-panel-title { font-size: var(--text-sm); min-height: 42px; padding: 0 14px; }
 .v-expansion-panel-title__icon .v-icon { font-size: 18px; color: var(--gray-9); }
 .v-expansion-panel-text__wrapper { padding: 4px 14px 14px; font-size: var(--text-sm); }
-
-/* ── 날짜 선택기 ── */
-.v-date-picker { font-size: var(--text-sm); }
-.v-date-picker-month { padding: 0 10px 10px; }
-.v-date-picker-month__day { width: 34px; height: 34px; }
-.v-date-picker-month__day .v-btn { width: 30px; height: 30px; font-size: var(--text-sm); }
-.v-date-picker-controls__month-btn, .v-date-picker-controls .v-btn { font-size: var(--text-sm); }
 
 /* ── 진행 표시 ── */
 .v-progress-linear { border-radius: var(--r-full); overflow: hidden; }
