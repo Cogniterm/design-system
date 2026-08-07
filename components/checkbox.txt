@@ -28,6 +28,8 @@ import { DsCheckbox } from '~/design'   // Vuetify 불필요 · ds.css만
 ## 지침
 - [해야 할 것] 저장 버튼을 눌러야 반영되면 Checkbox, 즉시 반영이면 Switch입니다.
 - [해야 할 것] 테이블 전체 선택은 일부만 선택됐을 때 indeterminate로 표시합니다.
+- [해야 할 것] Vue를 쓰지 않는 화면에서는 직접 만들지 말고 ds.css의 .check를 씁니다 — DsCheckbox와 같은 모양으로 맞춰져 있습니다.
+- [하지 말 것] 체크 표식을 회전한 border(::after)로 그리지 않습니다. 크기·정렬이 브라우저 반올림에 따라 어긋나 상자 안에서 삐뚤어집니다. 표식은 뷰박스가 고정된 SVG입니다.
 
 ## 접근성
 키보드: Tab=이동 · Space=켜고 끄기

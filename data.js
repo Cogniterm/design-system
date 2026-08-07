@@ -1129,15 +1129,25 @@ export const COMPONENTS = [
     ['disabled', 'boolean', 'false', '비활성.'],
   ],
   slots: [],
-  demo: `<div class="row" style="gap:18px"><label class="row" style="gap:9px;font-size:14px"><input class="check" type="checkbox" checked>선택</label><label class="row" style="gap:9px;font-size:14px"><input class="check" type="checkbox">미선택</label><label class="row" style="gap:9px;font-size:14px"><input class="check" type="checkbox" indeterminate>부분 선택</label></div>`,
+  demo: `<div class="row" style="gap:18px"><label class="row" style="gap:9px;font-size:14px"><input class="check" type="checkbox" checked>선택</label><label class="row" style="gap:9px;font-size:14px"><input class="check" type="checkbox">미선택</label><label class="row" style="gap:9px;font-size:14px"><input class="check is-mixed" type="checkbox">부분 선택</label></div>`,
   vue: `<DsCheckbox v-model="notify" label="이메일 알림 받기"
   hint="실패한 실행에 대해서만 발송됩니다." />
 
 <DsCheckbox :indeterminate="someSelected" label="전체 선택" />`,
-  html: null,
+  html: `<!-- Vue 없이 쓸 때 — ds.css의 .check 하나면 됩니다 -->
+<label class="row" style="gap:9px">
+  <input class="check" type="checkbox" checked />
+  이메일 알림 받기
+</label>
+
+<!-- 테이블 전체 선택 — 부분 선택은 JS로 el.indeterminate = true,
+     정적 마크업이면 class="is-mixed" -->
+<input class="check is-mixed" type="checkbox" aria-label="전체 선택" aria-checked="mixed" />`,
   guidelines: [
     ['해야 할 것', '저장 버튼을 눌러야 반영되면 Checkbox, 즉시 반영이면 Switch입니다.'],
     ['해야 할 것', '테이블 전체 선택은 일부만 선택됐을 때 indeterminate로 표시합니다.'],
+    ['해야 할 것', 'Vue를 쓰지 않는 화면에서는 직접 만들지 말고 ds.css의 .check를 씁니다 — DsCheckbox와 같은 모양으로 맞춰져 있습니다.'],
+    ['하지 말 것', '체크 표식을 회전한 border(::after)로 그리지 않습니다. 크기·정렬이 브라우저 반올림에 따라 어긋나 상자 안에서 삐뚤어집니다. 표식은 뷰박스가 고정된 SVG입니다.'],
   ],
 },
 {
