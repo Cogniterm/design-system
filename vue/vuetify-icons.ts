@@ -28,9 +28,9 @@ import {
 import { icons as semantic } from './icons'
 
 /* Lucide 컴포넌트를 Vuetify 아이콘 슬롯에 맞게 감쌉니다.
-   크기는 VIcon의 font-size(1em)를 따라가고, 선 굵기는 시스템 표준 1.5. */
+   크기는 VIcon의 font-size(1em)를 따라가고, 선 굵기는 시스템 표준 2 (Lucide 기본값, 2026-08-07 확정). */
 const wrap = (C: unknown): FunctionalComponent =>
-  () => h(C as FunctionalComponent, { size: '1em', strokeWidth: 1.5, 'aria-hidden': 'true' })
+  () => h(C as FunctionalComponent, { size: '1em', strokeWidth: 2, 'aria-hidden': 'true' })
 
 /* 체크박스 표식 — DsCheckbox(.ds-check__mark)와 같은 경로·같은 굵기입니다.
 
@@ -118,7 +118,7 @@ const lucideSet: IconSet = {
   component: (props: IconProps) => {
     const C = semantic[props.icon as keyof typeof semantic]
     if (!C) return h('span')  // 등록되지 않은 이름은 조용히 비웁니다
-    return h(C as FunctionalComponent, { size: '1em', strokeWidth: 1.5, 'aria-hidden': 'true' })
+    return h(C as FunctionalComponent, { size: '1em', strokeWidth: 2, 'aria-hidden': 'true' })
   },
 }
 

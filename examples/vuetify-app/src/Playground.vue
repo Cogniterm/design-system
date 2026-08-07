@@ -1,7 +1,7 @@
 <script setup lang="ts">
 /* 컴포넌트별 인터랙티브 데모 — 문서 사이트가 iframe으로 임베드합니다.
    #play/<id> 로 접근. 높이는 postMessage로 부모에게 알립니다. */
-import { computed, onMounted, ref, watch } from 'vue'
+import { computed, nextTick, onMounted, ref, watch } from 'vue'
 import { useTheme } from 'vuetify'
 import {
   DsButton, DsButtonGroup, DsCheckbox, DsRadioGroup, DsInput, DsBadge, DsChip, DsAvatar, DsCard, DsDivider, DsSkeleton,
@@ -136,6 +136,39 @@ const streaming = ref(true); const toolStatus = ref<'running' | 'done' | 'error'
 const stages = ['문서 분석 중', '근거 문서 검색 중', '답변 정리 중']
 const stageIdx = ref(0)
 onMounted(() => { window.setInterval(() => { stageIdx.value = (stageIdx.value + 1) % stages.length }, 2600) })
+/* ── 아이콘 굵기 점검 (#play/strokeaudit) ──
+   Lucide 굵기를 1.5 → 2로 통일한 뒤, 아이콘이 흘러 들어오는 경로가 여러 개라
+   한 곳만 고치고 끝난 줄 알기 쉽습니다. 경로마다 실제로 그려진 값을
+   DOM에서 읽어 표로 보여줍니다 — 눈으로도, 숫자로도 확인됩니다. */
+const auditRoot = ref<HTMLElement>()
+const auditRows = ref<{ name: string; widths: string[]; ok: boolean }[]>([])
+function runAudit() {
+  const el = auditRoot.value
+  if (!el) return
+  const rows: { name: string; widths: string[]; ok: boolean }[] = []
+  el.querySelectorAll<HTMLElement>('[data-audit]').forEach((cell) => {
+    const seen = new Set<string>()
+    cell.querySelectorAll('svg').forEach((svg) => {
+      const shapes = svg.querySelectorAll('path,circle,rect,line,polyline,polygon,ellipse')
+      const targets: Element[] = shapes.length ? Array.from(shapes) : [svg]
+      targets.forEach((s) => {
+        const cs = getComputedStyle(s)
+        // 면으로만 그린 글리프(stroke 없음)는 굵기 대상이 아닙니다
+        if (cs.stroke === 'none' || cs.stroke === 'rgba(0, 0, 0, 0)') return
+        const w = parseFloat(cs.strokeWidth)
+        if (!Number.isFinite(w)) return
+        seen.add(String(Math.round(w * 100) / 100))
+      })
+    })
+    const widths = [...seen].sort()
+    rows.push({ name: cell.dataset.audit || '?', widths, ok: widths.length > 0 && widths.every((w) => w === '2') })
+  })
+  auditRows.value = rows
+}
+watch(id, (v) => { if (v === 'strokeaudit') nextTick(runAudit) })
+onMounted(() => { if (id.value === 'strokeaudit') nextTick(runAudit) })
+const auditFail = computed(() => auditRows.value.filter((r) => !r.ok).length)
+
 const chips = ref(['계약서_최종.pdf', 'Q3 보고서'])
 const gridSel = ref(['2']); const clicks = ref(0); const sent = ref<string[]>([])
 const q = ref(''); const loading = ref(false)
@@ -809,6 +842,87 @@ const badgeLabel: Record<string, string> = { default: '대기', brand: '실행�
         <DsIcon name="settings" /><DsIcon name="loading" spin />
       </template>
 
+      <!-- 아이콘 굵기 점검 — #play/strokeaudit -->
+      <template v-else-if="id === 'strokeaudit'">
+        <div ref="auditRoot" class="play-doc">
+          <div class="play-group">
+            <p class="play-h2">아이콘 굵기 점검 — 기준 stroke-width 2</p>
+            <p class="play-sub">
+              아이콘이 화면에 닿는 경로를 모두 늘어놓고, 실제로 그려진 굵기를 DOM에서 읽었습니다.
+              <b :class="auditFail ? 'sa-bad' : 'sa-good'">{{ auditFail ? auditFail + '개 경로가 기준과 다릅니다' : '모든 경로가 2입니다' }}</b>
+            </p>
+
+            <table class="sa-table">
+              <thead><tr><th>경로</th><th>실측 stroke-width</th><th>판정</th></tr></thead>
+              <tbody>
+                <tr v-for="r in auditRows" :key="r.name">
+                  <td>{{ r.name }}</td>
+                  <td class="sa-num">{{ r.widths.join(' · ') || '—' }}</td>
+                  <td :class="r.ok ? 'sa-good' : 'sa-bad'">{{ r.ok ? '기준' : '어긋남' }}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="play-group">
+            <p class="play-h2">경로별 실물</p>
+            <p class="play-sub">같은 아이콘을 경로만 바꿔 나란히 둡니다. 굵기가 다르면 여기서 바로 보입니다.</p>
+            <div class="sa-grid">
+              <div class="sa-cell"><span class="sa-cap">DsIcon sm / md / lg</span>
+                <div class="sa-row" data-audit="DsIcon (vue/components/DsIcon.vue)">
+                  <DsIcon name="search" size="sm" /><DsIcon name="search" /><DsIcon name="search" size="lg" />
+                  <DsIcon name="settings" /><DsIcon name="folder" /><DsIcon name="loading" spin />
+                </div>
+              </div>
+              <div class="sa-cell"><span class="sa-cap">v-icon 문자열 (의미 이름)</span>
+                <div class="sa-row" data-audit="v-icon 문자열 (vuetify-icons.ts · lucideSet)">
+                  <v-icon icon="search" /><v-icon icon="settings" /><v-icon icon="folder" />
+                </div>
+              </div>
+              <div class="sa-cell"><span class="sa-cap">Vuetify 내부 alias ($…)</span>
+                <div class="sa-row" data-audit="Vuetify alias (vuetify-icons.ts · wrap)">
+                  <v-icon icon="$dropdown" /><v-icon icon="$close" /><v-icon icon="$next" /><v-icon icon="$prev" />
+                </div>
+              </div>
+              <div class="sa-cell"><span class="sa-cap">Vuetify 컴포넌트 속 아이콘</span>
+                <div class="sa-row" data-audit="Vuetify 컴포넌트 내부 (VSelect·VAlert)">
+                  <DsSelect :items="['A', 'B']" model-value="A" style="width:120px" />
+                  <DsAlert variant="info" closable>알림</DsAlert>
+                </div>
+              </div>
+              <div class="sa-cell"><span class="sa-cap">인라인 .lic SVG</span>
+                <div class="sa-row" data-audit="인라인 .lic (ds.css)">
+                  <DsSearchField model-value="계약서" style="width:200px" />
+                </div>
+              </div>
+              <div class="sa-cell"><span class="sa-cap">체크 표식</span>
+                <div class="sa-row" data-audit="체크 표식 (DsCheckbox · Vuetify mark)">
+                  <DsCheckbox :model-value="true" label="DS" />
+                  <v-icon icon="$checkboxOn" />
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="play-group">
+            <p class="play-h2">굵기 비교 기준선</p>
+            <p class="play-sub">왼쪽이 예전 1.5, 오른쪽이 지금 2입니다. 위 실물이 오른쪽과 같아야 합니다.</p>
+            <div class="sa-row">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <circle cx="11" cy="11" r="8" /><path d="m21 21-4.3-4.3" />
+              </svg>
+              <span class="sa-cap">1.5 (옛 기준)</span>
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <circle cx="11" cy="11" r="8" /><path d="m21 21-4.3-4.3" />
+              </svg>
+              <span class="sa-cap">2 (현재 기준)</span>
+            </div>
+          </div>
+        </div>
+      </template>
+
       <template v-else-if="id === 'visuallyhidden'">
         <DsButton variant="secondary">
           12건<DsVisuallyHidden> — 검색 결과 12건</DsVisuallyHidden>
@@ -959,4 +1073,18 @@ html, body { background: var(--gray-1); }
 }
 .play-tile-desc { font-size: var(--text-xs); color: var(--gray-11); margin-top: 2px; }
 .play .v-application__wrap { min-height: 0; }
+
+/* ── 아이콘 굵기 점검 (#play/strokeaudit) ── */
+.sa-table { border-collapse: collapse; width: 100%; font-size: var(--text-sm); }
+.sa-table th, .sa-table td {
+  text-align: left; padding: 8px 12px; border-bottom: 1px solid var(--border);
+}
+.sa-table th { font-size: var(--text-xs); font-weight: var(--weight-semibold); color: var(--gray-11); }
+.sa-num { font-family: var(--mono); }
+.sa-good { color: var(--gray-12); font-weight: var(--weight-medium); }
+.sa-bad { color: var(--danger, #d93025); font-weight: var(--weight-semibold); }
+.sa-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 16px; width: 100%; }
+.sa-cell { display: flex; flex-direction: column; gap: 6px; }
+.sa-cap { font-size: var(--text-xs); color: var(--gray-11); }
+.sa-row { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; }
 </style>
