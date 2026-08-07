@@ -1,2 +1,2 @@
-export const DS_VERSION = '643dd629'          // 내용 지문
-export const DS_BUILT_AT = '2026-08-06'   // 생성일
+export const DS_VERSION = '6036a58c'          // 내용 지문
+export const DS_BUILT_AT = '2026-08-07'   // 생성일

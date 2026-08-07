@@ -101,9 +101,13 @@
   background: var(--bg);
   border-right: 1px solid var(--border);
 }
+/* 왼쪽 머리는 본문과 같은 높이에서 시작합니다.
+   본문(#content)의 위 여백이 40px이므로 여기도 40px입니다 — 두 값이 어긋나면
+   상단 바 아래에서 한쪽만 붙어 보입니다. 제목이 세 줄에서 한 줄로 줄었을 때
+   실제로 그렇게 됐습니다(머리 100px → 66px). */
 .lnb-head {
   position: sticky; top: 0; z-index: 1;
-  padding: 20px 20px 15px;
+  padding: 40px 20px 15px;
   background: var(--bg);
   margin-bottom: 10px;
 }
@@ -112,7 +116,7 @@
   color: var(--gray-9);
 }
 .lnb-title {
-  display: block; margin-top: 5px;
+  display: block;
   font-size: var(--text-lg); font-weight: var(--weight-semibold);
   color: var(--gray-12); letter-spacing: -0.01em;
 }
