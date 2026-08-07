@@ -16,7 +16,7 @@ const emit = defineEmits<{ search: [q: string] }>()
 <template>
   <div class="searchfield" :class="[{ focused }, size !== 'default' && size]">
     <span class="sf-icon" aria-hidden="true">
-      <svg v-if="!loading" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+      <svg v-if="!loading" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
       <span v-else class="spinner" style="width:14px;height:14px"></span>
     </span>
     <input
@@ -26,7 +26,7 @@ const emit = defineEmits<{ search: [q: string] }>()
     />
     <kbd v-if="shortcut && !focused && !model" class="kbd sf-kbd">{{ shortcut }}</kbd>
     <button v-if="model" class="sf-clear" aria-label="지우기" @click="model = ''">
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M18 6 6 18M6 6l12 12"/></svg>
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M18 6 6 18M6 6l12 12"/></svg>
     </button>
   </div>
 </template>

@@ -32,7 +32,7 @@ const cmp = computed(() => {
     class="ds-icon"
     :class="{ 'is-spin': spin }"
     :size="px"
-    :stroke-width="1.5"
+    :stroke-width="2"
     :aria-label="label"
     :aria-hidden="label ? undefined : 'true'"
     :role="label ? 'img' : undefined"

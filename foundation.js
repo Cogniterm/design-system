@@ -88,7 +88,7 @@ export function fdOverview() {
     tokens: '모든 값의 단일 원본', color: '브랜드 1 · 회색 12 · 알파 12 · 상태 4',
     typography: 'Pretendard 9단계 — UI와 본문 분리', spacing: '4px 배수 · 역할 열 그리드',
     shape: '4/6/8/12 — 컨트롤과 면의 두 단계', elevation: '그림자 없음 · 떠 있는 것만 예외',
-    density: '32/40/48 — 화면 성격별 행 높이', iconography: 'Lucide 59 · stroke 1.5',
+    density: '32/40/48 — 화면 성격별 행 높이', iconography: 'Lucide 59 · stroke 2',
     motion: '160ms ease · 상태를 알리는 움직임만', state: '화면 5종 + 인터랙션 6종',
     a11y: 'WCAG 2.2 AA · 포커스 링 · 키보드', writing: '에러는 사과하지 않는다',
     wordlist: '한국어 UI 어휘 고정', i18n: '이름은 영문 · 문구는 한글',
@@ -772,7 +772,7 @@ export function fdDensity() {
 export function fdIconography() {
   return `
     <div class="page-head"><h1>Iconography</h1></div>
-    <p class="page-lead">Lucide 하나, 크기 3개, stroke 1.5.</p>
+    <p class="page-lead">Lucide 하나, 크기 3개, stroke 2.</p>
     <div class="prose">
       <p>
         <b>적용 완료</b> — <code>lucide-vue-next</code>를 등록하고

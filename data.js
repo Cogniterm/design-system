@@ -1281,8 +1281,8 @@ export const COMPONENTS = [
     { key: 'clearable', title: 'Clearable', desc: '선택을 되돌릴 수 있어야 하는 필터에.'},
     { key: 'states',    title: 'States',    desc: '에러 · 비활성 — 입력 필드와 같은 언어.' },
   ],
-  thumb: `<div class="input" style="display:flex;align-items:center;gap:8px;width:220px"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--gray-9)" stroke-width="1.5" stroke-linecap="round"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M8 3v4M16 3v4M3 11h18"/></svg><span>2026년 8월 11일</span></div>`,
-  demo: `<div class="field" style="width:260px"><label>계약 만료일</label><div class="input" style="display:flex;align-items:center;gap:8px"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--gray-9)" stroke-width="1.5" stroke-linecap="round"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M8 3v4M16 3v4M3 11h18"/></svg><span>2026년 8월 11일</span></div></div>`,
+  thumb: `<div class="input" style="display:flex;align-items:center;gap:8px;width:220px"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--gray-9)" stroke-width="2" stroke-linecap="round"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M8 3v4M16 3v4M3 11h18"/></svg><span>2026년 8월 11일</span></div>`,
+  demo: `<div class="field" style="width:260px"><label>계약 만료일</label><div class="input" style="display:flex;align-items:center;gap:8px"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--gray-9)" stroke-width="2" stroke-linecap="round"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M8 3v4M16 3v4M3 11h18"/></svg><span>2026년 8월 11일</span></div></div>`,
   vue: `<DsDatePicker
   v-model="period" mode="range" label="조회 기간"
   :presets="[['최근 7일', 7], ['최근 30일', 30], ['최근 90일', 90]]"
@@ -1612,7 +1612,7 @@ export const COMPONENTS = [
   props: [['modelValue','string',`''`,'v-model.'],['placeholder','string',`'검색…'`,'안내.'],['shortcut','string','—','⌘K 힌트 — 포커스 전에만 표시.'],['loading','boolean','false','검색 중 스피너.'],['size',`'sm' | 'default'`,`'default'`,'컨트롤 스케일 — 기본 32 / md 36 / lg 40 (sm은 32의 다른 이름).']],
   events: [['search','string','Enter 시 발생.']],
   slots: [],
-  demo: `<div class="searchfield" style="min-width:260px"><span class="sf-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg></span><input placeholder="문서 · 에이전트 검색…" /><kbd class="kbd">⌘K</kbd></div>`,
+  demo: `<div class="searchfield" style="min-width:260px"><span class="sf-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg></span><input placeholder="문서 · 에이전트 검색…" /><kbd class="kbd">⌘K</kbd></div>`,
   vue: `<DsSearchField v-model="q" shortcut="⌘K" :loading="searching" @search="run" />`,
   html: null,
   guidelines: [['해야 할 것','전역 검색은 CommandPalette와 연결 — 같은 ⌘K.']],

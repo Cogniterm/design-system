@@ -118,7 +118,7 @@ ${FOUNDATION_PAGES.map(([id, ko, en]) => `- ${en} (${ko}) — ${SITE}/#/foundati
   tracking combo also reads as generic admin-template). Micro labels are 12px /
   weight 500 / gray instead. word-break: keep-all.
   Tabular numerals (font-variant-numeric) on timestamps, sizes and counts.
-  Icons: Lucide at stroke-width 1.5 (2 looks chunky at 16-20px).
+  Icons: Lucide at stroke-width 2 (the lucide default — app chrome uses it raw).
   Focus ring: box-shadow 0 0 0 2px bg, 0 0 0 4px brand (var(--focus-ring)) — same
   ring on every interactive element. Overlay shadow: var(--shadow-overlay), a
   3-layer stack (1px outline + near + far), never a single blurry drop shadow.

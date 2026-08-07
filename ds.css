@@ -787,12 +787,13 @@ td.mono { font-family: var(--mono); font-size: var(--text-xs); color: var(--gray
 .ds-icon.is-spin { animation: spin .8s linear infinite; }
 
 /* ── 인라인 Lucide SVG (문서·템플릿용) ──
-   stroke 1.5 — 16~20px 크기에서 2는 뭉툭해 보입니다.
+   stroke 2 — Lucide 기본값. 앱 크롬(사이드바·메뉴·툴바)이 lucide 원본을 그대로 쓰기 때문에
+   DS만 1.5로 두면 같은 화면에서 굵기가 어긋납니다 (2026-08-07 확정).
    기준선 보정 -0.125em — 시스템 전체에서 이 값 하나만 씁니다.
    (아이콘+글자를 나란히 둘 때는 가급적 flex + align-items: center를 쓰고,
     인라인 흐름에 섞일 때만 이 보정에 기댑니다.) */
 .lic { flex-shrink: 0; vertical-align: -0.125em; fill: none; stroke: currentColor;
-  stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
+  stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
 
 /* 버튼 안 아이콘 — 광학 여백 보정.
    아이콘은 사각 캔버스 안에 여백을 갖고 있어, 글자와 같은 패딩이면
