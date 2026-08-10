@@ -8,7 +8,7 @@
   "scripts": {
     "gen:meta": "node scripts-gen-meta.mjs",
     "check:data": "node scripts-check.mjs",
-    "lint:css": "stylelint 'ds.css' 'ds-vuetify.css' 'docs.css'",
+    "lint:css": "stylelint ds.css ds-vuetify.css docs.css",
     "check": "npm run check:data && npm run lint:css",
     "docs": "python3 -m http.server 4173"
   },
