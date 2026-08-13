@@ -3,7 +3,7 @@ import { ref } from 'vue'
 import { useTheme } from 'vuetify'
 import {
   DsButton, DsButtonGroup, DsCheckbox, DsRadioGroup, DsInput, DsBadge, DsChip, DsAvatar, DsCard, DsDivider, DsSkeleton,
-  DsToast, DsEmptyState, DsChatMessage, DsStreamingText, DsThinkingIndicator, DsDotField,
+  DsToast, DsEmptyState, DsChatMessage, DsStreamingText, DsThinkingIndicator, DsDotField, DsLoadingScreen,
   DsToolCallStep, DsAgentInput, DsCitationChip, DsArtifactPanel, DsSearchResult,
   DsFileGrid, DsFileRow, DsTreeview,
 } from '~/design'
@@ -581,6 +581,13 @@ const SECTIONS = [
             <div class="g-name">DsDotField <i class="lg standalone"></i></div>
           </div>
           <div class="g-demo"><DsDotField label="이미지를 생성하는 중" :size="200" /></div>
+        </div>
+
+        <div class="g-item">
+          <div class="g-meta">
+            <div class="g-name">DsLoadingScreen <i class="lg standalone"></i></div>
+          </div>
+          <div class="g-demo" style="min-height:120px"><DsLoadingScreen :fullscreen="false" label="불러오는 중" /></div>
         </div>
 
         <div class="g-item">

@@ -6,7 +6,7 @@ import { useTheme } from 'vuetify'
 import {
   DsButton, DsButtonGroup, DsCheckbox, DsRadioGroup, DsInput, DsBadge, DsChip, DsAvatar, DsCard, DsDivider, DsSkeleton,
   DsToast, DsEmptyState, DsChatMessage, DsStreamingText, DsThinkingIndicator,
-  DsDotField, DsToolCallStep, DsAgentInput, DsCitationChip, DsArtifactPanel, DsSearchResult,
+  DsDotField, DsLoadingScreen, DsToolCallStep, DsAgentInput, DsCitationChip, DsArtifactPanel, DsSearchResult,
   DsFileGrid, DsFileRow, DsLink, DsKbd, DsCode, DsTimestamp,
   DsMetaList, DsSearchField, DsSystemMessage, DsToolbar, DsTableOfContents, DsVisuallyHidden,
   DsTreeview,
@@ -107,6 +107,8 @@ onMounted(() => {
 
 /* ── 공유 상태 ── */
 const txt = ref(''); const email = ref('ujin@'); const memo = ref('')
+const loadingOpen = ref(false)
+function showLoading() { loadingOpen.value = true; setTimeout(() => { loadingOpen.value = false }, 3000) }
 const num = ref(3); const tags = ref(['법무', '계약'])
 const sel = ref('실행 중'); const auto = ref(['법무', '재무', '인사', '영업'])
 const b1 = ref(true); const b2 = ref(false); const radio = ref('180')
@@ -962,6 +964,14 @@ const badgeLabel: Record<string, string> = { default: '대기', brand: '실행�
 
       <template v-else-if="id === 'dotfield'">
         <DsDotField label="이미지를 생성하는 중" :size="260" />
+      </template>
+
+      <template v-else-if="id === 'loadingscreen'">
+        <div style="display:flex;flex-direction:column;align-items:center;gap:20px;padding:24px 0">
+          <DsLoadingScreen :fullscreen="false" label="불러오는 중" />
+          <DsButton variant="secondary" @click="showLoading()">풀스크린으로 3초 보기</DsButton>
+          <DsLoadingScreen v-if="loadingOpen" label="불러오는 중" />
+        </div>
       </template>
 
       <template v-else-if="id === 'toolcall'">

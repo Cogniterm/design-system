@@ -173,6 +173,11 @@ Keyboard: n/a
 Component handles: role="status" + aria-label 강제; 도트 그리드는 aria-hidden; prefers-reduced-motion이면 rAF 루프 대신 정지 프레임 1장
 YOU must handle: label에 무엇을 생성 중인지 구체적으로 ("이미지 생성 중"); 완료되면 즉시 결과로 교체
 
+### DsLoadingScreen (풀스크린 로딩)
+Keyboard: n/a
+Component handles: role="status" + aria-label 강제; 도트 스피어는 aria-hidden; prefers-reduced-motion이면 rAF 루프 대신 정지 프레임 1장
+YOU must handle: label에 무엇을 불러오는지 구체적으로 ("문서함 불러오는 중"); 준비되면 즉시 화면으로 교체
+
 ### DsBanner (배너)
 Keyboard: Tab = 액션으로 이동
 Component handles: —

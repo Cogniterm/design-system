@@ -683,6 +683,20 @@ export const meta: ComponentMeta[] = [
     since: '0.1.0',
   },
   {
+    name: 'DsLoadingScreen',
+    ko: '풀스크린 로딩',
+    category: 'feedback',
+    origin: 'custom',
+    vuetifyBase: null,
+    summary: { ko: '페이지·데이터 로딩용 풀스크린 로딩 화면.', en: '' },
+    reason: {
+      ko: 'Vuetify에 없습니다. 첫 진입·화면 전환처럼 화면 전체가 아직 없을 때, 브랜드 컬러 도트 44개가 구 표면에서 회전하는 인디케이터 하나로 "곧 화면이 온다"를 전달합니다.',
+      en: 'Not in Vuetify. For first paint and full-page transitions — a single brand dot-sphere says the screen is on its way.',
+    },
+    where: '첫 진입·전체 화면 전환 — 화면 전체가 아직 없을 때만. 준비되면 즉시 교체.',
+    since: '0.1.0',
+  },
+  {
     name: 'DsSnackbar',
     ko: '스낵바',
     category: 'feedback',

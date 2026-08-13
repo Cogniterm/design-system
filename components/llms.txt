@@ -1,6 +1,6 @@
 # Components — Cogniterm Design System
 
-> 67 components. 36 standalone
+> 68 components. 37 standalone
 > (no Vuetify needed, import from `~/design`) and
 > 31 Vuetify-based
 > (import from `~/design/vuetify`, also needs ds-vuetify.css).
@@ -414,6 +414,13 @@ If two components look interchangeable, the "confused with" section of each
   vs: ThinkingIndicator — 단계를 말로 알릴 수 있으면 ThinkingIndicator — DotField는 말할 단계가 없는 생성 대기 전용 / ProgressBar — 진행률을 알면 ProgressBar / Skeleton — 결과의 자리(레이아웃)를 미리 알면 Skeleton
   usage:
     <DsDotField v-if="generating" label="이미지 생성 중" />
+- **DsLoadingScreen** (풀스크린 로딩) — 페이지·데이터 로딩용 풀스크린 로딩 화면.
+  import: ~/design | origin: custom
+  where: 첫 진입·전체 화면 전환 — 화면 전체가 아직 없을 때만. 준비되면 즉시 교체.
+  props: fullscreen=true, speed=2, size=50, label='불러오는 중'
+  vs: Skeleton — 화면의 레이아웃을 이미 알면 Skeleton — LoadingScreen은 화면 전체가 아직 없을 때만 / Spinner — 영역 하나의 2초 이내 대기면 Spinner / ThinkingIndicator — 에이전트 작업 대기면 ThinkingIndicator (원칙 1)
+  usage:
+    <DsLoadingScreen v-if="booting" label="문서함 불러오는 중" />
 - **DsSnackbar** (스낵바) — 떴다가 사라지는 알림.
   import: ~/design/vuetify | origin: wrapped (VSnackbar)
   where: 저장·삭제 결과 알림. 후속 액션은 하나까지.

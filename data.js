@@ -1430,6 +1430,54 @@ export const COMPONENTS = [
   ],
 },
 {
+  id: 'loadingscreen', name: 'LoadingScreen', ko: '풀스크린 로딩', category: 'feedback',
+  origin: 'custom', vuetifyBase: null,
+  summary: '페이지·데이터 로딩용 풀스크린 로딩 화면.',
+  reason: { ko: 'Vuetify에 없습니다. 첫 진입·화면 전환처럼 화면 전체가 아직 없을 때, 브랜드 컬러 도트 44개가 구 표면에서 회전하는 인디케이터 하나로 "곧 화면이 온다"를 전달합니다.',
+            en: 'Not in Vuetify. For first paint and full-page transitions — a single brand dot-sphere says the screen is on its way.' },
+  props: [
+    ['fullscreen', 'boolean', 'true', 'false면 오버레이 없이 50×50 인디케이터만 인라인으로 렌더.'],
+    ['speed', 'number', '2', '모션 배속. 스펙 확정값 — 바꾸지 않는 것이 기본입니다.'],
+    ['size', 'number', '50', '인디케이터 한 변(px).'],
+    ['label', 'string', `'불러오는 중'`, '스크린리더용 라벨. 화면에는 보이지 않습니다.'],
+  ],
+  slots: [],
+  demo: `<div class="loading-screen loading-screen--inline"><div class="loading-screen__sphere" style="width:50px;height:50px">${(() => {
+    const N = 44, R = 20.5, GA = Math.PI * (3 - Math.sqrt(5))
+    const stops = [[11, 84, 189], [31, 127, 240], [122, 182, 247]]
+    const ry = 0.9, rx = Math.atan(1 / Math.sqrt(2))
+    const cy = Math.cos(ry), sy = Math.sin(ry), cx = Math.cos(rx), sx = Math.sin(rx)
+    let out = ''
+    for (let i = 0; i < N; i++) {
+      const y = 1 - (i / (N - 1)) * 2
+      const r = Math.sqrt(Math.max(0, 1 - y * y))
+      const th = i * GA
+      const px0 = Math.cos(th) * r * R, py0 = y * R, pz0 = Math.sin(th) * r * R
+      const x1 = px0 * cy + pz0 * sy, z1 = -px0 * sy + pz0 * cy
+      const y2 = py0 * cx - z1 * sx, z2 = py0 * sx + z1 * cx
+      const pf = 170 / (170 - z2)
+      const dn = (z2 / 22.8 + 1) / 2
+      const sc = 0.78 + 0.42 * dn
+      const lam = Math.max(0, Math.min(1, (x1 * -0.52 + y2 * -0.55 + z2 * 0.61) / R * 0.5 + 0.5))
+      const g = 1 - lam, seg = g < 0.5 ? 0 : 1, k = (g - seg * 0.5) * 2
+      const a = stops[seg], b = stops[seg + 1], fade = (1 - dn) * 0.22
+      const col = [0, 1, 2].map((j) => { const v = a[j] + (b[j] - a[j]) * k; return Math.round(v + (255 - v) * fade) })
+      out += `<div style="position:absolute;left:50%;top:50%;width:2.8px;height:2.8px;border-radius:50%;background:rgb(${col.join(',')});opacity:${(0.55 + 0.35 * dn).toFixed(2)};transform:translate(${(x1 * pf - 1.4).toFixed(1)}px,${(y2 * pf - 1.4).toFixed(1)}px) scale(${sc.toFixed(2)})"></div>`
+    }
+    return out
+  })()}</div></div>`,
+  vue: `<DsLoadingScreen v-if="booting" label="문서함 불러오는 중" />`,
+  html: `<!-- 정적 마크업은 골격만 — 도트 44개의 위치·크기·색은 rAF로 매 프레임 계산 -->
+<div class="loading-screen" role="status" aria-label="불러오는 중">
+  <div class="loading-screen__sphere" aria-hidden="true"><!-- 44 <div> --></div>
+</div>`,
+  guidelines: [
+    ['해야 할 것', '첫 진입·전체 화면 전환에만 씁니다. 화면이 준비되면 즉시 교체합니다 — 최소 노출 시간을 두지 않습니다.'],
+    ['하지 말 것', '영역 하나가 로딩 중일 때 쓰지 않습니다. 레이아웃을 알면 Skeleton, 에이전트 작업이면 ThinkingIndicator입니다 (원칙 1).'],
+    ['하지 말 것', '문구·진행률·로고를 함께 얹지 않습니다. 인디케이터 하나만 정중앙에 둡니다.'],
+  ],
+},
+{
   id: 'snackbar', name: 'Snackbar', ko: '스낵바', category: 'feedback',
   origin: 'wrapped', vuetifyBase: 'VSnackbar',
   summary: '떴다가 사라지는 알림.',
@@ -1943,6 +1991,7 @@ export const WHERE = {
   progressbar: '업로드·일괄 처리 — 진행률을 아는 경우만. 모르면 ThinkingIndicator.',
   spinner: '버튼 내부, 인라인 짧은 대기(2초 이내). 에이전트 작업에는 쓰지 않습니다.',
   dotfield: '이미지·미디어 생성 대기 — 단계 문구도 진행률도 줄 수 없는 생성형 작업 전용.',
+  loadingscreen: '첫 진입·전체 화면 전환 — 화면 전체가 아직 없을 때만. 준비되면 즉시 교체.',
   snackbar: '저장·삭제 결과 알림. 후속 액션은 하나까지.',
   badge: '테이블 상태 열, 목록 항목의 상태 표시. 읽기 전용.',
   skeleton: '목록·테이블의 로딩 상태. 에이전트 응답 대기에는 쓰지 않습니다.',
@@ -2164,6 +2213,12 @@ Object.assign(A11Y, {
            'prefers-reduced-motion이면 rAF 루프 대신 정지 프레임 1장'],
     yours: ['label에 무엇을 생성 중인지 구체적으로 ("이미지 생성 중")', '완료되면 즉시 결과로 교체'],
   },
+  loadingscreen: {
+    keys: [],
+    free: ['role="status" + aria-label 강제', '도트 스피어는 aria-hidden',
+           'prefers-reduced-motion이면 rAF 루프 대신 정지 프레임 1장'],
+    yours: ['label에 무엇을 불러오는지 구체적으로 ("문서함 불러오는 중")', '준비되면 즉시 화면으로 교체'],
+  },
   banner: {
     keys: [['Tab', '액션으로 이동']],
     free: [],
@@ -2334,6 +2389,9 @@ export const VERSUS = {
   dotfield: [['ThinkingIndicator', '단계를 말로 알릴 수 있으면 ThinkingIndicator — DotField는 말할 단계가 없는 생성 대기 전용'],
              ['ProgressBar', '진행률을 알면 ProgressBar'],
              ['Skeleton', '결과의 자리(레이아웃)를 미리 알면 Skeleton']],
+  loadingscreen: [['Skeleton', '화면의 레이아웃을 이미 알면 Skeleton — LoadingScreen은 화면 전체가 아직 없을 때만'],
+                  ['Spinner', '영역 하나의 2초 이내 대기면 Spinner'],
+                  ['ThinkingIndicator', '에이전트 작업 대기면 ThinkingIndicator (원칙 1)']],
   skeleton: [['ThinkingIndicator', '에이전트 응답 대기에는 Skeleton을 쓰지 않습니다']],
   progressbar: [['ThinkingIndicator', '진행률을 모르면 ProgressBar 대신 ThinkingIndicator']],
   select: [['Autocomplete', '옵션 10개를 넘으면 Autocomplete']],

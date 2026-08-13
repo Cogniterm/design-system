@@ -1,0 +1,38 @@
+# DsLoadingScreen — Cogniterm Design System
+
+import { DsLoadingScreen } from '~/design'   // Vuetify 불필요 · ds.css만
+
+## 용도
+첫 진입·전체 화면 전환 — 화면 전체가 아직 없을 때만. 준비되면 즉시 교체.
+
+## Props
+- fullscreen: boolean = true — false면 오버레이 없이 50×50 인디케이터만 인라인으로 렌더.
+- speed: number = 2 — 모션 배속. 스펙 확정값 — 바꾸지 않는 것이 기본입니다.
+- size: number = 50 — 인디케이터 한 변(px).
+- label: string = '불러오는 중' — 스크린리더용 라벨. 화면에는 보이지 않습니다.
+
+
+## 사용 예
+```vue
+<DsLoadingScreen v-if="booting" label="문서함 불러오는 중" />
+```
+
+## 구분
+- vs Skeleton: 화면의 레이아웃을 이미 알면 Skeleton — LoadingScreen은 화면 전체가 아직 없을 때만
+- vs Spinner: 영역 하나의 2초 이내 대기면 Spinner
+- vs ThinkingIndicator: 에이전트 작업 대기면 ThinkingIndicator (원칙 1)
+
+## 지침
+- [해야 할 것] 첫 진입·전체 화면 전환에만 씁니다. 화면이 준비되면 즉시 교체합니다 — 최소 노출 시간을 두지 않습니다.
+- [하지 말 것] 영역 하나가 로딩 중일 때 쓰지 않습니다. 레이아웃을 알면 Skeleton, 에이전트 작업이면 ThinkingIndicator입니다 (원칙 1).
+- [하지 말 것] 문구·진행률·로고를 함께 얹지 않습니다. 인디케이터 하나만 정중앙에 둡니다.
+
+## 접근성
+직접 처리: label에 무엇을 불러오는지 구체적으로 ("문서함 불러오는 중") / 준비되면 즉시 화면으로 교체
+
+## 시스템 규칙 (요약)
+- 색·간격·모서리는 CSS 변수만 (var(--gray-6), var(--brand)) — hex 금지
+- primary 버튼은 화면당 하나. 선택·활성 상태는 중립(--sel-bg/--sel-fg)
+- 컨트롤 높이 32(sm)/40/48 — 필터 바·툴바는 sm
+- 목록·테이블은 default/loading/empty/error/partial 5상태
+- 전체 규칙: https://Cogniterm.github.io/design-system/llms.txt
