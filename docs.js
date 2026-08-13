@@ -1206,3 +1206,13 @@ window.addEventListener('keydown', (e) => {
 })
 
 render()
+
+/* 부팅 로딩 화면 제거 — 첫 렌더가 끝났으니 즉시 교체 (최소 노출 시간 없음) */
+{
+  const boot = document.getElementById('boot')
+  if (boot) {
+    boot.style.transition = 'opacity .2s ease'
+    boot.style.opacity = '0'
+    setTimeout(() => { window.__bootLoader?.destroy(); boot.remove() }, 200)
+  }
+}
