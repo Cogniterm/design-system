@@ -301,7 +301,10 @@ body {
    테두리는 outline에서만 씁니다 — 상태마다 stroke가 붙으면 목록이 시끄러워집니다. */
 .badge {
   display: inline-flex; align-items: center; height: 22px; padding: 0 8px;
-  border-radius: var(--r-full); font-size: var(--text-xs); font-weight: var(--weight-medium);
+  /* 각진 사각 (2026-08-18 확정) — 상태 라벨은 표·목록에 여러 개가 줄지어 놓이는 자리라,
+     둥근 알약보다 각진 사각이 열 간격에 맞아떨어지고 글자가 가운데로 몰려 보이지 않습니다.
+     알약 모양이 필요한 건 조작 가능한 Chip 쪽입니다. */
+  border-radius: var(--r-sm); font-size: var(--text-xs); font-weight: var(--weight-medium);
   border: 1px solid transparent; white-space: nowrap;
   background: var(--gray-3); color: var(--gray-11);
 }
@@ -338,7 +341,7 @@ body {
 .badge.outline.pink     { border-color: color-mix(in srgb, var(--chart-5) 32%, transparent); color: var(--chart-5); }
 
 /* 크기 */
-.badge.sm { height: 18px; padding: 0 6px; font-size: var(--text-2xs); }
+.badge.sm { height: 18px; padding: 0 6px; font-size: var(--text-2xs); border-radius: 3px; }   /* 작은 배지는 모서리도 한 단 작게 */
 
 /* ── ds-checkbox ──────────────────────────
    상자는 CSS(정확한 px), 표식은 뷰박스 16 고정 SVG(항상 정중앙·같은 획).
