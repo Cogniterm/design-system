@@ -257,8 +257,9 @@
 .v-tab { text-transform: none; letter-spacing: 0; font-size: var(--text-base); font-weight: var(--weight-medium);
   color: var(--gray-11); min-width: 0; padding: 0 12px; }
 .v-tab:hover { color: var(--gray-12); }
-.v-tab--selected { color: var(--sel-fg); }
-.v-tabs .v-tab__slider { height: 2px; background: var(--sel-fg); }
+/* 활성 탭 — 브랜드 (2026-08-19). 밑줄과 글자에만 얹고 면은 깔지 않아 primary 버튼과 경쟁하지 않습니다 */
+.v-tab--selected { color: var(--nav-active-fg); }
+.v-tabs .v-tab__slider { height: 2px; background: var(--nav-active); }
 
 /* ── VField (VTextField·VSelect 등 입력 공통) ── */
 .v-field { border-radius: var(--r-lg); font-size: 14px; background: var(--surface); }
@@ -406,7 +407,7 @@
   margin-left: 6px; font-size: 11px; font-weight: 600; padding: 1px 6px;
   border-radius: var(--r-sm); background: var(--gray-3); color: var(--gray-11);   /* 각진 배지 (2026-08-18) */
 }
-.ds-tabs .v-tab--selected .ds-tab-count { background: var(--sel-bg); color: var(--sel-fg); }
+.ds-tabs .v-tab--selected .ds-tab-count { background: var(--nav-active-bg); color: var(--nav-active-fg); }
 
 /* ── DsBreadcrumbs ── */
 .ds-breadcrumbs.v-breadcrumbs { padding: 0; font-size: var(--text-xs); }
