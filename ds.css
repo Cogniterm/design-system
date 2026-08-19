@@ -636,7 +636,9 @@ td.mono { font-family: var(--mono); font-size: var(--text-xs); color: var(--gray
 }
 
 /* ── ds-btn-group — 세그먼티드 컨트롤 (Astryx SegmentedControl 참고)
-   회색 트랙(32px) 안에서 선택 항목만 흰 칩(26px). 구분선·외곽 보더 없음. ── */
+   회색 트랙(32px) 안에서 선택 항목만 흰 칩(26px). 구분선·외곽 보더 없음.
+   활성 칩 = 흰 면 + 브랜드 선·글자 (--nav-active 개정 확장, 2026-08-19) —
+   면까지 브랜드 틴트로 깔면 회색 트랙 위에서 글자 시인성이 떨어져 면은 흰색을 유지합니다. ── */
 .ds-btn-group {
   display: inline-flex; align-items: center; gap: 2px;
   height: 32px; padding: 3px; border-radius: var(--r-lg); background: var(--gray-3);
@@ -656,9 +658,9 @@ td.mono { font-family: var(--mono); font-size: var(--text-xs); color: var(--gray
 .ds-btn-group--lg .ds-btn-group__seg { height: 32px; padding: 0 14px; font-size: var(--text-base); }
 .ds-btn-group__seg:hover { color: var(--gray-12); }
 .ds-btn-group__seg:focus-visible { box-shadow: var(--focus-ring); }
-.ds-btn-group__seg.is-on { background: var(--surface); color: var(--gray-12);
-  box-shadow: 0 0 0 1px var(--border); }
-.ds-btn-group__seg.is-on:focus-visible { box-shadow: 0 0 0 1px var(--border), var(--focus-ring); }
+.ds-btn-group__seg.is-on { background: var(--surface); color: var(--nav-active-fg);
+  box-shadow: 0 0 0 1px var(--nav-active); }
+.ds-btn-group__seg.is-on:focus-visible { box-shadow: 0 0 0 1px var(--nav-active), var(--focus-ring); }
 
 /* ── ds-treeview (cog-tree) — 자체 폴더 트리, 평탄화 렌더.
    VTreeview 대신: 깊이별 14px 가이드(들여쓰기+세로 연결선)·30px 컴팩트 행. ── */
