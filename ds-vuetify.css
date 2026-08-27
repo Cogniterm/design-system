@@ -71,6 +71,17 @@
   padding: 18px 22px; font-size: var(--text-lg); font-weight: var(--weight-semibold); color: var(--gray-12);
   border-bottom: 1px solid var(--border-subtle);
 }
+.ds-dialog-head__text { flex: 1 1 auto; min-width: 0; }
+/* 제목줄 우상단 닫기 X — closable 일 때만 (조회·안내 모달).
+   결정 모달(삭제 확인 등)은 취소/실행 버튼으로만 닫는 게 규칙이라 기본값은 없음. */
+.ds-dialog-close {
+  all: unset; box-sizing: border-box; flex: none; cursor: pointer;
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 28px; height: 28px; border-radius: var(--r-md); color: var(--gray-11);
+  transition: background .12s ease, color .12s ease;
+}
+.ds-dialog-close:hover { background: var(--gray-a3); color: var(--gray-12); }
+.ds-dialog-close:focus-visible { box-shadow: var(--focus-ring); }
 .ds-dialog-body { padding: 20px 22px; font-size: var(--text-base); color: var(--gray-11); line-height: var(--leading-prose); }
 .ds-dialog-foot {
   padding: 14px 22px; border-top: 1px solid var(--border-subtle);
@@ -982,6 +993,9 @@
   line-height: var(--leading-ui);
 }
 
+/* 패딩 0 — 내용물(필터 패널·컨텍스트 메뉴·달력)이 자체 패딩과 폭을 가질 때 */
+.ds-popover--bare { padding: 0; }
+
 .ds-hovercard { max-width: 320px; }
 
 /* ── DsCommandPalette ── */
@@ -1185,7 +1199,11 @@
 
 /* ── 탭 — 인디케이터·간격 ── */
 .v-tabs { min-height: 40px; }
-.v-tab.v-btn { min-width: 0; padding-inline: 12px; }
+/* height 를 함께 못박습니다. Vuetify 의 .v-btn--size-default{height:32px} 가
+   레이어 안에 있고 이 파일은 레이어 밖이라 보통 선언은 이쪽이 이기지만,
+   탭 높이는 --v-tabs-height 로 와야 밑줄이 하단 stroke 에 붙습니다.
+   빠져 있을 때 밑줄이 stroke 보다 8px 위에 떠 있었습니다. (2026-08-27) */
+.v-tab.v-btn { min-width: 0; padding-inline: 12px; height: var(--v-tabs-height); }
 .v-tab__slider { border-radius: 0; }
 .v-slide-group__content { gap: 2px; }
 

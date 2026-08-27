@@ -24,7 +24,7 @@ import {
   Palette, Command, ArrowBigUp, Option, CornerDownLeft,
   ArrowUp as ArrowUpKey, ArrowDown as ArrowDownKey,
   ArrowLeft as ArrowLeftKey, ArrowRight as ArrowRightKey, Delete, Space,
-} from 'lucide-vue-next'
+} from '@lucide/vue'
 import { icons as semantic } from './icons'
 
 /* Lucide 컴포넌트를 Vuetify 아이콘 슬롯에 맞게 감쌉니다.
