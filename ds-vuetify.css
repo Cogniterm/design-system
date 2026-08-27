@@ -277,6 +277,22 @@
    그리도록 되어 있습니다. 네 변을 모두 켜면 조각끼리 맞닿는 자리에
    세로줄이 하나 생깁니다 — 입력 필드 안에 선이 그어져 보이던 정체입니다.
    굵기는 아래 --v-field-border-width가 이미 1px로 고정합니다. */
+
+/* Vuetify는 이 테두리를 "색 × 불투명도"로 그립니다 — 기본 .38 · hover .87 · 포커스 1.
+   위에서 색만 토큰으로 바꾸면 쉬는 상태가 38%로 흐려져, 같은 토큰을 쓰면서도
+   항상 100%로 그리는 손수 만든 .input 과 나란히 놓았을 때 선 색이 달라 보입니다.
+   실제 사고: 문의하기 모달의 '제목'(.input)과 '문의 내용'(VTextarea)이
+   같은 토큰 하나를 쓰는데 텍스트영역 쪽만 눈에 띄게 흐려 보였습니다. (2026-08-27)
+   색은 토큰이 정하므로 불투명도는 1로 고정하고, hover 는 .input:hover 와 같은 색으로 맞춥니다. */
+.v-field__outline { --v-field-border-opacity: 1; }
+@media (hover: hover) {
+  .v-field:hover .v-field__outline { --v-field-border-opacity: 1; }
+  /* 포커스는 제외 — :hover 쪽이 특정도가 높아 포커스 중 마우스를 얹으면 브랜드색을 덮습니다 */
+  .v-field:not(.v-field--focused):hover .v-field__outline__start,
+  .v-field:not(.v-field--focused):hover .v-field__outline__end,
+  .v-field:not(.v-field--focused):hover .v-field__outline__notch::before,
+  .v-field:not(.v-field--focused):hover .v-field__outline__notch::after { border-color: var(--border-hover); }
+}
 .v-field--focused .v-field__outline__start, .v-field--focused .v-field__outline__end,
 .v-field--focused .v-field__outline__notch::before, .v-field--focused .v-field__outline__notch::after {
   border-color: var(--brand);
