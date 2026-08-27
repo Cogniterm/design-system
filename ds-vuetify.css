@@ -91,7 +91,7 @@
 }
 
 .ds-menu-item {
-  position: relative; display: flex; align-items: center; gap: 9px; height: 34px; padding: 0 10px;
+  position: relative; display: flex; align-items: center; gap: 9px; height: 32px; padding: 0 10px;
   border-radius: var(--r-md); font-size: var(--text-sm); color: var(--gray-12);
   cursor: pointer; user-select: none; white-space: nowrap;
   transition: background .12s ease, color .12s ease;
@@ -129,13 +129,18 @@
 
 /* 섹션 머리글 */
 .ds-menu-label {
-  padding: 7px 10px 4px; font-size: var(--text-2xs); font-weight: var(--weight-semibold);
+  padding: 6px 10px 4px; line-height: 14px;   /* 블록 24px — 4의 배수 격자 */
+  font-size: var(--text-2xs); font-weight: var(--weight-semibold);
   color: var(--gray-11);
 }
 .ds-menu-panel > .ds-menu-label:first-child { padding-top: 4px; }
 
 /* 구분선 — 얇게, 좌우 인셋 */
-.ds-menu-sep { height: 1px; margin: 4px 6px; background: var(--border-subtle); border: 0; }
+/* 위 4 + 선 1 + 아래 3 = 블록 8px. 8과 항목 32가 모두 4의 배수라서 구분선 사이
+   간격이 항상 4의 배수가 되고, 배율 1.25·1.5 에서도 모든 구분선이 같은 소수점
+   위치에 앉아 같은 굵기·색으로 찍힌다. 34px 항목이던 시절에는 한 메뉴 안의
+   구분선 두 개가 서로 다른 굵기로 보였다. (2026-08-27) */
+.ds-menu-sep { height: 1px; margin: 4px 6px 3px; background: var(--border-subtle); border: 0; }
 
 /* ── DsTooltip ── */
 .v-tooltip > .v-overlay__content {
@@ -807,7 +812,7 @@
   font-size: var(--text-sm); color: var(--gray-12);
 }
 /* 밀도 규칙이 항목을 44px로 키우는 것을 DsMenu와 같은 34px로 */
-.v-overlay__content .v-list-item--density-comfortable.v-list-item--one-line { min-height: 34px; }
+.v-overlay__content .v-list-item--density-comfortable.v-list-item--one-line { min-height: 32px; }
 /* 선택된 옵션 — 회색 면이 아니라 브랜드 글자 (DsMenu의 --selected와 같은 표현).
    hover가 면을 쓰므로 선택은 색으로만 구분합니다. */
 .v-overlay__content .v-list-item--active {
@@ -1002,7 +1007,7 @@
 .ds-palette-item {
   all: unset; box-sizing: border-box; cursor: pointer;
   display: flex; align-items: center; gap: 9px;
-  width: 100%; height: 34px; padding: 0 10px; border-radius: var(--r-md);
+  width: 100%; height: 32px; padding: 0 10px; border-radius: var(--r-md);
   font-size: var(--text-sm); color: var(--gray-12);
   transition: background .12s ease, color .12s ease;
 }
