@@ -9,7 +9,7 @@ withDefaults(defineProps<{
 
 <template>
   <span class="ds-avatar" :class="[size !== 'default' && size, variant === 'brand' && 'brand']">
-    <img v-if="src" :src="src" alt="" style="width:100%;height:100%;border-radius:inherit;object-fit:cover" />
+    <img v-if="src" :src="src" alt="" style="width:100%;height:100%;border-radius: inherit;object-fit:cover" />
     <slot v-else />
   </span>
 </template>

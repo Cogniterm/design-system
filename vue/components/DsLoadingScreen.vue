@@ -20,14 +20,14 @@ const host = ref<HTMLElement | null>(null)
 const N = 44                      // 도트 수
 const R = 20.5                    // 구 반지름 (디자인 단위 = px)
 const ISO = Math.atan(1 / Math.sqrt(2)) // 35.26° — 공중제비 고도각
-// 브랜드 블루 팔레트: 딥 → --brand(#1F7FF0) → 라이트 틴트. 조명 계산이라 hex 고정(스펙 확정값).
+// 브랜드 블루 팔레트: 딥 → --primary(#1F7FF0) → 라이트 틴트. 조명 계산이라 hex 고정(스펙 확정값).
 const STOPS = [[11, 84, 189], [31, 127, 240], [122, 182, 247]]
-// 깊이 페이드가 녹아드는 목표색 — 배경(--bg)을 읽어 라이트/다크 모두 자연스럽게
+// 깊이 페이드가 녹아드는 목표색 — 배경(--background)을 읽어 라이트/다크 모두 자연스럽게
 let bgRGB = [255, 255, 255]
 let themeObs: MutationObserver | undefined
 
 function readBg() {
-  const v = getComputedStyle(document.documentElement).getPropertyValue('--bg').trim()
+  const v = getComputedStyle(document.documentElement).getPropertyValue('--background').trim()
   const m = /^#([0-9a-f]{6})$/i.exec(v)
   if (m) bgRGB = [0, 1, 2].map((j) => parseInt(m[1].slice(j * 2, j * 2 + 2), 16))
 }
@@ -124,7 +124,7 @@ onMounted(() => {
     const th = i * GA
     pts.push({ px: Math.cos(th) * r * R, py: y * R, pz: Math.sin(th) * r * R })
     const d = document.createElement('div')
-    d.style.cssText = `position:absolute;left:50%;top:50%;width:${dot}px;height:${dot}px;border-radius:50%;opacity:0;will-change:transform,opacity,background;`
+    d.style.cssText = `position:absolute;left:50%;top:50%;width:${dot}px;height:${dot}px;border-radius: 50%;opacity:0;will-change:transform,opacity,background;`
     el.appendChild(d)
     els.push(d)
   }

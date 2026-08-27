@@ -9,7 +9,7 @@ withDefaults(defineProps<{
   <div class="toolcall">
     <span v-if="status === 'running'" class="spinner"></span>
     <span v-else-if="status === 'done'" class="check">✓</span>
-    <span v-else class="check" style="color:var(--danger)">✕</span>
+    <span v-else class="check" style="color:var(--error)">✕</span>
     <slot />
   </div>
 </template>

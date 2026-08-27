@@ -234,21 +234,23 @@ if (scaleOk) {
     // 브랜드 원색(#1F7FF0)을 그대로 쓰기로 한 결정. 색 일치 > AA.
     // 비텍스트 기준(3:1)은 통과하므로 점·포커스 링·보더는 문제없고,
     // 흰 라벨을 얹는 primary 버튼만 3.92:1로 AA에 미달합니다.
-    'light 버튼 라벨 on-brand': '브랜드 원색 유지 결정 (2026-08-06)',
+    'light 버튼 라벨 primary-foreground': '브랜드 원색 유지 결정 (2026-08-06)',
     // 다크에서도 같은 원색·같은 흰 라벨을 씁니다. 밝은 파랑에 검은 글자를 쓰면
     // 대비는 통과하지만 같은 Primary 버튼이 테마에 따라 글자색이 뒤집혀,
     // 사용자에게는 다른 물건으로 읽힙니다. 일관성을 택했습니다.
-    'dark 버튼 라벨 on-brand': '라이트와 같은 브랜드 원색·흰 라벨 유지 결정 (2026-08-06)',
+    'dark 버튼 라벨 primary-foreground': '라이트와 같은 브랜드 원색·흰 라벨 유지 결정 (2026-08-06)',
   }
   // [설명, 앞색, 뒷색, 최소비] — 본문 4.5, UI 3
+  // 토큰 이름은 콘솔 기준으로 정렬했습니다 (2026-08-27). 앞색은 hex 를 직접 든
+  // 토큰이어야 합니다 — --foreground 처럼 var() 별칭이면 여기서 hex 를 못 읽습니다.
   const PAIRS = [
-    ['본문 gray-12', '--gray-12', '--bg', 4.5],
-    ['보조 gray-11', '--gray-11', '--bg', 4.5],
-    ['링크 brand-text', '--brand-text', '--bg', 4.5],
-    ['버튼 라벨 on-brand', '--on-brand', '--brand', 4.5],
-    ['상태 success', '--success', '--bg', 4.5],
-    ['상태 warning', '--warning', '--bg', 4.5],
-    ['상태 danger', '--danger', '--bg', 4.5],
+    ['본문 gray-12', '--gray-12', '--background', 4.5],
+    ['보조 gray-11', '--gray-11', '--background', 4.5],
+    ['링크 primary-text', '--primary-text', '--background', 4.5],
+    ['버튼 라벨 primary-foreground', '--primary-foreground', '--primary', 4.5],
+    ['상태 success', '--success', '--background', 4.5],
+    ['상태 warning', '--warning', '--background', 4.5],
+    ['상태 error', '--error', '--background', 4.5],
   ]
   const fails = []
   for (const theme of ['light', 'dark']) {
