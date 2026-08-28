@@ -25,15 +25,60 @@
    사용법: 저장소 루트에서 `npm run live`
 */
 import { cpSync, existsSync, readdirSync, readFileSync, rmSync, writeFileSync } from 'node:fs'
+import { createHash } from 'node:crypto'
 import { spawnSync } from 'node:child_process'
 import { join } from 'node:path'
 
 const APP = join('examples', 'vuetify-app')
 const DESIGN = join(APP, 'src', 'design')
+/** live/가 **어느 소스로** 만들어졌는지 적어 두는 표식. 낡음 검사는 이 값만 봅니다 */
+const MARK = join('live', '.built-from')
 
 /* 루트에서만 돕니다 — 다른 데서 돌리면 엉뚱한 폴더를 지웁니다 */
 if (!existsSync('ds.css') || !existsSync(APP)) {
   console.error('저장소 루트에서 실행하세요 (ds.css와 examples/vuetify-app이 보이는 자리).')
+  process.exit(1)
+}
+
+/* ── 소스 지문 ──────────────────────────────────────────
+   live/에 들어가는 것: vue/(부품·테마·아이콘)과 CSS 두 벌.
+   ⚠ 줄 끝을 LF로 맞춰서 잽니다 — 안 그러면 Windows에서 낸 지문과 리눅스 CI가 낸 지문이
+     달라 "늘 낡음"이 됩니다.
+   ⚠ vue/version.ts · vue/meta.ts는 뺍니다. 스탬프·문서에서 나오는 생성물이라
+     docs.css만 고쳐도 지문이 바뀌어 헛짚습니다. */
+const SKIP = new Set([join('vue', 'version.ts'), join('vue', 'meta.ts')])
+function srcHash() {
+  const files = ['ds.css', 'ds-vuetify.css']
+  for (const f of readdirSync('vue', { recursive: true, withFileTypes: true })) {
+    if (!f.isFile()) continue
+    const p = join(f.parentPath ?? f.path, f.name)
+    if (!SKIP.has(p)) files.push(p)
+  }
+  files.sort()
+  const h = createHash('sha256')
+  for (const p of files) {
+    h.update(p.replace(/\\/g, '/'))
+    h.update(readFileSync(p, 'utf8').replace(/\r\n/g, '\n'))
+  }
+  return h.digest('hex').slice(0, 12)
+}
+
+/* ── --check — 커밋된 live/가 지금 소스로 만든 것인지만 봅니다 ──
+   ⚠ 빌드 결과를 바이트로 견주지 않습니다. 번들 이름이 내용 해시라 환경이 다르면
+     이름이 달라져 가짜 실패가 납니다. 소스 지문 한 줄이면 충분합니다. */
+if (process.argv.includes('--check')) {
+  const want = srcHash()
+  const have = existsSync(MARK) ? readFileSync(MARK, 'utf8').trim() : ''
+  if (have === want) {
+    console.log(`통과 — live/가 최신입니다 (${want})`)
+    process.exit(0)
+  }
+  console.error('live/(문서 사이트 플레이그라운드)가 지금 소스로 만든 것이 아닙니다.')
+  console.error(`  live/가 만들어진 소스: ${have || '(표식 없음)'}`)
+  console.error(`  지금 소스:             ${want}`)
+  console.error('')
+  console.error('아래를 실행하고 함께 커밋하세요 (live/ · index.html · version.json · vue/version.ts):')
+  console.error('  npm run live')
   process.exit(1)
 }
 
@@ -74,6 +119,9 @@ for (const f of readdirSync('live', { recursive: true, withFileTypes: true })) {
   const s = readFileSync(p, 'utf8')
   if (s.includes('\r\n')) writeFileSync(p, s.replace(/\r\n/g, '\n'))
 }
+
+/* 어느 소스로 만들었는지 적어 둡니다 — `--check`가 이 한 줄만 봅니다 */
+writeFileSync(MARK, srcHash() + '\n')
 
 console.log('5/5 스탬프')
 run('node scripts-stamp.mjs')

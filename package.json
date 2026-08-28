@@ -12,6 +12,7 @@
     "lint:css": "stylelint ds.css ds-vuetify.css docs.css",
     "check": "npm run check:data && npm run lint:css",
     "live": "node scripts-build-live.mjs",
+    "live:check": "node scripts-build-live.mjs --check",
     "docs": "npx --yes http-server -p 4173 -c-1 ."
   },
   "devDependencies": {
