@@ -28,7 +28,7 @@ const fieldId = `ds-field-${uid}`
             양쪽에 걸리고, Vuetify가 붙이는 `.bg-primary`는 `!important`라 CSS로 못 덮습니다.
             (같은 이유로 defaults.ts의 VSlider·VRangeSlider에도 같은 값이 있습니다) -->
     <VSlider :id="fieldId" v-model="model" :min="min" :max="max" :step="step"
-      color="primary" track-color="var(--gray-5)" density="comfortable" hide-details
+      color="primary" track-color="var(--muted)" density="comfortable" hide-details
       :elevation="0" :thumb-size="16" :track-size="6" v-bind="$attrs" />
   </div>
 </template>

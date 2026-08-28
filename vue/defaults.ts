@@ -69,8 +69,8 @@ export const dsDefaults = {
         Vuetify가 그때 붙이는 `.bg-primary`가 `!important`라 CSS로는 못 덮습니다.
         빼면 홈 전체가 파랗게 칠해져 값이 어디까지 찼는지 안 보입니다.
         `var(--`로 시작하는 값은 Vuetify가 CSS 색으로 알아보고 인라인으로 넣습니다. */
-  VSlider: { color: 'primary', trackColor: 'var(--gray-5)', density: 'comfortable', hideDetails: 'auto', elevation: 0, thumbSize: 16, trackSize: 6 },
-  VRangeSlider: { color: 'primary', trackColor: 'var(--gray-5)', density: 'comfortable', hideDetails: 'auto', elevation: 0, thumbSize: 16, trackSize: 6 },
+  VSlider: { color: 'primary', trackColor: 'var(--muted)', density: 'comfortable', hideDetails: 'auto', elevation: 0, thumbSize: 16, trackSize: 6 },
+  VRangeSlider: { color: 'primary', trackColor: 'var(--muted)', density: 'comfortable', hideDetails: 'auto', elevation: 0, thumbSize: 16, trackSize: 6 },
   VRating: { color: 'primary', density: 'comfortable', size: 'small' },
   VDatePicker: { elevation: 0, color: 'primary', hideHeader: true },
   VTimePicker: { elevation: 0, color: 'primary', hideHeader: true },

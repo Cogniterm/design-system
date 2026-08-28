@@ -365,7 +365,6 @@
 .v-expansion-panel-title { font-size: var(--text-sm); font-weight: 500; min-height: 42px; }
 .v-stepper { background: var(--card); border: 1px solid var(--border); }
 .v-stepper-item__title { font-size: var(--text-sm); font-weight: 500; }
-.v-timeline-item__body { font-size: var(--text-sm); }
 
 /* ── VProgress ── */
 .v-progress-linear { border-radius: 0; }
@@ -482,7 +481,7 @@
 .ds-slider-val { font-family: var(--mono); font-size: var(--text-xs); color: var(--muted-foreground); font-weight: 400; }
 /* 빈 홈 색을 여기서 정하던 줄은 2026-08-28 걷었습니다 — **한 번도 먹지 않던 줄**입니다.
    `color="primary"`가 걸리면 Vuetify가 `.bg-primary`를 붙이는데 그게 `!important`라
-   CSS로는 못 이깁니다. 지금은 `track-color="var(--gray-5)"`(인라인)로 정합니다. */
+   CSS로는 못 이깁니다. 지금은 `track-color="var(--muted)"`(인라인)로 정합니다. */
 
 /* ── Calendar · DatePicker ─────────────────────────────────
    달력 격자는 한 벌뿐입니다. 펼쳐 두면 Calendar, 필드에 딸려 뜨면 DatePicker이고
@@ -622,11 +621,11 @@
 .ds-list .v-list-item-subtitle { font-size: 12px; color: var(--muted-foreground); }
 .ds-list-meta { font-family: var(--mono); font-size: 12px; color: var(--muted-foreground); }
 
-/* ── DsTimeline ── */
-.ds-timeline .v-timeline-divider__dot { box-shadow: none; }
-.ds-tl-time { font-family: var(--mono); font-size: var(--text-2xs); color: var(--muted-foreground); }
-.ds-tl-title { font-size: var(--text-sm); font-weight: 500; color: var(--foreground); margin-top: 2px; }
-.ds-tl-body { font-size: var(--text-xs); color: var(--muted-foreground); margin-top: 2px; }
+/* ⛔ 타임라인은 여기 없습니다 — 2026-08-28에 VTimeline을 버리고 custom으로 옮겼습니다.
+   원본은 ds.css의 .ds-timeline이고, 부품은 vue/components/DsTimeline.vue입니다.
+   .v-timeline-* 보정(점 크기 · 선 두께 · density 변수)과 .ds-tl-* 은 함께 걷었습니다.
+   VTimeline으로 되돌리지 마세요 — 점이 면을 채운 원이라 링으로 못 바꾸고,
+   치수가 density 프리셋에 묶여 통제되지 않습니다 (까닭은 ds.css의 .ds-timeline 주석) */
 
 /* ── DsAccordion ── */
 .ds-accordion .v-expansion-panel { background: var(--card); border: 1px solid var(--border); }
@@ -939,11 +938,6 @@
 .v-stepper-item__title { color: var(--muted-foreground); }
 .v-divider--vertical { border-color: var(--border); }
 
-/* ── VTimeline ── */
-.v-timeline--vertical.v-timeline--density-comfortable { --v-timeline-line-thickness: 1px; }
-.v-timeline-divider__dot--size-x-small { width: 10px; height: 10px; }
-.v-timeline-divider__inner-dot { box-shadow: none; }
-.v-timeline .v-timeline-divider__line { background: var(--gray-5); }
 
 /* ── VPagination ── */
 /* 시스템 컨트롤 규격(32px · radius 8px)에 맞춥니다 — 옆에 오는 버튼·필드와 높이가 어긋나 있었습니다 */
@@ -968,7 +962,7 @@
 
 /* ── VSlider ── */
 .v-slider-thumb__ripple { display: none; }
-.v-slider-track__background { background: var(--gray-5); opacity: 1; }
+.v-slider-track__background { background: var(--muted); opacity: 1; }
 /* 머티리얼 헤일로 — 포커스하면 손잡이 뒤에서 원이 2배로 커집니다.
    우리는 그 자리에 링을 그리므로(아래 '슬라이더' 블록) 겹치지 않게 걷습니다. */
 .v-slider-thumb__surface::before { display: none; }
@@ -1197,6 +1191,9 @@
 .v-slider-thumb__surface {
   width: 16px; height: 16px; box-sizing: border-box;
   background: var(--primary-foreground); border: 1px solid var(--primary);
+  /* 평상시 그림자(shadcn shadow-sm). ⚠ box-shadow가 아니라 filter인 이유는 아래 참고 —
+     `.elevation-N`이 box-shadow를 레이어 안에서 !important로 잡고 있어 못 씁니다 */
+  filter: drop-shadow(0 1px 1px rgba(0, 0, 0, .1));
 }
 /* ⚠ 링은 box-shadow가 아니라 **outline**으로 그립니다. 이유가 있습니다:
    Vuetify는 손잡이에 `.elevation-N`(기본 2)을 붙이고 그 클래스가 box-shadow를
@@ -1211,13 +1208,16 @@
 .v-slider-thumb:hover .v-slider-thumb__surface {
   outline: 4px solid color-mix(in srgb, var(--primary) 20%, transparent); outline-offset: 0;
 }
-/* 포커스 — 배경 2px + 브랜드 2px. `--focus-ring`(box-shadow 토큰)과 **같은 그림**을
-   outline으로 그린 것입니다: offset 2px가 배경이 비치는 틈, 그 바깥 2px가 브랜드 선.
+/* 잡은 동안(끌기 · 포커스) — 같은 4px 링을 **진하게**. 손잡이에 딱 붙는 옅은 헤일로입니다.
+   ⚠ 여기만 시스템 공통 `--focus-ring`(배경 2px + 브랜드 2px)을 쓰지 않습니다.
+      슬라이더는 **잡고 끄는** 부품이라 손 밑에서 링이 계속 떠 있는데, 또렷한 실선 링은
+      끄는 내내 손잡이에서 떨어져 따라다녀 산만합니다. 관리자 콘솔의 DsSlider가 이미
+      이 모양이고(2026-08-28 사용자 확인 — "콘솔에 나오는 게 정답"), 같은 부품이 두
+      제품에서 다르게 움직이면 안 됩니다. 굵기 4px는 hover와 같고 진하기만 20 → 50입니다.
    ⚠ 선택자에 `.v-slider-thumb`를 한 번 더 붙여 hover와 **같은 무게**로 맞추고 뒤에 뒀습니다.
-      안 그러면 포커스된 손잡이에 마우스를 올렸을 때 hover가 이겨서, 옅은 링이 2px 떠 있는
-      어정쩡한 모양이 됩니다(hover는 색·굵기, focus는 offset만 먹던 상태) */
+      안 그러면 잡은 손잡이에 마우스가 얹혀 있을 때 hover(20%)가 이겨서 링이 옅어집니다 */
 .v-slider-thumb.v-slider-thumb--focused .v-slider-thumb__surface {
-  outline: 2px solid var(--primary); outline-offset: 2px;
+  outline: 4px solid color-mix(in srgb, var(--primary) 50%, transparent); outline-offset: 0;
 }
 .v-slider-thumb__label { font-size: var(--text-2xs); }
 .v-input--density-comfortable.v-slider { --v-input-control-height: 32px; }
@@ -1263,10 +1263,6 @@
 /* 세로 스테퍼에서도 같은 간격 */
 .v-stepper--vertical .v-stepper-item { gap: 10px; }
 
-/* ── 타임라인 ── */
-.v-timeline-divider__dot { box-shadow: none; }
-.v-timeline--density-comfortable.v-timeline--vertical { --v-timeline-dot-size: 12px; }
-.v-timeline-item__opposite { font-size: var(--text-xs); color: var(--muted-foreground); }
 
 /* ── 확장 패널 ── */
 .v-expansion-panel-title { font-size: var(--text-sm); min-height: 42px; padding: 0 14px; }
