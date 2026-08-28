@@ -20,7 +20,15 @@ const fieldId = `ds-field-${uid}`
     <label v-if="label" :for="fieldId" class="ds-slider-label">
       {{ label }}<span class="ds-slider-val">{{ model }}{{ suffix }}</span>
     </label>
+    <!-- 치수는 shadcn Slider 규격입니다 — 손잡이 16 · 홈 6.
+         ⚠ 여기 숫자와 ds-vuetify.css의 `.v-slider-thumb__surface` 크기는 **같이 움직입니다.**
+            Vuetify가 손잡이 자리를 --v-slider-thumb-size로 계산해서, 한쪽만 고치면
+            손잡이가 값보다 반 칸씩 밀려 그려집니다.
+         ⚠ track-color를 빼면 **홈 전체가 파랗게** 칠해집니다 — color는 채운 구간과 빈 홈
+            양쪽에 걸리고, Vuetify가 붙이는 `.bg-primary`는 `!important`라 CSS로 못 덮습니다.
+            (같은 이유로 defaults.ts의 VSlider·VRangeSlider에도 같은 값이 있습니다) -->
     <VSlider :id="fieldId" v-model="model" :min="min" :max="max" :step="step"
-      color="primary" density="comfortable" hide-details :thumb-size="14" :track-size="3" v-bind="$attrs" />
+      color="primary" track-color="var(--gray-5)" density="comfortable" hide-details
+      :elevation="0" :thumb-size="16" :track-size="6" v-bind="$attrs" />
   </div>
 </template>
