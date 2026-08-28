@@ -614,7 +614,7 @@ td.mono { font-family: var(--mono); font-size: var(--text-xs); color: var(--mute
 .avatar-group { display: inline-flex; }
 /* stylelint-disable-next-line declaration-property-value-disallowed-list --
    겹친 아바타를 분리하는 "구멍"입니다. 보더가 아니라 배경색으로 파낸 것이라
-   1px로는 겹침이 읽히지 않습니다. 이 시스템에서 2px가 허용되는 유일한 곳입니다. */
+   1px로는 겹침이 읽히지 않습니다. 2px가 허용되는 곳은 여기와 라디오 선택 링 · 타임라인 링뿐입니다. */
 .avatar-group .ds-avatar { margin-left: -8px; border: 2px solid var(--background); }
 .avatar-group .ds-avatar:first-child { margin-left: 0; }
 
@@ -773,6 +773,54 @@ td.mono { font-family: var(--mono); font-size: var(--text-xs); color: var(--mute
 .cog-tree__chev:hover { background: var(--gray-4); }
 .cog-tree__icon { flex: none; color: var(--muted-foreground); }
 .cog-tree__label { flex: 1; min-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-weight: var(--weight-medium); }
+
+/* ── ds-timeline — 시간순 이력. **VTimeline을 버리고 직접 그립니다** (2026-08-28).
+   버린 까닭: VTimeline의 점은 면을 채운 원이라 링으로 바꾸려면 .v-timeline-divider__inner-dot을
+   뒤집어야 하고, 점 크기 · 선 두께 · 항목 간격이 전부 density 프리셋에 묶여 있어 우리 치수로
+   통제되지 않았습니다. 타임라인은 포커스 트랩도 포지셔닝도 키보드 조작도 없는
+   **시각이 전부인 부품**이라, 기여 가이드의 판단 기준상 custom이 맞습니다 (DsTreeview와 같은 길).
+   치수는 naive-ui n-timeline(medium)에서 옮겼습니다 — 그쪽 titleFontSize · iconSize가 둘 다
+   14px이라 우리 --text-base와 그대로 맞습니다.
+     링 14px · 획 2px · 속 빔 | 선 2px | 링↔글자 26px(= 링 14 + 12) | 제목 아래 6px | 항목 사이 20px
+   ⚠ 링의 세로 위치와 선의 시작점은 **제목 글자 크기에서 계산**합니다(calc).
+     제목 크기를 바꾸면 링이 저절로 따라옵니다 — 숫자를 손으로 다시 박지 마세요.
+   ⚠ variant 색은 **거드는 표시**입니다. 성공 · 실패를 링 색만으로 가르지 마세요
+     (a11y — 색각 이상에서 사라집니다). 글로도 말해야 합니다. ── */
+.ds-timeline { list-style: none; margin: 0; padding: 0; }
+.ds-timeline__item { position: relative; padding: 0 0 20px 26px; }
+.ds-timeline__item:last-child { padding-bottom: 0; }
+/* 링 — 세로 가운데 = 제목 줄의 한가운데 (14 × 1.25 ÷ 2 − 14 ÷ 2 = 1.75px) */
+.ds-timeline__item::before {
+  content: ''; position: absolute; left: 0;
+  top: calc(var(--text-base) * 1.25 / 2 - 7px);
+  width: 14px; height: 14px; border-radius: 50%; box-sizing: border-box;
+  /* stylelint-disable-next-line declaration-property-value-disallowed-list --
+     타임라인 링은 2px입니다. 라디오 선택 링과 같은 이유 — 14px 원에 1px 획을 두르면
+     선(2px)보다 얇아져서 링이 선에 매달린 것처럼 보입니다. 레이아웃 보더가 아니라
+     그래픽 마크라 이 시스템의 1px 규칙 바깥입니다 */
+  border: 2px solid var(--gray-8);
+}
+/* 선 — 링 바닥에서 다음 링 꼭대기까지. **링을 관통하지 않습니다** */
+.ds-timeline__item::after {
+  content: ''; position: absolute; left: 6px; bottom: 0;
+  top: calc(var(--text-base) * 1.25 / 2 + 7px);
+  width: 2px; background: var(--gray-5);
+}
+.ds-timeline__item:last-child::after { display: none; }
+.ds-timeline__item--success::before { border-color: var(--success); }
+.ds-timeline__item--danger::before  { border-color: var(--error); }
+.ds-timeline__item--brand::before   { border-color: var(--brand); }
+/* 글은 제목 → 본문 → 시각 차례입니다. 시각이 맨 아래인 것이 n-timeline 규격이고,
+   목록을 훑을 때 먼저 읽혀야 하는 것은 '무엇이 있었나'입니다 */
+.ds-timeline__title {
+  margin: 0 0 6px; font-size: var(--text-base); font-weight: var(--weight-semibold);
+  line-height: 1.25; color: var(--foreground);
+}
+.ds-timeline__body { font-size: var(--text-base); line-height: 1.5; color: var(--muted-foreground); }
+.ds-timeline__time {
+  display: block; margin-top: 6px; font-size: var(--text-xs);
+  color: var(--muted-foreground); font-variant-numeric: tabular-nums;
+}
 
 /* ── ds-dotfield (도트 필드 로더 — 생성형 작업 대기) ── */
 .dotfield { display: flex; align-items: center; justify-content: center;

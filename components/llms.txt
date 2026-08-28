@@ -1,8 +1,8 @@
 # Components — Cogniterm Design System
 
-> 68 components. 37 standalone
+> 68 components. 38 standalone
 > (no Vuetify needed, import from `~/design`) and
-> 31 Vuetify-based
+> 30 Vuetify-based
 > (import from `~/design/vuetify`, also needs ds-vuetify.css).
 > Docs: https://Cogniterm.github.io/design-system/#/components
 
@@ -558,14 +558,14 @@ If two components look interchangeable, the "confused with" section of each
     <DsTreeview v-model="activated" v-model:opened="opened" :items="[
       { id: 1, title: '법무', children: [{ id: 2, title: '2026' }] },
     ]" />
-- **DsTimeline** (타임라인) — 시간순 이력.
-  import: ~/design/vuetify | origin: wrapped (VTimeline)
+- **DsTimeline** (타임라인) — 시간순 이력. 속이 빈 링과 이어 주는 선.
+  import: ~/design | origin: custom
   where: 문서 변경 이력, 에이전트 실행 이력, 승인 흐름.
-  props: items
+  props: items, ariaLabel
   usage:
     <DsTimeline :items="[
-      { id: 1, time: '09:14', title: '삭제 시도 차단',
-        body: '권한 없음 — 법무 폴더', variant: 'danger' },
+      { id: 1, time: '09:14', datetime: '2026-08-28T09:14',
+        title: '삭제 시도 차단', body: '권한 없음 — 법무 폴더', variant: 'danger' },
     ]" />
 - **DsAccordion** (아코디언) — 접었다 펴는 영역.
   import: ~/design/vuetify | origin: wrapped (VExpansionPanels)

@@ -36,6 +36,8 @@ export { default as DsTableOfContents } from './components/DsTableOfContents.vue
 export type { TocItem } from './components/DsTableOfContents.vue'
 export { default as DsTreeview } from './components/DsTreeview.vue'
 export type { DsTreeNode } from './components/DsTreeview.vue'
+export { default as DsTimeline } from './components/DsTimeline.vue'
+export type { TimelineItem } from './components/DsTimeline.vue'
 export { default as DsVisuallyHidden } from './components/DsVisuallyHidden.vue'
 
 // 이 앱이 어느 시점의 디자인 시스템을 쓰는지 — 내용 지문 + 생성일

@@ -5,14 +5,14 @@ import {
   DsButton, DsButtonGroup, DsCheckbox, DsRadioGroup, DsInput, DsBadge, DsChip, DsAvatar, DsCard, DsDivider, DsSkeleton,
   DsToast, DsEmptyState, DsChatMessage, DsStreamingText, DsThinkingIndicator, DsDotField, DsLoadingScreen,
   DsToolCallStep, DsAgentInput, DsCitationChip, DsArtifactPanel, DsSearchResult,
-  DsFileGrid, DsFileRow, DsTreeview,
+  DsFileGrid, DsFileRow, DsTreeview, DsTimeline,
 } from '~/design'
 import {
   DsIconButton, DsMenu, DsTabs, DsBreadcrumbs, DsPagination,
   DsNavList, DsStepper, DsSelect, DsAutocomplete, DsTextarea,
   DsSwitch, DsSlider, DsFileInput, DsDatePicker, DsAlert,
   DsBanner, DsProgressBar, DsSpinner, DsSnackbar, DsDialog, DsTooltip,
-  DsDataTable, DsList, DsTimeline, DsAccordion,
+  DsDataTable, DsList, DsAccordion,
 } from '~/design/vuetify'
 import { DsIcon } from '~/design/icon'
 import { icons } from '~/design/icons'
@@ -449,7 +449,7 @@ const SECTIONS = [
 
         <div class="g-item">
           <div class="g-meta">
-            <div class="g-name">DsTimeline <i class="lg wrapped"></i> <code>VTimeline</code></div>
+            <div class="g-name">DsTimeline <i class="lg standalone"></i></div>
           </div>
           <div class="g-demo" style="display:block">
             <DsTimeline :items="timelineItems" />

@@ -1,25 +1,33 @@
 # DsTimeline — Cogniterm Design System
 
-import { DsTimeline } from '~/design/vuetify'   // Vuetify 필요 · ds.css + ds-vuetify.css
+import { DsTimeline } from '~/design'   // Vuetify 불필요 · ds.css만
 
 ## 용도
 문서 변경 이력, 에이전트 실행 이력, 승인 흐름.
 
 ## Props
-- items: TimelineItem[] = 필수 — { id, time, title, body?, variant? }
+- items: TimelineItem[] = 필수 — { id, time, datetime?, title, body?, variant? } — variant는 default·success·danger·brand
+- ariaLabel: string — 에 붙는 이름.
 
+## Slots
+- #title — 제목 줄을 직접 그릴 때. { item }을 받습니다.
+- #body — 본문 줄 — 두 값을 좌우로 벌리는 등 배치가 필요할 때.
+- #time — 시각 줄 — 상태 라벨을 함께 놓을 때.
 
 ## 사용 예
 ```vue
 <DsTimeline :items="[
-  { id: 1, time: '09:14', title: '삭제 시도 차단',
-    body: '권한 없음 — 법무 폴더', variant: 'danger' },
+  { id: 1, time: '09:14', datetime: '2026-08-28T09:14',
+    title: '삭제 시도 차단', body: '권한 없음 — 법무 폴더', variant: 'danger' },
 ]" />
 ```
 
 
 ## 지침
 - [해야 할 것] 항목이 20개를 넘으면 날짜로 묶고 더보기를 제공합니다.
+- [해야 할 것] 글의 차례는 제목 → 본문 → 시각입니다. 먼저 읽혀야 하는 것은 "무엇이 있었나"입니다.
+- [하지 말 것] 성공·실패를 링 색만으로 가르지 않습니다 — 색각 이상에서 사라집니다. 글로도 말하세요.
+- [하지 말 것] VTimeline으로 되돌아가지 않습니다 — 점을 링으로 못 바꾸고 치수가 density에 묶입니다.
 
 ## 접근성
 키보드: Tab=항목 내 링크로 이동

@@ -884,13 +884,6 @@
 .ds-tree-demo .on { background: var(--sel-bg); color: var(--sel-fg); }
 .ds-tree-demo .lic { color: var(--gray-8); }
 
-.ds-tl-demo > div { display: grid; grid-template-columns: 14px 50px 1fr; gap: 11px; align-items: baseline; padding: 9px 0; }
-.ds-tl-demo .d { width: 8px; height: 8px; border-radius: 50%; background: var(--brand); }
-.ds-tl-demo .d.err { background: var(--danger); }
-.ds-tl-demo .d.ok { background: var(--success); }
-.ds-tl-demo .t { font-family: var(--mono); font-size: var(--text-2xs); color: var(--gray-9); }
-.ds-tl-demo b { font-size: var(--text-sm); font-weight: var(--weight-medium); }
-.ds-tl-demo em { font-style: normal; font-size: var(--text-xs); color: var(--gray-11); display: block; }
 
 .ds-acc-demo { border: 1px solid var(--border); border-radius: var(--r-xl); overflow: hidden; }
 .ds-acc-demo .h {

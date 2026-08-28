@@ -9,14 +9,14 @@ import {
   DsDotField, DsLoadingScreen, DsToolCallStep, DsAgentInput, DsCitationChip, DsArtifactPanel, DsSearchResult,
   DsFileGrid, DsFileRow, DsLink, DsKbd, DsCode, DsTimestamp,
   DsMetaList, DsSearchField, DsSystemMessage, DsToolbar, DsTableOfContents, DsVisuallyHidden,
-  DsTreeview,
+  DsTreeview, DsTimeline,
 } from '~/design'
 import {
   DsIconButton, DsMenu, DsTabs, DsBreadcrumbs, DsPagination,
   DsNavList, DsStepper, DsSelect, DsAutocomplete, DsTextarea,
   DsSwitch, DsSlider, DsFileInput, DsCalendar, DsDatePicker, DsAlert,
   DsBanner, DsProgressBar, DsSpinner, DsSnackbar, DsDialog, DsTooltip,
-  DsDataTable, DsList, DsTimeline, DsAccordion,
+  DsDataTable, DsList, DsAccordion,
   DsNumberInput, DsCombobox, DsPopover, DsHoverCard, DsCommandPalette,
 } from '~/design/vuetify'
 import { DsIcon } from '~/design/icon'
