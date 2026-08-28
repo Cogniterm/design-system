@@ -409,7 +409,7 @@ export const COMPONENTS = [
   reason: { ko: 'VChip으로 대체 가능하지만 필요한 형태가 훨씬 단순합니다. 톤(무엇인지)과 외형(얼마나 강조할지)을 분리해 같은 상태를 화면 맥락에 맞게 쓸 수 있게 했습니다.',
             en: 'Simpler than VChip. Tone (what it means) and appearance (how loud) are separate axes.' },
   props: [
-    ['variant', `'default' | 'brand' | 'success' | 'warning' | 'danger' | 'info' | 'violet' | 'teal' | 'pink'`, `'default'`, '톤 — 앞의 여섯은 의미색, 뒤의 셋은 분류용(베타·신규 같은 라벨).'],
+    ['variant', `'default' | 'brand' | 'success' | 'warning' | 'danger' | 'info' | 'cat-2' | 'cat-3' | 'cat-5'`, `'default'`, '톤 — 앞의 여섯은 의미색, 뒤의 셋은 분류용(베타·신규 같은 라벨). 분류용은 색 이름이 아니라 범주 팔레트의 슬롯 번호입니다 — 값이 바뀌어도 이름이 안 틀립니다.'],
     ['appearance', `'subtle' | 'solid' | 'outline'`, `'subtle'`, '외형 — subtle은 면만(테두리 없음), solid는 채움, outline은 테두리만.'],
     ['size', `'default' | 'sm'`, `'default'`, '22px / 18px.'],
   ],
@@ -425,18 +425,18 @@ export const COMPONENTS = [
     <span class="badge success">완료</span>
     <span class="badge warning">보류</span>
     <span class="badge danger">실패</span>
-    <span class="badge violet">베타</span>
+    <span class="badge cat-3">베타</span>
   </div>`,
   vue: `<DsBadge>대기</DsBadge>
 <DsBadge variant="brand">실행중</DsBadge>
 <DsBadge variant="success" appearance="solid">완료</DsBadge>
 <DsBadge variant="danger" appearance="outline">실패</DsBadge>
-<DsBadge variant="violet" size="sm">베타</DsBadge>`,
+<DsBadge variant="cat-3" size="sm">베타</DsBadge>`,
   html: `<span class="badge">대기</span>
 <span class="badge brand">실행중</span>
 <span class="badge success solid">완료</span>
 <span class="badge danger outline">실패</span>
-<span class="badge violet sm">베타</span>`,
+<span class="badge cat-3 sm">베타</span>`,
   guidelines: [
     ['해야 할 것', '상태별 색(배경·글자·테두리)으로 구분하고, 라벨 텍스트를 항상 함께 씁니다.'],
     ['하지 말 것', '색만으로 상태를 구분하지 않습니다. 텍스트를 항상 함께 씁니다(색맹 대응).'],

@@ -83,26 +83,39 @@
   --success-on-inverse: #46a758;
   --error-on-inverse:  #e5484d;
 
-  /* ── Data Visualization ──────────────
-     차트 계열 색. 브랜드에서 시작해 색상환을 돌되 명도를 맞춰
-     인접 계열이 구분되게 했습니다. 상태색과 겹치지 않는 색만 씁니다. */
-  --cat-1: #1F7FF0;   /* 브랜드 블루 */
-  --cat-2: #16a3a3;   /* 틸 */
-  --cat-3: #8b5cf6;   /* 바이올렛 */
-  --cat-4: #e8963c;   /* 앰버 */
-  --cat-5: #d6539b;   /* 핑크 */
-  --cat-6: #4f9e4f;   /* 그린 */
-  /* 7 · 8은 2026-08-28에 늘렸습니다 — 콘솔(llmops-console-ux)의 그래프 DB 라벨이
-     열둘이라 여섯으로 모자랐습니다. 값은 **콘솔과 같습니다**(토큰 값이 리포마다 다르면
-     디자인 시스템이 아닙니다).
-     ⚠ 이 둘은 차트 **계열**이 아니라 '종류에 고정으로 붙는 색'으로 쓰려고 늘린 것입니다 —
-       차트는 여전히 1부터 순서대로, 일곱을 넘기지 마세요(Color 페이지 안내 그대로).
-     ⚠ 지금 --cat-7(청록)은 --cat-2(틸), --cat-8(보라)은 --cat-3(바이올렛)과 겹쳐 보입니다.
-       DS의 2 · 3이 콘솔(주황 · 초록)과 어긋나 있어서 생긴 일입니다 — 두 리포의 2 · 3을
-       맞추는 건 `.badge.teal`(--cat-2를 쓰는데 이름이 teal입니다) 개명이 따라와서
-       따로 잡아야 합니다. HANDOFF에 남겼습니다 */
-  --cat-7: #0b87a3;   /* 청록 */
-  --cat-8: #8250c4;   /* 보라 */
+  /* ── Data Visualization — 차트 계열 ──────────────
+     브랜드에서 시작해 색상환을 돌되 명도를 맞춰 인접 계열이 구분되게 했습니다.
+     상태색과 겹치지 않는 색만 씁니다.
+     ⚠ **순서대로 배정하는 색**입니다 — 1부터 채우고 필요한 만큼만. 그래서 이름이 번호입니다
+       (shadcn `--chart-1..5`, Atlassian `color.chart.categorical.1–8`과 같은 규칙).
+     ⚠ 2026-08-28에 `--cat-*`의 별칭이던 것을 **끊고 자기 값을 갖게** 했습니다.
+       한 팔레트로 차트와 라벨을 겸하던 것이 문제였습니다 — 조사한 시스템(shadcn · Atlassian ·
+       Carbon · Primer) 중 둘을 겸용하는 곳은 없습니다. 차트는 **순서**가 정보라 인접 색의
+       대비가 중요하고, 범주는 **종류에 고정**이라 값이 앱을 따라 바뀝니다. 요구가 반대입니다 */
+  --chart-1: #1F7FF0;   /* 브랜드 블루 */
+  --chart-2: #16a3a3;   /* 틸 */
+  --chart-3: #8b5cf6;   /* 바이올렛 */
+  --chart-4: #e8963c;   /* 앰버 */
+  --chart-5: #d6539b;   /* 핑크 */
+  --chart-6: #4f9e4f;   /* 그린 */
+
+  /* ── Category — 종류에 고정으로 붙는 색 ──────────────
+     순위나 개수가 바뀌어도 그 종류는 늘 같은 색입니다. 문서 종류 · 노드 라벨처럼
+     화면을 오가며 대조하는 값이 대상입니다.
+     ⚠ **값의 원본은 콘솔(llmops-console-ux)의 `src/shared/index.css`입니다.** 여기는
+       따라옵니다 — 토큰 값이 리포마다 다르면 디자인 시스템이 아닙니다.
+     ⚠ 그래서 이 색들은 **언제든 바뀔 수 있습니다.** 색 이름(`teal` · `violet`)으로 부르지
+       마세요 — 값이 바뀌는 순간 이름이 거짓말이 됩니다(2026-08-28에 실제로 그랬습니다).
+       Atlassian이 같은 이유로 accent를 "한 색을 다른 색으로 바꿔도 경험이 그대로여야 한다"고
+       못박습니다. 부를 때는 **슬롯 번호**로 부릅니다 */
+  --cat-1: #1f7ff0;
+  --cat-2: #eb6834;
+  --cat-3: #1baf7a;
+  --cat-4: #eda100;
+  --cat-5: #e87ba4;
+  --cat-6: #008300;
+  --cat-7: #0b87a3;
+  --cat-8: #8250c4;
 
   /* ── Shape ── */
   --r-in: 4px; --r-el: 6px; --r-ct: 10px; --r-full: 9999px;
@@ -191,12 +204,8 @@
   --danger: var(--error);
   --sel-bg: var(--selected-fill);
   --sel-fg: var(--selected-foreground);
-  --chart-1: var(--cat-1);
-  --chart-2: var(--cat-2);
-  --chart-3: var(--cat-3);
-  --chart-4: var(--cat-4);
-  --chart-5: var(--cat-5);
-  --chart-6: var(--cat-6);
+  /* ⚠ `--chart-*`는 2026-08-28부터 `--cat-*`의 별칭이 아닙니다 — 위에서 자기 값을 갖습니다.
+     차트는 순서대로 배정하는 색, 범주는 종류에 고정하는 색이라 요구가 반대입니다 */
   --r-sm: var(--r-in);
   --r-md: var(--r-el);
   --r-xl: var(--r-ct);
@@ -230,12 +239,20 @@
   --error-on-inverse:  #d93036;
 
   /* 차트 — 다크 배경에서 채도가 죽지 않게 한 톤 밝게 */
-  --cat-1: #4593F5;
-  --cat-2: #2ec4c4;
-  --cat-3: #a78bfa;
-  --cat-4: #f0a94e;
-  --cat-5: #ec6cb0;
-  --cat-6: #63b563;
+  --chart-1: #4593F5;
+  --chart-2: #2ec4c4;
+  --chart-3: #a78bfa;
+  --chart-4: #f0a94e;
+  --chart-5: #ec6cb0;
+  --chart-6: #63b563;
+
+  /* 범주 — 콘솔의 다크 값 그대로 */
+  --cat-1: #3987e5;
+  --cat-2: #d95926;
+  --cat-3: #199e70;
+  --cat-4: #c98500;
+  --cat-5: #d55181;
+  --cat-6: #008300;
   --cat-7: #2ea3bd;
   --cat-8: #9a72d6;
 
@@ -261,12 +278,8 @@
   --surface: var(--card);
   --danger-on-inverse: var(--error-on-inverse);
   --danger: var(--error);
-  --chart-1: var(--cat-1);
-  --chart-2: var(--cat-2);
-  --chart-3: var(--cat-3);
-  --chart-4: var(--cat-4);
-  --chart-5: var(--cat-5);
-  --chart-6: var(--cat-6);
+  /* ⚠ `--chart-*`는 2026-08-28부터 `--cat-*`의 별칭이 아닙니다 — 위에서 자기 값을 갖습니다.
+     차트는 순서대로 배정하는 색, 범주는 종류에 고정하는 색이라 요구가 반대입니다 */
 }
 
 * { box-sizing: border-box; margin: 0; }
@@ -401,9 +414,9 @@ body {
 .badge.warning { background: var(--warning-subtle); color: var(--warning); }
 .badge.danger  { background: var(--error-subtle);  color: var(--error); }
 .badge.info    { background: var(--info-subtle);    color: var(--primary-text); }
-.badge.violet  { background: color-mix(in srgb, var(--cat-3) 10%, var(--background)); color: var(--cat-3); }
-.badge.teal    { background: color-mix(in srgb, var(--cat-2) 12%, var(--background)); color: var(--cat-2); }
-.badge.pink    { background: color-mix(in srgb, var(--cat-5) 10%, var(--background)); color: var(--cat-5); }
+.badge.cat-2  { background: color-mix(in srgb, var(--cat-2) 12%, var(--background)); color: var(--cat-2); }
+.badge.cat-3  { background: color-mix(in srgb, var(--cat-3) 10%, var(--background)); color: var(--cat-3); }
+.badge.cat-5  { background: color-mix(in srgb, var(--cat-5) 10%, var(--background)); color: var(--cat-5); }
 
 /* 외형 — solid (채움) */
 .badge.solid            { background: var(--foreground);  color: var(--background); }
@@ -412,9 +425,9 @@ body {
 .badge.solid.warning    { background: var(--warning);  color: var(--background); }
 .badge.solid.danger     { background: var(--error);   color: var(--background); }
 .badge.solid.info       { background: var(--primary);     color: var(--primary-foreground); }
-.badge.solid.violet     { background: var(--cat-3);  color: var(--background); }
-.badge.solid.teal       { background: var(--cat-2);  color: var(--background); }
-.badge.solid.pink       { background: var(--cat-5);  color: var(--background); }
+.badge.solid.cat-2      { background: var(--cat-2);  color: var(--background); }
+.badge.solid.cat-3      { background: var(--cat-3);  color: var(--background); }
+.badge.solid.cat-5      { background: var(--cat-5);  color: var(--background); }
 
 /* 외형 — outline (테두리만) */
 .badge.outline          { background: transparent; border-color: var(--input); color: var(--muted-foreground); }
@@ -423,9 +436,9 @@ body {
 .badge.outline.warning  { border-color: var(--warning-border); color: var(--warning); }
 .badge.outline.danger   { border-color: var(--error-border);  color: var(--error); }
 .badge.outline.info     { border-color: var(--info-border);    color: var(--primary); }
-.badge.outline.violet   { border-color: color-mix(in srgb, var(--cat-3) 32%, transparent); color: var(--cat-3); }
-.badge.outline.teal     { border-color: color-mix(in srgb, var(--cat-2) 34%, transparent); color: var(--cat-2); }
-.badge.outline.pink     { border-color: color-mix(in srgb, var(--cat-5) 32%, transparent); color: var(--cat-5); }
+.badge.outline.cat-2    { border-color: color-mix(in srgb, var(--cat-2) 34%, transparent); color: var(--cat-2); }
+.badge.outline.cat-3    { border-color: color-mix(in srgb, var(--cat-3) 32%, transparent); color: var(--cat-3); }
+.badge.outline.cat-5    { border-color: color-mix(in srgb, var(--cat-5) 32%, transparent); color: var(--cat-5); }
 
 /* 크기 */
 .badge.sm { height: 18px; padding: 0 6px; font-size: var(--text-2xs); border-radius: 3px; }   /* 작은 배지는 모서리도 한 단 작게 */
