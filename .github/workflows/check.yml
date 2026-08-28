@@ -10,7 +10,10 @@ jobs:
     name: 문서 데이터 무결성
     runs-on: ubuntu-latest
     steps:
+      # fetch-depth: 0 — 아래 'live/ 최신 여부'가 경로별 마지막 커밋 시각을 봅니다.
+      # 얕은 클론(기본값 1)이면 git log가 그 이력을 못 찾습니다.
       - uses: actions/checkout@v4
+        with: { fetch-depth: 0 }
       - uses: actions/setup-node@v4
         with: { node-version: '20' }
       # 컴포넌트 필수 항목, 배럴/문서/meta 동기화, 아이콘·토큰 일치,
@@ -28,8 +31,34 @@ jobs:
           node scripts-gen-llms.mjs
           if ! git diff --quiet; then
             echo "생성물이 오래됐습니다. 아래를 실행하고 커밋하세요:"
-            echo "  node scripts-gen-meta.mjs && node scripts-gen-llms.mjs"
+            echo "  npm run gen:meta && npm run gen:llms"
             git diff --stat
+            exit 1
+          fi
+
+      # 커밋된 live/가 낡았는지 — 부품보다 오래됐으면 실패시킵니다.
+      #
+      # 배포는 이제 live/를 매번 새로 만드니(deploy.yml) **공개 사이트는 안 낡습니다.**
+      # 그래도 이 검사를 두는 이유: 저장소의 live/는 로컬에서 `npm run docs`로 문서
+      # 사이트를 열어 볼 때 쓰는 것이라, 낡으면 "내 화면에선 옛 모양"이 됩니다.
+      # 2026-08-19~08-28에 실제로 그랬고, 조용해서 아무도 몰랐습니다.
+      #
+      # ⚠ 빌드 결과를 바이트로 견주지 않습니다 — 번들 이름이 내용 해시라, 소스의 줄 끝
+      #    하나만 달라도 리눅스 CI와 Windows 로컬이 다른 이름을 냅니다(가짜 실패).
+      #    대신 **경로별 마지막 커밋 시각**만 봅니다. 낡음을 정확히 잡고 흔들리지 않습니다.
+      - name: live/ 최신 여부
+        run: |
+          # vue/version.ts · vue/meta.ts는 생성물입니다 — 부품이 아니라 스탬프·문서에서
+          # 나오므로, 빼지 않으면 docs.css만 고쳐도 "live/를 다시 만들라"고 헛짚습니다.
+          SRC=$(git log -1 --format=%ct -- vue ds.css ds-vuetify.css ':!vue/version.ts' ':!vue/meta.ts')
+          LIVE=$(git log -1 --format=%ct -- live)
+          if [ -z "$LIVE" ] || [ "$LIVE" -lt "$SRC" ]; then
+            echo "live/(문서 사이트 플레이그라운드)가 부품보다 오래됐습니다."
+            echo "  부품 마지막 커밋: $(date -u -d @$SRC '+%Y-%m-%d %H:%M UTC')"
+            echo "  live/ 마지막 커밋: $(date -u -d @${LIVE:-0} '+%Y-%m-%d %H:%M UTC')"
+            echo ""
+            echo "아래를 실행하고 함께 커밋하세요 (live/ · index.html · version.json · vue/version.ts):"
+            echo "  npm run live"
             exit 1
           fi
 

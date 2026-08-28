@@ -496,6 +496,8 @@ body {
 /* 선택 — 링을 브랜드색으로 굵히고 안쪽을 점으로 채웁니다.
    점 크기는 비율이 아니라 "링 안쪽에서 1.5px 띄운 나머지 전부"입니다.
    비율(%)로 잡으면 작은 크기에서 점이 사라지듯 작아집니다. */
+/* stylelint-disable-next-line declaration-property-value-disallowed-list --
+     라디오 선택 링은 2px입니다. 1px이면 안쪽 점과 링이 붙어 한 덩어리로 보입니다 */
 .ds-radio__mark.is-on { border-width: 2px; border-color: var(--primary); }
 .ds-radio__mark.is-on::after {
   content: ''; width: var(--rb-dot); height: var(--rb-dot);
@@ -545,7 +547,10 @@ body {
    보이는 규격은 같게 맞춥니다: 16px · 선 2px · 브랜드색.
    1.5px 같은 소수는 배율 1배 화면에서 변마다 다르게 반올림돼 링이 일그러집니다. */
 .spinner {
-  width: 16px; height: 16px; border: 2px solid var(--gray-6);
+  width: 16px; height: 16px;
+  /* stylelint-disable-next-line declaration-property-value-disallowed-list --
+     스피너 선은 2px입니다. 1px은 16px 원에서 돌 때 끊겨 보입니다 (바로 위 주석 참고) */
+  border: 2px solid var(--gray-6);
   border-top-color: var(--primary); border-radius: 50%;
   animation: spin .8s linear infinite; flex-shrink: 0;
 }
@@ -684,7 +689,11 @@ td.mono { font-family: var(--mono); font-size: var(--text-xs); color: var(--mute
   36%, 100% { transform: translateY(0); opacity: .4; } }
 .thinking .t-label { font-weight: var(--weight-medium);
   background: linear-gradient(90deg, var(--gray-10) 20%, var(--primary-text) 50%, var(--gray-10) 80%);
-  background-size: 200% 100%; background-clip: text; -webkit-background-clip: text;
+  background-size: 200% 100%; background-clip: text;
+  /* stylelint-disable-next-line property-no-vendor-prefix --
+     Safari는 아직 접두사 없는 background-clip: text를 글자에 못 먹입니다.
+     빼면 사파리에서 글자가 통째로 사라집니다(-webkit-text-fill-color: transparent 때문) */
+  -webkit-background-clip: text;
   -webkit-text-fill-color: transparent; color: transparent;
   animation: shimmer 3s linear infinite, thinkfade .45s ease-out; }
 @keyframes thinkfade { from { opacity: 0; transform: translateY(3px); } to { opacity: 1; transform: translateY(0); } }
@@ -880,6 +889,8 @@ td.mono { font-family: var(--mono); font-size: var(--text-xs); color: var(--mute
 .ds-toc { display: flex; flex-direction: column; }
 .ds-toc a {
   display: block; padding: 5px 0 5px 14px;
+  /* stylelint-disable-next-line declaration-property-value-disallowed-list --
+     목차 왼쪽 레일은 2px입니다. 1px이면 지금 보는 항목의 브랜드색 표시가 안 읽힙니다 */
   border-left: 2px solid var(--gray-a3);
   font-size: var(--text-sm); line-height: var(--leading-ui);
   /* gray-11 — 보조 글자의 표준값. gray-10은 흰 배경에서 3.78:1로 AA에 못 미칩니다 */

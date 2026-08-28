@@ -12,16 +12,23 @@ git clone https://github.com/Cogniterm/design-system.git
 cd design-system
 
 # 1) 문서 사이트 — 빌드 과정 없음
-python3 -m http.server 4173
+npm run docs
 # → http://localhost:4173
 
-# 2) 라이브 갤러리 (실제 Vuetify 위)
+# 2) 라이브 갤러리 (실제 Vuetify 위) — 고치면서 볼 때
 cd examples/vuetify-app
 npm install
-cp -r ../../vue src/design
-cp ../../ds.css ../../ds-vuetify.css src/design/
+cp -r ../../vue src/design && cp ../../ds.css ../../ds-vuetify.css src/design/
 npm run dev
+
+# 3) 문서 사이트에 넣을 갤러리를 다시 만들 때 (저장소 루트에서)
+npm run live
 ```
+
+> 문서 사이트 Overview의 데모는 `live/`(갤러리 빌드본)를 iframe으로 띄웁니다.
+> 부품을 고쳤으면 `npm run live`를 돌리고 결과를 함께 커밋하세요 —
+> 안 하면 CI의 `live/ 최신 여부`가 실패합니다.
+> (공개 사이트는 배포가 매번 다시 만들므로 안 낡습니다.)
 
 ---
 
@@ -57,15 +64,16 @@ npm run dev
 - [ ] 포커스 링을 지우지 않음 (`outline: none` 금지)
 - [ ] 아이콘만 있는 버튼에 `aria-label`
 - [ ] `data.js`에 문서 항목 추가 — `reason`(왜 만들었나)과 `WHERE`(어디에 쓰나)를 **비워두지 않음**
-- [ ] `node scripts-gen-meta.mjs` 실행 (meta.ts 재생성)
+- [ ] `npm run gen:meta` 실행 (meta.ts 재생성)
 - [ ] 라이브 갤러리에 추가해 실제 Vuetify 위에서 확인
+- [ ] `npm run live` 실행 후 결과를 함께 커밋 — 문서 사이트 데모가 이 빌드본입니다
 
 ### 문서를 직접 적지 않습니다
 
 `vue/meta.ts`는 `data.js`에서 **자동 생성**됩니다. 직접 고치지 마세요.
 
 ```bash
-node scripts-gen-meta.mjs
+npm run gen:meta
 ```
 
 ---

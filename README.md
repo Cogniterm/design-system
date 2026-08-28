@@ -97,12 +97,13 @@ vue/
   components/         Ds*.vue
 templates/            페이지 템플릿 (HTML)
 examples/vuetify-app/ 실제 Vuetify 앱 예제 (소스)
-live/                 위 예제의 빌드 결과 — 공개 사이트에서 바로 열림
+live/                 위 예제의 빌드 결과 — 문서 사이트 데모가 이걸 띄웁니다 (`npm run live`)
 llms.txt              AI용 색인
 {components,patterns,foundation,vuetify,a11y}/llms.txt   섹션별 컨텍스트 (자동 생성)
 scripts-gen-llms.mjs  llms.txt 생성기
 scripts-gen-meta.mjs  meta.ts 생성기
 scripts-check.mjs     문서 무결성 검사 (CI)
+scripts-build-live.mjs  live/ 재빌드 — 복사·빌드·교체·스탬프 한 번에
 ```
 
 ## Foundation

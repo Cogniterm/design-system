@@ -37,6 +37,24 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: '20' }
+      # 플레이그라운드(live/)를 올리기 직전에 새로 만듭니다.
+      #
+      # 왜: 문서 사이트 Overview의 데모는 정적 HTML이 아니라 live/를 iframe으로 띄웁니다.
+      # 전에는 저장소에 커밋된 live/를 그대로 올렸는데, 사람이 손으로 재빌드해야 해서
+      # 2026-08-19~08-28 아흐레 동안 아무도 안 돌렸고 그 사이 모든 변경이 문서
+      # 사이트에서만 안 보였습니다. 이제 배포가 매번 다시 만듭니다 —
+      # **공개 사이트는 커밋된 live/가 낡아 있어도 최신입니다.**
+      #
+      # 스탬프도 이 안에서 다시 찍힙니다(scripts-build-live.mjs 5단계).
+      # live/index.html이 해시 대상이라, 안 찍으면 방문자 브라우저가 옛 번들을 계속 씁니다.
+      - name: 라이브 갤러리 빌드
+        run: npm run live
+      # ⚠ upload-pages-artifact는 path 아래를 통째로 담습니다(.gitignore를 보지 않습니다).
+      #   방금 만든 node_modules와 dist를 안 걷어내면 아티팩트가 수백 MB로 붑니다.
+      - name: 업로드 전 정리
+        run: rm -rf examples/vuetify-app/node_modules examples/vuetify-app/dist
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
         with: { path: '.' }

@@ -276,20 +276,26 @@ Vuetify는 CSS 변수를 못 받으므로 `vue/theme.ts`에 같은 값이 한 �
 ### 수동 (기억해야 하는 것)
 
 1. **자동 생성물은 직접 고치지 않습니다** — `vue/meta.ts`, 모든 `llms.txt`,
-   `components/*.txt`. 고쳤으면 `node scripts-gen-meta.mjs && node scripts-gen-llms.mjs`.
+   `components/*.txt`. 고쳤으면 `npm run gen:meta && npm run gen:llms`.
    안 돌리고 커밋하면 CI가 "생성물이 낡았다"며 실패시킵니다.
    문서 사이트의 CSS·JS를 고쳤다면 `node scripts-stamp.mjs`도 함께 돌립니다
    (안 돌리면 방문자 브라우저가 옛 파일을 계속 씁니다).
 2. **토큰을 바꾸면 네 곳** — `ds.css` · `vue/theme.ts` · Foundation 문서 · `llms.txt`
-3. **`live/` 재빌드** — 컴포넌트 `.vue`를 고치면 갤러리를 다시 빌드해 넣어야 합니다.
-   이건 아직 자동이 아닙니다.
+3. **`live/` 재빌드** — 컴포넌트 `.vue`나 CSS를 고쳤으면 갤러리를 다시 만듭니다.
+
    ```bash
-   cd examples/vuetify-app
-   rm -rf src/design && cp -r ../../vue src/design
-   cp ../../ds.css ../../ds-vuetify.css src/design/
-   npm install && npx vite build --base=./
-   rm -rf ../../live && cp -r dist ../../live
+   npm run live
    ```
+
+   복사 · 설치 · 빌드 · `live/` 교체 · 스탬프까지 한 번에 합니다
+   (`scripts-build-live.mjs`). Windows에서도 됩니다.
+   **바뀐 파일을 함께 커밋하세요** — `live/` · `index.html` · `version.json` · `vue/version.ts`.
+
+   > **공개 사이트는 안 잊어도 됩니다.** 배포(`deploy.yml`)가 올리기 직전에 같은 스크립트를
+   > 돌리므로, 커밋된 `live/`가 낡아 있어도 공개 사이트는 최신입니다.
+   > 이 단계가 여전히 필요한 것은 **로컬에서 `npm run docs`로 열어 볼 때** 쓰는 사본이기
+   > 때문이고, 안 돌리고 커밋하면 CI의 `live/ 최신 여부`가 실패시킵니다
+   > (2026-08-19~08-28에 아흐레 동안 조용히 낡아 있던 사고를 막으려는 것입니다).
 
 ---
 
@@ -329,7 +335,8 @@ function toggle(dark: boolean) {
 - **시각적 회귀 테스트 없음** — 레이아웃이 미묘하게 깨지는 건 아직 눈으로 봐야 합니다.
   코드·타입·대비·링크·렌더 예외는 CI가 보지만, "보기에 이상한지"는 못 봅니다.
   Playwright 스크린샷 diff가 다음 과제입니다.
-- **`live/` 자동 빌드 없음** — CI가 갤러리를 대신 빌드하게 만들 수 있습니다 (반나절).
+- ~~**`live/` 자동 빌드 없음**~~ — 2026-08-28 해결. 배포가 매번 갤러리를 다시 만들고
+  (`deploy.yml` → `npm run live`), 커밋된 사본이 낡으면 CI가 실패시킵니다.
 - **기존 컴포넌트와의 대응표 없음** — 앱의 기존 컴포넌트 → `Ds*` 매핑을 만들면
   전환이 빨라집니다. 요청하면 앱 코드를 스캔해 만들 수 있습니다.
 - **npm 패키지화 안 함** — 의도적입니다. 쓰는 앱이 2~3개로 늘면 그때가 적기입니다.
