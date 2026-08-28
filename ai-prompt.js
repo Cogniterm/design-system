@@ -16,7 +16,7 @@ export function componentPrompt(c, { WHERE, VERSUS, A11Y, SITE }) {
   const needs = c.origin === 'wrapped'
     ? 'Vuetify 필요 · ds.css + ds-vuetify.css'
     : c.importFrom
-      ? 'Vuetify 불필요 · ds.css만 · lucide-vue-next 필요'
+      ? 'Vuetify 불필요 · ds.css만 · @lucide/vue 필요'
       : 'Vuetify 불필요 · ds.css만'
 
   const props = (c.props || []).map((p) =>

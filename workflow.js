@@ -13,7 +13,7 @@
 export const DEPS = [
   ['vue', '^3.5.13', '화면을 만드는 프레임워크', '필수'],
   ['vuetify', '3.11.6', '컴포넌트 66종 중 31종의 바탕. 버전을 고정합니다', '필수'],
-  ['lucide-vue-next', '^1.0.0', '아이콘. Vuetify 내부 아이콘도 이걸로 갈아끼웁니다', '필수'],
+  ['@lucide/vue', '^1.34.0', '아이콘. Vuetify 내부 아이콘도 이걸로 갈아끼웁니다', '필수'],
   ['pretendard', '^1.3.9', '본문 글꼴. 한글·영문·숫자가 한 벌로 어울립니다', '필수'],
   ['vite', '^6.0.7', '개발 서버와 빌드', '개발용'],
   ['@vitejs/plugin-vue', '^5.2.1', 'Vite가 .vue 파일을 읽게 합니다', '개발용'],
@@ -40,7 +40,7 @@ export const SETUP_PROMPT = `# Cogniterm Design System — 개발 환경 세팅
     cd my-app
 
 ## 2. 의존성 설치
-    npm i vue vuetify@3.11.6 lucide-vue-next pretendard
+    npm i vue vuetify@3.11.6 @lucide/vue pretendard
     npm i -D vite @vitejs/plugin-vue vite-plugin-vuetify typescript vue-tsc
 
 vuetify는 3.11.6으로 고정한다. 마이너 버전이 올라가면 내부 클래스 이름이
@@ -234,7 +234,7 @@ cd my-app</code></pre>
 
       <h3>3-3. 설치 — 무엇을 왜 넣나</h3>
       <p>제품에 함께 실려 나가는 것들입니다.</p>
-      <pre><code>npm i vue vuetify@3.11.6 lucide-vue-next pretendard</code></pre>
+      <pre><code>npm i vue vuetify@3.11.6 @lucide/vue pretendard</code></pre>
       <table>
         <thead><tr><th>패키지</th><th>버전</th><th>왜 필요한가</th></tr></thead>
         <tbody>${dep('필수')}</tbody>
@@ -462,7 +462,7 @@ export const QUICK_INSTALL = `# 1. 프로젝트 만들기
 npm create vite@latest my-app -- --template vue-ts && cd my-app
 
 # 2. 한 번에 설치 (제품에 실리는 것 + 개발 도구)
-npm i vue vuetify@3.11.6 lucide-vue-next pretendard
+npm i vue vuetify@3.11.6 @lucide/vue pretendard
 npm i -D vite @vitejs/plugin-vue vite-plugin-vuetify typescript vue-tsc
 
 # 3. 디자인 시스템 복사 (<DS> = 디자인 시스템 저장소 경로)

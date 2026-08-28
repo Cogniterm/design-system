@@ -1,6 +1,6 @@
 # DsIcon — Cogniterm Design System
 
-import { DsIcon } from '~/design/icon'   // Vuetify 불필요 · ds.css만 · lucide-vue-next 필요
+import { DsIcon } from '~/design/icon'   // Vuetify 불필요 · ds.css만 · @lucide/vue 필요
 
 ## 용도
 아이콘이 필요한 모든 곳. 의미 이름으로 부르고, 없으면 vue/icons.ts에 등록합니다.

@@ -44,7 +44,7 @@ Vuetify 컴포넌트 96종 전부가 `theme.ts` + `defaults.ts`로 우리 스타
 cp -r vue/ <소스루트>/design/
 cp ds.css ds-vuetify.css <소스루트>/design/
 
-npm install pretendard lucide-vue-next   # 새로 설치할 것은 둘뿐 (Vuetify는 이미 있다고 봅니다)
+npm install pretendard @lucide/vue   # 새로 설치할 것은 둘뿐 (Vuetify는 이미 있다고 봅니다)
 ```
 
 ```ts

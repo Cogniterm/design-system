@@ -775,7 +775,7 @@ export function fdIconography() {
     <p class="page-lead">Lucide 하나, 크기 3개, stroke 2.</p>
     <div class="prose">
       <p>
-        <b>적용 완료</b> — <code>lucide-vue-next</code>를 등록하고
+        <b>적용 완료</b> — <code>@lucide/vue</code>를 등록하고
         <code>DsIcon</code> 컴포넌트와 아이콘 레지스트리(<code>vue/icons.ts</code>)를 만들었습니다.
         라이브 갤러리의 <b>Iconography</b> 섹션에서 등록된 아이콘 전체를 볼 수 있습니다.
       </p>
@@ -812,7 +812,7 @@ export function fdIconography() {
       <table>
         <thead><tr><th>항목</th><th>값</th></tr></thead>
         <tbody>
-          <tr><td>패키지</td><td><code>lucide-vue-next</code> — 이 시스템의 <b>유일한 외부 의존성</b></td></tr>
+          <tr><td>패키지</td><td><code>@lucide/vue</code> — 이 시스템의 <b>유일한 외부 의존성</b></td></tr>
           <tr><td>라이선스</td><td>ISC (상업적 사용 가능)</td></tr>
           <tr><td>개수</td><td>1,600+ — 드라이브·검색까지 충분</td></tr>
           <tr><td>선 굵기</td><td>2px 고정</td></tr>

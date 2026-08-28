@@ -737,12 +737,12 @@ export default defineConfig({
       </p>
 
       <h2>2. 폰트 · 아이콘 설치</h2>
-      <pre><code>npm install pretendard lucide-vue-next</code></pre>
+      <pre><code>npm install pretendard @lucide/vue</code></pre>
       <table>
         <thead><tr><th>패키지</th><th>용도</th><th>라이선스</th></tr></thead>
         <tbody>
           <tr><td><code>pretendard</code></td><td>본문 글꼴</td><td>SIL OFL 1.1</td></tr>
-          <tr><td><code>lucide-vue-next</code></td><td>아이콘</td><td>ISC</td></tr>
+          <tr><td><code>@lucide/vue</code></td><td>아이콘</td><td>ISC</td></tr>
         </tbody>
       </table>
 

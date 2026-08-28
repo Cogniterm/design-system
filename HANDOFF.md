@@ -27,17 +27,20 @@
 ### 2-1. 의존성 두 개
 
 ```bash
-npm install pretendard lucide-vue-next
+npm install pretendard @lucide/vue
 ```
 
 | 패키지 | 용도 | 라이선스 |
 |---|---|---|
 | `pretendard` | 본문 글꼴 | SIL OFL 1.1 |
-| `lucide-vue-next` | 아이콘 | ISC |
+| `@lucide/vue` | 아이콘 | ISC |
 
-> 설치할 때 `lucide-vue-next@1.0.0: Package deprecated` 경고가 뜹니다 — **정상입니다.**
-> 1.0.0이 이 이름으로 나온 마지막 버전이고, 후속인 `@lucide/vue`로 옮기려면
-> `vue/icons.ts`와 `vue/vuetify-icons.ts`의 import를 함께 바꿔야 해서 아직 그대로 씁니다.
+> ⚠ **2026-08-28 정정.** 여기에는 오래 `lucide-vue-next`라고 적혀 있었는데,
+> `vue/icons.ts` · `vue/vuetify-icons.ts` · `DsDialog.vue`는 이미 `@lucide/vue`를
+> import하고 있었습니다. 문서만 옛 이름으로 남아 있었던 것이고, 그대로 따라 설치하면
+> `Failed to resolve import "@lucide/vue"`로 **빌드가 안 됩니다.**
+> 실제로 `examples/vuetify-app`이 그 상태였고, 그래서 `live/`(문서 사이트 플레이그라운드)가
+> 열흘 가까이 재빌드되지 못했습니다. 지금은 소스·문서·예제 셋이 `@lucide/vue`로 맞습니다.
 
 ### 2-2. 파일 복사
 

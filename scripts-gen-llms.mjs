@@ -184,7 +184,7 @@ createVuetify({ theme: dsTheme, defaults: dsDefaults, icons: lucideIconSet })
 // since the default is the uninstalled @mdi webfont. String icons resolve via
 // the semantic registry: <v-icon icon="agent" />.
 \`\`\`
-Load \`ds.css\` and \`ds-vuetify.css\`. Install \`pretendard\` and \`lucide-vue-next\`.
+Load \`ds.css\` and \`ds-vuetify.css\`. Install \`pretendard\` and \`@lucide/vue\`.
 Omitting the Pretendard CSS silently falls back to the system font with no error.
 
 ## Why some components need Vuetify and others don't
