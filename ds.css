@@ -6,11 +6,15 @@
    이용자 인터페이스(front-ux)가 이 파일을 복사해 쓰는데, 거기서 매번 이름을
    바꿔 심느라 동기화 때마다 수정분이 날아갔습니다. 이제 이름이 같습니다.
 
-   ⚠ **값은 이 저장소 것이 원본입니다.** 콘솔의 상태색 일부는 흰 배경에서
-     WCAG AA(4.5:1)에 미달합니다 — success 3.45:1, warning 2.50:1, 링크로 쓰는
-     primary 3.92:1. 이 저장소는 아래 17번 대비 게이트를 통과해야 하므로 값은
-     통과하는 쪽을 유지합니다. 앱은 자기 토큰 파일에서 덮어씁니다.
-     콘솔 쪽 값을 고칠 수 있게 되면 그때 맞춥니다.
+   ⚠ **값도 콘솔 기준입니다** (2026-09-08). 전에는 이 저장소가 자기 값을 고집했습니다 —
+     콘솔의 success가 흰 배경과 3.45:1, warning이 2.50:1이라 대비 게이트를 통과 못 해서였습니다.
+     이제 **면 색과 글자 색을 나눠서** 둘 다 만족시킵니다:
+       · --success / --warning / --error       면 색. 콘솔 원색 그대로. 점 · 막대 · 옅은 면 · 테두리용
+                                                (비텍스트 기준 3:1이라 원색으로 충분합니다)
+       · --success-text / --warning-text / --error-text   글자용. 콘솔이 쓰던 어두운 값 (4.5:1 이상)
+     콘솔이 이미 쓰던 방식이고, --primary / --primary-text 를 나눈 것과 같은 요령입니다.
+     ⚠ **흰 글자를 얹는 채움에는 면 색을 쓰지 마세요** — 어두운 쪽(-text)을 씁니다.
+       .badge.solid.* 와 Vuetify 테마(theme.ts)가 그 경우입니다.
    ============================================ */
 :root {
   /* ── Brand ──────────────────────────
@@ -57,9 +61,20 @@
   /* ── Status ──────────────────────────
      각 상태는 3단: solid(글자·점) · subtle(면) · border(테두리).
      면·테두리는 solid에서 파생하므로 다크에서도 자동으로 유효합니다. */
-  --success: #17803d;
-  --warning: #ab6400;
-  --error:  #d93036;
+  --success: #2f9e44;
+  --warning: #e69100;
+  --error:  #d6362a;
+  /* 글자용 상태색 — 지금은 위 값과 같지만 **따로 두는 데 이유가 있습니다** (2026-09-08).
+     위 셋은 앱이 자기 브랜드에 맞춰 덮어쓰는 **면 색**입니다(배지 바탕 · 점 · 테두리).
+     면은 비텍스트 기준(3:1)이라 원색을 그대로 써도 되지만, 글자는 4.5:1이 필요합니다.
+     둘을 한 토큰으로 두면 앱이 면을 바꾸는 순간 글자까지 따라가 대비가 무너집니다 —
+     실제로 그랬습니다: front-ux가 `--success`를 콘솔 값(#2f9e44)으로 덮자 `.badge.success` ·
+     `.check` · `.card .delta`가 전부 3.45:1이 됐고, 경고는 2.50:1까지 내려갔습니다.
+     **이 저장소의 대비 게이트는 자기 값만 검사하므로 그걸 못 잡습니다.**
+     `--primary` / `--primary-text` 를 나눈 것과 같은 이유이고, 관리자 콘솔이 이미 쓰던 방식입니다. */
+  --success-text: #17803d;
+  --warning-text: #9a6700;
+  --error-text:  #c92a2a;
   --info:    var(--primary);
   --favorite: #e8a800;      /* 즐겨찾기 별 — 골드 (비텍스트 UI, 3:1) */
 
@@ -80,8 +95,8 @@
   /* 뒤집힌 면(--gray-12) 위에 얹는 상태색 — 토스트·툴팁처럼 배경이 반전된 곳.
      현재 테마의 상태색을 그대로 쓰면 어두운 면에 어두운 초록이 얹혀 안 보입니다.
      그래서 "반대 테마의 값"을 씁니다. */
-  --success-on-inverse: #46a758;
-  --error-on-inverse:  #e5484d;
+  --success-on-inverse: #51cf66;
+  --error-on-inverse:  #ff6b6b;
 
   /* ── Data Visualization — 차트 계열 ──────────────
      브랜드에서 시작해 색상환을 돌되 명도를 맞춰 인접 계열이 구분되게 했습니다.
@@ -233,10 +248,13 @@
   --accent-muted: #10243E;
   --primary-foreground: #ffffff;
 
-  --success: #46a758; --warning: #f0b429; --error: #e5484d; --favorite: #f5c518;
+  --success: #51cf66; --warning: #ffd43b; --error: #ff6b6b; --favorite: #f5c518;
+  /* 글자용 — 다크에서는 면 색이 이미 밝아 글자로도 충분합니다 (배경 #111113과 10:1 이상).
+     경고가 --warning과 같은 값인 것도 같은 까닭입니다. 라이트에서만 따로 골라야 합니다. */
+  --success-text: #51cf66; --warning-text: #ffd43b; --error-text: #ff8787;
   /* 다크에서는 뒤집힌 면이 밝으므로 어두운 상태색을 씁니다 */
-  --success-on-inverse: #17803d;
-  --error-on-inverse:  #d93036;
+  --success-on-inverse: #2f9e44;
+  --error-on-inverse:  #d6362a;
 
   /* 차트 — 다크 배경에서 채도가 죽지 않게 한 톤 밝게 */
   --chart-1: #4593F5;
@@ -352,7 +370,7 @@ body {
 .btn-secondary:hover { background: var(--gray-2); border-color: var(--border-emphasized); }
 .btn-ghost { color: var(--muted-foreground); }
 .btn-ghost:hover { background: var(--muted); color: var(--foreground); }
-.btn-danger { background: var(--card); border: 1px solid var(--input); color: var(--error); }
+.btn-danger { background: var(--card); border: 1px solid var(--input); color: var(--error-text); }
 .btn-danger:hover { background: var(--error-subtle); border-color: var(--error-border); }
 .btn[disabled] { background: var(--gray-4); color: var(--gray-10); cursor: not-allowed; border: none; }
 /* 크기 세 단계 — 32(기본) · 36 · 40.
@@ -391,7 +409,7 @@ body {
 /* 에러 상태의 포커스 링은 브랜드가 아니라 위험색 — 상태가 링 색으로도 읽혀야 합니다 */
 .input.error:focus { border-color: var(--error); box-shadow: 0 0 0 3.5px var(--error-ring); }
 .hint { font-size: var(--text-xs); color: var(--muted-foreground); }
-.hint.error { color: var(--error); }
+.hint.error { color: var(--error-text); }
 
 /* ── ds-badge ──────────────────────────────
    외형(appearance) × 톤(variant)의 두 축입니다 (Geist·Astryx 방식).
@@ -410,9 +428,9 @@ body {
 }
 /* 톤 — subtle (기본) */
 .badge.brand   { background: var(--accent-muted);   color: var(--primary-text); }
-.badge.success { background: var(--success-subtle); color: var(--success); }
-.badge.warning { background: var(--warning-subtle); color: var(--warning); }
-.badge.danger  { background: var(--error-subtle);  color: var(--error); }
+.badge.success { background: var(--success-subtle); color: var(--success-text); }
+.badge.warning { background: var(--warning-subtle); color: var(--warning-text); }
+.badge.danger  { background: var(--error-subtle);  color: var(--error-text); }
 .badge.info    { background: var(--info-subtle);    color: var(--primary-text); }
 .badge.cat-2  { background: color-mix(in srgb, var(--cat-2) 12%, var(--background)); color: var(--cat-2); }
 .badge.cat-3  { background: color-mix(in srgb, var(--cat-3) 10%, var(--background)); color: var(--cat-3); }
@@ -421,9 +439,11 @@ body {
 /* 외형 — solid (채움) */
 .badge.solid            { background: var(--foreground);  color: var(--background); }
 .badge.solid.brand      { background: var(--primary);    color: var(--primary-foreground); }
-.badge.solid.success    { background: var(--success);  color: var(--background); }
-.badge.solid.warning    { background: var(--warning);  color: var(--background); }
-.badge.solid.danger     { background: var(--error);   color: var(--background); }
+/* ⚠ 채움에는 --success 가 아니라 --success-text(어두운 쪽)를 씁니다. 글자가 얹히기 때문입니다 —
+   면 색은 콘솔 원색이라 흰 글자와 3.45:1(경고는 2.50:1)로 AA에 한참 못 미칩니다. (2026-09-08) */
+.badge.solid.success    { background: var(--success-text);  color: var(--background); }
+.badge.solid.warning    { background: var(--warning-text);  color: var(--background); }
+.badge.solid.danger     { background: var(--error-text);   color: var(--background); }
 .badge.solid.info       { background: var(--primary);     color: var(--primary-foreground); }
 .badge.solid.cat-2      { background: var(--cat-2);  color: var(--background); }
 .badge.solid.cat-3      { background: var(--cat-3);  color: var(--background); }
@@ -432,9 +452,9 @@ body {
 /* 외형 — outline (테두리만) */
 .badge.outline          { background: transparent; border-color: var(--input); color: var(--muted-foreground); }
 .badge.outline.brand    { border-color: color-mix(in srgb, var(--primary-text) 32%, transparent);   color: var(--primary); }
-.badge.outline.success  { border-color: var(--success-border); color: var(--success); }
-.badge.outline.warning  { border-color: var(--warning-border); color: var(--warning); }
-.badge.outline.danger   { border-color: var(--error-border);  color: var(--error); }
+.badge.outline.success  { border-color: var(--success-border); color: var(--success-text); }
+.badge.outline.warning  { border-color: var(--warning-border); color: var(--warning-text); }
+.badge.outline.danger   { border-color: var(--error-border);  color: var(--error-text); }
 .badge.outline.info     { border-color: var(--info-border);    color: var(--primary); }
 .badge.outline.cat-2    { border-color: color-mix(in srgb, var(--cat-2) 34%, transparent); color: var(--cat-2); }
 .badge.outline.cat-3    { border-color: color-mix(in srgb, var(--cat-3) 32%, transparent); color: var(--cat-3); }
@@ -544,7 +564,7 @@ body {
 .card h3 { font-size: var(--text-base); font-weight: var(--weight-semibold); }
 .card p { color: var(--muted-foreground); font-size: var(--text-sm); margin-top: 4px; }
 .card .num { font-size: var(--text-2xl); font-weight: var(--weight-semibold); letter-spacing: -0.02em; margin-top: 12px; }
-.card .delta { font-size: var(--text-xs); color: var(--success); margin-left: 6px; font-weight: var(--weight-medium); }
+.card .delta { font-size: var(--text-xs); color: var(--success-text); margin-left: 6px; font-weight: var(--weight-medium); }
 
 /* ── ds-chat ──
    글로벌 표준(Claude·ChatGPT·Gemini): 아바타·이름표 없음.
@@ -589,7 +609,7 @@ body {
 .spinner--current { border-color: color-mix(in srgb, currentColor 30%, transparent);
   border-top-color: currentColor; }
 @keyframes spin { to { transform: rotate(360deg); } }
-.check { color: var(--success); font-family: var(--font); }
+.check { color: var(--success-text); font-family: var(--font); }
 .cite {
   display: inline-flex; align-items: center; height: 18px; padding: 0 6px;
   border-radius: var(--r-full); background: var(--accent-muted); color: var(--primary-text);

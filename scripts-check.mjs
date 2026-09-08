@@ -239,6 +239,12 @@ if (scaleOk) {
     // 대비는 통과하지만 같은 Primary 버튼이 테마에 따라 글자색이 뒤집혀,
     // 사용자에게는 다른 물건으로 읽힙니다. 일관성을 택했습니다.
     'dark 버튼 라벨 primary-foreground': '라이트와 같은 브랜드 원색·흰 라벨 유지 결정 (2026-08-06)',
+    // 콘솔의 경고 주황(#e69100)은 흰 배경과 2.50:1이라 **면 기준(3:1)에도 미달**합니다.
+    // 글자는 --warning-text(#9a6700 · 4.87:1)로 갈라 놨으니 읽는 데는 문제가 없고,
+    // 남은 것은 이 색을 면으로 쓰는 곳입니다 — 진행 막대 · 상태 점 · 세그먼트.
+    // 값을 #cf8000(3.12:1)까지 내리면 통과하지만 그건 **콘솔 화면의 색이 바뀌는 일**이라
+    // 여기서 정하지 않았습니다. 콘솔에서 결정되면 그 값을 받아 이 줄을 지웁니다. (2026-09-08)
+    'light 상태 면 warning': '콘솔 원색 유지 — 색 변경은 콘솔에서 결정 (2026-09-08)',
   }
   // [설명, 앞색, 뒷색, 최소비] — 본문 4.5, UI 3
   // 토큰 이름은 콘솔 기준으로 정렬했습니다 (2026-08-27). 앞색은 hex 를 직접 든
@@ -248,9 +254,19 @@ if (scaleOk) {
     ['보조 gray-11', '--gray-11', '--background', 4.5],
     ['링크 primary-text', '--primary-text', '--background', 4.5],
     ['버튼 라벨 primary-foreground', '--primary-foreground', '--primary', 4.5],
-    ['상태 success', '--success', '--background', 4.5],
-    ['상태 warning', '--warning', '--background', 4.5],
-    ['상태 error', '--error', '--background', 4.5],
+    // 상태색은 2026-09-08에 **면과 글자로 갈렸습니다.** 검사도 같이 갈립니다:
+    //   -text 는 글자라 4.5, 민짜(--success 등)는 점·막대·테두리라 비텍스트 기준 3.
+    // 갈라 놓고 -text 만 검사하면 면 색이 아무리 흐려져도 통과하므로, 둘 다 봅니다.
+    ['상태 글자 success-text', '--success-text', '--background', 4.5],
+    ['상태 글자 warning-text', '--warning-text', '--background', 4.5],
+    ['상태 글자 error-text', '--error-text', '--background', 4.5],
+    ['상태 면 success', '--success', '--background', 3],
+    ['상태 면 warning', '--warning', '--background', 3],
+    ['상태 면 error', '--error', '--background', 3],
+    // 채운 배지 — 흰 글자(--background)가 어두운 쪽 위에 얹힙니다
+    ['채운 배지 success', '--background', '--success-text', 4.5],
+    ['채운 배지 warning', '--background', '--warning-text', 4.5],
+    ['채운 배지 error', '--background', '--error-text', 4.5],
   ]
   const fails = []
   for (const theme of ['light', 'dark']) {
@@ -293,7 +309,8 @@ if (scaleOk) {
   }
   if (fails.length) errors.push(`대비 미달 (토큰) — ${fails.join(' · ')}`)
   if (usageFails.length) errors.push(`대비 미달 (실제 사용) — ${usageFails.slice(0, 6).join(' · ')}${usageFails.length > 6 ? ` 외 ${usageFails.length - 6}건` : ''}`)
-  if (!fails.length && !usageFails.length) ok('색 대비 WCAG 2.2 AA — 토큰 14조합 + 스타일시트 실사용 전수')
+  // 개수는 세서 씁니다 — 손으로 적어 두면 조합을 늘렸을 때 라벨만 옛말이 됩니다 (실제로 그랬습니다)
+  if (!fails.length && !usageFails.length) ok(`색 대비 WCAG 2.2 AA — 토큰 ${PAIRS.length * 2}조합 + 스타일시트 실사용 전수`)
 }
 
 /* ── 18. 아이콘 이름이 글자로 새는 폴백 ──

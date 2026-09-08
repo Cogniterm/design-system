@@ -27,10 +27,15 @@ export const dsLight = {
     'secondary-darken-1': '#1c2024',
 
     // ── 상태 ──
-    'error':             '#d93036',
+    // ⚠ ds.css의 `--error` 가 아니라 **`--error-text`(어두운 쪽)** 와 같은 값입니다.
+    //   Vuetify의 색은 언제나 "채운 면 + 그 위의 on- 글자" 쌍으로 쓰입니다(v-chip · v-alert ·
+    //   v-btn). 면 색(--error #d6362a · --success #2f9e44 · --warning #e69100)을 여기 넣으면
+    //   흰 글자가 각각 4.75 · 3.45 · 2.50:1 이 되어 뒤 둘이 AA에 한참 못 미칩니다.
+    //   면 색은 글자가 안 얹히는 곳(점 · 막대 · 옅은 배경)에만 씁니다. (2026-09-08)
+    'error':             '#c92a2a',   // --error-text
     'info':              '#1F7FF0',
-    'success':           '#17803d',
-    'warning':           '#ab6400',
+    'success':           '#17803d',   // --success-text
+    'warning':           '#9a6700',   // --warning-text
 
     // ── 텍스트 ──
     'on-background':     '#1c2024',   // --gray-12
@@ -77,15 +82,19 @@ export const dsDark = {
     'secondary':         '#b0b4ba',
     'secondary-darken-1': '#edeef0',
 
-    'error':             '#e5484d',
+    // 다크는 콘솔 값 그대로입니다 — 어두운 면 위에서는 밝은 채움이 맞고,
+    // 글자를 어둡게 얹으면 셋 다 6.7:1 이상이라 라이트처럼 따로 고를 필요가 없습니다.
+    'error':             '#ff6b6b',
     'info':              '#4593F5',
-    'success':           '#46a758',
-    'warning':           '#f0b429',
+    'success':           '#51cf66',
+    'warning':           '#ffd43b',
 
     'on-background':     '#edeef0',   // --gray-12 (dark)
     'on-surface':        '#edeef0',
     'on-primary':        '#0b1220',   // --on-brand (dark)
-    'on-error':          '#ffffff',
+    // 셋 다 어두운 글자입니다 — 전에는 on-error 만 흰색이었는데, 다크 error 가
+    // #ff6b6b(밝은 산호)로 바뀌면서 흰 글자면 2.78:1 이 됩니다. (2026-09-08)
+    'on-error':          '#0b1220',
     'on-success':        '#0b1220',
     'on-warning':        '#0b1220',
     'on-info':           '#0b1220',
