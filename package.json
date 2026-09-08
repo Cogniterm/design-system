@@ -13,7 +13,8 @@
     "check": "npm run check:data && npm run lint:css",
     "live": "node scripts-build-live.mjs",
     "live:check": "node scripts-build-live.mjs --check",
-    "docs": "npx --yes http-server -p 4173 -c-1 ."
+    "docs": "npx --yes http-server -p 4173 -c-1 .",
+    "sync:app": "node scripts-sync-app.mjs"
   },
   "devDependencies": {
     "stylelint": "^16.10.0",
