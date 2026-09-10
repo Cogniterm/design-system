@@ -369,10 +369,10 @@ body {
   transition: background .16s ease, border-color .16s ease, color .16s ease; font-family: var(--font);
 }
 .btn:hover { background: var(--overlay-hover); }
-.btn:focus-visible { outline: 2px solid var(--ring); outline-offset: 1px; }
+.btn:focus-visible { outline: 2px solid var(--primary); outline-offset: 1px; }   /* 콘솔은 --ring 이나 그 값이 --primary 입니다 */
 .btn-primary { background: var(--primary); border-color: var(--primary); color: var(--primary-foreground); }
 .btn-primary:hover { background: var(--primary); filter: brightness(.95); }
-.btn-danger { background: var(--error); border-color: var(--error); color: #fff; }
+.btn-danger { background: var(--error); border-color: var(--error); color: var(--primary-foreground); }
 .btn-danger:hover { background: var(--error); filter: brightness(.95); }
 .btn[disabled] { opacity: .45; cursor: default; }
 .btn[disabled]:hover { background: var(--card); filter: none; }
