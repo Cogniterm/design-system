@@ -35,6 +35,9 @@ defineOptions({ inheritAttrs: false })
    headers에 align을 안 줬어도 numeric이면 end로 채웁니다. */
 const cols = computed(() => props.headers.map((h) =>
   h.align == null && h.numeric ? { ...h, align: 'end' } : h))
+/* 지나보내기 래퍼 — 슬롯을 통째로 넘깁니다. 적어 두지 않으면 자기 템플릿의
+   `#[name]`이 다시 자기 슬롯 타입을 만들어 추론이 제자리를 돕니다(TS7022). */
+defineSlots<Record<string, (props: Record<string, unknown>) => unknown>>()
 </script>
 
 <template>
