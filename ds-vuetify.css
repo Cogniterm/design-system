@@ -14,13 +14,13 @@
 /* 헤더 — 배경 없이 아래 보더 한 줄 */
 .ds-vtable .v-table__wrapper > table > thead > tr > th {
   background: var(--card); color: var(--muted-foreground);
-  font-size: var(--text-xs); font-weight: var(--weight-medium); letter-spacing: 0;
-  border-bottom: 1px solid var(--input);
+  font-size: var(--text-sm); font-weight: var(--weight-medium); letter-spacing: 0;   /* 콘솔 .jt thead th 13px */
+  border-bottom: 1px solid var(--border);
   white-space: nowrap;
 }
 .ds-vtable .v-table__wrapper > table > tbody > tr > td {
-  font-size: var(--text-sm); color: var(--foreground);
-  border-bottom: 1px solid var(--border-subtle);
+  font-size: var(--text-base); color: var(--foreground);   /* 콘솔 .jt tbody td 14px */
+  border-bottom: 1px solid var(--border);
 }
 /* 마지막 행의 밑줄은 지웁니다 — 바깥 테두리와 겹쳐 두 줄로 보입니다 */
 .ds-vtable .v-table__wrapper > table > tbody > tr:last-child > td { border-bottom: 0; }
@@ -36,7 +36,7 @@
 
 /* 크기 — 다른 컨트롤과 같은 sm / default / lg */
 .ds-vtable[data-size="sm"] .v-table__wrapper > table > tbody > tr > td { height: 34px; }
-.ds-vtable[data-size="default"] .v-table__wrapper > table > tbody > tr > td { height: 42px; }
+.ds-vtable[data-size="default"] .v-table__wrapper > table > tbody > tr > td { height: 46px; }   /* 콘솔 .jt 46 */
 .ds-vtable[data-size="lg"] .v-table__wrapper > table > tbody > tr > td { height: 50px; }
 .ds-vtable[data-size="sm"] .v-table__wrapper > table > thead > tr > th { height: 34px; }
 
@@ -70,7 +70,7 @@
 .ds-dialog-head {
   display: flex; align-items: center; gap: 8px;
   padding: 18px 22px; font-size: var(--text-lg); font-weight: var(--weight-semibold); color: var(--foreground);
-  border-bottom: 1px solid var(--border-subtle);
+  border-bottom: 1px solid var(--border);   /* 콘솔 .dlg__head 와 같은 선 (2026-09-10) */
 }
 .ds-dialog-head__text { flex: 1 1 auto; min-width: 0; }
 /* 제목줄 우상단 닫기 X — closable 일 때만 (조회·안내 모달) */
@@ -82,9 +82,9 @@
 }
 .ds-dialog-close:hover { background: var(--overlay-hover); color: var(--foreground); }
 .ds-dialog-close:focus-visible { box-shadow: var(--focus-ring); }
-.ds-dialog-body { padding: 20px 22px; font-size: var(--text-base); color: var(--muted-foreground); line-height: var(--leading-prose); }
+.ds-dialog-body { padding: 20px 22px; font-size: var(--text-base); color: var(--foreground); line-height: var(--leading-prose); }
 .ds-dialog-foot {
-  padding: 14px 22px; border-top: 1px solid var(--border-subtle);
+  padding: 14px 22px; border-top: 1px solid var(--border);   /* 콘솔 .dlg__foot 과 같은 선 */
   display: flex; gap: 8px; justify-content: flex-end;
 }
 
@@ -230,8 +230,8 @@
 .v-data-table__th--sorted .v-icon { color: var(--foreground); }
 
 /* ── VBtn ── */
-.v-btn { letter-spacing: 0; text-transform: none; font-weight: var(--weight-medium); }
-.v-btn--variant-outlined { border-color: var(--input); }
+.v-btn { letter-spacing: 0; text-transform: none; font-weight: var(--weight-normal); }   /* 콘솔 .btn 400 */
+.v-btn--variant-outlined { border-color: var(--border); }
 .v-btn--variant-outlined:hover { border-color: var(--border-emphasized); background: var(--gray-2); }
 .v-btn--variant-text:hover { background: var(--muted); }
 
@@ -270,11 +270,11 @@
 
 /* ── VTabs ── */
 .v-tabs { border-bottom: 1px solid var(--border); }
-.v-tab { text-transform: none; letter-spacing: 0; font-size: var(--text-base); font-weight: var(--weight-medium);
+.v-tab { text-transform: none; letter-spacing: 0; font-size: var(--text-base); font-weight: var(--weight-normal);
   color: var(--muted-foreground); min-width: 0; padding: 0 12px; }
 .v-tab:hover { color: var(--foreground); }
 /* 활성 탭 — 브랜드 (2026-08-19). 밑줄과 글자에만 얹고 면은 깔지 않아 primary 버튼과 경쟁하지 않습니다 */
-.v-tab--selected { color: var(--nav-active-fg); }
+.v-tab--selected { color: var(--nav-active-fg); font-weight: var(--weight-semibold); }   /* 콘솔 .tabs button.on */
 .v-tabs .v-tab__slider { height: 2px; background: var(--nav-active); }
 
 /* ── VField (VTextField·VSelect 등 입력 공통) ── */
@@ -417,9 +417,9 @@
 .ds-icon-btn .ds-icon { margin: 0 !important; }
 
 /* ── DsIconButton ── */
-.ds-icon-btn.v-btn { width: 32px; height: 32px; min-width: 0; border-radius: var(--r-el); color: var(--gray-10); }
+.ds-icon-btn.v-btn { width: 30px; height: 30px; min-width: 0; border-radius: var(--r-el); color: var(--gray-10); }   /* 콘솔 .iconbtn 30 */
 .ds-icon-btn.v-btn:hover { background: var(--muted); color: var(--foreground); }
-.ds-icon-btn.is-secondary.v-btn { border: 1px solid var(--input); background: var(--card); }
+.ds-icon-btn.is-secondary.v-btn { border: 1px solid var(--border); background: var(--card); }
 .ds-icon-btn.is-secondary.v-btn:hover { border-color: var(--border-emphasized); }
 .ds-icon-btn.is-sm.v-btn { width: 28px; height: 28px; font-size: 12px; }
 /* brand — 채운 원형. 입력창의 '보내기'처럼 그 자리의 유일한 주 동작에만 씁니다.

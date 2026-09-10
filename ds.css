@@ -356,23 +356,28 @@ body {
 }
 
 /* ── ds-button ── */
+/* ⚠ 값은 **관리자 콘솔 ui.css 의 .btn 과 같아야 합니다** (2026-09-10 사용자 확정: 같은 기능의 버튼은
+     하나만 — 콘솔에 맞춘다). 그전엔 여기가 14px/500 · 테두리 없음이라 같은 플랫폼 안에서 버튼이
+     두 벌이었습니다. 고칠 일이 생기면 콘솔을 먼저 고치고 여기에 옮겨 적으세요.
+   ⚠ 위계는 **채움 하나**입니다 — 채운 것(primary)과 중립(테두리) 둘뿐. secondary · ghost 는 옛
+     이름이라 남겨 두되 모양은 중립과 같습니다. 옅은 면을 깐 세컨더리는 콘솔이 2026-09-08에 걷었습니다 */
 .btn {
   all: unset; box-sizing: border-box; cursor: pointer; display: inline-flex;
   align-items: center; gap: 6px; height: 32px; padding: 0 12px;
-  border-radius: var(--r-el); font-size: var(--text-base); font-weight: var(--weight-medium);
+  border-radius: var(--r-el); font-size: var(--text-sm); font-weight: var(--weight-normal);
+  border: 1px solid var(--border); background: var(--card); color: var(--foreground);
   transition: background .16s ease, border-color .16s ease, color .16s ease; font-family: var(--font);
 }
-.btn:focus-visible { outline: none; box-shadow: var(--focus-ring); }
-.btn-primary { background: var(--primary); color: var(--primary-foreground); }
-.btn-primary:hover { background: var(--primary-hover); }
-.btn-primary:active { background: var(--primary-active); }
-.btn-secondary { background: var(--card); border: 1px solid var(--input); color: var(--foreground); }
-.btn-secondary:hover { background: var(--gray-2); border-color: var(--border-emphasized); }
-.btn-ghost { color: var(--muted-foreground); }
-.btn-ghost:hover { background: var(--muted); color: var(--foreground); }
-.btn-danger { background: var(--card); border: 1px solid var(--input); color: var(--error-text); }
-.btn-danger:hover { background: var(--error-subtle); border-color: var(--error-border); }
-.btn[disabled] { background: var(--gray-4); color: var(--gray-10); cursor: not-allowed; border: none; }
+.btn:hover { background: var(--overlay-hover); }
+.btn:focus-visible { outline: 2px solid var(--ring); outline-offset: 1px; }
+.btn-primary { background: var(--primary); border-color: var(--primary); color: var(--primary-foreground); }
+.btn-primary:hover { background: var(--primary); filter: brightness(.95); }
+.btn-danger { background: var(--error); border-color: var(--error); color: #fff; }
+.btn-danger:hover { background: var(--error); filter: brightness(.95); }
+.btn[disabled] { opacity: .45; cursor: default; }
+.btn[disabled]:hover { background: var(--card); filter: none; }
+.btn-primary[disabled]:hover { background: var(--primary); }
+.btn-danger[disabled]:hover { background: var(--error); }
 /* 크기 세 단계 — 32(기본) · 36 · 40.
    기본이 가장 작은 32인 이유: 컨트롤은 대부분 툴바·필터 바·표 안에 줄지어
    놓입니다. 큰 것을 기본으로 두면 그 줄들이 전부 두꺼워지고, 화면마다
@@ -384,8 +389,9 @@ body {
    못 쓴다는 뜻이 아닙니다. */
 .btn.is-loading { cursor: default; }
 .btn.is-loading[disabled] { opacity: 1; }
-.btn-sm { height: 32px; padding: 0 12px; font-size: var(--text-sm); }
-.btn-md { height: 36px; padding: 0 14px; font-size: var(--text-sm); }
+/* 크기는 둘 — 기본 32 · sm 28 (콘솔 .btn.sm 과 같음). md 는 걷었습니다(콘솔에 없음).
+   lg 40 은 **로그인 갈래의 제출 버튼 전용**입니다 — 콘솔에는 그 화면이 없어 견줄 값이 없습니다 */
+.btn-sm { height: 28px; padding: 0 10px; font-size: var(--text-xs); }
 .btn-lg { height: 40px; padding: 0 16px; font-size: var(--text-base); }
 
 /* ── ds-input ── */
@@ -393,21 +399,20 @@ body {
    width를 300px로 고정하면 팝오버·좁은 칸에서 그릇보다 넓게 잡혀 레이아웃이 깨집니다. */
 .field { display: flex; flex-direction: column; gap: 6px; width: 100%; max-width: 300px; }
 .field label { font-size: var(--text-sm); font-weight: var(--weight-medium); }
+/* ⚠ 값은 관리자 콘솔 ui.css 의 .field 와 같아야 합니다 (2026-09-10) — 테두리 --border, 글자 13px,
+   안쪽 10px, 포커스는 브랜드 22% 링 3px */
 .input {
-  all: unset; box-sizing: border-box; height: 32px; padding: 0 12px;
-  border: 1px solid var(--input); border-radius: var(--r-el); font-size: var(--text-base);
+  all: unset; box-sizing: border-box; height: 32px; padding: 0 10px;
+  border: 1px solid var(--border); border-radius: var(--r-el); font-size: var(--text-sm);
   background: var(--card); color: var(--foreground);
   transition: border-color .16s ease, box-shadow .16s ease; font-family: var(--font);
 }
 .input::placeholder { color: var(--muted-foreground); }
 .input:hover { border-color: var(--border-emphasized); }
-.input:focus { border-color: var(--primary); box-shadow: 0 0 0 3.5px var(--accent-muted); }
-.input.sm { height: 32px; padding: 0 12px; font-size: var(--text-sm); }
-.input.md { height: 36px; padding: 0 13px; }
-.input.lg { height: 40px; padding: 0 14px; font-size: var(--text-base); }
+.input:focus { border-color: var(--primary); box-shadow: 0 0 0 3px color-mix(in srgb, var(--primary) 22%, transparent); }
 .input.error { border-color: var(--error); }
 /* 에러 상태의 포커스 링은 브랜드가 아니라 위험색 — 상태가 링 색으로도 읽혀야 합니다 */
-.input.error:focus { border-color: var(--error); box-shadow: 0 0 0 3.5px var(--error-ring); }
+.input.error:focus { border-color: var(--error); box-shadow: 0 0 0 3px color-mix(in srgb, var(--error) 22%, transparent); }
 .hint { font-size: var(--text-xs); color: var(--muted-foreground); }
 .hint.error { color: var(--error-text); }
 
@@ -422,16 +427,17 @@ body {
   /* 각진 사각 (2026-08-18 확정) — 상태 라벨은 표·목록에 여러 개가 줄지어 놓이는 자리라,
      둥근 알약보다 각진 사각이 열 간격에 맞아떨어지고 글자가 가운데로 몰려 보이지 않습니다.
      알약 모양이 필요한 건 조작 가능한 Chip 쪽입니다. */
-  border-radius: var(--r-in); font-size: var(--text-xs); font-weight: var(--weight-medium);
-  border: 1px solid transparent; white-space: nowrap;
+  border-radius: var(--r-in); font-size: var(--text-xs); font-weight: var(--weight-semibold);   /* 콘솔 .pill 600 */
+  box-sizing: border-box; border: 1px solid transparent; white-space: nowrap;
   background: var(--muted); color: var(--muted-foreground);
 }
 /* 톤 — subtle (기본) */
-.badge.brand   { background: var(--accent-muted);   color: var(--primary-text); }
-.badge.success { background: var(--success-subtle); color: var(--success-text); }
-.badge.warning { background: var(--warning-subtle); color: var(--warning-text); }
-.badge.danger  { background: var(--error-subtle);  color: var(--error-text); }
-.badge.info    { background: var(--info-subtle);    color: var(--primary-text); }
+/* 톤의 면 농도는 콘솔 .pill 과 같습니다 — 성공 12 · 주의 14 · 위험 10% (2026-09-10 정렬) */
+.badge.brand   { background: var(--accent-muted); color: var(--primary); }
+.badge.success { background: color-mix(in srgb, var(--success) 12%, transparent); color: var(--success-text); }
+.badge.warning { background: color-mix(in srgb, var(--warning) 14%, transparent); color: var(--warning-text); }
+.badge.danger  { background: color-mix(in srgb, var(--error) 10%, transparent); color: var(--error-text); }
+.badge.info    { background: var(--accent-muted); color: var(--primary); }
 .badge.cat-2  { background: color-mix(in srgb, var(--cat-2) 12%, var(--background)); color: var(--cat-2); }
 .badge.cat-3  { background: color-mix(in srgb, var(--cat-3) 10%, var(--background)); color: var(--cat-3); }
 .badge.cat-5  { background: color-mix(in srgb, var(--cat-5) 10%, var(--background)); color: var(--cat-5); }
