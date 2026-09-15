@@ -622,7 +622,17 @@ input[type="date"].input::-webkit-calendar-picker-indicator { opacity: .5; curso
 .card h3 { font-size: var(--text-base); font-weight: var(--weight-semibold); }
 .card p { color: var(--muted-foreground); font-size: var(--text-sm); margin-top: 4px; }
 .card .num { font-size: var(--text-2xl); font-weight: var(--weight-semibold); letter-spacing: -0.02em; margin-top: 12px; }
-.card .delta { font-size: var(--text-xs); color: var(--success-text); margin-left: 6px; font-weight: var(--weight-medium); }
+/* ⚠ 증감은 **방향이 아니라 뜻**으로 색을 냅니다 — 관리자 콘솔 ui.css 의 .delta 그대로
+   (2026-09-15 사용자 지시). 나쁜 지표가 늘면 빨강(--bad), 줄면 녹색(--good), 변화 없으면 회색(--flat).
+   ⛔ 늘 초록(color: --success-text)으로 되돌리지 마세요: "유출 시도 +12건"이 초록으로 읽혔습니다.
+   ⚠ **기본은 색을 정하지 않습니다**(물려받습니다) — 콘솔 .delta 가 그렇습니다. 바깥 .delta 는
+     숫자와 비교 기준("· 직전 30일 대비")을 함께 담는 껍데기라, 여기에 회색을 깔면 숫자까지
+     같이 눕습니다. 색은 쓰는 쪽이 --good/--bad/--flat 로 고르고, 기준 라벨은 콘솔 .delta-l 입니다 */
+.card .delta { display: block; font-size: var(--text-xs); margin-top: 4px;
+  font-variant-numeric: tabular-nums; }
+.card .delta--good { color: var(--success-text); }
+.card .delta--bad { color: var(--error-text); }
+.card .delta--flat { color: var(--muted-foreground); }
 
 /* ── ds-chat ──
    글로벌 표준(Claude·ChatGPT·Gemini): 아바타·이름표 없음.
@@ -687,19 +697,30 @@ input[type="date"].input::-webkit-calendar-picker-indicator { opacity: .5; curso
 .table-wrap { border: 1px solid var(--border); border-radius: var(--r-ct); overflow: hidden; background: var(--card); }
 .table-wrap table { width: 100%; border-collapse: collapse; }
 /* 헤더·행 모두 배경 없이 — 보더와 글자 색만으로 구분합니다 */
-.table-wrap th { text-align: left; font-size: var(--text-xs); font-weight: var(--weight-medium);
+/* ⚠ 규격은 **관리자 콘솔 ui.css 의 표 그대로**입니다 (2026-09-15 사용자 지시 "콘솔쪽이 보통 맞아"):
+     머리 40px · 13px/600 · 보조색, 줄 52px · 14px, 좌우 끝 칸 20px.
+     앞서 DS 가 쓰던 머리 12px/500 · 줄 40px 은 콘솔 85개 표와 한 줄에 12px 씩 어긋났습니다.
+   ⚠ 머리행 고정(sticky)은 넣지 않습니다 — 스크롤을 누가 맡는지가 앱마다 달라서, 콘솔은
+     .tablewrap 이 맡습니다. 여기 .table-wrap 은 테두리 · 라운드로 **감싸는** 틀입니다.
+   ⛔ .mono 를 monospace 12px 로 되돌리지 마세요 — 콘솔 .mono 는 글꼴이 아니라 **자릿수 맞춤**입니다 */
+.table-wrap th { text-align: left; font-size: var(--text-sm); font-weight: var(--weight-semibold);
   color: var(--muted-foreground);
-  padding: 8px 16px; border-bottom: 1px solid var(--input); }
-.table-wrap td { padding: 0 16px; height: 40px; font-size: var(--text-sm); border-bottom: 1px solid var(--border-subtle); }
+  padding: 0 12px; height: 40px; white-space: nowrap; border-bottom: 1px solid var(--border); }
+.table-wrap td { padding: 0 12px; height: 52px; font-size: var(--text-base); border-bottom: 1px solid var(--border); }
+.table-wrap th:first-child, .table-wrap td:first-child { padding-left: 20px; }
+.table-wrap th:last-child, .table-wrap td:last-child { padding-right: 20px; }
 .table-wrap tr:last-child td { border-bottom: none; }
-.table-wrap td.mono { font-family: var(--mono); font-size: var(--text-xs); color: var(--muted-foreground); }
+.table-wrap td.mono { font-variant-numeric: tabular-nums; font-feature-settings: 'tnum'; letter-spacing: .01em; }
 
 /* ── ds-empty ── */
 /* ⚠ 이름이 .ds-empty 입니다 (2026-09-15 개명) — 관리자 콘솔의 .empty(display:none → .show)와 겹쳐서. DsEmptyState.vue 도 같이 */
-.ds-empty { border: 1px dashed var(--input); border-radius: var(--r-ct);
-  padding: 52px 48px; text-align: center; }
-.ds-empty h3 { font-size: var(--text-base); font-weight: var(--weight-semibold); }
-.ds-empty p { font-size: var(--text-sm); color: var(--muted-foreground); margin: 4px 0 16px; }
+/* ⚠ **점선 테두리가 없습니다** — 관리자 콘솔 ui.css 의 .empty 그대로 (2026-09-15 사용자 지시).
+   빈 상태는 이미 표·패널 안에 놓이므로 점선 상자를 한 겹 더 두르면 선이 겹칩니다
+   (사용자 지시 "선은 한 겹만"). 여백 56/20 으로 비어 있음을 말합니다.
+   ⛔ border: dashed 로 되돌리지 마세요 */
+.ds-empty { padding: 56px 20px; text-align: center; }
+.ds-empty h3 { margin: 0; font-size: var(--text-base); font-weight: var(--weight-semibold); }
+.ds-empty p { margin: 6px 0 14px; font-size: var(--text-sm); color: var(--muted-foreground); }
 
 /* ── theme toggle ── */
 .theme-toggle {
@@ -716,15 +737,17 @@ input[type="date"].input::-webkit-calendar-picker-indicator { opacity: .5; curso
      글자는 **본문색 · 굵기 400**(보조색 600 이 아닙니다 — 이름 첫 자는 읽으라고 있는 것이지
      곁말이 아닙니다), 면은 --muted 에 --muted-foreground 를 4% 섞어 한 단 눕히고,
      테두리는 --muted-foreground 28% 입니다.
-   ⚠ **크기 눈금(24 · 32 · 44)은 DS 것입니다** — 콘솔에는 28 · 40 둘뿐이라 눈금이 없습니다.
-     28 이 필요한 자리(GNB 프로필)는 쓰는 쪽에서 그 한 자리만 못박습니다. */
-.ds-avatar { width: 32px; height: 32px; border-radius: var(--r-full); flex-shrink: 0;
+   ⚠ **크기는 콘솔 눈금입니다 — 기본 28 · lg 40** (2026-09-15 사용자 지시 "콘솔쪽이 보통 맞아").
+     앞서 DS 가 쓰던 32 · 44 는 콘솔 표 줄(52px)에서 아바타가 줄을 꽉 채워 답답했습니다.
+     .sm(24) 만 DS 쪽 여분입니다 — 콘솔에 짝이 없으니 콘솔 화면에서는 쓰지 마세요.
+   ⛔ 32 · 44 로 되돌리지 마세요 */
+.ds-avatar { width: 28px; height: 28px; border-radius: var(--r-full); flex-shrink: 0;
   display: inline-flex; align-items: center; justify-content: center;
-  font-size: var(--text-sm); font-weight: var(--weight-normal); color: var(--foreground);
+  font-size: var(--text-2xs); font-weight: var(--weight-normal); color: var(--foreground);
   background: color-mix(in srgb, var(--muted-foreground) 4%, var(--muted));
   border: 1px solid color-mix(in srgb, var(--muted-foreground) 28%, transparent); }
 .ds-avatar.sm { width: 24px; height: 24px; font-size: var(--text-2xs); }
-.ds-avatar.lg { width: 44px; height: 44px; font-size: var(--text-lg); }
+.ds-avatar.lg { width: 40px; height: 40px; font-size: var(--text-base); }
 .ds-avatar.brand { background: var(--accent-muted); color: var(--primary); border-color: transparent; }
 .avatar-group { display: inline-flex; }
 /* stylelint-disable-next-line declaration-property-value-disallowed-list --
@@ -734,9 +757,12 @@ input[type="date"].input::-webkit-calendar-picker-indicator { opacity: .5; curso
 .avatar-group .ds-avatar:first-child { margin-left: 0; }
 
 /* ── ds-chip (제거 가능한 선택 항목) ── */
-.chip { display: inline-flex; align-items: center; gap: 6px; height: 28px; padding: 0 7px 0 11px;
-  border-radius: var(--r-full); font-size: var(--text-xs); font-weight: var(--weight-medium);
-  border: 1px solid var(--border); color: var(--foreground); background: var(--card); }
+/* ⚠ 값은 **관리자 콘솔 ui.css 의 .chip 그대로**입니다 (2026-09-15 사용자 지시 "콘솔쪽이 보통 맞아").
+   앞서 DS 가 혼자 쓰던 28px · 면 --card · 500 은 콘솔 표 칸에서 칩이 한 단 굵고 커 보였습니다.
+   ⛔ 28 · --card · 500 으로 되돌리지 마세요. 면을 깐 칩이 필요하면 .chip.brand 를 쓰세요 */
+.chip { display: inline-flex; align-items: center; gap: 5px; height: 24px; padding: 0 6px 0 9px;
+  border-radius: var(--r-full); font-size: var(--text-xs); font-weight: var(--weight-normal);
+  border: 1px solid var(--border); color: var(--foreground); background: transparent; }
 .chip .x { all: unset; box-sizing: border-box; cursor: pointer; width: 16px; height: 16px;
   border-radius: 50%; display: flex; align-items: center; justify-content: center;
   font-size: var(--text-2xs); color: var(--muted-foreground); }
@@ -763,11 +789,15 @@ input[type="date"].input::-webkit-calendar-picker-indicator { opacity: .5; curso
    툴팁도 같은 규칙을 씁니다(반전 면).
    테두리는 두지 않습니다 — --shadow-overlay의 첫 겹(0 0 0 1px)이 이미 윤곽이라
    둘 다 쓰면 1px 선이 두 겹으로 겹칩니다. */
-.toast { display: inline-flex; align-items: center; gap: 10px; min-width: 280px;
-  border: 0; border-radius: var(--r-el);
+/* ⚠ **알약입니다** — 관리자 콘솔 ui.css 의 .toast 그대로 (2026-09-15 사용자 지시 "콘솔쪽이 보통 맞아").
+   앞서 DS 가 쓰던 각진 r-el · 13px · min-width 280 은 콘솔의 짧은 알림("저장했습니다")에서
+   글자보다 상자가 한참 넓어 빈 칸이 남았습니다. 자리(가운데 아래 고정)는 쓰는 쪽 몫입니다.
+   ⛔ 각진 모서리로 되돌리지 마세요 */
+.toast { display: inline-flex; align-items: center; gap: 12px;
+  border: 0; border-radius: var(--r-full);
   background: var(--foreground); color: var(--background);
-  padding: 12px 14px; font-size: var(--text-sm);
-  box-shadow: var(--shadow-overlay); }
+  padding: 10px 20px; font-size: var(--text-base); font-weight: var(--weight-medium);
+  box-shadow: var(--shadow-lg); }
 
 /* 앞머리는 점 대신 상태 아이콘 — 색+형태로 성공/실패가 동시에 읽힘 (Geist·Astryx 참고).
    반전 면 위라 상태색도 반전 값을 씁니다. */
