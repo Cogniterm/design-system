@@ -390,3 +390,34 @@ function toggle(dark: boolean) {
 
 문서 사이트의 컴포넌트 페이지마다 **"AI 프롬프트 복사"** 버튼이 있어,
 그 컴포넌트를 쓰는 데 필요한 전부를 한 번에 클립보드로 가져갑니다.
+
+## 8. 관리자 콘솔 ↔ DS 부품 대응표 (2026-09-15)
+
+관리자 콘솔은 Vuetify 없이 **CSS 클래스**로 부품을 씁니다. 2026-09-15 부터 콘솔도 `ds.css` 를 실어
+버튼 · 배지 · 입력칸 · 칩 · 키캡 · 토스트 · 스위치 · 아이콘 버튼 · 필터 줄은 **DS 한 벌**입니다.
+콘솔이 쓰던 옛 이름은 전부 DS 이름으로 바꿨습니다. 새 화면을 그릴 때 이 표의 이름만 쓰세요.
+
+| 부품 | CSS (두 앱 공통, ds.css) | Vue 부품 (Vuetify 앱) | 옛 콘솔 이름 (폐기) |
+|---|---|---|---|
+| 버튼 | `.btn` · `.btn-primary` · `.btn-danger` · `.btn-sm` | `DsButton variant/size` | `btn primary` · `btn danger` · `btn sm` |
+| 배지 | `.badge` + `success` `warning` `danger` `info` `outline` `solid` | `DsBadge` | `.pill--ok/err/warn/info/line/dim/caut/ink` |
+| 입력칸 | `.input` (textarea · select 도) | `DsInput`(래퍼 `.field` + `.input`) | `.field` · 이용자 `.hfield` |
+| 드롭다운 트리거 | `.selbtn` (`.is-on` `.is-open` `.val` `.x`) | `DsSelect` | — (콘솔 어댑터 `.selbtn.ds-sel` 은 ui.css) |
+| 검색칸 | `.searchwrap .input` | `DsSearchField` | — |
+| 필터 버튼 · 패널 | `.fbtn` `.fbadge` · `.filpanel .fp-*` | 앱 공용 `FilterPanel.vue` | — |
+| 건수 줄 | `.resultmeta` (`<b>N</b> / M건`) | — | 이용자 `N / 전체 M건` |
+| 아이콘 버튼 | `.iconbtn` (30px) | `DsIconButton` | — |
+| 스위치 | `.switch` (32×18, `aria-checked`) | `DsSwitch --sm` | — |
+| 칩 | `.chip` · `.chip .x` (28px) | `DsChip` | `.chip button` (24px) |
+| 범례 점 | 콘솔 `.swatch` (ui 아님 — 차트 범례) | — | `.chip` 로 잘못 부르던 것 |
+| 키캡 | `.kbd` | `DsKbd` | ui.css 사본 |
+| ⓘ 설명 | `.infoi` + `data-tip` | — | ui.css 사본 |
+| 토스트 | `.toast` (생김새) — 자리는 콘솔 ui.css | `DsToast` | 알약형(999px · 14px) |
+| 빈 상태 | DS `.ds-empty` / 콘솔 `.empty` + `.show` | `DsEmptyState` | **아직 두 벌** — 모양이 달라(점선 상자 vs 맨 글) 정해야 함 |
+| 요약 카드 | DS `.card h3/p/.num/.delta` / 콘솔 `.summary .card .l/.v/.delta--*` | `DsCard` | **아직 두 벌** — 구조가 달라 정해야 함 |
+| 표 | DS `.table-wrap` 40px 줄 · 12px 머리 / 콘솔 `.tablewrap` 52 · 13/600 | `DsDataTable` | **규격이 다름** — 콘솔이 정답 규칙(08-28)이면 DS 를 52 로 |
+| 아바타 | DS `.ds-avatar` 32 / 콘솔 `.avatar` 28 | `DsAvatar` | **크기가 다름** |
+
+⚠ DS 의 맨 요소 규칙(`th` `td` `body`)은 싣는 앱 전체에 걸립니다 — 표 규칙은 `.table-wrap` 아래로
+내렸고, `body { line-height: 1.62 }` 는 콘솔이 `normal` 로 되돌려 씁니다(GNB 밀도). 새 전역 규칙을
+더할 때는 반드시 클래스 아래에 두세요.
