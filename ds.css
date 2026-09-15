@@ -102,6 +102,11 @@
   --shadow-md: 0 2px 8px rgba(0,0,0,.10);
   --shadow-lg: 0 6px 20px -6px rgba(0,0,0,.18);
   --shadow-xl: 0 12px 40px -12px rgba(0,0,0,.35);
+  /* 오른쪽에서 밀려 나오는 서랍(슬라이드오버) — 그림자가 **왼쪽으로** 눕습니다.
+     위 sm~xl 은 전부 아래로 지는 그림자라 세로 패널에는 맞지 않습니다.
+     ⚠ 값은 관리자 콘솔 dlp.css 의 조건 편집 패널 것입니다 — 이용자 화면 두 곳(국회 답변서 · 프로젝트)이
+       -8px 0 24px rgba(0,0,0,.08) 로 따로 놀던 것을 2026-09-15 에 이 한 벌로 모았습니다 */
+  --shadow-drawer: -12px 0 28px -18px rgba(0,0,0,.35);
   --scrim: rgba(0,0,0,.4);   /* 모달 뒤 가림막 */
 
   --success-subtle: color-mix(in srgb, var(--success) 6%, var(--background));
@@ -281,6 +286,7 @@
   --shadow-md: 0 2px 8px rgba(0,0,0,.4);
   --shadow-lg: 0 6px 20px -6px rgba(0,0,0,.5);
   --shadow-xl: 0 12px 40px -12px rgba(0,0,0,.6);
+  --shadow-drawer: -12px 0 28px -18px rgba(0,0,0,.6);
   --scrim: rgba(0,0,0,.4);   /* 모달 뒤 가림막 */
   /* 글자용 — 다크에서는 면 색이 이미 밝아 글자로도 충분합니다 (배경 #111113과 10:1 이상).
      경고가 --warning과 같은 값인 것도 같은 까닭입니다. 라이트에서만 따로 골라야 합니다. */
