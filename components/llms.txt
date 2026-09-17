@@ -347,7 +347,7 @@ If two components look interchangeable, the "confused with" section of each
     <DsBadge variant="brand">실행중</DsBadge>
     <DsBadge variant="success" appearance="solid">완료</DsBadge>
     <DsBadge variant="danger" appearance="outline">실패</DsBadge>
-    <DsBadge variant="violet" size="sm">베타</DsBadge>
+    <DsBadge variant="cat-3" size="sm">베타</DsBadge>
 - **DsSkeleton** (스켈레톤) — 데이터 로딩 중 콘텐츠의 자리를 미리 보여줍니다.
   import: ~/design | origin: custom
   where: 목록·테이블의 로딩 상태. 에이전트 응답 대기에는 쓰지 않습니다.
@@ -459,7 +459,7 @@ If two components look interchangeable, the "confused with" section of each
   props: modelValue=false, title, width=480, persistent=false
   vs: Snackbar — 단순 알림이면 Dialog가 아니라 Snackbar / Menu — 선택지 나열이면 Menu
   usage:
-    <DsDialog v-model="open" title="에이전트 삭제" persistent>
+    <DsDialog v-model="open" title="에이전트 삭제">
       이 작업은 되돌릴 수 없습니다. 연결된 실행 기록 128건도 함께 삭제됩니다.
       <template #actions>
         <DsButton variant="secondary" size="sm" @click="open = false">Cancel</DsButton>

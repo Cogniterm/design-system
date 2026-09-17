@@ -129,11 +129,53 @@
   /* ── Status ──────────────────────────
      각 상태는 3단: solid(글자·점) · subtle(면) · border(테두리).
      면·테두리는 solid에서 파생하므로 다크에서도 자동으로 유효합니다. */
-  --success: #17803d;
-  --warning: #ab6400;
-  --error:  #d93036;
+  --success: #2f9e44;
+  --warning: #e69100;
+  --error:  #d6362a;
+  /* 글자용 상태색 — 지금은 위 값과 같지만 **따로 두는 데 이유가 있습니다** (2026-09-08).
+     위 셋은 앱이 자기 브랜드에 맞춰 덮어쓰는 **면 색**입니다(배지 바탕 · 점 · 테두리).
+     면은 비텍스트 기준(3:1)이라 원색을 그대로 써도 되지만, 글자는 4.5:1이 필요합니다.
+     둘을 한 토큰으로 두면 앱이 면을 바꾸는 순간 글자까지 따라가 대비가 무너집니다 —
+     실제로 그랬습니다: front-ux가 `--success`를 콘솔 값(#2f9e44)으로 덮자 `.badge.success` ·
+     `.check` · `.card .delta`가 전부 3.45:1이 됐고, 경고는 2.50:1까지 내려갔습니다.
+     **이 저장소의 대비 게이트는 자기 값만 검사하므로 그걸 못 잡습니다.**
+     `--primary` / `--primary-text` 를 나눈 것과 같은 이유이고, 관리자 콘솔이 이미 쓰던 방식입니다. */
+  --success-text: #17803d;
+  --warning-text: #9a6700;
+  --error-text:  #c92a2a;
   --info:    var(--primary);
   --favorite: #e8a800;      /* 즐겨찾기 별 — 골드 (비텍스트 UI, 3:1) */
+  /* ── 파일 유형 — 확장자 아이콘 · 배지 색 (2026-09-15 신설) ──────────────────
+     세 곳(콘솔 문서 탐색 · 이용자 AI 드라이브 · 파일피커)이 같은 팔레트를 저마다 적고,
+     답변서 · 프로젝트 · 국회질의 분류는 **다른 팔레트**(React 포트 잔재: pdf #E5484D …)를 쓰고
+     있었습니다 — 같은 PDF 가 화면마다 다른 빨강. 값은 콘솔 것입니다(콘솔이 정답, 2026-08-28 규칙).
+     확장자 → 토큰 매핑은 앱의 공용/파일유형.ts 한 벌입니다.
+     ⚠ 다크 값은 라이트와 같습니다 — 정한 사람이 없어 지금 화면과 같게 둡니다(React 원본의
+       light-dark() 짝은 포트 때 버려졌습니다). 다크에서 탁하면 그때 .dark 에 값을 주세요 */
+  --ft-pdf: #d6452e; --ft-doc: #3b78d8; --ft-sheet: #2f9e44; --ft-slide: #e8730c;
+  --ft-hwp: #0e8ba8; --ft-image: #8250c4; --ft-archive: #b98900; --ft-csv: #12a594;
+  --ft-text: var(--muted-foreground);
+  /* 인용 하이라이트 — 출처 창 · 인용 서랍의 <mark>. 라이트/다크 짝은 chat.css 가 갖고 있던 값 그대로 */
+  --highlight-bg: #ffe28a;
+  /* 개인정보 분류 — 비식별화의 직접식별 · 준식별 · 민감. 범주 팔레트에 얹습니다(색맹 검증 · 다크 값 공유).
+     앞서 비식별화.css 가 #e8590c · #0c8599 · #7048e8 로 따로 들고 있었습니다 — 각각 cat-2 · 7 · 8 과 한 계열 */
+  --pii-direct: var(--cat-2); --pii-quasi: var(--cat-7); --pii-sensitive: var(--cat-8);
+  /* 가장 위험 — 개인 · 그룹 기준 동시 초과(통합 프로파일링). --error 보다 어둡고 진한 진홍 */
+  --error-deep: #8e1023;
+  /* 그림자 4단 (2026-09-15 신설) — 55곳이 저마다 rgba 를 적고 있었습니다.
+       sm 컨트롤 살짝 · md 카드 hover · 작은 팝 · lg 메뉴 · 팝오버 · 토스트 · xl 다이얼로그 · 패널
+     ⚠ 그림자는 다크에서도 **검정**입니다 — --gray-a 처럼 흰색으로 뒤집으면 빛이 납니다.
+       다크는 면이 어두워 같은 알파로는 안 보여서 --shadow-overlay 와 같은 요령으로 진하게 */
+  --shadow-sm: 0 1px 2px rgba(0,0,0,.06);
+  --shadow-md: 0 2px 8px rgba(0,0,0,.10);
+  --shadow-lg: 0 6px 20px -6px rgba(0,0,0,.18);
+  --shadow-xl: 0 12px 40px -12px rgba(0,0,0,.35);
+  /* 오른쪽에서 밀려 나오는 서랍(슬라이드오버) — 그림자가 **왼쪽으로** 눕습니다.
+     위 sm~xl 은 전부 아래로 지는 그림자라 세로 패널에는 맞지 않습니다.
+     ⚠ 값은 관리자 콘솔 dlp.css 의 조건 편집 패널 것입니다 — 이용자 화면 두 곳(국회 답변서 · 프로젝트)이
+       -8px 0 24px rgba(0,0,0,.08) 로 따로 놀던 것을 2026-09-15 에 이 한 벌로 모았습니다 */
+  --shadow-drawer: -12px 0 28px -18px rgba(0,0,0,.35);
+  --scrim: rgba(0,0,0,.4);   /* 모달 뒤 가림막 */
 
   --success-subtle: color-mix(in srgb, var(--success) 6%, var(--background));
   --success-border: color-mix(in srgb, var(--success) 28%, transparent);
@@ -152,18 +194,42 @@
   /* 뒤집힌 면(--gray-12) 위에 얹는 상태색 — 토스트·툴팁처럼 배경이 반전된 곳.
      현재 테마의 상태색을 그대로 쓰면 어두운 면에 어두운 초록이 얹혀 안 보입니다.
      그래서 "반대 테마의 값"을 씁니다. */
-  --success-on-inverse: #46a758;
-  --error-on-inverse:  #e5484d;
+  --success-on-inverse: #51cf66;
+  --error-on-inverse:  #ff6b6b;
 
-  /* ── Data Visualization ──────────────
-     차트 계열 색. 브랜드에서 시작해 색상환을 돌되 명도를 맞춰
-     인접 계열이 구분되게 했습니다. 상태색과 겹치지 않는 색만 씁니다. */
-  --cat-1: #1F7FF0;   /* 브랜드 블루 */
-  --cat-2: #16a3a3;   /* 틸 */
-  --cat-3: #8b5cf6;   /* 바이올렛 */
-  --cat-4: #e8963c;   /* 앰버 */
-  --cat-5: #d6539b;   /* 핑크 */
-  --cat-6: #4f9e4f;   /* 그린 */
+  /* ── Data Visualization — 차트 계열 ──────────────
+     브랜드에서 시작해 색상환을 돌되 명도를 맞춰 인접 계열이 구분되게 했습니다.
+     상태색과 겹치지 않는 색만 씁니다.
+     ⚠ **순서대로 배정하는 색**입니다 — 1부터 채우고 필요한 만큼만. 그래서 이름이 번호입니다
+       (shadcn `--chart-1..5`, Atlassian `color.chart.categorical.1–8`과 같은 규칙).
+     ⚠ 2026-08-28에 `--cat-*`의 별칭이던 것을 **끊고 자기 값을 갖게** 했습니다.
+       한 팔레트로 차트와 라벨을 겸하던 것이 문제였습니다 — 조사한 시스템(shadcn · Atlassian ·
+       Carbon · Primer) 중 둘을 겸용하는 곳은 없습니다. 차트는 **순서**가 정보라 인접 색의
+       대비가 중요하고, 범주는 **종류에 고정**이라 값이 앱을 따라 바뀝니다. 요구가 반대입니다 */
+  --chart-1: #1F7FF0;   /* 브랜드 블루 */
+  --chart-2: #16a3a3;   /* 틸 */
+  --chart-3: #8b5cf6;   /* 바이올렛 */
+  --chart-4: #e8963c;   /* 앰버 */
+  --chart-5: #d6539b;   /* 핑크 */
+  --chart-6: #4f9e4f;   /* 그린 */
+
+  /* ── Category — 종류에 고정으로 붙는 색 ──────────────
+     순위나 개수가 바뀌어도 그 종류는 늘 같은 색입니다. 문서 종류 · 노드 라벨처럼
+     화면을 오가며 대조하는 값이 대상입니다.
+     ⚠ **값의 원본은 콘솔(llmops-console-ux)의 `src/shared/index.css`입니다.** 여기는
+       따라옵니다 — 토큰 값이 리포마다 다르면 디자인 시스템이 아닙니다.
+     ⚠ 그래서 이 색들은 **언제든 바뀔 수 있습니다.** 색 이름(`teal` · `violet`)으로 부르지
+       마세요 — 값이 바뀌는 순간 이름이 거짓말이 됩니다(2026-08-28에 실제로 그랬습니다).
+       Atlassian이 같은 이유로 accent를 "한 색을 다른 색으로 바꿔도 경험이 그대로여야 한다"고
+       못박습니다. 부를 때는 **슬롯 번호**로 부릅니다 */
+  --cat-1: #1f7ff0;
+  --cat-2: #eb6834;
+  --cat-3: #1baf7a;
+  --cat-4: #eda100;
+  --cat-5: #e87ba4;
+  --cat-6: #008300;
+  --cat-7: #0b87a3;
+  --cat-8: #8250c4;
 
   /* ── Shape ── */
   --r-in: 4px; --r-el: 6px; --r-ct: 10px; --r-full: 9999px;
@@ -252,12 +318,8 @@
   --danger: var(--error);
   --sel-bg: var(--selected-fill);
   --sel-fg: var(--selected-foreground);
-  --chart-1: var(--cat-1);
-  --chart-2: var(--cat-2);
-  --chart-3: var(--cat-3);
-  --chart-4: var(--cat-4);
-  --chart-5: var(--cat-5);
-  --chart-6: var(--cat-6);
+  /* ⚠ `--chart-*`는 2026-08-28부터 `--cat-*`의 별칭이 아닙니다 — 위에서 자기 값을 갖습니다.
+     차트는 순서대로 배정하는 색, 범주는 종류에 고정하는 색이라 요구가 반대입니다 */
   --r-sm: var(--r-in);
   --r-md: var(--r-el);
   --r-xl: var(--r-ct);
@@ -285,18 +347,39 @@
   --accent-muted: #10243E;
   --primary-foreground: #ffffff;
 
-  --success: #46a758; --warning: #f0b429; --error: #e5484d; --favorite: #f5c518;
+  --success: #51cf66; --warning: #ffd43b; --error: #ff6b6b; --favorite: #f5c518;
+  --highlight-bg: #7a601f;
+  --error-deep: #ff4d4d;
+  --shadow-sm: 0 1px 2px rgba(0,0,0,.3);
+  --shadow-md: 0 2px 8px rgba(0,0,0,.4);
+  --shadow-lg: 0 6px 20px -6px rgba(0,0,0,.5);
+  --shadow-xl: 0 12px 40px -12px rgba(0,0,0,.6);
+  --shadow-drawer: -12px 0 28px -18px rgba(0,0,0,.6);
+  --scrim: rgba(0,0,0,.4);   /* 모달 뒤 가림막 */
+  /* 글자용 — 다크에서는 면 색이 이미 밝아 글자로도 충분합니다 (배경 #111113과 10:1 이상).
+     경고가 --warning과 같은 값인 것도 같은 까닭입니다. 라이트에서만 따로 골라야 합니다. */
+  --success-text: #51cf66; --warning-text: #ffd43b; --error-text: #ff8787;
   /* 다크에서는 뒤집힌 면이 밝으므로 어두운 상태색을 씁니다 */
-  --success-on-inverse: #17803d;
-  --error-on-inverse:  #d93036;
+  --success-on-inverse: #2f9e44;
+  --error-on-inverse:  #d6362a;
 
   /* 차트 — 다크 배경에서 채도가 죽지 않게 한 톤 밝게 */
-  --cat-1: #4593F5;
-  --cat-2: #2ec4c4;
-  --cat-3: #a78bfa;
-  --cat-4: #f0a94e;
-  --cat-5: #ec6cb0;
-  --cat-6: #63b563;
+  --chart-1: #4593F5;
+  --chart-2: #2ec4c4;
+  --chart-3: #a78bfa;
+  --chart-4: #f0a94e;
+  --chart-5: #ec6cb0;
+  --chart-6: #63b563;
+
+  /* 범주 — 콘솔의 다크 값 그대로 */
+  --cat-1: #3987e5;
+  --cat-2: #d95926;
+  --cat-3: #199e70;
+  --cat-4: #c98500;
+  --cat-5: #d55181;
+  --cat-6: #008300;
+  --cat-7: #2ea3bd;
+  --cat-8: #9a72d6;
 
   --background: #111113;
   --card: #18191b;
@@ -320,12 +403,8 @@
   --surface: var(--card);
   --danger-on-inverse: var(--error-on-inverse);
   --danger: var(--error);
-  --chart-1: var(--cat-1);
-  --chart-2: var(--cat-2);
-  --chart-3: var(--cat-3);
-  --chart-4: var(--cat-4);
-  --chart-5: var(--cat-5);
-  --chart-6: var(--cat-6);
+  /* ⚠ `--chart-*`는 2026-08-28부터 `--cat-*`의 별칭이 아닙니다 — 위에서 자기 값을 갖습니다.
+     차트는 순서대로 배정하는 색, 범주는 종류에 고정하는 색이라 요구가 반대입니다 */
 }
 ```
 

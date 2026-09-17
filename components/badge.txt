@@ -6,7 +6,7 @@ import { DsBadge } from '~/design'   // Vuetify 불필요 · ds.css만
 테이블 상태 열, 목록 항목의 상태 표시. 읽기 전용.
 
 ## Props
-- variant: 'default' | 'brand' | 'success' | 'warning' | 'danger' | 'info' | 'violet' | 'teal' | 'pink' = 'default' — 톤 — 앞의 여섯은 의미색, 뒤의 셋은 분류용(베타·신규 같은 라벨).
+- variant: 'default' | 'brand' | 'success' | 'warning' | 'danger' | 'info' | 'cat-2' | 'cat-3' | 'cat-5' = 'default' — 톤 — 앞의 여섯은 의미색, 뒤의 셋은 분류용(베타·신규 같은 라벨). 분류용은 색 이름이 아니라 범주 팔레트의 슬롯 번호입니다 — 값이 바뀌어도 이름이 안 틀립니다.
 - appearance: 'subtle' | 'solid' | 'outline' = 'subtle' — 외형 — subtle은 면만(테두리 없음), solid는 채움, outline은 테두리만.
 - size: 'default' | 'sm' = 'default' — 22px / 18px.
 
@@ -19,7 +19,7 @@ import { DsBadge } from '~/design'   // Vuetify 불필요 · ds.css만
 <DsBadge variant="brand">실행중</DsBadge>
 <DsBadge variant="success" appearance="solid">완료</DsBadge>
 <DsBadge variant="danger" appearance="outline">실패</DsBadge>
-<DsBadge variant="violet" size="sm">베타</DsBadge>
+<DsBadge variant="cat-3" size="sm">베타</DsBadge>
 ```
 
 ## 구분

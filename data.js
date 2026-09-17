@@ -528,7 +528,7 @@ export const COMPONENTS = [
     ['modelValue', 'boolean', 'false', 'v-model로 열림 상태 제어.'],
     ['title', 'string', '—', '제목.'],
     ['width', 'number | string', '480', '너비.'],
-    ['persistent', 'boolean', 'false', '바깥 클릭으로 닫히지 않게 합니다. 위험한 작업에만.'],
+    ['persistent', 'boolean', 'false', '바깥 클릭·Esc로 닫히지 않게 합니다. **되돌릴 수 없는 진행 중 작업에만**(올리는 중·실행 중). 확인 창에는 쓰지 마세요 — 닫히는 결과가 [취소]와 같습니다.'],
   ],
   slots: [['default', '본문.'], ['actions', '하단 버튼 영역.']],
   demo: `<div class="ds-dialog-panel" style="max-width:420px">
@@ -540,7 +540,7 @@ export const COMPONENTS = [
     </div>
   </div>
   <div class="hint" style="margin-top:10px">↑ 실제로는 이 패널이 화면 중앙에 떠서 배경을 어둡게 덮습니다.</div>`,
-  vue: `<DsDialog v-model="open" title="에이전트 삭제" persistent>
+  vue: `<DsDialog v-model="open" title="에이전트 삭제">
   이 작업은 되돌릴 수 없습니다. 연결된 실행 기록 128건도 함께 삭제됩니다.
   <template #actions>
     <DsButton variant="secondary" size="sm" @click="open = false">Cancel</DsButton>
@@ -550,7 +550,9 @@ export const COMPONENTS = [
   html: null,
   guidelines: [
     ['해야 할 것', '되돌릴 수 없는 작업은 결과를 구체적으로 씁니다("실행 기록 128건도 함께 삭제됩니다").'],
+    ['해야 할 것', '확인 창은 바깥을 눌러도 닫히게 둡니다 — 닫히는 결과가 [취소]와 같아 막을 이유가 없습니다. 쓰다 만 입력이 있는 창은 닫는 대신 **먼저 묻습니다**.'],
     ['하지 말 것', '단순 알림에 Dialog를 쓰지 않습니다. 그건 Toast입니다.'],
+    ['하지 말 것', '확인 창에 persistent를 걸지 않습니다. 나가는 길을 막으면 [취소]를 눈으로 찾게 만들 뿐입니다.'],
   ],
 },
 {
