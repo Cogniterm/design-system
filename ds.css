@@ -1157,10 +1157,16 @@ input[type="date"].input::-webkit-calendar-picker-indicator { opacity: .5; curso
 /* ── ds-kbd ── */
 /* 키캡 — 높이 20px 고정, 최소 폭 20px이라 한 글자짜리는 정사각입니다.
    글자 폭에 맡기면 키마다 폭이 달라지고 소수 상자(24.67 × 23.15)가 나옵니다. */
+/* ⚠ 글꼴은 **--font(Pretendard)** 입니다 (2026-09-17 수정). 앞서는 --mono 였는데,
+   Foundation 의 글꼴 표가 --mono 를 쓰는 자리를 **코드 · 툴콜 · 시각 · IP · 파일 크기**로
+   적어 두고 있습니다 — 기준은 "세로로 자릿수를 맞춰 읽어야 하는 값"이고, 키캡은 거기 없습니다.
+   'Ctrl' · 'Esc' 만 Consolas 계열로 나와 바로 옆 글자와 결이 어긋났습니다(키캡은 키 이름이지 코드가 아닙니다).
+   ⛔ --mono 로 되돌리지 마세요.
+   ⚠ 폭은 글꼴이 아니라 min-width + padding 이 잡습니다 — 글꼴을 바꿔도 상자 크기는 그대로입니다 */
 .kbd {
   display: inline-flex; align-items: center; justify-content: center;
   box-sizing: border-box; height: 20px; min-width: 20px; padding: 0 5px;
-  font-family: var(--mono); font-size: var(--text-2xs);
+  font-family: var(--font); font-size: var(--text-2xs);
   font-weight: var(--weight-medium); line-height: 1;
   background: var(--muted); color: var(--foreground);
   border: 1px solid var(--input); border-radius: var(--r-in);

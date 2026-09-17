@@ -203,7 +203,9 @@
 
 /* 고정폭이 필요한 곳은 다시 mono로 (위 규칙보다 뒤에 와야 합니다) */
 .v-application code, .v-application kbd, .v-application samp,
-.v-application pre, .v-code, .v-kbd { font-family: var(--mono); }
+.v-application pre, .v-code { font-family: var(--mono); }
+/* ⚠ 키캡은 **--font** 입니다 — 코드가 아니라 키 이름이라서(ds.css 의 .kbd 와 한 벌, 2026-09-17) */
+.v-application .v-kbd { font-family: var(--font); }
 
 /* 모서리 — Vuetify의 rounded 스케일을 우리 값으로 재정의.
    오버레이(메뉴·드롭다운)는 .v-application 밖 .v-overlay-container로 포털되므로
@@ -407,7 +409,7 @@
 /* ── VCode / VKbd ── */
 .v-code { font-family: var(--mono); font-size: var(--text-xs); background: var(--muted);
   color: var(--primary); padding: 1px 5px; border-radius: 3px; }
-.v-kbd { font-family: var(--mono); font-size: var(--text-2xs); background: var(--foreground);
+.v-kbd { font-family: var(--font); font-size: var(--text-2xs); background: var(--foreground);
   color: var(--background); border-radius: 3px; box-shadow: none; padding: 2px 5px; }
 
 /* ── VToolbar / VAppBar / VNavigationDrawer ── */
