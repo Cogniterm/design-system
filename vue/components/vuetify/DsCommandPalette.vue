@@ -62,8 +62,10 @@ function pick(i: PaletteItem) { emit('select', i); open.value = false }
 <template>
   <VDialog v-model="open" width="560" location="top" class="ds-palette-dialog">
     <div class="ds-palette" @keydown="onKey">
+      <!-- ⛔ v-model 을 쓰지 마세요 — 한글 조합 중에는 값이 안 옵니다(DsSearchField 의 그 사정) -->
       <input
-        v-model="q" class="ds-palette-input" :placeholder="placeholder ?? '검색 또는 명령…'"
+        :value="q" @input="q = ($event.target as HTMLInputElement).value"
+        class="ds-palette-input" :placeholder="placeholder ?? '검색 또는 명령…'"
         autofocus aria-label="명령 검색"
         role="combobox" aria-expanded="true" :aria-controls="listId"
         :aria-activedescendant="results[active] ? optId(active) : undefined"
