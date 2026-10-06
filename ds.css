@@ -1512,7 +1512,11 @@ input[type="date"].input::-webkit-calendar-picker-indicator { opacity: .5; curso
 .filpanel .fp-q:focus { outline: none; border-color: var(--primary); box-shadow: 0 0 0 3px color-mix(in srgb, var(--primary) 22%, transparent); }
 
 /* 기간처럼 값이 하나만 걸리는 축 — 값 목록과 같은 모양의 한 줄짜리 프리셋 */
-.filpanel .fp-dates { flex: none; overflow: visible; }
+/* ⚠ **기간 칸은 스스로 구릅니다** (2026-09-16 실측) — 패널 높이는 항목 수로 정해지는데
+   (기본 320) 안에 달력을 펴면 **170px 이 잘려** 마지막 주를 고를 수가 없었습니다.
+   패널이 overflow:hidden 이라 flex:none + visible 로는 넘친 만큼 그냥 사라집니다.
+   ⛔ 패널 높이 공식을 건드리지 마세요 — 항목이 적은 화면이 텅 비게 됩니다(그 공식 머리말) */
+.filpanel .fp-dates { flex: 1; min-height: 0; overflow-y: auto; }
 .filpanel .fp-date {
   display: flex;
   align-items: center;
