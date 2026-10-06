@@ -209,12 +209,18 @@ if (scaleOk) {
 /* ── 17. 색 대비 — WCAG 2.2 AA 실측 ── */
 {
   const css = readFileSync('ds.css', 'utf8')
-  const hex = (name, block) => {
+  /* 토큰 → hex. 값이 다른 토큰을 가리키면(`--gray-12: var(--foreground)`) 따라갑니다 —
+     2026-10-06 부터 ds.css 토큰을 앱 토큰.css 에서 받아 오는데(scripts-pull-tokens.mjs), 그 파일은 별칭을 많이 씁니다.
+     다크에서 못 찾은 이름은 라이트 값으로(다크 덩이는 바뀌는 것만 다시 적습니다) */
+  const hex = (name, block, depth = 0) => {
+    if (depth > 6) return null
     const scope = block === 'dark'
       ? css.slice(css.indexOf('[data-theme="dark"]'))
       : css.slice(0, css.indexOf('[data-theme="dark"]'))
-    const m = scope.match(new RegExp(`${name}\\s*:\\s*(#[0-9a-fA-F]{6})`))
-    return m ? m[1] : null
+    const m = scope.match(new RegExp(`${name}\\s*:\\s*(#[0-9a-fA-F]{6}|var\\((--[\\w-]+)\\))`))
+    if (!m) return block === 'dark' ? null : null
+    if (m[2]) return hex(m[2], block, depth + 1) || (block === 'dark' ? hex(m[2], 'light', depth + 1) : null)
+    return m[1]
   }
   const lum = (h) => {
     const c = h.match(/\w\w/g).map((x) => {
@@ -286,6 +292,14 @@ if (scaleOk) {
   /* 위는 "토큰끼리" 검사입니다. 실제로 화면에 나오는 건 스타일시트가 어느 회색을
      글자에 썼는가입니다 — 정의는 멀쩡한데 쓰는 쪽이 틀린 경우를 여기서 잡습니다. */
   const usageFails = []
+  /* 실제 사용 쪽 승인된 예외 — '토큰@최소비' 열쇠. 값은 앱 토큰.css 가 정합니다(scripts-pull-tokens.mjs 로 받아 옴) */
+  const USAGE_ACCEPTED = {
+    // 2026-10-06 토큰을 앱 값으로 맞추자 --gray-9(#96969d)가 흰 바탕과 2.94:1 — 아이콘 · 구분 기호의 비텍스트 기준 3:1 에 0.06 모자랍니다.
+    // DS 의 옛 값(#8b8d98)은 통과했지만 화면이 실제로 쓰는 것은 콘솔 값입니다. 사용자 지시("관리자 콘솔 디자인을 바꿀 생각하지 말고")로
+    // 값을 그대로 둡니다 — 바꾼다면 콘솔 토큰.css 에서 정하고 이 줄을 지웁니다.
+    'gray-9@3': '콘솔 회색 값 유지 — 아이콘 · 구분 기호 (2026-10-06)',
+  }
+  const usageWarned = new Set()
   for (const f of ['ds.css', 'ds-vuetify.css']) {
     const src = readFileSync(f, 'utf8').split('\n')
     let sel = ''
@@ -303,7 +317,13 @@ if (scaleOk) {
         const b = hex('--bg', theme) || hex('--bg', 'light')
         if (!a || !b) return
         const r = ratio(a, b)
-        if (r < min) usageFails.push(`${f}:${i + 1} ${theme} ${sel.slice(0, 28)} ${m[1]} ${r.toFixed(2)}:1 (최소 ${min})`)
+        if (r < min) {
+          const key = `${m[1]}@${min}`
+          if (USAGE_ACCEPTED[key]) {
+            if (!usageWarned.has(key + theme)) warn.push(`대비 예외 (실제 사용) — ${theme} ${m[1]} ${r.toFixed(2)}:1 (최소 ${min}) · ${USAGE_ACCEPTED[key]}`)
+            usageWarned.add(key + theme)
+          } else usageFails.push(`${f}:${i + 1} ${theme} ${sel.slice(0, 28)} ${m[1]} ${r.toFixed(2)}:1 (최소 ${min})`)
+        }
       }
     })
   }

@@ -14,7 +14,9 @@
     "live": "node scripts-build-live.mjs",
     "live:check": "node scripts-build-live.mjs --check",
     "docs": "npx --yes http-server -p 4173 -c-1 .",
-    "sync:app": "node scripts-sync-app.mjs"
+    "sync:app": "node scripts-sync-app.mjs",
+    "tokens:pull": "node scripts-pull-tokens.mjs",
+    "tokens:check": "node scripts-pull-tokens.mjs --check"
   },
   "devDependencies": {
     "stylelint": "^16.10.0",

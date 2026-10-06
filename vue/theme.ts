@@ -6,41 +6,41 @@
    우리가 감싸지 않은 컴포넌트까지 전부 우리 색으로 렌더됩니다.
 
    ⚠️ Vuetify 테마는 CSS 변수가 아닌 실제 hex 값을 요구합니다.
-      ds.css의 값과 동일하게 유지하세요 (양쪽이 어긋나면 색이 갈립니다).
+      **공용/스타일/토큰.css 와 같은 값을 유지하세요** (양쪽이 어긋나면 색이 갈립니다).
+      그 파일이 두 앱의 단일 원본입니다(관리자 콘솔 기준) — 색을 바꿀 일이 생기면
+      토큰.css → 여기 순서로 옮겨 심으세요(ds.css 토큰은 npm run tokens:pull 이 받아 옵니다).
 */
 
 export const dsLight = {
   dark: false,
   colors: {
     // ── 앱 표면 ──
-    'background':        '#ffffff',   // --bg
-    'surface':           '#ffffff',   // --surface
-    'surface-bright':    '#fcfcfd',   // --gray-1
-    'surface-light':     '#f9f9fb',   // --gray-2
-    'surface-variant':   '#60646c',   // --gray-11
+    'background':        '#ffffff',   // --background
+    'surface':           '#ffffff',   // --card
+    'surface-bright':    '#fcfcfc',   // --gray-1
+    'surface-light':     '#f4f4f5',   // --muted
+    'surface-variant':   '#707070',   // --muted-foreground
     'on-surface-variant': '#ffffff',
 
     // ── 브랜드 ──
-    'primary':           '#1F7FF0',   // --brand
-    'primary-darken-1':  '#1A6CCC',   // --brand-active
-    'secondary':         '#60646c',   // --gray-11
-    'secondary-darken-1': '#1c2024',
+    'primary':           '#1F7FF0',   // --primary
+    'primary-darken-1':  '#1A6CCC',   // --primary-active
+    'secondary':         '#707070',   // --muted-foreground
+    'secondary-darken-1': '#1a1a1a',
 
     // ── 상태 ──
-    // ⚠ ds.css의 `--error` 가 아니라 **`--error-text`(어두운 쪽)** 와 같은 값입니다.
-    //   Vuetify의 색은 언제나 "채운 면 + 그 위의 on- 글자" 쌍으로 쓰입니다(v-chip · v-alert ·
-    //   v-btn). 면 색(--error #d6362a · --success #2f9e44 · --warning #e69100)을 여기 넣으면
-    //   흰 글자가 각각 4.75 · 3.45 · 2.50:1 이 되어 뒤 둘이 AA에 한참 못 미칩니다.
-    //   면 색은 글자가 안 얹히는 곳(점 · 막대 · 옅은 배경)에만 씁니다. (2026-09-08)
+    // ⚠ 면 색(--error)이 아니라 **글자용(--error-text)** 값입니다. Vuetify 색은 언제나
+    //   "채운 면 + 그 위의 on- 글자" 쌍이라, 면 색을 넣으면 흰 글자가 success 3.45 ·
+    //   warning 2.50:1 이 됩니다. 면 색은 점·막대처럼 글자가 안 얹히는 곳에만. (2026-09-08)
     'error':             '#c92a2a',   // --error-text
     'info':              '#1F7FF0',
     'success':           '#17803d',   // --success-text
     'warning':           '#9a6700',   // --warning-text
 
     // ── 텍스트 ──
-    'on-background':     '#1c2024',   // --gray-12
-    'on-surface':        '#1c2024',
-    'on-primary':        '#ffffff',   // --on-brand
+    'on-background':     '#1a1a1a',   // --foreground
+    'on-surface':        '#1a1a1a',
+    'on-primary':        '#ffffff',   // --primary-foreground
     'on-error':          '#ffffff',
     'on-success':        '#ffffff',
     'on-warning':        '#ffffff',
@@ -48,74 +48,76 @@ export const dsLight = {
   },
   variables: {
     // Vuetify 내부 계산에 쓰이는 값들 — 미니멀 기조에 맞게 낮춤
-    'border-color':          '#1c2024',
-    'border-opacity':        0.08,
+    // border-color × border-opacity 가 흰 면 위에서 --border(#e4e4e7)가 되도록 잡은 값입니다
+    'border-color':          '#1a1a1a',
+    'border-opacity':        0.11,
     'high-emphasis-opacity': 1,
     'medium-emphasis-opacity': 0.72,
     'disabled-opacity':      0.38,
     'idle-opacity':          0.04,
-    'hover-opacity':         0.04,
+    'hover-opacity':         0.05,   // --overlay-hover = rgba(0,0,0,.05)
     'focus-opacity':         0.08,
-    'selected-opacity':      0.06,
+    'selected-opacity':      0.06,   // --selected-fill = rgba(0,0,0,.06)
     'activated-opacity':     0.06,
     'pressed-opacity':       0.10,
     'dragged-opacity':       0.08,
-    'theme-kbd':             '#1c2024',
+    'theme-kbd':             '#1a1a1a',
     'theme-on-kbd':          '#ffffff',
-    'theme-code':            '#f0f0f3',
-    'theme-on-code':         '#1c2024',
+    'theme-code':            '#f4f4f5',
+    'theme-on-code':         '#1a1a1a',
   },
 }
 
 export const dsDark = {
   dark: true,
   colors: {
-    'background':        '#111113',   // --bg (dark)
-    'surface':           '#18191b',   // --surface (dark)
-    'surface-bright':    '#212225',   // --gray-3
-    'surface-light':     '#18191b',   // --gray-2
-    'surface-variant':   '#b0b4ba',   // --gray-11
-    'on-surface-variant': '#111113',
+    'background':        '#0c0c0f',   // --background (dark)
+    'surface':           '#101013',   // --card (dark)
+    'surface-bright':    '#222327',   // --muted (dark)
+    'surface-light':     '#171719',   // --gray-2 (dark)
+    'surface-variant':   '#a3a3ac',   // --muted-foreground (dark)
+    'on-surface-variant': '#131316',
 
-    'primary':           '#4593F5',   // --brand (dark)
-    'primary-darken-1':  '#77B1F9',   // --brand-active (dark)
-    'secondary':         '#b0b4ba',
-    'secondary-darken-1': '#edeef0',
+    // 다크에서도 프라이머리 버튼 글자는 흰색 — 같은 버튼이 테마에 따라
+    // 흰 글자/검은 글자로 갈리지 않게 콘솔이 정한 규격입니다.
+    'primary':           '#4A97F5',   // --primary (dark)
+    'primary-darken-1':  '#7AB5F8',   // --primary-active (dark)
+    'secondary':         '#a3a3ac',
+    'secondary-darken-1': '#f4f4f5',
 
-    // 다크는 콘솔 값 그대로입니다 — 어두운 면 위에서는 밝은 채움이 맞고,
-    // 글자를 어둡게 얹으면 셋 다 6.7:1 이상이라 라이트처럼 따로 고를 필요가 없습니다.
-    'error':             '#ff6b6b',
-    'info':              '#4593F5',
-    'success':           '#51cf66',
-    'warning':           '#ffd43b',
+    'error':             '#ff6b6b',   // --error (dark)
+    'info':              '#4A97F5',
+    'success':           '#51cf66',   // --success (dark)
+    'warning':           '#ffd43b',   // --warning (dark)
 
-    'on-background':     '#edeef0',   // --gray-12 (dark)
-    'on-surface':        '#edeef0',
-    'on-primary':        '#0b1220',   // --on-brand (dark)
-    // 셋 다 어두운 글자입니다 — 전에는 on-error 만 흰색이었는데, 다크 error 가
-    // #ff6b6b(밝은 산호)로 바뀌면서 흰 글자면 2.78:1 이 됩니다. (2026-09-08)
-    'on-error':          '#0b1220',
-    'on-success':        '#0b1220',
-    'on-warning':        '#0b1220',
-    'on-info':           '#0b1220',
+    'on-background':     '#f4f4f5',   // --foreground (dark)
+    'on-surface':        '#f4f4f5',
+    'on-primary':        '#ffffff',   // --primary-foreground — 라이트와 동일
+    'on-error':          '#131316',
+    // 다크의 상태색은 밝은 계열(#51cf66·#ffd43b)이라 채운 면 위 글자는 어두워야 읽힙니다.
+    // 프라이머리와 달리 여기서는 테마별로 갈리는 게 맞습니다.
+    'on-success':        '#131316',
+    'on-warning':        '#131316',
+    'on-info':           '#ffffff',
   },
   variables: {
-    'border-color':          '#edeef0',
-    'border-opacity':        0.11,
+    // 어두운 면(#101013) 위에서 --border(#2c2d33)가 되도록 잡은 값입니다
+    'border-color':          '#f4f4f5',
+    'border-opacity':        0.10,
     'high-emphasis-opacity': 1,
     'medium-emphasis-opacity': 0.72,
     'disabled-opacity':      0.38,
-    'idle-opacity':          0.05,
-    'hover-opacity':         0.05,
+    'idle-opacity':          0.06,
+    'hover-opacity':         0.06,   // --overlay-hover = rgba(255,255,255,.06)
     'focus-opacity':         0.10,
-    'selected-opacity':      0.08,
-    'activated-opacity':     0.08,
+    'selected-opacity':      0.09,   // --selected-fill = rgba(255,255,255,.09)
+    'activated-opacity':     0.09,
     'pressed-opacity':       0.12,
     'dragged-opacity':       0.08,
-    'theme-kbd':             '#edeef0',
-    'theme-on-kbd':          '#111113',
-    'theme-code':            '#212225',
-    'theme-on-code':         '#edeef0',
+    'theme-kbd':             '#f4f4f5',
+    'theme-on-kbd':          '#131316',
+    'theme-code':            '#222327',
+    'theme-on-code':         '#f4f4f5',
   },
 }
 
@@ -136,6 +138,7 @@ import { useTheme } from 'vuetify'
 const theme = useTheme()
 function toggle(dark: boolean) {
   theme.change(dark ? 'dsDark' : 'dsLight')
-  document.documentElement.setAttribute('data-theme', dark ? 'dark' : 'light')
+  // CSS 토큰은 .dark 한 벌 — 콘솔과 같은 셀렉터입니다
+  document.documentElement.classList.toggle('dark', dark)
 }
 */
