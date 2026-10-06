@@ -43,13 +43,13 @@ export function fdOverview() {
     typography: `<div style="display:flex;align-items:baseline;gap:10px;color:var(--gray-12)">
       <span style="font-size:26px;font-weight:600;letter-spacing:-.02em">Ag</span>
       <span style="font-size:16px;font-weight:500">가나</span>
-      <span style="font-size:12px;color:var(--gray-10)">12–30px</span>
+      <span style="font-size:12px;color:var(--gray-10)">11–24px</span>
     </div>`,
     spacing: `<div style="display:flex;flex-direction:column;gap:5px;width:130px">
       ${[8,16,32,56].map((w) => `<div style="height:8px;width:${w}px;background:var(--brand-subtle);border-left:2px solid var(--brand)"></div>`).join('')}
     </div>`,
     shape: `<div style="display:flex;gap:8px;align-items:flex-end">
-      ${['sm','md','lg','xl'].map((r) =>
+      ${['in','el','ct'].map((r) =>
         `<div style="width:26px;height:26px;border:1px solid var(--brand);background:var(--brand-subtle);border-radius:var(--r-${r})"></div>`).join('')}
     </div>`,
     elevation: `<div style="display:flex;gap:12px;align-items:center">
@@ -57,7 +57,7 @@ export function fdOverview() {
       <div style="width:44px;height:32px;border-radius:var(--r-md);background:var(--surface);box-shadow:var(--shadow-overlay)"></div>
     </div>`,
     density: `<div style="width:120px;border:1px solid var(--border);border-radius:var(--r-md);overflow:hidden">
-      ${[22,28,34].map((h) => `<div style="height:${h}px;border-bottom:1px solid var(--border-subtle);display:flex;align-items:center;padding:0 8px"><div style="width:60%;height:5px;border-radius:3px;background:var(--gray-4)"></div></div>`).join('')}
+      ${[28,32,40].map((h) => `<div style="height:${h}px;border-bottom:1px solid var(--border-subtle);display:flex;align-items:center;padding:0 8px"><div style="width:60%;height:5px;border-radius:3px;background:var(--gray-4)"></div></div>`).join('')}
     </div>`,
     iconography: `<div style="display:flex;gap:10px;color:var(--gray-11)">
       ${ic('agent')}${ic('search')}${ic('folder')}${ic('settings')}
@@ -86,9 +86,9 @@ export function fdOverview() {
 
   const DESC = {
     tokens: '모든 값의 단일 원본', color: '브랜드 1 · 회색 12 · 알파 12 · 상태 4',
-    typography: 'Pretendard 9단계 — UI와 본문 분리', spacing: '4px 배수 · 역할 열 그리드',
-    shape: '4/6/8/12 — 컨트롤과 면의 두 단계', elevation: '그림자 없음 · 떠 있는 것만 예외',
-    density: '32/40/48 — 화면 성격별 행 높이', iconography: 'Lucide 59 · stroke 2',
+    typography: 'Pretendard 11~24 여덟 단계 — UI와 본문 분리', spacing: '4px 배수 · 문서형 화면 층 간격',
+    shape: '4 · 6 · 10 — 안쪽 · 요소 · 컨테이너', elevation: '면은 1px 선 · 떠 있는 것만 그림자',
+    density: '컨트롤 32 · 표 줄 52 · 머리 40', iconography: `Lucide ${ICON_NAMES.length} · stroke 2`,
     motion: '160ms ease · 상태를 알리는 움직임만', state: '화면 5종 + 인터랙션 6종',
     a11y: 'WCAG 2.2 AA · 포커스 링 · 키보드', writing: '에러는 사과하지 않는다',
     wordlist: '한국어 UI 어휘 고정', i18n: '이름은 영문 · 문구는 한글',
@@ -131,11 +131,12 @@ export function fdTokens() {
           <tr><td><code>--brand-*</code></td><td>브랜드 색과 그 변형</td><td><code>--brand-hover</code></td></tr>
           <tr><td><code>--gray-1~12</code></td><td>불투명 회색 — 배경·텍스트</td><td><code>--gray-11</code></td></tr>
           <tr><td><code>--gray-a1~a12</code></td><td>반투명 회색 — 보더·오버레이</td><td><code>--gray-a3</code></td></tr>
-          <tr><td><code>--border(-subtle/-strong/-hover)</code></td><td>보더 시맨틱</td><td><code>--border</code></td></tr>
-          <tr><td><code>--success/warning/danger/info</code></td><td>상태 색 (+ <code>-subtle</code>·<code>-border</code>)</td><td><code>--danger-subtle</code></td></tr>
-          <tr><td><code>--r-*</code></td><td>모서리 반경 (sm·md·lg·xl·full)</td><td><code>--r-xl</code></td></tr>
-          <tr><td><code>--bg</code> / <code>--surface</code></td><td>페이지 배경 / 요소 면</td><td>—</td></tr>
-          <tr><td><code>--sel-bg</code> / <code>--sel-fg</code></td><td>선택 · 활성 상태 (중립)</td><td>활성 내비, 선택 행</td></tr>
+          <tr><td><code>--border</code> · <code>--input</code> · <code>--border-emphasized</code> · <code>--border-subtle</code></td><td>보더 시맨틱 (<code>--border-strong</code> · <code>--border-hover</code>는 옛 별칭)</td><td><code>--border</code></td></tr>
+          <tr><td><code>--success/warning/error</code></td><td>상태 색 (+ <code>-text</code>·<code>-subtle</code>·<code>-border</code>). <code>--danger-*</code>는 옛 별칭</td><td><code>--error-text</code></td></tr>
+          <tr><td><code>--r-in</code> · <code>--r-el</code> · <code>--r-ct</code> · <code>--r-full</code></td><td>모서리 반경 4 · 6 · 10 · 원형 (<code>sm/md/lg/xl</code>은 옛 별칭)</td><td><code>--r-el</code></td></tr>
+          <tr><td><code>--canvas</code> / <code>--card</code> / <code>--background</code></td><td>셸 바탕 / 흰 패널 · 카드 면 / 그 아래 한 단</td><td>—</td></tr>
+          <tr><td><code>--nav-active</code> · <code>-fg</code> · <code>-bg</code></td><td>탭 · 세그먼티드 · 값 걸린 필터 · 조건 칩의 활성 (브랜드 선 + 글자)</td><td>밑줄 탭</td></tr>
+          <tr><td><code>--selected-fill</code> (<code>--sel-bg</code>)</td><td>목록 · 내비 행의 선택 (중립 회색 면)</td><td>GNB 현재 메뉴, 고른 행</td></tr>
           <tr><td><code>--focus-ring</code> / <code>--shadow-overlay</code></td><td>포커스 링 / 떠 있는 요소 그림자</td><td>—</td></tr>
           <tr><td><code>--font</code> / <code>--mono</code></td><td>글꼴</td><td>—</td></tr>
         </tbody>
@@ -148,11 +149,17 @@ export function fdTokens() {
 
       <h2>다크 모드</h2>
       <p>
-        같은 이름의 변수를 <code>[data-theme="dark"]</code>에서 덮어씁니다.
-        컴포넌트는 테마를 신경 쓰지 않고 <code>var(--gray-3)</code>만 참조합니다.
+        같은 이름의 변수를 제품에서는 <code>.dark</code> 클래스에서 덮어씁니다(관리자 콘솔 · 이용자 화면 같은 셀렉터).
+        컴포넌트는 테마를 신경 쓰지 않고 <code>var(--muted)</code>만 참조합니다.
+        이 문서 사이트만 <code>[data-theme="dark"]</code>로 전환합니다 — <code>ds.css</code>가 두 셀렉터를 함께 받습니다.
       </p>
-      <pre><code>:root            { --gray-3: #f0f0f3; }   /* 라이트 */
-[data-theme="dark"] { --gray-3: #212225; }   /* 다크 */</code></pre>
+      <pre><code>:root { --muted: #f4f4f5; --card: #ffffff; --canvas: #f4f4f5; }   /* 라이트 */
+.dark { --muted: #222327; --card: #101013; --canvas: #181818; }   /* 다크 */</code></pre>
+      <p>
+        <b>다른 토큰을 <code>var()</code>로 엮은 토큰은 다크 블록에도 같은 줄을 적습니다.</b>
+        <code>--nav-active: var(--primary)</code>는 선언된 자리의 값으로 굳어서,
+        <code>:root</code>에만 적으면 다크에서도 라이트 브랜드가 나옵니다.
+      </p>
 
       <h2>Vuetify와의 연결</h2>
       <p>
@@ -204,7 +211,7 @@ export function fdColor() {
       </div>
       <p>
         <b>면과 글자를 나눕니다.</b>
-        <code>--brand</code>(<code>#1F7FF0</code>)는 브랜드 원색이며 버튼 배경·점·포커스 링처럼
+        <code>--brand</code>(제품 토큰 <code>--primary</code> — 라이트 <code>#1F7FF0</code> · 다크 <code>#4A97F5</code>, 두 모드 모두 위 글자는 흰색)는 브랜드 원색이며 버튼 배경·점·포커스 링처럼
         <b>면</b>에만 씁니다. 흰 배경 위 <b>글자·링크</b>에 쓰면 대비가 부족하므로
         반드시 <code>--brand-text</code>를 씁니다 (5.89:1).
       </p>
@@ -224,25 +231,36 @@ export function fdColor() {
             <li>포커스 링</li>
             <li>진행 중 상태 · 인용 칩</li>
             <li>폼 컨트롤의 켜짐</li>
+            <li><b>활성 표시</b> — 탭 · 세그먼티드 · 값 걸린 필터 · 조건 칩 (선 + 글자만)</li>
           </ul>
         </div>
         <div class="dd dont">
           <span class="dd-tag">쓰지 않습니다</span>
           <ul>
-            <li><b>선택 · 활성 상태</b> — 내비 · 탭 · 목록은 중립</li>
+            <li><b>목록 · 내비 행의 선택</b> — 중립 회색 면</li>
+            <li>활성 항목의 <b>면 채우기</b> (브랜드 채움 · 검정 반전)</li>
             <li>페이지 배경 · 카드 보더</li>
             <li>제목 텍스트 · 장식</li>
           </ul>
         </div>
       </div>
       <p>
-        선택 · 활성은 <code>--sel-bg</code>(gray-4) · <code>--sel-fg</code>(gray-12)를 씁니다.
-        브랜드가 흔해지면 정작 주요 버튼이 눈에 들어오지 않습니다.
+        <b>활성과 선택은 다른 규칙입니다.</b>
+        탭 · 세그먼티드 · 값 걸린 필터 트리거 · 조건 칩의 활성은 <code>--nav-active</code>(브랜드 선)
+        + <code>--nav-active-fg</code>(브랜드 글자)이고 면은 그대로 둡니다.
+        목록 · 내비 행(GNB 현재 메뉴, 고른 행)의 선택은 중립 회색 면 <code>--selected-fill</code>입니다.
+        면을 브랜드로 채우면 여러 개를 고른 줄이 덩어리로 보이고 정작 주요 버튼이 눈에 들어오지 않습니다.
       </p>
 
       <h2>Gray</h2>
       ${scale(N, '--gray-')}
-      <p>화면의 95%는 이 12단계입니다. Radix Slate — 라이트/다크 대비가 검증된 차가운 회색.</p>
+      <p>
+        화면의 95%는 이 12단계입니다. <b>푸른 기가 없는 중립 회색</b>입니다 — 제품의 의미 토큰
+        (3 <code>--muted</code> #f4f4f5 · 5 <code>--border</code> #e4e4e7 · 6 <code>--input</code> #d6d6da ·
+        7 <code>--border-emphasized</code> #c9c9cd · 10 <code>--muted-foreground</code> #707070 ·
+        12 <code>--foreground</code> #1a1a1a)을 계조로 늘린 것이라 그 단계는 같은 값을 가리킵니다.
+        화면 CSS는 번호 대신 의미 토큰을 씁니다.
+      </p>
       <table>
         <thead><tr><th>단계</th><th>역할</th></tr></thead>
         <tbody>
@@ -256,36 +274,40 @@ export function fdColor() {
         </tbody>
       </table>
       <p>
-        <b>보더는 이 스케일을 쓰지 않습니다</b> — 아래 알파 스케일의 시맨틱 토큰을 씁니다.
+        <b>보더는 번호가 아니라 아래 보더 토큰으로</b> 고릅니다.
       </p>
 
       <h2>Gray Alpha</h2>
       ${scale(N, '--gray-a')}
       <p>
-        반투명 회색. 불투명보다 연하게 얹히고 어떤 배경 위에서도 자연스럽습니다.
-        보더·오버레이가 여기서 나옵니다.
+        반투명 회색. 어떤 면 위에 올려도 자연스러운 hover 면(<code>--overlay-hover</code>) ·
+        겹판 · 행 구분선(<code>--border-subtle</code>)이 여기서 나옵니다.
       </p>
 
       <h2>Border</h2>
       <div class="tok-row">
-        ${sw('--border-subtle', '행 구분선')}
-        ${sw('--border', '카드 · 표')}
-        ${sw('--border-strong', '버튼 · 입력')}
-        ${sw('--border-hover', '호버')}
+        ${sw('--border-subtle', '행 구분선 (반투명)')}
+        ${sw('--border', '카드 · 표 · 패널')}
+        ${sw('--input', '한 단 강한 선')}
+        ${sw('--border-emphasized', '호버')}
       </div>
-      <div class="demo" style="border-radius:var(--r-xl)">
+      <div class="demo" style="border-radius:var(--r-ct)">
         <div style="display:flex;gap:14px;flex-wrap:wrap;width:100%">
-          ${['subtle', '', 'strong', 'hover'].map((k) => {
-            const t = k ? `--border-${k}` : '--border'
-            return `<div style="flex:1;min-width:140px;border:1px solid var(${t});border-radius:var(--r-lg);padding:14px;font-size:var(--text-xs);color:var(--gray-10);font-family:var(--mono)">${t}</div>`
-          }).join('')}
+          ${['--border-subtle', '--border', '--input', '--border-emphasized'].map((t) =>
+            `<div style="flex:1;min-width:140px;border:1px solid var(${t});border-radius:var(--r-el);padding:14px;font-size:var(--text-xs);color:var(--gray-10);font-family:var(--mono)">${t}</div>`
+          ).join('')}
         </div>
       </div>
-      <p>번호를 직접 고르지 않고 역할로 고릅니다. CI가 <code>1px solid var(--gray-N)</code>을 차단합니다.</p>
+      <p>
+        <b>보더는 불투명 실선입니다</b> — <code>--border</code> #e4e4e7 · <code>--input</code> #d6d6da ·
+        <code>--border-emphasized</code> #c9c9cd (다크 #2c2d33 · #3a3b42 · #3a3b42).
+        반투명은 행 사이 구분선 <code>--border-subtle</code> 하나뿐입니다.
+        번호를 직접 고르지 않고 역할로 고릅니다. <code>--border-strong</code> · <code>--border-hover</code>는 옛 별칭입니다.
+      </p>
 
       <h2>Status</h2>
       <div class="tok-grid">
-        ${[['success', '완료'], ['warning', '확인 필요'], ['danger', '실패 · 파괴적'], ['info', '정보']].map(([k, d]) => `
+        ${[['success', '완료'], ['warning', '확인 필요'], ['error', '실패 · 오류 · 파괴적'], ['info', '정보']].map(([k, d]) => `
           <div class="tok-status">
             <div class="tok-status-h">
               <span class="tok-chip" style="background:var(--${k})"></span>
@@ -299,8 +321,10 @@ export function fdColor() {
           </div>`).join('')}
       </div>
       <p>
-        상태마다 3단입니다 — <b>solid</b>(글자·점) · <b>subtle</b>(면) · <b>border</b>(테두리).
-        면·테두리는 solid에서 파생하므로 다크에서도 자동으로 맞습니다.
+        상태마다 단이 나뉩니다 — <b>solid</b>(점 · 막대 · 배지 면의 원색) · <b>-text</b>(글자 — 원색은 흰 배경에서
+        AA 미달이라 글자에는 <code>--error-text</code> · <code>--warning-text</code> · <code>--success-text</code>) ·
+        <b>subtle</b>(면) · <b>border</b>(테두리). 면·테두리는 solid에서 파생하므로 다크에서도 자동으로 맞습니다.
+        이름은 <code>--error-*</code>이고 <code>--danger-*</code>는 옛 별칭입니다.
       </p>
       <div class="dodont">
         <div class="dd dont">
@@ -310,7 +334,7 @@ export function fdColor() {
         </div>
         <div class="dd do">
           <span class="dd-tag">해야 할 것</span>
-          <ul><li>배지처럼 <b>점 + 텍스트</b>를 함께</li>
+          <ul><li>배지처럼 <b>옅은 면 + 글자</b>로 — 색과 낱말이 함께</li>
               <li>진짜 그 상태일 때만</li></ul>
         </div>
       </div>
@@ -328,16 +352,17 @@ export function fdColor() {
       <table>
         <thead><tr><th>조합</th><th>라이트</th><th>다크</th></tr></thead>
         <tbody>
-          <tr><td>본문 (<code>gray-12</code>)</td><td>16.4:1</td><td>16.3:1</td></tr>
-          <tr><td>보조 텍스트 (<code>gray-11</code>)</td><td>5.9:1</td><td>9.1:1</td></tr>
-          <tr><td>링크 (<code>brand-text</code>)</td><td>5.9:1</td><td>7.8:1</td></tr>
-          <tr><td>버튼 라벨 (<code>on-brand</code> on <code>brand</code>)</td><td><b>3.9:1 — 미달(승인된 예외)</b></td><td>6.0:1</td></tr>
-          <tr><td>상태색</td><td>4.6~5.0:1</td><td>4.8~10.1:1</td></tr>
+          <tr><td>본문 (<code>--foreground</code>)</td><td>17.4:1</td><td>17.3:1</td></tr>
+          <tr><td>보조 텍스트 (<code>--muted-foreground</code> · gray-10)</td><td>4.9:1</td><td>7.6:1</td></tr>
+          <tr><td>링크 (<code>--primary-text</code>)</td><td>5.9:1</td><td>7.8:1</td></tr>
+          <tr><td>버튼 라벨 (흰 글자 on <code>--primary</code>)</td><td><b>3.9:1 — 미달(승인된 예외)</b></td><td><b>3.0:1 — 미달(승인된 예외)</b></td></tr>
+          <tr><td>상태 글자 (<code>-text</code>)</td><td>4.9~5.5:1</td><td>8.2~13.3:1</td></tr>
         </tbody>
       </table>
       <p>
-        <code>gray-9</code>(3.3:1)·<code>gray-10</code>(3.8:1)은 본문 기준에 미달합니다 —
+        <code>gray-9</code>(2.9:1)는 본문 기준에 미달합니다 —
         <b>의미 있는 정보를 담지 마세요.</b> placeholder·장식 메타에만 씁니다.
+        (값은 제품 토큰 기준, 다크는 콘텐츠 면 <code>--card</code> #101013 위)
       </p>
 
       <h2>Chart</h2>
@@ -375,32 +400,35 @@ export function fdColor() {
 
       <h2>Surface</h2>
       <div class="tok-row">
-        ${sw('--bg', '페이지 배경')}
-        ${sw('--surface', '요소 면')}
-        ${sw('--sel-bg', '선택 배경')}
-        ${sw('--sel-fg', '선택 글자')}
+        ${sw('--canvas', '셸 바탕')}
+        ${sw('--card', '패널 · 카드 면')}
+        ${sw('--muted', '옅은 면')}
+        ${sw('--selected-fill', '행 선택 면')}
       </div>
+      <p>
+        <b>셸은 캔버스 위 흰 패널입니다</b> — <code>--canvas</code>(#F4F4F5) 위에 <code>--card</code> 패널을
+        <b>8px 인셋</b>으로 얹습니다. 다크에서는 명암 관계가 반대입니다: 콘텐츠 면(<code>--card</code> #101013)이
+        캔버스(#181818)보다 <b>어둡습니다</b> — 글자 대비가 높은 쪽이 읽는 면입니다.
+      </p>
     </div>`
 }
 
 /* ════════════════════════════════════════ */
 export function fdTypography() {
   const rows = [
-    ['4xl', '36px', '600', '랜딩 대표 제목', 'font-size:36px;font-weight:600;letter-spacing:-.03em'],
-    ['3xl', '30px', '600', '페이지 제목 (26~32 유동)', 'font-size:30px;font-weight:600;letter-spacing:-.025em'],
-    ['2xl', '24px', '600', '페이지 제목', 'font-size:24px;font-weight:600;letter-spacing:-.025em'],
-    ['xl', '20px', '600', '섹션 제목', 'font-size:20px;font-weight:600;letter-spacing:-.015em'],
-    ['lg', '16px', '600', '작은 제목 · 카드 제목', 'font-size:16px;font-weight:600;letter-spacing:-.01em'],
+    ['2xl', '24px', '600', '카드 숫자 (KPI)', 'font-size:24px;font-weight:600;letter-spacing:-.025em'],
+    ['xl', '20px', '600', '화면 제목 · 문서형 화면의 대분류', 'font-size:20px;font-weight:600;letter-spacing:-.015em'],
+    ['lg', '16px', '600', '소분류 · 카드 · 다이얼로그 · 절 제목', 'font-size:16px;font-weight:600;letter-spacing:-.01em'],
     ['md', '15px', '400', '읽는 글 본문', 'font-size:15px'],
-    ['base', '14px', '400', 'UI 기본 — 버튼 · 입력 · 탭', 'font-size:14px'],
-    ['sm', '13px', '400', '조밀한 UI — 표 셀 · 사이드바', 'font-size:13px'],
-    ['xs', '12px', '500', '라벨 · 메타 · 표 헤더', 'font-size:12px;font-weight:500'],
-    ['2xs', '11px', '600', '마이크로 라벨 · 배지', 'font-size:11px;font-weight:600'],
+    ['base', '14px', '400', 'UI 기본 — 입력 · 탭 · 표 본문', 'font-size:14px'],
+    ['sm', '13px', '400', '조밀한 UI — 버튼 · 표 머리(600) · 칩', 'font-size:13px'],
+    ['xs', '12px', '500', '메타 · 곁말 · 쪽 발', 'font-size:12px;font-weight:500'],
+    ['2xs', '11px', '600', '마이크로 라벨 · 배지 · 키캡', 'font-size:11px;font-weight:600'],
   ]
   return `
     <div class="page-head"><h1>Typography</h1></div>
     <p class="page-lead">
-      Pretendard 9단계. <b>위계는 크기보다 굵기와 색으로</b> 만듭니다 —
+      Pretendard 여덟 단계 — 11 · 12 · 13 · 14 · 15 · 16 · 20 · 24. <b>위계는 크기보다 굵기와 색으로</b> 만듭니다 —
       크기를 키우면 화면이 커 보이고, 굵기를 바꾸면 위계만 생깁니다.
     </p>
     <div class="prose">
@@ -420,7 +448,10 @@ export function fdTypography() {
             <div class="ts-use">${use}</div>
           </div>`).join('')}
       </div>
-      <p>이 아홉 개 밖의 값은 쓰지 않습니다. CI가 <code>docs.css</code>를 검사해 막습니다.</p>
+      <p>
+        <b>이 여덟 밖의 값과 반픽셀은 쓰지 않습니다.</b> 20은 화면 제목, 24는 카드 숫자 전용입니다.
+        <code>--text-3xl</code>(30) · <code>--text-4xl</code>(36) 토큰은 남아 있지만 제품 화면에는 쓰지 않습니다(랜딩 전용).
+      </p>
 
       <h2>굵기</h2>
       <table>
@@ -471,6 +502,7 @@ export function fdTypography() {
       <p>
         <b>고정폭 글꼴을 쓰는 기준</b> — 세로로 자릿수를 맞춰 읽어야 하는 값.
         시각·용량·ID·코드가 여기 해당합니다. 사람 이름이나 문서 제목은 아닙니다.
+        <b>키캡(<code>.kbd</code>)도 아닙니다</b> — 'Ctrl' · 'Esc'는 코드가 아니라 키 이름이라 <code>--font</code>(Pretendard)입니다.
       </p>
 
       <h2>한글에서 주의할 것</h2>
@@ -484,12 +516,12 @@ export function fdTypography() {
       <p>
         표 헤더·섹션 라벨 같은 작은 라벨에 <b>대문자 + 벌어진 자간</b>을 쓰면
         전형적인 "관리자 템플릿" 인상이 됩니다. Geist 계열은 쓰지 않습니다.
-        대신 <b>한 단계 작은 크기(12px) + medium 굵기 + 회색</b>으로 위계를 만듭니다.
+        대신 <b>작은 크기 + 굵기 + 회색</b>으로 위계를 만듭니다.
       </p>
       <div class="dodont">
         <div class="dd do"><span class="dd-tag">이렇게</span><ul>
-          <li>표 헤더: 12px · 500 · <code>gray-10</code> · 소문자 그대로</li>
-          <li>섹션 라벨: 12px · 500 · <code>gray-9</code></li>
+          <li>표 헤더: 13px · 600 · <code>--muted-foreground</code> · 소문자 그대로</li>
+          <li>섹션 라벨: 12px · 500 · <code>--muted-foreground</code></li>
         </ul></div>
         <div class="dd dont"><span class="dd-tag">이렇지 않게</span><ul>
           <li><span style="font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.07em">Section Title</span> — 템플릿 인상</li>
@@ -525,7 +557,28 @@ export function fdSpacing() {
             <span>${v === 0 ? '없음' : v === 4 ? '아이콘과 글자 사이' : v === 8 ? '관련된 요소 사이' : v === 12 ? '버튼 사이, 카드 안쪽' : v === 16 ? '카드 안쪽 여백' : v === 24 ? '섹션 안쪽' : v === 32 ? '섹션 사이' : v === 48 ? '큰 구획' : '페이지 상하'}</span>
           </div>`).join('')}
       </div>
-      <p><b>4px 배수가 아닌 값은 쓰지 않습니다.</b> 7px, 15px 같은 값이 섞이면 정렬이 미묘하게 어긋납니다.</p>
+      <p><b>컴포넌트 안은 4px 배수만 씁니다.</b> 7px, 15px 같은 값이 섞이면 정렬이 미묘하게 어긋납니다.</p>
+
+      <h2>예외 — 문서형 화면의 층 간격</h2>
+      <p>
+        보고서 · 평가 · 프로파일링처럼 <b>절이 층으로 쌓이는 화면</b>은 층을 여백 차이로 말합니다.
+        먼 것은 멀리, 가까운 것은 가까이 — <b>이 차이 자체가 어디까지가 한 덩어리인지</b>를 알려 줍니다.
+      </p>
+      <table>
+        <thead><tr><th>사이</th><th>값</th></tr></thead>
+        <tbody>
+          <tr><td>대분류 ↔ 대분류 (20px/600)</td><td><code>44</code></td></tr>
+          <tr><td>문서 머리 → 첫 대분류</td><td><code>32</code></td></tr>
+          <tr><td>소분류 ↔ 소분류 (16px/600 — 카드 하나)</td><td><code>28</code></td></tr>
+          <tr><td>대분류 → 첫 소분류</td><td><code>18</code></td></tr>
+          <tr><td>소분류 → 그 내용</td><td><code>10</code></td></tr>
+        </tbody>
+      </table>
+      <p>
+        층 간격은 <b>한 곳에서만</b> 냅니다(절 · 덩어리 · 머리 중 하나). 내용이 제 안여백을 더하므로
+        바꾼 뒤에는 <b>그려진 것 기준으로</b> 잽니다.
+        대시보드 카드는 <b>사방 16 · 제목 16px/600 · 제목 아래 10</b>입니다.
+      </p>
 
       <h2>덩어리 짓기</h2>
       <p>
@@ -560,10 +613,10 @@ export function fdSpacing() {
           <tr><td>본문 최대 너비 (읽는 화면)</td><td><code>720px</code> (<code>--measure</code>)</td></tr>
           <tr><td>본문 최대 너비 (문서·설정)</td><td><code>900px</code></td></tr>
           <tr><td>본문 최대 너비 (데이터 화면)</td><td><code>1080~1280px</code></td></tr>
-          <tr><td>사이드바 너비</td><td><code>232px</code></td></tr>
-          <tr><td>페이지 좌우 여백</td><td><code>24px</code> (모바일) / <code>44px</code> (데스크톱)</td></tr>
-          <tr><td>상단 바 높이</td><td><code>52px</code></td></tr>
-          <tr><td>버튼 · 입력 높이</td><td>Geist 스케일 — <code>32</code> sm / <code>40</code> 기본 / <code>48</code> lg. 필터 바 같은 밀한 자리는 sm</td></tr>
+          <tr><td>셸</td><td><code>--canvas</code> 바탕 + 흰 패널(<code>--card</code>) <code>8px</code> 인셋 · GNB <code>268px</code>(관리자 콘솔)</td></tr>
+          <tr><td>패널 좌우 여백</td><td><code>20px</code> 하나 — 목록 · 판 · 한 칸 화면 모두 (글자 시작점이 화면마다 움직이지 않게)</td></tr>
+          <tr><td>화면 제목 줄</td><td>20px/600 · 위 <code>18px</code> · 아래 여백은 다음 블록의 padding-top <code>16px</code>이 맡음</td></tr>
+          <tr><td>버튼 · 입력 높이</td><td>기본 <code>32</code> · sm <code>28</code> · lg <code>40</code>(로그인 제출 · 이용자 목록 화면의 큰 검색칸만)</td></tr>
         </tbody>
       </table>
       <p>
@@ -593,7 +646,7 @@ export function fdSpacing() {
       </table>
       <p>
         표는 줄이지 않고 <b>가로 스크롤</b>로 둡니다 — 열을 빼면 정보가 사라집니다.
-        제목은 <code>clamp()</code>로 화면 폭에 따라 24~30px 사이를 흐릅니다.
+        표가 가로로 넘치면 첫 열을 붙박을 수 있습니다(머리 칸의 압정).
       </p>
     </div>`
 }
@@ -609,35 +662,37 @@ export function fdShape() {
     <div class="prose">
       <h2>Radius</h2>
       <div class="radiusrow">
-        <div><div class="rd" style="border-radius:var(--r-sm)"></div><code>--r-sm</code><span>4px</span><em>작은 표식, 코드 태그</em></div>
-        <div><div class="rd" style="border-radius:var(--r-md)"></div><code>--r-md</code><span>6px</span><em>메뉴 항목, 툴콜, 목록 행</em></div>
-        <div><div class="rd" style="border-radius:var(--r-lg)"></div><code>--r-lg</code><span>8px</span><em>버튼, 입력, 알림</em></div>
-        <div><div class="rd" style="border-radius:var(--r-xl)"></div><code>--r-xl</code><span>12px</span><em>카드, 패널, 다이얼로그, 테이블</em></div>
-        <div><div class="rd" style="border-radius:var(--r-full)"></div><code>--r-full</code><span>9999px</span><em>배지, 칩, 아바타</em></div>
+        <div><div class="rd" style="border-radius:var(--r-in)"></div><code>--r-in</code><span>4px</span><em>요소 안쪽 — 체크박스, 작은 칩, 키캡</em></div>
+        <div><div class="rd" style="border-radius:var(--r-el)"></div><code>--r-el</code><span>6px</span><em>요소 — 버튼, 입력, 메뉴 항목, 조건 칩</em></div>
+        <div><div class="rd" style="border-radius:var(--r-ct)"></div><code>--r-ct</code><span>10px</span><em>컨테이너 — 카드, 패널, 다이얼로그, 상세 표</em></div>
+        <div><div class="rd" style="border-radius:var(--r-full)"></div><code>--r-full</code><span>9999px</span><em>원형 — 아바타, 스위치</em></div>
       </div>
       <p>
-        일반적인 시스템(보통 8~16px)보다 <b>조금 작습니다</b>.
-        각질수록 정확해 보이지만 지나치면 차갑고 딱딱해집니다.
-        큰 면(카드·패널)은 12px로 부드럽게, 조작 요소(버튼·입력)는 8px로 또렷하게 —
-        이 <b>두 단계 차이</b>가 위계를 만듭니다.
+        <b>요소 6 / 컨테이너 10 두 단</b>이 위계를 만들고, 그 안쪽만 4를 씁니다.
+        <code>--r-sm</code> · <code>--r-md</code> · <code>--r-lg</code> · <code>--r-xl</code>은 옛 4단(4/6/8/12)의
+        별칭으로 남아 있을 뿐입니다(<code>--r-lg</code>는 이제 6). 새 코드에는 쓰지 않습니다.
+        <b>px로 직접 쓰지 마세요</b> — 하드코딩 라운드가 남아 버튼이 8, 카드가 12 · 16으로 제각각이던 적이 있습니다.
       </p>
       <p>
         <b>중첩 규칙</b> — 안쪽 요소의 radius는 바깥보다 작거나 같아야 합니다.
-        카드(6px) 안의 툴콜(4px)처럼. 반대가 되면 모서리가 어긋나 보입니다.
+        컨테이너(10) 안의 버튼(6), 버튼 안의 키캡(4)처럼. 반대가 되면 모서리가 어긋나 보입니다.
       </p>
 
       <h2>Border</h2>
       <table>
         <thead><tr><th>토큰</th><th>쓰는 곳</th></tr></thead>
         <tbody>
-          <tr><td><code>--border-subtle</code></td><td>행 사이 구분선</td></tr>
-          <tr><td><code>--border</code></td><td>카드 · 패널 · 테이블</td></tr>
-          <tr><td><code>--border-strong</code></td><td>버튼 · 입력 (조작 가능 표시)</td></tr>
-          <tr><td><code>--border-hover</code></td><td>위 요소의 호버</td></tr>
-          <tr><td><code>--brand</code></td><td>포커스</td></tr>
+          <tr><td><code>--border-subtle</code></td><td>목록 행 사이 구분선 (반투명 — 유일한 알파 보더)</td></tr>
+          <tr><td><code>--border</code></td><td>카드 · 패널 · 표(머리 밑줄 · 행 선) · 버튼 · 입력 · 탭 줄</td></tr>
+          <tr><td><code>--input</code></td><td>한 단 강한 선 — 키캡 · 이용자 화면 표 머리 밑줄</td></tr>
+          <tr><td><code>--border-emphasized</code></td><td>입력 · 컨트롤의 호버 · 체크박스 테두리</td></tr>
+          <tr><td><code>--primary</code></td><td>포커스 · 활성(<code>--nav-active</code>)</td></tr>
         </tbody>
       </table>
-      <p>반투명(알파)이라 불투명 회색보다 연하게 얹힙니다. 회색 번호를 직접 쓰지 않습니다.</p>
+      <p>
+        <b>불투명 실선입니다</b> (#e4e4e7 · #d6d6da · #c9c9cd). 회색 번호를 직접 쓰지 않습니다.
+        <code>--border-strong</code> · <code>--border-hover</code>는 <code>--input</code> · <code>--border-emphasized</code>의 옛 별칭입니다.
+      </p>
       <p>
         <b>두께는 항상 1px입니다.</b> 2px 보더는 강조가 아니라 소음이 됩니다.
         강조가 필요하면 보더 색을 진하게 하거나 배경을 바꿉니다.
@@ -656,7 +711,8 @@ export function fdShape() {
         <div class="dd dont">
           <span class="dd-tag">여백으로 충분합니다</span>
           <ul>
-            <li><b>섹션 사이 — 선을 긋지 않습니다.</b> 위 여백 64px + 제목 굵기가 그룹을 만듭니다</li>
+            <li><b>섹션 사이 — 선을 긋지 않습니다.</b> 위 여백 + 제목 굵기가 그룹을 만듭니다</li>
+            <li><b>밑줄 탭 아래</b> — 탭 줄이 이미 1px 선입니다. 또 그으면 선 두 개 사이에 죽은 띠가 생깁니다</li>
             <li>카드가 이미 보더를 가진 경우 그 안쪽</li>
             <li>제목과 본문 사이</li>
           </ul>
@@ -670,19 +726,33 @@ export function fdElevation() {
   return `
     <div class="page-head"><h1>Elevation</h1></div>
     <p class="page-lead">
-      <b>이 시스템에는 elevation 단계가 없습니다.</b>
-      그림자는 "떠 있는 것"에만, 그것도 한 종류만 씁니다.
+      <b>페이지 안에 놓인 것은 그림자 없이 1px 선으로</b> 구분합니다.
+      그림자는 페이지 위에 <b>떠 있는 것</b>에만, 정해진 토큰으로만 씁니다.
     </p>
     <div class="prose">
       <h2>규칙</h2>
       <table>
         <thead><tr><th>상황</th><th>처리</th></tr></thead>
         <tbody>
-          <tr><td>페이지 안에 놓인 모든 것</td><td>그림자 없음. <code>1px solid var(--gray-4)</code></td></tr>
-          <tr><td>페이지 위에 <b>떠 있는</b> 것</td><td>보더 + <code>0 6px 20px rgba(0,0,0,.09)</code></td></tr>
+          <tr><td>페이지 안에 놓인 모든 것 (카드 · 표 · 패널)</td><td>그림자 없음. <code>1px solid var(--border)</code></td></tr>
+          <tr><td>페이지 위에 <b>떠 있는</b> 것</td><td>아래 그림자 토큰 중 하나. rgba를 직접 적지 않습니다</td></tr>
         </tbody>
       </table>
-      <p>떠 있는 것은 넷뿐입니다 — <b>Menu · Dialog · Tooltip · Snackbar</b>.</p>
+
+      <h2>그림자 토큰과 쓰는 곳</h2>
+      <table>
+        <thead><tr><th>토큰</th><th>쓰는 곳</th></tr></thead>
+        <tbody>
+          <tr><td><code>--shadow-sm</code></td><td>컨트롤 살짝 — 슬라이더 손잡이 · 바닥에 붙박인 줄(<code>--shadow-up-sm</code>)</td></tr>
+          <tr><td><code>--shadow-md</code></td><td>카드 hover · 작은 팝</td></tr>
+          <tr><td><code>--shadow-lg</code></td><td>팝오버(필터 · 고르개 목록) · 토스트</td></tr>
+          <tr><td><code>--shadow-xl</code></td><td>다이얼로그 · 상세 검색 패널 · 달력 팝</td></tr>
+          <tr><td><code>--shadow-overlay</code></td><td>1px 윤곽 + 근거리 + 원거리 3겹 — 메뉴 · 알림 패널 · 파일 고르개</td></tr>
+          <tr><td><code>--shadow-drawer</code></td><td>오른쪽에서 밀려 나오는 서랍 — 그림자가 왼쪽으로 눕습니다</td></tr>
+          <tr><td><code>--scrim</code></td><td>모달 뒤 가림막 (검정 40%)</td></tr>
+        </tbody>
+      </table>
+      <p>그림자는 다크에서도 <b>검정</b>입니다 — 면이 어두워 같은 알파로는 안 보여 다크 값이 더 진합니다.</p>
 
       <div class="demo" style="border-radius:var(--r-lg)">
         <div style="display:flex;gap:24px;flex-wrap:wrap;align-items:flex-start">
@@ -691,7 +761,7 @@ export function fdElevation() {
             <div class="card" style="width:180px"><h3>카드</h3><p>보더로만 구분</p></div>
           </div>
           <div>
-            <div style="font-size:11px;font-weight:600;color:var(--gray-9);margin-bottom:10px;text-transform:uppercase;letter-spacing:.05em">떠 있음 — 그림자 1종</div>
+            <div style="font-size:11px;font-weight:600;color:var(--gray-9);margin-bottom:10px;text-transform:uppercase;letter-spacing:.05em">떠 있음 — 그림자 토큰</div>
             <div class="ds-menu-panel" style="width:180px">
               <div class="ds-menu-item">이름 바꾸기</div>
               <div class="ds-menu-item">복제</div>
@@ -702,9 +772,9 @@ export function fdElevation() {
 
       <h2>다크 모드</h2>
       <p>
-        다크에서는 같은 그림자가 거의 보이지 않으므로 불투명도를 <code>.4</code>로 올립니다.
-        다만 <b>다크에서 깊이는 그림자보다 배경 밝기로</b> 표현합니다 —
-        떠 있는 면은 <code>--surface</code>(#18191b)로 페이지 배경(#111113)보다 밝습니다.
+        다크에서는 같은 그림자가 거의 보이지 않으므로 토큰의 다크 값이 알파를 올립니다(<code>.3~.6</code>).
+        면의 위계는 라이트와 반대입니다 — 콘텐츠 면 <code>--card</code>(#101013)가
+        캔버스 <code>--canvas</code>(#181818)보다 <b>어둡습니다</b>. 읽는 면의 글자 대비를 높이려는 것입니다.
       </p>
 
       <h2>깊이가 정말 필요하면</h2>
@@ -722,66 +792,42 @@ export function fdDensity() {
   return `
     <div class="page-head"><h1>Density</h1></div>
     <p class="page-lead">
-      같은 시스템으로 챗(여유롭게)과 드라이브 목록(조밀하게)을 다 만듭니다.
-      <b>밀도는 토큰으로 제어하고 컴포넌트에 하드코딩하지 않습니다.</b>
+      밀도는 화면마다 고르는 값이 아니라 <b>정해진 높이 한 벌</b>입니다.
+      같은 자리의 줄이 화면마다 다르면 오갈 때 표가 출렁입니다.
     </p>
     <div class="prose">
-      <h2>3단계</h2>
+      <h2>높이 한 벌</h2>
       <table>
-        <thead><tr><th>이름</th><th>행 높이</th><th>세로 여백</th><th>쓰는 곳</th></tr></thead>
+        <thead><tr><th>자리</th><th>높이</th><th>글자</th></tr></thead>
         <tbody>
-          <tr><td><code>compact</code></td><td>34px</td><td>4px</td><td>드라이브 목록, 감사 로그, 대량 테이블</td></tr>
-          <tr><td><code>comfortable</code></td><td>42px</td><td>8px</td><td><b>기본</b>. 대부분의 화면</td></tr>
-          <tr><td><code>spacious</code></td><td>50px</td><td>12px</td><td>챗, 읽는 화면, 설정</td></tr>
+          <tr><td>버튼 · 입력 · 세그먼티드 (기본)</td><td><code>32px</code></td><td>13 · 14px</td></tr>
+          <tr><td>작은 버튼 (<code>sm</code>) · 조건 칩</td><td><code>28px</code></td><td>12 · 13px</td></tr>
+          <tr><td>큰 버튼 (<code>lg</code>) — 로그인 제출 · 이용자 목록 화면의 큰 검색칸만</td><td><code>40px</code></td><td>14px</td></tr>
+          <tr><td><b>목록 표의 줄</b></td><td><code>52px</code></td><td>14px</td></tr>
+          <tr><td><b>목록 표의 머리</b> — sticky · 아래 1px 선</td><td><code>40px</code></td><td>13px / 600</td></tr>
+          <tr><td>밑줄 탭</td><td><code>40px</code></td><td>14px</td></tr>
+          <tr><td>상세 · 카드 안의 키–값 표 (<code>.jt</code>)</td><td>줄 <code>46px</code> · 머리 <code>38px</code></td><td>14 · 13px</td></tr>
+          <tr><td>메뉴 항목</td><td><code>32px</code></td><td>14px</td></tr>
         </tbody>
       </table>
 
-      <div class="demo" style="border-radius:var(--r-lg)">
-        <div style="display:flex;gap:16px;flex-wrap:wrap">
-          ${['compact:34', 'comfortable:42', 'spacious:50'].map((s) => {
-            const [n, h] = s.split(':')
-            return `<div style="flex:1;min-width:180px">
-              <div style="font-size:11px;font-weight:600;color:var(--gray-9);margin-bottom:8px">${n} · ${h}px</div>
-              <div class="table-wrap"><table><tbody>
-                ${['계약서_최종.pdf', 'Q3_실적.xlsx', '회의록.docx'].map((f) =>
-                  `<tr><td style="height:${h}px;font-size:13px">${f}</td></tr>`).join('')}
-              </tbody></table></div>
-            </div>`
-          }).join('')}
-        </div>
+      <div class="demo" style="border-radius:var(--r-ct)">
+        <div class="table-wrap" style="width:100%"><table>
+          <thead><tr><th style="height:40px;font-size:13px;font-weight:600">파일명</th></tr></thead>
+          <tbody>
+            ${['계약서_최종.pdf', 'Q3_실적.xlsx', '회의록.docx'].map((f) =>
+              `<tr><td style="height:52px;font-size:14px">${f}</td></tr>`).join('')}
+          </tbody>
+        </table></div>
       </div>
 
-      <h2>어떻게 쓰나</h2>
-      <pre><code>&lt;DsDataTable :headers="headers" :items="items" density="compact" /&gt;</code></pre>
-      <p>
-        Vuetify의 <code>density</code> prop과 이름을 맞췄습니다.
-        <code>defaults.ts</code>가 전역 기본값을 <code>comfortable</code>로 고정하므로,
-        따로 지정하지 않은 화면은 자동으로 기본 밀도가 됩니다.
-      </p>
-
-      <h2>고르는 기준</h2>
-      <div class="dodont">
-        <div class="dd do">
-          <span class="dd-tag">compact</span>
-          <ul>
-            <li>한 화면에 20행 이상을 보여줘야 할 때</li>
-            <li>사용자가 <b>찾으러</b> 온 화면 (스캔)</li>
-            <li>행마다 정보가 짧을 때</li>
-          </ul>
-        </div>
-        <div class="dd do" style="border-color:var(--gray-4)">
-          <span class="dd-tag" style="background:var(--gray-3);color:var(--gray-11)">spacious</span>
-          <ul>
-            <li>사용자가 <b>읽으러</b> 온 화면</li>
-            <li>행마다 두 줄 이상일 때</li>
-            <li>실수하면 되돌리기 어려운 조작이 섞일 때</li>
-          </ul>
-        </div>
-      </div>
-      <p>
-        <b>한 화면 안에서 밀도를 섞지 않습니다.</b>
-        같은 페이지의 테이블과 목록은 같은 밀도를 씁니다.
-      </p>
+      <h2>규칙</h2>
+      <ul>
+        <li><b>34 · 42 · 50 같은 밀도 단계를 화면마다 고르지 않습니다.</b> 목록 표는 어디서나 52 / 40입니다.
+            밀도를 바꾸려면 화면이 아니라 공용 표부터 바꿉니다.</li>
+        <li>메뉴 · 목록 안 요소 높이는 <b>4의 배수</b>로 둡니다 — 배율 125% · 150%에서 1px 선이 흐려지지 않게.</li>
+        <li>Vuetify <code>density</code> prop은 래핑한 컴포넌트 안에서만 의미가 있습니다. 화면 규격은 위 표가 정합니다.</li>
+      </ul>
     </div>`
 }
 
@@ -970,7 +1016,7 @@ export function fdMotion() {
 export function fdState() {
   return `
     <div class="page-head"><h1>State</h1></div>
-    <p class="page-lead">화면 상태 5종 + 인터랙션 상태 6종. 처음부터 전부.</p>
+    <p class="page-lead">화면 상태 5종 + 인터랙션 상태. 처음부터 전부.</p>
     <div class="prose">
       <h2>화면 상태 5종</h2>
       <p>모든 목록·테이블·검색 화면은 이 다섯을 전부 가집니다.</p>
@@ -1002,19 +1048,31 @@ export function fdState() {
       </table>
       <p>네 가지를 같은 문구로 처리하면 사용자는 무엇을 해야 할지 알 수 없습니다.</p>
 
-      <h2>인터랙션 상태 5종</h2>
-      <p>조작 가능한 모든 요소는 이 다섯을 가집니다. 시각 요소를 절제한 화면에서는 <b>특히 중요합니다</b> — 보더와 그림자를 걷어내면 무엇이 눌리는지 안 보이기 때문입니다.</p>
+      <h2>인터랙션 상태</h2>
+      <p>조작 가능한 모든 요소는 이 상태들을 가집니다. 시각 요소를 절제한 화면에서는 <b>특히 중요합니다</b> — 보더와 그림자를 걷어내면 무엇이 눌리는지 안 보이기 때문입니다.</p>
       <table>
         <thead><tr><th>상태</th><th>표현</th></tr></thead>
         <tbody>
           <tr><td><code>default</code></td><td>기본</td></tr>
-          <tr><td><code>hover</code></td><td>배경 <code>gray-3</code> 또는 보더 <code>gray-6 → gray-8</code></td></tr>
-          <tr><td><code>focus</code></td><td>브랜드 보더 + <code>3px</code> 브랜드 subtle 링. <b>절대 없애지 않습니다</b></td></tr>
+          <tr><td><code>hover</code></td><td>면 <code>--overlay-hover</code> 또는 보더 <code>--border → --border-emphasized</code>.
+            표의 줄 hover는 <b>눌러서 무언가 열리는 줄(<code>.rowlink</code>)에만</b> — 안 열리는 줄이 밝아지면 상세가 있는 줄로 읽힙니다</td></tr>
+          <tr><td><code>focus</code></td><td>아래 세 가지. <b>절대 없애지 않습니다</b></td></tr>
           <tr><td><code>active</code></td><td>한 단계 더 진한 배경</td></tr>
-          <tr><td><code>disabled</code></td><td>배경 <code>gray-3</code>, 글자 <code>gray-8</code>, <code>cursor: not-allowed</code></td></tr>
-          <tr><td><code>selected</code></td><td>중립 — <code>--sel-bg</code>(gray-4) + <code>--sel-fg</code>(gray-12). 브랜드가 아닙니다</td></tr>
+          <tr><td><code>disabled</code></td><td>흐리게(버튼 <code>opacity .45</code>) · 이유는 툴팁으로. 고를 수 없는 칸은 지우지 말고 잠급니다</td></tr>
+          <tr><td><code>활성</code> (탭 · 세그먼티드 · 값 걸린 필터 · 조건 칩)</td><td>브랜드 선 + 브랜드 글자(<code>--nav-active</code> · <code>-fg</code>). <b>면은 그대로</b></td></tr>
+          <tr><td><code>selected</code> (목록 · 내비 행)</td><td>중립 회색 면 <code>--selected-fill</code>. 브랜드가 아닙니다</td></tr>
         </tbody>
       </table>
+      <h3>포커스 — 지금 쓰는 세 가지</h3>
+      <table>
+        <thead><tr><th>대상</th><th>표현</th></tr></thead>
+        <tbody>
+          <tr><td>버튼 · 네이티브 체크박스 · 라디오</td><td><code>outline: 2px solid var(--primary)</code> · <code>outline-offset: 1px</code></td></tr>
+          <tr><td>입력 · 세그먼티드 · 검색칸</td><td>브랜드 보더 + <code>0 0 0 3px</code> 브랜드 22% 링</td></tr>
+          <tr><td>DS 체크박스 · 라디오 부품 · 트리 · 링크</td><td><code>var(--focus-ring)</code> — 배경 2px + 브랜드 2px 이중 링</td></tr>
+        </tbody>
+      </table>
+      <p>세 벌이 섞여 있는 것이 현재 상태입니다. 새 부품은 놓이는 자리의 것을 따릅니다.</p>
       <div class="demo" style="border-radius:var(--r-lg)">
         <div class="row">
           <button class="btn btn-secondary">기본 · 호버 · 클릭해보세요</button>
@@ -1062,8 +1120,8 @@ export function fdA11y() {
           <tr><td>본문 텍스트 (<code>gray-12</code> on <code>bg</code>)</td><td>4.5:1</td><td>통과</td></tr>
           <tr><td>보조 텍스트 (<code>gray-11</code>)</td><td>4.5:1</td><td>통과</td></tr>
           <tr><td>약한 텍스트 (<code>gray-9</code>)</td><td>4.5:1</td><td>경계 — 메타 정보에만</td></tr>
-          <tr><td>보더·아이콘</td><td>3:1</td><td><code>gray-6</code> 이상 사용</td></tr>
-          <tr><td>브랜드 위 흰 글자</td><td>4.5:1</td><td>통과</td></tr>
+          <tr><td>보더·아이콘</td><td>3:1</td><td>아이콘은 글자색 · 보더는 장식 구분(대비 대상 아님)</td></tr>
+          <tr><td>브랜드 위 흰 글자</td><td>4.5:1</td><td><b>미달 — 승인된 예외</b> (라이트 3.9:1 · 다크 3.0:1)</td></tr>
         </tbody>
       </table>
       <p>
@@ -1076,14 +1134,15 @@ export function fdA11y() {
         <b><code>outline: none</code>을 쓰지 않습니다.</b>
         키보드만 쓰는 사용자에게 포커스 링은 마우스 커서와 같습니다.
       </p>
-      <pre><code>.btn:focus-visible {
-  outline: 2px solid var(--brand);
-  outline-offset: 2px;
+      <pre><code>.btn:focus-visible {                 /* 버튼 · 네이티브 체크박스 · 라디오 */
+  outline: 2px solid var(--primary);
+  outline-offset: 1px;
 }
-.input:focus {
-  border-color: var(--brand);
-  box-shadow: 0 0 0 3px var(--brand-subtle);
-}</code></pre>
+.input:focus {                       /* 입력 · 세그먼티드 · 검색칸 */
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--primary) 22%, transparent);
+}
+.ds-check__box:has(input:focus-visible) { box-shadow: var(--focus-ring); }   /* DS 부품 */</code></pre>
       <p><code>:focus</code>가 아니라 <code>:focus-visible</code>을 씁니다 — 마우스 클릭 시에는 링이 뜨지 않습니다.</p>
 
       <h2>키보드</h2>
@@ -1116,7 +1175,7 @@ export function fdA11y() {
 
       <h2>스크린 리더</h2>
       <ul>
-        <li>아이콘만 있는 버튼 → <code>aria-label</code> 필수</li>
+        <li>아이콘만 있는 버튼 → <code>aria-label</code>(낭독기) + <code>title</code>(눈으로 보는 사람) <b>둘 다</b>. 단 <code>title</code>과 <code>data-tip</code>을 한 요소에 함께 달지 않습니다 — 툴팁이 두 개 뜹니다</li>
         <li>진행 중 영역 → <code>aria-live="polite"</code> (에이전트 응답이 도착할 때 읽어줌)</li>
         <li>장식용 아이콘 → <code>aria-hidden="true"</code></li>
         <li>제목 계층(<code>h1</code>→<code>h2</code>→<code>h3</code>)을 건너뛰지 않기</li>
@@ -1196,16 +1255,17 @@ export function fdWriting() {
         <thead><tr><th>컴포넌트</th><th>규칙</th><th>예</th></tr></thead>
         <tbody>
           <tr><td>화면 제목</td><td>명사구 최대 3어절 · 설명문은 기본 삭제</td><td>"데이터 수집" (✗ 데이터 수집 관리하기)</td></tr>
-          <tr><td>버튼</td><td>명사형 · "-하기" 금지 · "확인" 단독 금지 · 마침표 없음</td><td>[저장] [영구 삭제] [지금 수집]</td></tr>
+          <tr><td>버튼</td><td><b>대상 + 동사, 동사가 끝</b> · 대상이 뻔하면 동사만 · "-하기" 금지 · "확인" 단독 금지 · 마침표 없음</td><td>[사용자 추가] [권한 편집] [저장] [영구 삭제]</td></tr>
           <tr><td>취소/닫기/중단</td><td>하려던 행동을 무르면 <b>취소</b> · 창만 없애면 <b>닫기</b> · 실행 중 작업이면 <b>중단</b></td><td>이탈 모달은 [계속 작성] [나가기]</td></tr>
           <tr><td>폼</td><td>플레이스홀더로 레이블 대체 금지 · 플레이스홀더는 입력 예시만</td><td>레이블 "커넥터 이름" / 예: 국가법령정보센터</td></tr>
           <tr><td>토스트</td><td>{대상} {개수}건을 {액션}했습니다 · "정상적으로/성공적으로" 삭제</td><td>"문서 12건을 삭제했습니다. [실행 취소]"</td></tr>
-          <tr><td>다이얼로그</td><td>제목은 명사구(물음표 금지) · 본문은 결과 + 복구 불가 명시</td><td>제목 "컬렉션 삭제" / 버튼 [취소] [영구 삭제]</td></tr>
+          <tr><td>다이얼로그</td><td>제목은 "~할까요?" · 본문은 결과 + 복구 불가 명시 · 확인 버튼은 동작을 반복</td><td>제목 "컬렉션을 삭제할까요?" / 버튼 [취소] [영구 삭제]</td></tr>
           <tr><td>오류</td><td><b>무엇이 안 됐는지 + 왜 + 무엇을 하면 되는지</b> · 시스템 원인만 오류 코드</td><td>"색인 서버에 연결하지 못했습니다. 잠시 후 다시 시도하세요. (IDX-503)"</td></tr>
           <tr><td>빈 상태</td><td>없다는 사실 + 다음 행동</td><td>"등록된 커넥터가 없습니다. 커넥터를 추가하면 수집을 시작할 수 있습니다."</td></tr>
           <tr><td>로딩</td><td>3초+ 무엇을 하는 중인지 · 10초+ 진행률/건수 · 마침표 없음</td><td>"문서 320/1,204건 색인 중"</td></tr>
           <tr><td>권한</td><td>권한명 + 요청 대상 명시 · "권한이 없습니다" 단독 금지 · 비활성 버튼엔 툴팁으로 이유</td><td>"이 화면은 보안관리자 권한이 필요합니다. 운영관리자에게 요청하세요."</td></tr>
-          <tr><td>상태 배지</td><td>표준 상태어 6종, 배지 안은 붙여 씀</td><td>대기 · 실행중 · 완료 · 실패 · 중단 · 보류 (✗ 진행중·성공·에러)</td></tr>
+          <tr><td>상태 배지</td><td>상태(지금 어떤가)와 결과(어떻게 끝났나)는 다른 축 — <a href="#/foundation/wordlist">용어집</a></td><td>상태: 정상 · 일시정지 / 활성 · 비활성 — 결과: 완료 · 확인 필요 · 오류 (✗ 회차에 '정상')</td></tr>
+          <tr><td>조작 설명문</td><td>쓰지 않습니다 — 눌린다는 것은 hover가 말합니다</td><td>✗ "행을 누르면 상세가 열립니다"</td></tr>
         </tbody>
       </table>
 
@@ -1239,7 +1299,7 @@ export function fdWriting() {
           <tr><td>마침표</td><td>완결 문장(본문·토스트·오류)에만. 제목·버튼·레이블·플레이스홀더·배지·로딩 문구에는 없음</td></tr>
           <tr><td>숫자</td><td>천 단위 쉼표 — 1,284</td></tr>
           <tr><td>용량</td><td>2.1 MB — 숫자와 단위 사이 띄어쓰기</td></tr>
-          <tr><td>시각</td><td>절대 시각 <code>2026-07-31 09:14</code> · 감사 기록은 절대 시각 고정</td></tr>
+          <tr><td>날짜 · 시각</td><td>하이픈만 — 날짜 <code>2026-07-31</code> · 일시 <code>07-31 09:14</code>(연도 없으면 올해) · 기간 <code>~</code> · 점 표기 금지</td></tr>
           <tr><td>피동 금지</td><td>"삭제되었습니다" → "삭제했습니다" (이중피동은 항상 금지)</td></tr>
           <tr><td>영문 고유명사</td><td>원문 그대로 — Vuetify, Pretendard</td></tr>
         </tbody>
@@ -1282,44 +1342,68 @@ export function fdWordlist() {
 
       <h2>동작</h2>
       ${T([
-        ['만들기', '생성, 추가, 새로 만들기', '버튼 라벨은 "만들기". 짧고 동사로.'],
+        ['추가', '만들기, 등록, 새로 만들기', '새 화면은 "추가" — [사용자 추가] [예산 추가]. ⚠ 기존 콘솔 화면은 "생성"(콘솔이 새로 만들어 내는 것: 그룹 · 매핑룰 · 커넥터)과 "추가"가 아직 섞여 있습니다 — 알려진 차이이고 개명하지 않습니다.'],
+        ['편집', '수정', '값을 고치는 모드는 "편집" — [권한 편집] → [저장]. "수정"으로 되돌리지 않습니다.'],
         ['저장', '적용, 확인, 완료', '값을 남기는 것은 "저장"입니다.'],
         ['삭제', '제거, 지우기', '영구적으로 없애는 것. Chip에서 빼는 것은 "제거".'],
         ['제거', '삭제, 빼기', '목록에서 빼되 원본은 남는 경우.'],
         ['불러오기', '로드, 가져오기', '외부에서 데이터를 읽어올 때.'],
-        ['내보내기', '다운로드, 익스포트', '파일로 뽑을 때. 단순 다운로드는 "다운로드".'],
+        ['내보내기', '다운로드, 익스포트, CSV 저장', '표 · 보고서를 파일로 뽑을 때 — 한 낱말.'],
+        ['내려받기', '다운로드, 받기', '파일 <b>원본</b>을 받는 동작. 단 권한 이름은 코드를 따라 "다운로드"(DOWNLOAD)를 그대로 씁니다.'],
         ['되돌리기', '취소, 언두, 롤백', 'Snackbar의 Undo 액션.'],
         ['취소', '닫기, 그만두기', '진행 중이던 것을 중단. 다이얼로그의 부(副) 버튼.'],
         ['다시 시도', '재시도, 리트라이', '실패 후 같은 작업을 반복.'],
       ])}
 
-      <h2>상태</h2>
+      <h2>상태와 결과 — 두 축을 섞지 않습니다</h2>
+      <table>
+        <thead><tr><th>축</th><th>붙는 대상</th><th>열 이름</th><th>값</th></tr></thead>
+        <tbody>
+          <tr><td><b>상태</b> — 지금 어떤가 (계속됨)</td><td>커넥터 · 매핑룰 · 문서 · 계정</td><td>상태</td><td>정상 · 일시정지 / 활성 · 비활성</td></tr>
+          <tr><td><b>결과</b> — 어떻게 끝났나 (한 번)</td><td>실행 1회 · 동기화 회차</td><td>결과</td><td>완료 · 확인 필요 · 오류</td></tr>
+          <tr><td><b>결과</b> — 파일 1건</td><td>파일 · 문서 한 건</td><td>결과</td><td>완료 · 실패 (구체화 가능: 편입 완료)</td></tr>
+        </tbody>
+      </table>
+      <p><b>회차에 "정상"을 쓰지 않습니다</b> — "정상"은 연결 · 객체에 붙는 말이라 두 층에 같은 낱말이 겹칩니다.</p>
+
+      <h2>에이전트 실행 상태</h2>
       ${T([
         ['대기', '준비, 예약됨, 대기 중', '아직 시작하지 않음.'],
         ['실행 중', '진행 중, 처리 중, 작업 중', '가장 많이 흔들리는 말입니다. "실행 중"으로 고정.'],
         ['완료', '성공, 종료, 끝남', '정상적으로 끝남.'],
-        ['실패', '오류, 에러, 문제 발생', '사용자에게는 "실패". "에러"는 개발 로그에만.'],
+        ['실패', '에러, 문제 발생', '사용자에게는 "실패". "에러"는 개발 로그에만. 회차 결과의 "오류"는 위 결과 축의 값입니다.'],
         ['부분 완료', '일부 성공, 부분 성공', '일부만 성공한 상태 — 에이전트 제품에서 자주 나옵니다.'],
         ['중단됨', '정지, 멈춤, 취소됨', '사용자가 멈춘 경우.'],
       ])}
 
       <h2>사람 · 권한</h2>
       ${T([
-        ['멤버', '사용자, 유저, 구성원', '워크스페이스에 속한 사람.'],
-        ['관리자', '어드민, 매니저', '권한을 가진 멤버.'],
+        ['구성원', '멤버, 유저', '조직 · 그룹에 속한 사람. 메뉴 이름(구성원 · 권한)과 같은 낱말.'],
+        ['사용자', '유저', '계정 하나 · 그 사람 (목록 · 상세의 "사용자", 사용자 ID = 계정 이메일).'],
+        ['관리자', '어드민, 매니저', '콘솔 역할. 자원 권한 이름에는 "관리"를 쓰지 않습니다.'],
         ['권한', '퍼미션, 접근 권한', '무엇을 할 수 있는지.'],
         ['공유', '초대, 공유하기', '다른 사람이 볼 수 있게 하는 것.'],
+      ])}
+
+      <h2>화면에 내지 않는 말</h2>
+      ${T([
+        ['회사 전체', '테넌트', '개발 낱말입니다. 범위는 사용자가 아는 말로.'],
+        ['라우팅 · 평소 사용 모델', '바인딩', '백엔드 값 이름입니다.'],
+        ['직위 · 직책 · 직급', '축', '"축을 모두 껐습니다" ✗ → "직위 · 직책 · 직급을 모두 껐습니다".'],
       ])}
 
       <h2>문장 규칙</h2>
       <table>
         <thead><tr><th>상황</th><th>규칙</th><th>예</th></tr></thead>
         <tbody>
-          <tr><td>안내 문장</td><td><b>~합니다</b> 체</td><td>"모든 멤버에게 표시됩니다."</td></tr>
-          <tr><td>버튼</td><td><b>동사</b>, 2~4글자</td><td>"저장" "삭제" "만들기"</td></tr>
+          <tr><td>안내 문장</td><td><b>~합니다</b> 체</td><td>"모든 구성원에게 표시됩니다."</td></tr>
+          <tr><td>버튼</td><td><b>대상 + 동사</b>, 동사가 끝 (대상이 뻔하면 동사만)</td><td>"사용자 추가" "권한 편집" "저장" "삭제"</td></tr>
           <tr><td>지시</td><td><b>~하세요</b></td><td>"올바른 이메일 주소를 입력하세요."</td></tr>
           <tr><td>질문 (다이얼로그 제목)</td><td><b>~할까요?</b></td><td>"에이전트를 삭제할까요?"</td></tr>
           <tr><td>빈 상태 제목</td><td>명사구 — 무엇이 없는지</td><td>"에이전트가 없습니다"</td></tr>
+          <tr><td>검색칸 placeholder</td><td><b>&lt;대상&gt; 검색</b> — 군더더기 없이</td><td>"그룹 검색" "부서 검색" (✗ 부서 이름 검색)</td></tr>
+          <tr><td>조작 설명</td><td>쓰지 않습니다</td><td>✗ "행을 누르면 …합니다" — hover가 말합니다</td></tr>
+          <tr><td>아이콘만 있는 버튼</td><td><code>title</code> + <code>aria-label</code> 둘 다 · <code>title</code>과 <code>data-tip</code>은 함께 달지 않음</td><td>title="더보기"</td></tr>
         </tbody>
       </table>
       <p>
@@ -1339,8 +1423,9 @@ export function fdWordlist() {
         </tbody>
       </table>
       <p>
-        <b>조사는 앞말에 맞춥니다.</b> 프로그램이 붙이는 조사는 "을(를)"처럼 두 개를 쓰지 말고,
-        문장을 바꿔 조사를 피합니다 — "PDF을(를) 선택하세요" 대신 "파일 형식: PDF".
+        <b>조사는 앞말이 정합니다.</b> 값을 끼워 넣는 문장(토스트 · 확인창)은 앞말의 받침으로 조사를 고릅니다
+        ('이용'으로 · '팀장'을). <b>"을(를)"처럼 둘 다 적지 않습니다</b> — 기계가 쓴 문장으로 읽힙니다.
+        앞말이 한글이 아니면(메일 주소 등) 문장을 바꿔 조사를 피합니다 — "답변은 이메일로 나갑니다 · {메일}".
       </p>
 
       <h2>숫자와 시각</h2>
@@ -1349,11 +1434,12 @@ export function fdWordlist() {
         <tbody>
           <tr><td>개수</td><td>천 단위 쉼표 · "건" — <code>1,284건</code></td></tr>
           <tr><td>용량</td><td>소수 한 자리 · 띄어쓰기 — <code>2.1 MB</code></td></tr>
-          <tr><td>절대 시각</td><td><code>2026-07-31 09:14</code> (고정폭 글꼴)</td></tr>
-          <tr><td>상대 시각</td><td>7일 이내면 "2시간 전", 그 이상은 절대 시각</td></tr>
+          <tr><td>날짜</td><td>하이픈 <code>YYYY-MM-DD</code> — <code>2026-07-31</code>. 점 표기(2026.07.31) 금지</td></tr>
+          <tr><td>일시</td><td><code>MM-DD HH:MM</code> — <code>07-31 09:14</code> (연도 없는 일시 = 올해)</td></tr>
+          <tr><td>상대 시각</td><td>7일 이내면 "2시간 전", 그 이상은 위 표기</td></tr>
           <tr><td>소요 시간</td><td><code>12.4초</code> · <code>1분 20초</code></td></tr>
-          <tr><td>범위</td><td>물결표 — <code>10~30초</code></td></tr>
-        </tbody>
+          <tr><td>범위 · 기간</td><td>물결표 — <code>10~30초</code> · <code>09-01 ~ 09-30</code></td></tr>
+          <tr><td>값 없음</td><td><code>—</code> (0이 아닙니다 — "0건"은 잰 결과이고 "—"는 잰 적 없음)</td></tr>        </tbody>
       </table>
     </div>`
 }

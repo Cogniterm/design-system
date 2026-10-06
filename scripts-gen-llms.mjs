@@ -51,8 +51,8 @@ If two components look interchangeable, the "confused with" section of each
 
 ## Rules
 - Import from the correct barrel. Mixing them breaks builds in apps without Vuetify.
-- Use CSS variables only — never hardcode hex, spacing or radius.
-- One primary button per screen.
+- Use CSS variables only — never hardcode hex, spacing or radius (--r-in 4 / --r-el 6 / --r-ct 10).
+- One primary button per screen. Button labels are "대상 + 동사", verb last (사용자 추가, 권한 편집).
 - Every list/table needs default, loading, empty, error and partial states.
 - Async agent work shows PROGRESS (DsToolCallStep / DsThinkingIndicator), never a bare spinner.
 - Icons come from \`~/design/icon\` by semantic name; components take them via an \`#icon\` slot.
@@ -75,7 +75,7 @@ ${PATTERN_GROUPS.map((g) => {
   const items = PATTERNS.filter((p) => p.group === g.id)
   if (!items.length) return ''
   return `## ${g.name} (${g.ko})\n\n` + items.map((p) =>
-    `### ${p.name} — ${p.ko}\n${p.summary}\n\n${strip(p.body()).slice(0, 1400)}\n`
+    `### ${p.name} — ${p.ko}\n${p.summary}\n\n${strip(p.body()).slice(0, 4000)}\n`
   ).join('\n')
 }).join('\n')}`)
 
@@ -92,40 +92,56 @@ writeFileSync('foundation/llms.txt', `# Foundation — Cogniterm Design System
 ${FOUNDATION_PAGES.map(([id, ko, en]) => `- ${en} (${ko}) — ${SITE}/#/foundation/${id}`).join('\n')}
 
 ## Hard rules for generating screens
-- Color: brand ONLY for primary actions, links, focus and progress. Gray does 95%.
-  SELECTION/ACTIVE states are NEUTRAL: var(--sel-bg) (gray-4) + var(--sel-fg)
-  (gray-12) — never brand. Blue active states everywhere dilute the primary button.
-  Gray roles — 1-2 background, 3 hover bg, 9 faint text, 11 secondary, 12 body.
-  BORDERS never use solid gray numbers — use the semantic alpha tokens:
-  --border-subtle (row dividers) / --border (cards, tables) /
-  --border-strong (buttons, inputs) / --border-hover. They are translucent
-  (gray-a scale), so strokes sit lighter on any background.
-  Status tints use tokens too: --success-subtle/-border, --warning-*, --danger-*,
-  --info-* — never inline color-mix. Each status has 3 tiers: solid (text/dot),
-  -subtle (surface), -border (outline).
-  Charts use --chart-1..6 in order (brand blue, teal, violet, amber, pink, green);
-  they deliberately avoid status hues so "red = failure" keeps its meaning.
-- Tables: NO background fills. Header is transparent with a --border-strong bottom
-  rule and gray-10 medium 12px labels; rows separate with --border-subtle only.
-  No zebra striping, no hover fill.
-- Type: Pretendard, 10 steps only — 11/12/13/14/15/16/20/24/30/36 via var(--text-*).
-  Page titles are fluid: h1 clamp 26-32px, landing hero 30-40px.
-  UI surfaces (buttons, tables, sidebars) use 13-14px; reading surfaces (explanations,
-  agent responses) use 15px with line-height 1.8. Using one size for both makes both
-  mediocre. Weights 400/500/600 — never 700+.
+- The PRODUCT (admin console + user app) is the reference. Where docs and product
+  disagree, the product wins. Products switch dark mode with the \`.dark\` class
+  (this doc site alone uses [data-theme="dark"]; ds.css accepts both).
+- Color: brand #1F7FF0 (dark #4A97F5, white label in both) ONLY for primary
+  actions, links (--primary-text), focus, progress and ACTIVE marks. Gray does 95%.
+  ACTIVE (tabs, segmented, filter trigger with a value, condition chips) = brand
+  stroke + brand text via --nav-active / --nav-active-fg, NO fill.
+  SELECTED rows (list rows, nav/GNB current item) = neutral gray fill
+  var(--selected-fill). Never fill a selected/active item with brand or black.
+  Gray is a NEUTRAL scale built from the product tokens (not Radix Slate):
+  --muted #f4f4f5, --border #e4e4e7, --input #d6d6da, --border-emphasized #c9c9cd,
+  --muted-foreground #707070, --foreground #1a1a1a.
+  BORDERS are SOLID tokens: --border (cards, tables, buttons, inputs) /
+  --input (one step stronger) / --border-emphasized (hover, checkbox).
+  Only --border-subtle (row dividers in lists) is translucent. Never pick gray numbers.
+  Status tokens are --success/--warning/--error (+ -text for TEXT, -subtle, -border);
+  --danger-* is a legacy alias. Solid status colors fail AA as text — use -text.
+  Shell: --canvas #F4F4F5 with a white --card panel inset 8px. Dark: the content
+  surface --card #101013 is DARKER than the canvas #181818 (reversed relation).
+  Tokens that reference other tokens with var() must be redeclared in the .dark
+  block too — var() resolves where it is declared.
+  Charts: axes are --border 1px like the grid, never thicker/darker; re-render on
+  theme change; size from the container width, not the window.
+- Tables (console list tables): header 40px, 13px/600 --muted-foreground, sticky,
+  1px bottom line; rows 52px, 14px, 1px --border line. No zebra.
+  Row hover ONLY on rows that open something (.rowlink). Status/result column at the
+  right end, just before the action column. Empty cell = "—", never 0.
+  Detail key-value card tables (.jt): rows 46, header 38, key column 188px.
+- Type: Pretendard, 8 steps only — 11/12/13/14/15/16/20/24 via var(--text-*).
+  20 = screen titles, 24 = card (KPI) numbers. No half pixels. --text-3xl/4xl
+  exist but are not used in product screens.
+  UI surfaces use 13-14px; reading surfaces (agent responses) use 15px with
+  line-height 1.8. Weights 400/500/600 — never 700+.
   Hierarchy comes from weight and color, not size.
-  No uppercase and no positive letter-spacing (both break Korean; the uppercase+
-  tracking combo also reads as generic admin-template). Micro labels are 12px /
-  weight 500 / gray instead. word-break: keep-all.
+  No uppercase and no positive letter-spacing. word-break: keep-all.
+  --mono only for values read column-wise (time, IP, size, IDs, code);
+  keycaps (.kbd) use --font (Pretendard), not mono.
   Tabular numerals (font-variant-numeric) on timestamps, sizes and counts.
-  Icons: Lucide at stroke-width 2 (the lucide default — app chrome uses it raw).
-  Focus ring: box-shadow 0 0 0 2px bg, 0 0 0 4px brand (var(--focus-ring)) — same
-  ring on every interactive element. Overlay shadow: var(--shadow-overlay), a
-  3-layer stack (1px outline + near + far), never a single blurry drop shadow.
+  Icons: Lucide at stroke-width 2, addressed by semantic name.
+  Focus — three styles exist today: buttons & native checkbox/radio = outline 2px
+  brand, offset 1px; inputs/segmented/search = brand border + 3px brand-22% ring;
+  DS checkbox/radio parts, tree rows, links = var(--focus-ring) double ring.
   Line-height tokens: tight 1.3 (headings), ui 1.5 (dense), normal 1.62, prose 1.8.
   Reading measure max 720px (var(--measure)) — px, not ch (Korean is full-width).
-- Spacing: multiples of 4 only (0 4 8 12 16 24 32 48 64). Grouping is proximity.
-  Reading width max 720px (68ch); data screens 1080-1280px.
+- Spacing: multiples of 4 inside components. Grouping is proximity.
+  Page side padding is 20px everywhere. Exception — document-style screens
+  (reports) express layers by gap: 44 (section↔section, 20px/600 titles) /
+  32 (doc head→first section) / 28 (block↔block, 16px/600 titles) /
+  18 (section→first block) / 10 (block title→content). Dashboard card:
+  padding 16, title 16px/600, 10 below the title.
 - Layout grid: role columns, not a forced 12-col — docs shell is LNB 264px /
   main minmax(0,720px) / TOC rail 192px, gap 48px. Card lists use
   repeat(auto-fill, minmax(232px,1fr)). Breakpoints 1280/1080/900/640; at 900 the
@@ -134,26 +150,46 @@ ${FOUNDATION_PAGES.map(([id, ko, en]) => `- ${en} (${ko}) — ${SITE}/#/foundati
 - Grouping: sections are separated by WHITESPACE and heading weight (64px above
   an h2), never by horizontal rules. Borders belong to components (cards, tables,
   controls) and shell edges only.
-- Shape: radius sm=4 md=6 lg=8 xl=12. Controls use lg, large surfaces use xl.
+- Shape: --r-in 4 (inside elements: checkbox, small chip, kbd) / --r-el 6
+  (elements: buttons, inputs, menu items) / --r-ct 10 (containers: cards, panels,
+  dialogs) / --r-full. --r-sm/md/lg/xl are legacy aliases. Never write px radius.
   Border always 1px. Nested radius must be <= parent radius.
-- Elevation: NO elevation scale. Shadow only on Menu, Dialog, Tooltip, Snackbar.
-- Density: compact 34px / comfortable 42px (default) / spacious 50px row height.
-  Never mix densities within one screen.
+- Elevation: things placed IN the page get no shadow, only a 1px --border.
+  Floating things use the shadow tokens: --shadow-sm (slider thumb, small control),
+  --shadow-md (card hover, small pop), --shadow-lg (popovers, toast),
+  --shadow-xl (dialogs, advanced-search panel), --shadow-overlay (menus,
+  notification panel, file picker), --shadow-drawer (slide-over panels).
+  Never write raw rgba shadows. Scrim: var(--scrim).
+- Heights: controls 32 (default) / 28 (sm) / 40 (lg — login submit and the big
+  search field on user-app list screens only). Tabs 40. Menu items 32.
+  No 34/42/50 density steps — list tables are always 52 rows / 40 header.
 - Motion: 160ms default, 240ms max, ease only, fade for overlays, no ripple.
   Honor prefers-reduced-motion.
 - Accessibility: WCAG 2.2 AA. Never rely on color alone. Never remove focus outline.
-  aria-label on icon-only buttons.
+  Icon-only buttons get BOTH title and aria-label — but never title and data-tip
+  on the same element (two tooltips appear).
+  Known exception: white label on --primary is 3.9:1 light / 3.0:1 dark.
 - Writing: errors never apologize. Formula = what happened + why + what you can do.
-  Buttons start with a verb; dialog buttons repeat the action ("삭제", not "확인").
+  Button labels are "대상 + 동사" with the verb LAST (사용자 추가, 권한 편집);
+  verb alone when the object is obvious (저장, 삭제). Dialog buttons repeat the
+  action ("삭제", not "확인"). No instruction text like "행을 누르면 …합니다".
+  Korean particles follow the preceding word; never write 을(를).
+  Dates YYYY-MM-DD (hyphens only), datetime MM-DD HH:MM (this year), ranges with ~.
+  Empty value "—", not 0.
 - Korean UI vocabulary is FIXED — see the word list. Key ones:
-  에이전트 (not AI/봇), 실행 (not 수행/구동), 실행 기록 (not 히스토리),
-  실행 중 (not 진행 중/처리 중), 실패 (not 오류/에러), 부분 완료,
-  만들기 (not 생성/추가), 저장 (not 적용/확인), 되돌리기 (not 언두).
+  에이전트 (not AI/봇), 실행 (not 수행/구동), 실행 중 (not 진행 중/처리 중),
+  추가 for new things (existing console screens still mix 생성/추가 — known,
+  don't rename), 편집 (not 수정), 저장 (not 적용/확인), 구성원 (not 멤버),
+  내보내기 = table→file, 내려받기 = original file (permission name 다운로드 stays),
+  search placeholder "<대상> 검색". No dev words on screen (테넌트, 바인딩, 축).
+  STATUS vs RESULT are two axes: 상태 (지금) 정상 · 일시정지 / 활성 · 비활성;
+  결과 (한 번) 완료 · 확인 필요 · 오류; a file result is 완료 / 실패.
+  Never "정상" for a run.
   Sentences end 합니다; instructions 하세요; dialog titles 할까요? (never 하시겠습니까?).
   Units are spaced from numbers: 2.1 MB, 128건, 12.4초.
   Full list: ${SITE}/#/foundation/wordlist
 
-## Tokens (source of truth: ds.css)
+## Tokens (ds.css — names match the product; product values live in the apps' 토큰.css and win on conflict)
 \`\`\`css
 ${tokens.trim()}
 \`\`\`
@@ -244,8 +280,11 @@ writeFileSync('llms.txt', `# Cogniterm Design System
 
 > Minimal design system for AI agent products, built for Vue 3 + Vuetify 3.11.
 > Hierarchy comes from spacing, type weight and 1px borders — not shadows or decoration.
-> No shadows, 1px borders, radius 4/6/8/12, Pretendard, brand blue #1B72D9
-> (#4593F5 in dark), Radix Slate gray 1-12. Light + dark via [data-theme="dark"].
+> 1px solid borders (#E4E4E7), radius 4/6/10 (--r-in/--r-el/--r-ct), Pretendard,
+> brand blue #1F7FF0 (#4A97F5 in dark), neutral gray, --canvas #F4F4F5 shell with a
+> white panel inset 8px. Shadows only on floating things. Light + dark via the
+> \`.dark\` class in the products (this doc site uses [data-theme="dark"]).
+> The product (admin console + user app) is the reference — where they differ, it wins.
 > ${COMPONENTS.length} components, ${PATTERNS.length} patterns, ${FOUNDATION_PAGES.length} foundation pages.
 > Docs: ${SITE}
 
@@ -266,11 +305,17 @@ For a whole screen you usually need **Foundation + Components + Patterns**.
 1. Import from the right barrel — \`~/design\` (standalone) or \`~/design/vuetify\`
    (needs Vuetify). Mixing them breaks builds.
 2. CSS variables only. Never hardcode hex, spacing or radius.
-3. Gray does 95% of the work. Brand color only for actions, selection, focus, links.
-4. Spacing is multiples of 4. Radius: controls 8px, large surfaces 12px. Borders 1px.
-5. No shadows except Menu, Dialog, Tooltip, Snackbar.
-6. One primary button per screen. Buttons start with a verb.
+3. Gray does 95% of the work. Brand only for primary actions, links, focus and
+   ACTIVE marks — tabs, segmented, filter-with-value and chips get brand stroke +
+   brand text with NO fill (--nav-active); selected list/nav rows get a neutral
+   gray fill (--selected-fill).
+4. Spacing is multiples of 4 (page side padding 20). Radius: --r-el 6 for
+   controls, --r-ct 10 for containers, --r-in 4 inside. Borders 1px solid tokens.
+5. Things in the page have no shadow; floating things use --shadow-* tokens only.
+6. One primary button per screen, on the title bar right. Labels are
+   "대상 + 동사" with the verb last (사용자 추가, 권한 편집). Controls are 32px.
 7. Every list/table ships default, loading, empty, error AND partial states.
+   List tables: 52px rows, 40px 13px/600 sticky header, 20 rows per page.
 8. Agent work shows PROGRESS — DsToolCallStep / DsThinkingIndicator, never a bare
    spinner. Tool calls render ABOVE the answer.
 9. Errors never apologize: what happened + why + what you can do.

@@ -32,7 +32,7 @@ import { DsFileRow } from '~/design'   // Vuetify 불필요 · ds.css만
 - vs FileGrid: 썸네일이 중요하면 그리드
 
 ## 지침
-- [해야 할 것] compact 밀도(42px)를 유지해 많은 파일을 훑기 좋게 합니다.
+- [해야 할 것] 42px 행을 유지해 많은 파일을 훑기 좋게 합니다.
 
 ## 접근성
 키보드: Tab=행으로 이동 · Enter=열기 · Space=선택

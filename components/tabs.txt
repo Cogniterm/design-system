@@ -7,7 +7,7 @@ import { DsTabs } from '~/design/vuetify'   // Vuetify 필요 · ds.css + ds-vue
 
 ## Props
 - modelValue: any — v-model.
-- items: { value, label, count? }[] = 필수 — count를 주면 배지가 붙습니다.
+- items: { value, label, count? }[] = 필수 — count는 처리하면 줄어드는 대기열(미답변 등)에만 줍니다.
 
 
 ## 사용 예
@@ -24,6 +24,9 @@ import { DsTabs } from '~/design/vuetify'   // Vuetify 필요 · ds.css + ds-vue
 ## 지침
 - [해야 할 것] 탭은 같은 대상의 다른 단면일 때만. 다른 대상이면 내비게이션입니다.
 - [하지 말 것] 탭 안에 탭을 넣지 않습니다.
+- [하지 말 것] 탭마다 건수 배지를 달지 않습니다 — 건수는 목록 위 한 곳. 줄어드는 대기열만 예외.
+- [해야 할 것] 페이지 탭은 밑줄 탭, 화면 안 보기 전환은 세그먼티드. 탭 줄 아래에 선 · 여백을 또 두지 않습니다.
+- [해야 할 것] 활성 탭은 브랜드 글자 + 브랜드 밑줄(--nav-active). 면은 그대로.
 
 ## 접근성
 키보드: Tab=탭 목록으로 진입 · ← →=탭 이동 · Home · End=첫 · 마지막 · Enter · Space=선택

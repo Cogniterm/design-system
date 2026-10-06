@@ -8,7 +8,7 @@ import { DsButtonGroup } from '~/design'   // Vuetify 불필요 · ds.css만
 ## Props
 - modelValue: any — v-model.
 - items: { value, label }[] = 필수 — 선택지.
-- size: 'sm' | 'default' | 'lg' = 'default' — 컨트롤 스케일 32/40/48. 필터 바·툴바는 sm.
+- size: 'sm' | 'default' | 'lg' = 'default' — 높이 32(기본) / 40(lg).
 
 
 ## 사용 예
@@ -23,7 +23,9 @@ import { DsButtonGroup } from '~/design'   // Vuetify 불필요 · ds.css만
 - vs Tabs: 내용이 통째로 바뀌면 Tabs
 
 ## 지침
-- [해야 할 것] 선택지는 2~4개까지. 그 이상이면 Select를 씁니다.
+- [해야 할 것] 선택지는 2~5개 · 짧은 라벨까지. 그 이상이거나 라벨이 길면 Select를 씁니다.
+- [해야 할 것] 켜진 칸은 흰 면 + 브랜드 1px 링 + 브랜드 글자(--nav-active). 면을 브랜드로 채우지 않습니다.
+- [하지 말 것] 한 줄에서 하나 고르는 값이 여러 줄에 걸치면 세그먼티드가 아니라 매트릭스입니다 — 줄끼리 열이 안 맞습니다.
 - [하지 말 것] 페이지를 바꾸는 내비게이션으로 쓰지 않습니다. 그건 Tabs입니다.
 
 ## 접근성

@@ -2,9 +2,12 @@
 
 > Minimal design system for AI agent products, built for Vue 3 + Vuetify 3.11.
 > Hierarchy comes from spacing, type weight and 1px borders — not shadows or decoration.
-> No shadows, 1px borders, radius 4/6/8/12, Pretendard, brand blue #1B72D9
-> (#4593F5 in dark), Radix Slate gray 1-12. Light + dark via [data-theme="dark"].
-> 68 components, 17 patterns, 14 foundation pages.
+> 1px solid borders (#E4E4E7), radius 4/6/10 (--r-in/--r-el/--r-ct), Pretendard,
+> brand blue #1F7FF0 (#4A97F5 in dark), neutral gray, --canvas #F4F4F5 shell with a
+> white panel inset 8px. Shadows only on floating things. Light + dark via the
+> `.dark` class in the products (this doc site uses [data-theme="dark"]).
+> The product (admin console + user app) is the reference — where they differ, it wins.
+> 68 components, 19 patterns, 14 foundation pages.
 > Docs: https://Cogniterm.github.io/design-system
 
 ## Read the section you need — not everything
@@ -24,11 +27,17 @@ For a whole screen you usually need **Foundation + Components + Patterns**.
 1. Import from the right barrel — `~/design` (standalone) or `~/design/vuetify`
    (needs Vuetify). Mixing them breaks builds.
 2. CSS variables only. Never hardcode hex, spacing or radius.
-3. Gray does 95% of the work. Brand color only for actions, selection, focus, links.
-4. Spacing is multiples of 4. Radius: controls 8px, large surfaces 12px. Borders 1px.
-5. No shadows except Menu, Dialog, Tooltip, Snackbar.
-6. One primary button per screen. Buttons start with a verb.
+3. Gray does 95% of the work. Brand only for primary actions, links, focus and
+   ACTIVE marks — tabs, segmented, filter-with-value and chips get brand stroke +
+   brand text with NO fill (--nav-active); selected list/nav rows get a neutral
+   gray fill (--selected-fill).
+4. Spacing is multiples of 4 (page side padding 20). Radius: --r-el 6 for
+   controls, --r-ct 10 for containers, --r-in 4 inside. Borders 1px solid tokens.
+5. Things in the page have no shadow; floating things use --shadow-* tokens only.
+6. One primary button per screen, on the title bar right. Labels are
+   "대상 + 동사" with the verb last (사용자 추가, 권한 편집). Controls are 32px.
 7. Every list/table ships default, loading, empty, error AND partial states.
+   List tables: 52px rows, 40px 13px/600 sticky header, 20 rows per page.
 8. Agent work shows PROGRESS — DsToolCallStep / DsThinkingIndicator, never a bare
    spinner. Tool calls render ABOVE the answer.
 9. Errors never apologize: what happened + why + what you can do.

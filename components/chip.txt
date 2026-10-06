@@ -6,7 +6,7 @@ import { DsChip } from '~/design'   // Vuetify 불필요 · ds.css만
 활성 필터 표시, 첨부 파일 목록, 선택된 태그.
 
 ## Props
-- variant: 'default' | 'brand' = 'default' — 거의 default를 씁니다. 활성 필터도 중립 칩입니다.
+- variant: 'default' | 'brand' = 'default' — 걸린 필터 조건은 brand — 제품의 조건 칩 줄은 면을 벗기고 브랜드 선 + 글자(28px · 네모)로 씁니다. 첨부처럼 중립 표시는 default.
 - removable: boolean = true — ✕ 버튼 표시.
 
 ## Events

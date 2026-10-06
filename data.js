@@ -32,8 +32,8 @@ export const COMPONENTS = [
   reason: { ko: '시각이 전부인 컴포넌트라 직접 만듭니다. 직접 만든 버튼은 Vuetify와 특이도 싸움이 일어나지 않습니다.',
             en: 'Purely visual; building it ourselves avoids specificity wars with Vuetify.' },
   props: [
-    ['variant', `'primary' | 'secondary' | 'ghost' | 'danger'`, `'primary'`, '시각 강도. primary는 한 화면에 하나만.'],
-    ['size', `'default' | 'sm' | 'lg'`, `'default'`, '컨트롤 스케일 32/40/48. 필터 바·테이블 주변 같은 밀한 맥락은 sm, 랜딩·빈 상태의 대표 액션은 lg.'],
+    ['variant', `'primary' | 'secondary' | 'ghost' | 'danger'`, `'primary'`, '위계는 채움 하나 — primary(브랜드 채움, 한 화면에 하나)와 중립(테두리) 둘뿐. secondary · ghost는 옛 이름이고 모양은 중립과 같습니다. danger는 빨강 채움.'],
+    ['size', `'default' | 'sm' | 'lg'`, `'default'`, '높이 32(기본) / 28(sm) / 40(lg — 로그인 제출 버튼 전용).'],
     ['disabled', 'boolean', 'false', '비활성화. 이유를 Tooltip으로 알려주는 것을 권장.'],
     ['type', `'button' | 'submit' | 'reset'`, `'button'`, '폼 안에서도 기본은 button — 누른다고 제출되지 않습니다.'],
   ],
@@ -42,9 +42,9 @@ export const COMPONENTS = [
   // variant마다 독립 미리보기 블록 — 플레이그라운드가 #play/button/<key>로 그룹만 렌더
   demos: [
     { key: 'primary',   title: 'Primary',   desc: '화면의 대표 액션. 한 화면에 하나만.' },
-    { key: 'secondary', title: 'Secondary', desc: '보조 액션 — 취소·닫기·부가 기능.' },
-    { key: 'ghost',     title: 'Ghost',     desc: '가장 조용한 액션 — 툴바·반복 요소.' },
-    { key: 'danger',    title: 'Danger',    desc: '파괴적 액션. 기본은 조용한 외곽선, 호버할 때만 빨간 면.' },
+    { key: 'secondary', title: 'Secondary', desc: '옛 이름 — 중립(테두리) 버튼과 같은 모양. 취소·닫기·부가 기능.' },
+    { key: 'ghost',     title: 'Ghost',     desc: '옛 이름 — 중립 버튼과 같은 모양(테두리 있음). 글자만 필요하면 링크 버튼을 씁니다.' },
+    { key: 'danger',    title: 'Danger',    desc: '파괴적 액션 — 빨강 채움. 확인 창의 확인 버튼에.' },
   ],
   thumb: `<button class="btn btn-primary">New agent</button>`,
   demo: `<div class="row">
@@ -72,8 +72,10 @@ export const COMPONENTS = [
 <button class="btn btn-primary btn-lg">Large</button>`,
   guidelines: [
     ['해야 할 것', 'primary는 한 화면에 하나. 그 화면에서 사용자가 할 "그 행동"에만 씁니다.'],
-    ['해야 할 것', '파괴적 액션은 danger를 쓰되, 기본은 조용한 외곽선 — 호버할 때만 빨간 배경이 드러납니다.'],
-    ['하지 말 것', '취소 버튼을 primary로 쓰지 않습니다. 취소는 secondary 또는 ghost입니다.'],
+    ['해야 할 것', '라벨은 "대상 + 동사", 동사가 끝입니다 — [사용자 추가] [권한 편집]. 대상이 뻔하면 동사만 — [저장] [삭제].'],
+    ['해야 할 것', '만들기 · 편집 · 저장은 화면 제목줄 오른쪽에 둡니다. 필터줄에는 거르는 것만.'],
+    ['하지 말 것', '취소 버튼을 primary로 쓰지 않습니다. 취소는 중립 버튼입니다.'],
+    ['하지 말 것', '옅은 면을 깐 세컨더리를 새로 만들지 않습니다. 위계는 채운 것 하나와 중립뿐입니다.'],
     ['접근성', '아이콘만 있는 버튼에는 반드시 aria-label을 붙입니다.'],
   ],
 },
@@ -277,23 +279,23 @@ export const COMPONENTS = [
     ['error', 'string', '—', '에러 메시지. 있으면 에러 상태가 됩니다.'],
     ['placeholder', 'string', '—', '입력 예시.'],
     ['type', 'string', `'text'`, 'HTML input type.'],
-    ['size', `'sm' | 'default'`, `'default'`, '컨트롤 스케일 — 기본 32 / md 36 / lg 40 (sm은 32의 다른 이름).'],
+    ['size', `'sm' | 'default'`, `'default'`, '높이 — 기본 32. 제품의 컨트롤은 기본 32 · sm 28 · lg 40(로그인 · 큰 검색칸)입니다.'],
   ],
   slots: [],
   thumb: `<div class="field"><input class="input" placeholder="Acme Inc." /></div>`,
   demo: `<div class="row" style="align-items:flex-start;gap:24px">
-    <div class="field"><label>Workspace name</label><input class="input" placeholder="Acme Inc." /><div class="hint">모든 멤버에게 표시됩니다.</div></div>
+    <div class="field"><label>Workspace name</label><input class="input" placeholder="Acme Inc." /><div class="hint">모든 구성원에게 표시됩니다.</div></div>
     <div class="field"><label>Email</label><input class="input error" value="ujin@" /><div class="hint error">올바른 이메일 주소를 입력하세요.</div></div>
   </div>`,
   vue: `<DsInput v-model="name" label="Workspace name"
-  placeholder="Acme Inc." hint="모든 멤버에게 표시됩니다." />
+  placeholder="Acme Inc." hint="모든 구성원에게 표시됩니다." />
 
 <DsInput v-model="email" label="Email"
   :error="emailError" />`,
   html: `<div class="field">
   <label>Workspace name</label>
   <input class="input" placeholder="Acme Inc." />
-  <div class="hint">모든 멤버에게 표시됩니다.</div>
+  <div class="hint">모든 구성원에게 표시됩니다.</div>
 </div>
 
 <!-- 에러 상태 -->
@@ -316,7 +318,7 @@ export const COMPONENTS = [
     ['items', 'any[]', '필수', '옵션 목록.'],
     ['label', 'string', '—', '필드 라벨.'],
     ['multiple', 'boolean', 'false', '다중 선택.'],
-    ['size', `'sm' | 'default'`, `'default'`, '컨트롤 스케일 — 기본 32 / md 36 / lg 40 (sm은 32의 다른 이름).'],
+    ['size', `'sm' | 'default'`, `'default'`, '높이 — 기본 32. 제품의 컨트롤은 기본 32 · sm 28 · lg 40(로그인 · 큰 검색칸)입니다.'],
     ['error', 'string', '—', '에러 메시지.'],
   ],
   slots: [],
@@ -337,14 +339,14 @@ export const COMPONENTS = [
   summary: '선택된 항목을 표시하고 제거합니다.',
   reason: { ko: 'VChip보다 훨씬 단순한 형태만 필요합니다.', en: 'We need a far simpler shape than VChip.' },
   props: [
-    ['variant', `'default' | 'brand'`, `'default'`, '거의 default를 씁니다. 활성 필터도 중립 칩입니다.'],
+    ['variant', `'default' | 'brand'`, `'default'`, '걸린 필터 조건은 brand — 제품의 조건 칩 줄은 면을 벗기고 브랜드 선 + 글자(28px · 네모)로 씁니다. 첨부처럼 중립 표시는 default.'],
     ['removable', 'boolean', 'true', '✕ 버튼 표시.'],
   ],
   events: [['remove', '—', '✕ 클릭 시 발생.']],
   slots: [['default', '칩 라벨.']],
   demos: [
-    { key: 'default', title: 'Default', desc: '거의 항상 이것 — 활성 필터도 중립 칩.' },
-    { key: 'brand',   title: 'Brand',   desc: '에이전트 관련 표시에만.' },
+    { key: 'default', title: 'Default', desc: '첨부 파일 · 고른 항목 같은 중립 표시.' },
+    { key: 'brand',   title: 'Brand',   desc: '걸린 필터 조건 — 조건 칩 줄에서는 면 없이 선 + 글자. ×는 그 값 하나만 뺍니다.' },
   ],
   demo: `<div class="row">
     <span class="chip">design-system.pdf<button class="x" aria-label="Remove">${ic('close',12)}</button></span>
@@ -513,7 +515,7 @@ export const COMPONENTS = [
   guidelines: [
     ['해야 할 것', '에러 토스트는 무엇이 실패했고 왜인지 말합니다("10MB를 초과합니다").'],
     ['하지 말 것', '액션을 두 개 이상 넣지 않습니다. 선택이 필요하면 Dialog입니다.'],
-    ['예외', '떠 있는 요소라 이 시스템에서 그림자가 허용되는 몇 안 되는 컴포넌트입니다.'],
+    ['예외', '떠 있는 요소라 그림자 토큰(--shadow-lg)을 씁니다. 페이지 안에 놓인 것은 그림자 없이 1px 선입니다.'],
   ],
 },
 
@@ -586,7 +588,7 @@ export const COMPONENTS = [
   props: [
     ['headers', 'any[]', '필수', 'VDataTable headers 형식. numeric: true를 주면 그 열은 오른쪽 정렬 + 자릿수 고정폭이 됩니다.'],
     ['items', 'any[]', '필수', '행 데이터.'],
-    ['size', `'sm' | 'default' | 'lg'`, `'default'`, '행 높이 34 / 42 / 50px (원칙 3).'],
+    ['size', `'sm' | 'default' | 'lg'`, `'default'`, '행 높이 34 / 46 / 50px. 제품의 목록 표는 줄 52 · 머리 40(13px/600, sticky)입니다 — Foundation › Density.'],
     ['striped', 'boolean', 'false', '홀짝 행에 옅은 면. 열이 많아 눈이 행을 놓칠 때만.'],
     ['sticky', 'boolean', 'false', '헤더 고정 — height와 함께 씁니다.'],
     ['bordered', 'boolean', 'true', '바깥 테두리·모서리. 이미 테두리가 있는 카드 안에서는 false.'],
@@ -596,7 +598,7 @@ export const COMPONENTS = [
   ],
   slots: [['(VDataTable의 모든 슬롯)', 'item.* 등 Vuetify 슬롯이 그대로 전달됩니다.']],
   demos: [
-    { key: 'default',    title: 'Default',    desc: '기본 — 42px 행, 행에 hover하면 지금 보는 줄이 드러납니다.' },
+    { key: 'default',    title: 'Default',    desc: '기본 — 46px 행(상세 키–값 표와 같은 높이). 줄 hover는 눌러서 열리는 표에만 둡니다.' },
     { key: 'sm',         title: 'Small',      desc: '34px 행 — 한 화면에 더 많이 보여야 하는 감사 로그·이력.' },
     { key: 'lg',         title: 'Large',      desc: '50px 행 — 행마다 아바타·배지가 여럿 들어갈 때.' },
     { key: 'striped',    title: 'Striped',    desc: '홀짝 행에 옅은 면. 열이 많아 눈이 행을 놓칠 때만 씁니다.' },
@@ -628,8 +630,9 @@ export const COMPONENTS = [
   guidelines: [
     ['해야 할 것', '숫자 열에는 numeric: true를 줍니다 — 오른쪽 정렬 + 자릿수 고정폭이라야 크기를 눈으로 비교할 수 있습니다.'],
     ['하지 말 것', 'striped를 기본으로 쓰지 않습니다. 줄무늬는 정보가 아니라 장식이고, 대부분의 표는 hover만으로 충분합니다.'],
-    ['해야 할 것', '드라이브·목록처럼 훑는 화면은 compact, 그 외는 comfortable (원칙 3).'],
-    ['해야 할 것', '행 액션은 호버 시에만 드러내 기본 화면을 조용하게 유지합니다.'],
+    ['해야 할 것', '표는 두 갈래 — 줄 클릭 표(줄이 곧 물건) · 링크 표(맨 왼쪽 한 칸이 문). 한 표 안에서 섞지 않습니다.'],
+    ['해야 할 것', '상태 열은 오른쪽 끝, 조작 열(⋯ · 스위치) 바로 앞. 조작 열은 늘 섭니다.'],
+    ['해야 할 것', '머리 칸은 전부 정렬 — 빈 값은 맨 뒤, 수 · 일시는 내림차순부터. 값이 없는 칸은 "—".'],
   ],
 },
 {
@@ -695,7 +698,7 @@ export const COMPONENTS = [
   <span class="f-name">계약서_최종.pdf</span>
   <span class="f-meta">2.1 MB · Jun 28</span>
 </div>`,
-  guidelines: [['해야 할 것', 'compact 밀도(42px)를 유지해 많은 파일을 훑기 좋게 합니다.']],
+  guidelines: [['해야 할 것', '42px 행을 유지해 많은 파일을 훑기 좋게 합니다.']],
 },
 {
   id: 'searchresult', name: 'SearchResult', ko: '검색 결과', category: 'data',
@@ -963,7 +966,7 @@ export const COMPONENTS = [
   props: [
     ['modelValue', 'any', '—', 'v-model.'],
     ['items', '{ value, label }[]', '필수', '선택지.'],
-    ['size', `'sm' | 'default' | 'lg'`, `'default'`, '컨트롤 스케일 32/40/48. 필터 바·툴바는 sm.'],
+    ['size', `'sm' | 'default' | 'lg'`, `'default'`, '높이 32(기본) / 40(lg).'],
   ],
   slots: [],
   demo: `<div class="ds-bg-demo"><span class="on">리스트</span><span>그리드</span></div>`,
@@ -973,7 +976,9 @@ export const COMPONENTS = [
 ]" />`,
   html: null,
   guidelines: [
-    ['해야 할 것', '선택지는 2~4개까지. 그 이상이면 Select를 씁니다.'],
+    ['해야 할 것', '선택지는 2~5개 · 짧은 라벨까지. 그 이상이거나 라벨이 길면 Select를 씁니다.'],
+    ['해야 할 것', '켜진 칸은 흰 면 + 브랜드 1px 링 + 브랜드 글자(--nav-active). 면을 브랜드로 채우지 않습니다.'],
+    ['하지 말 것', '한 줄에서 하나 고르는 값이 여러 줄에 걸치면 세그먼티드가 아니라 매트릭스입니다 — 줄끼리 열이 안 맞습니다.'],
     ['하지 말 것', '페이지를 바꾸는 내비게이션으로 쓰지 않습니다. 그건 Tabs입니다.'],
   ],
 },
@@ -985,10 +990,10 @@ export const COMPONENTS = [
             en: 'Default uppercase + ripple clash with our tone; count badges are frequently needed.' },
   props: [
     ['modelValue', 'any', '—', 'v-model.'],
-    ['items', '{ value, label, count? }[]', '필수', 'count를 주면 배지가 붙습니다.'],
+    ['items', '{ value, label, count? }[]', '필수', 'count는 처리하면 줄어드는 대기열(미답변 등)에만 줍니다.'],
   ],
   slots: [],
-  demo: `<div class="ds-tabs-demo"><span class="on">전체 <b>12</b></span><span>실패 <b>3</b></span><span>경고 <b>2</b></span></div>`,
+  demo: `<div class="ds-tabs-demo"><span class="on">미답변 <b>14</b></span><span>답변 완료</span></div>`,
   vue: `<DsTabs v-model="tab" :items="[
   { value: 'all', label: '전체', count: 12 },
   { value: 'error', label: '실패', count: 3 },
@@ -997,6 +1002,9 @@ export const COMPONENTS = [
   guidelines: [
     ['해야 할 것', '탭은 같은 대상의 다른 단면일 때만. 다른 대상이면 내비게이션입니다.'],
     ['하지 말 것', '탭 안에 탭을 넣지 않습니다.'],
+    ['하지 말 것', '탭마다 건수 배지를 달지 않습니다 — 건수는 목록 위 한 곳. 줄어드는 대기열만 예외.'],
+    ['해야 할 것', '페이지 탭은 밑줄 탭, 화면 안 보기 전환은 세그먼티드. 탭 줄 아래에 선 · 여백을 또 두지 않습니다.'],
+    ['해야 할 것', '활성 탭은 브랜드 글자 + 브랜드 밑줄(--nav-active). 면은 그대로.'],
   ],
 },
 {
@@ -1080,7 +1088,7 @@ export const COMPONENTS = [
     ['hint', 'string', '—', '보조 설명.'],
     ['error', 'string', '—', '에러 메시지.'],
     ['rows', 'number', '3', '초기 줄 수. 내용이 늘면 자동 확장.'],
-    ['size', `'sm' | 'default'`, `'default'`, '컨트롤 스케일 — 기본 32 / md 36 / lg 40 (sm은 32의 다른 이름).'],
+    ['size', `'sm' | 'default'`, `'default'`, '높이 — 기본 32. 제품의 컨트롤은 기본 32 · sm 28 · lg 40(로그인 · 큰 검색칸)입니다.'],
   ],
   slots: [],
   demo: `<div class="field"><label>메모</label><textarea class="input" style="height:auto;padding:10px 12px;min-height:66px" placeholder="내용을 입력하세요"></textarea><div class="hint">줄이 늘면 자동으로 커집니다.</div></div>`,
@@ -1099,13 +1107,13 @@ export const COMPONENTS = [
     ['items', 'any[]', '필수', '옵션.'],
     ['multiple', 'boolean', 'false', '다중 선택 시 칩으로 표시됩니다.'],
     ['error', 'string', '—', '에러 메시지.'],
-    ['size', `'sm' | 'default'`, `'default'`, '컨트롤 스케일 — 기본 32 / md 36 / lg 40 (sm은 32의 다른 이름).'],
+    ['size', `'sm' | 'default'`, `'default'`, '높이 — 기본 32. 제품의 컨트롤은 기본 32 · sm 28 · lg 40(로그인 · 큰 검색칸)입니다.'],
   ],
   slots: [],
   demos: [
     { key: 'single',   title: 'Single',   desc: '하나만 고를 때 — 고른 값이 글자로 남습니다.' },
     { key: 'multiple', title: 'Multiple', desc: '여러 개 — 고른 값이 칩으로 쌓이고, 넘치면 줄이 늘어납니다.' },
-    { key: 'sizes',    title: 'Sizes',    desc: '32 / 36 / 40px — 다른 입력 컨트롤과 같은 두 단계. 필터 바·툴바는 sm.' },
+    { key: 'sizes',    title: 'Sizes',    desc: '기본 32 — 다른 입력 컨트롤과 같은 높이.' },
     { key: 'states',   title: 'States',   desc: '에러 · 비활성 — 입력 필드와 같은 언어.' },
   ],
   demo: `<div class="field"><label>폴더</label><div class="input" style="display:flex;gap:6px;align-items:center"><span class="chip" style="height:20px">법무<button class="x">${ic('close',12)}</button></span><span style="color:var(--gray-9);font-size:13px">검색…</span></div></div>`,
@@ -1231,7 +1239,7 @@ export const COMPONENTS = [
     ['accept', 'string', '—', '허용 확장자.'],
     ['multiple', 'boolean', 'false', '여러 개 선택.'],
     ['error', 'string', '—', '에러 메시지.'],
-    ['size', `'sm' | 'default'`, `'default'`, '컨트롤 스케일 — 기본 32 / md 36 / lg 40 (sm은 32의 다른 이름).'],
+    ['size', `'sm' | 'default'`, `'default'`, '높이 — 기본 32. 제품의 컨트롤은 기본 32 · sm 28 · lg 40(로그인 · 큰 검색칸)입니다.'],
   ],
   slots: [],
   demo: `<div class="field"><label>문서 업로드</label><div class="input" style="color:var(--gray-9)">파일 선택 또는 드래그</div><div class="hint">PDF·DOCX · 최대 10MB</div></div>`,
@@ -1284,7 +1292,7 @@ export const COMPONENTS = [
     ['hint', 'string', '—', '보조 설명.'],
     ['error', 'string', '—', '에러 메시지. 있으면 에러 상태.'],
     ['placeholder', 'string', `'날짜 선택'`, '비었을 때 문구.'],
-    ['size', `'sm' | 'default'`, `'default'`, '32 / 36 / 40px — 필터 바·툴바는 sm.'],
+    ['size', `'sm' | 'default'`, `'default'`, '높이 — 기본 32. 제품의 컨트롤은 기본 32 · sm 28 · lg 40(로그인 · 큰 검색칸)입니다.'],
     ['clearable', 'boolean', 'false', '지우기 버튼.'],
     ['presets', '[string, number][]', '—', `기간 프리셋. 예: [['최근 7일', 7]].`],
     ['min · max · disablePast · disableFuture', '—', '—', 'Calendar와 같습니다.'],
@@ -1294,7 +1302,7 @@ export const COMPONENTS = [
     { key: 'default',   title: 'Default',   desc: '기본 — 비었을 때는 무엇을 고르는 칸인지 문구로 알립니다.' },
     { key: 'range',     title: 'Range',     desc: '기간 — 고른 값은 "시작 ~ 종료"로 한 줄에 보입니다.' },
     { key: 'presets',   title: 'Presets',   desc: '기간 프리셋. 최근 7일을 두 번 클릭으로 만들지 않습니다.' },
-    { key: 'sizes',     title: 'Sizes',     desc: '32 / 36 / 40px — 다른 입력 컨트롤과 같은 두 단계.' },
+    { key: 'sizes',     title: 'Sizes',     desc: '기본 32 — 다른 입력 컨트롤과 같은 높이.' },
     { key: 'clearable', title: 'Clearable', desc: '선택을 되돌릴 수 있어야 하는 필터에.'},
     { key: 'states',    title: 'States',    desc: '에러 · 비활성 — 입력 필드와 같은 언어.' },
   ],
@@ -1633,7 +1641,7 @@ export const COMPONENTS = [
   vue: `<DsKbd :keys="['⌘', 'K']" />
 <DsKbd>Esc</DsKbd>`,
   html: `<kbd class="kbd">⌘</kbd><kbd class="kbd">K</kbd>`,
-  guidelines: [['해야 할 것','기능 이름과 함께 씁니다 — "⌘K로 어디서든 검색".']],
+  guidelines: [['해야 할 것','기능 이름과 함께 씁니다 — "⌘K로 어디서든 검색".'],['해야 할 것','글꼴은 --font(Pretendard)입니다 — 키 이름은 코드가 아닙니다. 화살표 · ↵는 글자가 아니라 아이콘으로.']],
 },
 {
   id: 'code', name: 'Code', ko: '코드', category: 'content',
@@ -1740,7 +1748,7 @@ export const COMPONENTS = [
   props: [
     ['dense','boolean','false','40px 줄 (기본 48).'],
     ['label','string','—','화면에 툴바가 둘 이상이면 구분할 이름.'],
-    ['size', `'sm' | 'default'`, `'default'`, '컨트롤 스케일 — 기본 32 / md 36 / lg 40 (sm은 32의 다른 이름).'],
+    ['size', `'sm' | 'default'`, `'default'`, '높이 — 기본 32. 제품의 컨트롤은 기본 32 · sm 28 · lg 40(로그인 · 큰 검색칸)입니다.'],
   ],
   slots: [['default','컨트롤들. .sep(구분) · .spacer(밀기) 사용 가능.']],
   demo: `<div class="ds-toolbar" style="width:100%"><button class="btn btn-secondary btn-sm">필터</button><button class="btn btn-ghost btn-sm">내보내기</button><span class="sep"></span><span style="font-size:var(--text-xs);color:var(--gray-9)">12건</span><span class="spacer"></span><button class="btn btn-primary btn-sm">에이전트 추가</button></div>`,
@@ -1961,7 +1969,7 @@ export const VUETIFY_COVERAGE = [
   ['VChipGroup', 'css', '', '칩 묶음'],
   ['VItemGroup', 'css', '', '선택 그룹'],
   ['VCode', 'css', '', 'mono · 회색 배경'],
-  ['VKbd', 'css', '', 'mono · 반전 배경'],
+  ['VKbd', 'css', '', 'Pretendard · 반전 배경'],
   ['VHotkey', 'css', '', 'VKbd 기반'],
   ['VOverflowBtn', 'css', '', 'VSelect 기반'],
 

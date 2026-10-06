@@ -21,40 +21,56 @@
 - Word List (용어집) — https://Cogniterm.github.io/design-system/#/foundation/wordlist
 
 ## Hard rules for generating screens
-- Color: brand ONLY for primary actions, links, focus and progress. Gray does 95%.
-  SELECTION/ACTIVE states are NEUTRAL: var(--sel-bg) (gray-4) + var(--sel-fg)
-  (gray-12) — never brand. Blue active states everywhere dilute the primary button.
-  Gray roles — 1-2 background, 3 hover bg, 9 faint text, 11 secondary, 12 body.
-  BORDERS never use solid gray numbers — use the semantic alpha tokens:
-  --border-subtle (row dividers) / --border (cards, tables) /
-  --border-strong (buttons, inputs) / --border-hover. They are translucent
-  (gray-a scale), so strokes sit lighter on any background.
-  Status tints use tokens too: --success-subtle/-border, --warning-*, --danger-*,
-  --info-* — never inline color-mix. Each status has 3 tiers: solid (text/dot),
-  -subtle (surface), -border (outline).
-  Charts use --chart-1..6 in order (brand blue, teal, violet, amber, pink, green);
-  they deliberately avoid status hues so "red = failure" keeps its meaning.
-- Tables: NO background fills. Header is transparent with a --border-strong bottom
-  rule and gray-10 medium 12px labels; rows separate with --border-subtle only.
-  No zebra striping, no hover fill.
-- Type: Pretendard, 10 steps only — 11/12/13/14/15/16/20/24/30/36 via var(--text-*).
-  Page titles are fluid: h1 clamp 26-32px, landing hero 30-40px.
-  UI surfaces (buttons, tables, sidebars) use 13-14px; reading surfaces (explanations,
-  agent responses) use 15px with line-height 1.8. Using one size for both makes both
-  mediocre. Weights 400/500/600 — never 700+.
+- The PRODUCT (admin console + user app) is the reference. Where docs and product
+  disagree, the product wins. Products switch dark mode with the `.dark` class
+  (this doc site alone uses [data-theme="dark"]; ds.css accepts both).
+- Color: brand #1F7FF0 (dark #4A97F5, white label in both) ONLY for primary
+  actions, links (--primary-text), focus, progress and ACTIVE marks. Gray does 95%.
+  ACTIVE (tabs, segmented, filter trigger with a value, condition chips) = brand
+  stroke + brand text via --nav-active / --nav-active-fg, NO fill.
+  SELECTED rows (list rows, nav/GNB current item) = neutral gray fill
+  var(--selected-fill). Never fill a selected/active item with brand or black.
+  Gray is a NEUTRAL scale built from the product tokens (not Radix Slate):
+  --muted #f4f4f5, --border #e4e4e7, --input #d6d6da, --border-emphasized #c9c9cd,
+  --muted-foreground #707070, --foreground #1a1a1a.
+  BORDERS are SOLID tokens: --border (cards, tables, buttons, inputs) /
+  --input (one step stronger) / --border-emphasized (hover, checkbox).
+  Only --border-subtle (row dividers in lists) is translucent. Never pick gray numbers.
+  Status tokens are --success/--warning/--error (+ -text for TEXT, -subtle, -border);
+  --danger-* is a legacy alias. Solid status colors fail AA as text — use -text.
+  Shell: --canvas #F4F4F5 with a white --card panel inset 8px. Dark: the content
+  surface --card #101013 is DARKER than the canvas #181818 (reversed relation).
+  Tokens that reference other tokens with var() must be redeclared in the .dark
+  block too — var() resolves where it is declared.
+  Charts: axes are --border 1px like the grid, never thicker/darker; re-render on
+  theme change; size from the container width, not the window.
+- Tables (console list tables): header 40px, 13px/600 --muted-foreground, sticky,
+  1px bottom line; rows 52px, 14px, 1px --border line. No zebra.
+  Row hover ONLY on rows that open something (.rowlink). Status/result column at the
+  right end, just before the action column. Empty cell = "—", never 0.
+  Detail key-value card tables (.jt): rows 46, header 38, key column 188px.
+- Type: Pretendard, 8 steps only — 11/12/13/14/15/16/20/24 via var(--text-*).
+  20 = screen titles, 24 = card (KPI) numbers. No half pixels. --text-3xl/4xl
+  exist but are not used in product screens.
+  UI surfaces use 13-14px; reading surfaces (agent responses) use 15px with
+  line-height 1.8. Weights 400/500/600 — never 700+.
   Hierarchy comes from weight and color, not size.
-  No uppercase and no positive letter-spacing (both break Korean; the uppercase+
-  tracking combo also reads as generic admin-template). Micro labels are 12px /
-  weight 500 / gray instead. word-break: keep-all.
+  No uppercase and no positive letter-spacing. word-break: keep-all.
+  --mono only for values read column-wise (time, IP, size, IDs, code);
+  keycaps (.kbd) use --font (Pretendard), not mono.
   Tabular numerals (font-variant-numeric) on timestamps, sizes and counts.
-  Icons: Lucide at stroke-width 2 (the lucide default — app chrome uses it raw).
-  Focus ring: box-shadow 0 0 0 2px bg, 0 0 0 4px brand (var(--focus-ring)) — same
-  ring on every interactive element. Overlay shadow: var(--shadow-overlay), a
-  3-layer stack (1px outline + near + far), never a single blurry drop shadow.
+  Icons: Lucide at stroke-width 2, addressed by semantic name.
+  Focus — three styles exist today: buttons & native checkbox/radio = outline 2px
+  brand, offset 1px; inputs/segmented/search = brand border + 3px brand-22% ring;
+  DS checkbox/radio parts, tree rows, links = var(--focus-ring) double ring.
   Line-height tokens: tight 1.3 (headings), ui 1.5 (dense), normal 1.62, prose 1.8.
   Reading measure max 720px (var(--measure)) — px, not ch (Korean is full-width).
-- Spacing: multiples of 4 only (0 4 8 12 16 24 32 48 64). Grouping is proximity.
-  Reading width max 720px (68ch); data screens 1080-1280px.
+- Spacing: multiples of 4 inside components. Grouping is proximity.
+  Page side padding is 20px everywhere. Exception — document-style screens
+  (reports) express layers by gap: 44 (section↔section, 20px/600 titles) /
+  32 (doc head→first section) / 28 (block↔block, 16px/600 titles) /
+  18 (section→first block) / 10 (block title→content). Dashboard card:
+  padding 16, title 16px/600, 10 below the title.
 - Layout grid: role columns, not a forced 12-col — docs shell is LNB 264px /
   main minmax(0,720px) / TOC rail 192px, gap 48px. Card lists use
   repeat(auto-fill, minmax(232px,1fr)). Breakpoints 1280/1080/900/640; at 900 the
@@ -63,103 +79,177 @@
 - Grouping: sections are separated by WHITESPACE and heading weight (64px above
   an h2), never by horizontal rules. Borders belong to components (cards, tables,
   controls) and shell edges only.
-- Shape: radius sm=4 md=6 lg=8 xl=12. Controls use lg, large surfaces use xl.
+- Shape: --r-in 4 (inside elements: checkbox, small chip, kbd) / --r-el 6
+  (elements: buttons, inputs, menu items) / --r-ct 10 (containers: cards, panels,
+  dialogs) / --r-full. --r-sm/md/lg/xl are legacy aliases. Never write px radius.
   Border always 1px. Nested radius must be <= parent radius.
-- Elevation: NO elevation scale. Shadow only on Menu, Dialog, Tooltip, Snackbar.
-- Density: compact 34px / comfortable 42px (default) / spacious 50px row height.
-  Never mix densities within one screen.
+- Elevation: things placed IN the page get no shadow, only a 1px --border.
+  Floating things use the shadow tokens: --shadow-sm (slider thumb, small control),
+  --shadow-md (card hover, small pop), --shadow-lg (popovers, toast),
+  --shadow-xl (dialogs, advanced-search panel), --shadow-overlay (menus,
+  notification panel, file picker), --shadow-drawer (slide-over panels).
+  Never write raw rgba shadows. Scrim: var(--scrim).
+- Heights: controls 32 (default) / 28 (sm) / 40 (lg — login submit and the big
+  search field on user-app list screens only). Tabs 40. Menu items 32.
+  No 34/42/50 density steps — list tables are always 52 rows / 40 header.
 - Motion: 160ms default, 240ms max, ease only, fade for overlays, no ripple.
   Honor prefers-reduced-motion.
 - Accessibility: WCAG 2.2 AA. Never rely on color alone. Never remove focus outline.
-  aria-label on icon-only buttons.
+  Icon-only buttons get BOTH title and aria-label — but never title and data-tip
+  on the same element (two tooltips appear).
+  Known exception: white label on --primary is 3.9:1 light / 3.0:1 dark.
 - Writing: errors never apologize. Formula = what happened + why + what you can do.
-  Buttons start with a verb; dialog buttons repeat the action ("삭제", not "확인").
+  Button labels are "대상 + 동사" with the verb LAST (사용자 추가, 권한 편집);
+  verb alone when the object is obvious (저장, 삭제). Dialog buttons repeat the
+  action ("삭제", not "확인"). No instruction text like "행을 누르면 …합니다".
+  Korean particles follow the preceding word; never write 을(를).
+  Dates YYYY-MM-DD (hyphens only), datetime MM-DD HH:MM (this year), ranges with ~.
+  Empty value "—", not 0.
 - Korean UI vocabulary is FIXED — see the word list. Key ones:
-  에이전트 (not AI/봇), 실행 (not 수행/구동), 실행 기록 (not 히스토리),
-  실행 중 (not 진행 중/처리 중), 실패 (not 오류/에러), 부분 완료,
-  만들기 (not 생성/추가), 저장 (not 적용/확인), 되돌리기 (not 언두).
+  에이전트 (not AI/봇), 실행 (not 수행/구동), 실행 중 (not 진행 중/처리 중),
+  추가 for new things (existing console screens still mix 생성/추가 — known,
+  don't rename), 편집 (not 수정), 저장 (not 적용/확인), 구성원 (not 멤버),
+  내보내기 = table→file, 내려받기 = original file (permission name 다운로드 stays),
+  search placeholder "<대상> 검색". No dev words on screen (테넌트, 바인딩, 축).
+  STATUS vs RESULT are two axes: 상태 (지금) 정상 · 일시정지 / 활성 · 비활성;
+  결과 (한 번) 완료 · 확인 필요 · 오류; a file result is 완료 / 실패.
+  Never "정상" for a run.
   Sentences end 합니다; instructions 하세요; dialog titles 할까요? (never 하시겠습니까?).
   Units are spaced from numbers: 2.1 MB, 128건, 12.4초.
   Full list: https://Cogniterm.github.io/design-system/#/foundation/wordlist
 
-## Tokens (source of truth: ds.css)
+## Tokens (ds.css — names match the product; product values live in the apps' 토큰.css and win on conflict)
 ```css
 :root {
-  /* ── Brand ──────────────────────────
-     --primary는 "면" 색입니다 (버튼 배경·점·인디케이터·포커스 링).
-     브랜드 원색을 그대로 씁니다 — 색 일치를 접근성보다 우선한 결정입니다.
-     ⚠ 흰 라벨을 얹으면 3.92:1로 WCAG AA(4.5:1)에 미달합니다.
-       비텍스트 UI 기준(3:1)은 통과하므로 점·링·보더에는 문제가 없습니다.
-     글자·링크에는 --primary를 쓰지 말고 반드시 --primary-text를 씁니다 (5.89:1). */
-  --primary: #1F7FF0;         /* 면 — 브랜드 원색 */
-  --primary-text: #0F62C4;    /* 글자·링크 — 흰 배경과 5.89:1 */
-  --primary-hover: #1C74DC;
-  --primary-active: #1A6CCC;
-  --accent-muted: #EBF3FE;
-  --primary-foreground: #ffffff;
+  /* ⚠ 이 덩이는 앱 토큰 파일에서 받아 온 것입니다 — 여기서 고치지 말고 앱 토큰.css 를 고친 뒤 npm run tokens:pull (2026-10-06) */
+  /* ── 콘솔 원본 ─────────────────────────────────────────────
+     아래 블록은 shared/design/index.css 와 **값이 같아야 합니다.**
+     주석까지 저쪽에서 그대로 옮겨 왔습니다. 임의로 손대지 마세요. */
+  --background:#ffffff; --foreground:#1a1a1a; --card:#ffffff;
+  --primary:#1f7ff0; --primary-foreground:#ffffff;
+  --muted:#f4f4f5; --muted-foreground:#707070;
+  --border:#e4e4e7; --input:#d6d6da; --ring:#1f7ff0;
+  --border-emphasized:#c9c9cd;
+  --success:#2f9e44; --error:#d6362a; --warning:#e69100;
+  /* 글자용 상태색 — 위 세 개는 면 색이고 글자에는 이쪽. --success-text는 2026-09-08에
+     관리자 콘솔이 늘린 것을 받아온 것입니다(흰 배경 5.01:1). 원색 #2f9e44는 3.45:1이라
+     글자로 쓰면 WCAG AA 미달입니다 — 배지 바탕·점에만 쓰세요. */
+  --error-text:#c92a2a; --warning-text:#9a6700; --success-text:#17803d;
+  --accent-muted:#e9f2fe;
+  --overlay-hover:rgba(0,0,0,.05); --selected-fill:rgba(0,0,0,.06);
+  --canvas:#f4f4f5;
+  --r-el:6px; --r-ct:10px;
+  --font:'Pretendard Variable', Pretendard, -apple-system, sans-serif;
+  /* 탭·필터 활성 — 선·글자는 브랜드, 면은 옅은 브랜드. 면을 브랜드로 채우지 않습니다 */
+  --nav-active: var(--primary);
+  --nav-active-fg: var(--primary);
+  --nav-active-bg: color-mix(in srgb, var(--primary) 7%, transparent);
+  /* 범주형 팔레트 — '종류'에 고정으로 붙는 색 (순위·개수가 바뀌어도 색은 그대로).
+     1번은 브랜드색, 나머지는 색맹 판별(ΔE)·명도대비 검증을 통과한 조합입니다.
+     ⚠ 상태색(성공·경고·오류)과 섞어 쓰지 마세요 — 저쪽은 의미가 고정된 색입니다. */
+  --cat-1: #1f7ff0; --cat-2: #eb6834; --cat-3: #1baf7a;
+  --cat-4: #eda100; --cat-5: #e87ba4; --cat-6: #008300;
+  /* 7 · 8은 관리자 콘솔이 2026-08-28에 늘린 두 칸입니다 — 그래프 라벨 열둘을 여섯 색에
+     담으려니 법령 계통 하나에만 넷이 몰렸습니다. 여기 화면에는 아직 쓰는 곳이 없지만,
+     토큰은 기준(콘솔)과 같은 벌이어야 합니다 — 없으면 `npm run ds:check`가 잡습니다. */
+  --cat-7: #0b87a3; --cat-8: #8250c4;
+  /* 지식자산 갈래 — 커넥터 파이프라인(브랜드 블루)과 다른 계통이라는 걸 색으로 못박습니다 */
+  --kb: #7c3aed;
+  /* 스크롤바 */
+  color-scheme: light;
+  --scrollbar: rgba(0, 0, 0, .28); --scrollbar-hover: rgba(0, 0, 0, .45);
 
-  /* ── Radix Slate (light) 1~12 ── */
-  --gray-1: #fcfcfd; --gray-2: #f9f9fb; --gray-3: #f0f0f3; --gray-4: #e8e8ec;
-  --gray-5: #e0e1e6; --gray-6: #d9d9e0; --gray-7: #cdced6; --gray-8: #b9bbc6;
-  --gray-9: #8b8d98; --gray-10: #80838d; --gray-11: #60646c; --gray-12: #1c2024;
+  /* ── 확장 ──────────────────────────────────────────────────
+     콘솔에 없지만 본편이 쓰는 것들. **위 토큰에서 파생**시켜 원본이 하나로 유지되게 했습니다.
+     콘솔에도 필요해지면 저쪽에 먼저 올리고 여기서 지우세요. */
 
-  /* ── Alpha Gray ──────────────────────
-     반투명 회색 — 보더·구분선용. 불투명 회색보다 연하게 얹히고
-     어떤 배경 위에서도 자연스럽습니다 (OpenAI·Radix·Geist 방식). */
-  --gray-a1: color-mix(in srgb, var(--gray-12) 2%, transparent);
-  --gray-a2: color-mix(in srgb, var(--gray-12) 4%, transparent);
-  --gray-a3: color-mix(in srgb, var(--gray-12) 6%, transparent);
-  --gray-a4: color-mix(in srgb, var(--gray-12) 8%, transparent);
-  --gray-a5: color-mix(in srgb, var(--gray-12) 11%, transparent);
-  --gray-a6: color-mix(in srgb, var(--gray-12) 14%, transparent);
-  --gray-a7: color-mix(in srgb, var(--gray-12) 18%, transparent);
-  --gray-a8: color-mix(in srgb, var(--gray-12) 24%, transparent);
-  --gray-a9: color-mix(in srgb, var(--gray-12) 36%, transparent);
-  --gray-a10: color-mix(in srgb, var(--gray-12) 46%, transparent);
-  --gray-a11: color-mix(in srgb, var(--gray-12) 62%, transparent);
-  --gray-a12: color-mix(in srgb, var(--gray-12) 92%, transparent);
+  /* 그레이 12단 — 콘솔의 회색을 계조로 늘린 것. 3·7·10·12는 콘솔 값을 그대로 물고 있습니다.
+     화면 CSS는 이걸 직접 쓰지 않습니다(--muted 등 의미 토큰을 쓸 것) — 디자인시스템 내부용 */
+  --gray-1: #fcfcfc;
+  --gray-2: #fafafa;
+  --gray-3: var(--muted);              /* #f4f4f5 */
+  --gray-4: #ececee;
+  --gray-5: var(--border);             /* #e4e4e7 */
+  --gray-6: var(--input);              /* #d6d6da */
+  --gray-7: var(--border-emphasized);  /* #c9c9cd */
+  --gray-8: #b0b0b6;
+  --gray-9: #96969d;
+  --gray-10: var(--muted-foreground);  /* #707070 */
+  --gray-11: #5c5c62;
+  --gray-12: var(--foreground);        /* #1a1a1a */
 
-  /* ── Border ──────────────────────────
-     보더는 이 네 개만 씁니다. 회색 번호를 직접 고르지 않습니다. */
-  --border-subtle: var(--gray-a2);   /* 행 사이 구분선 */
-  --border:        var(--gray-a3);   /* 카드·패널·테이블 */
-  --input: var(--gray-a5);   /* 버튼·입력 — 조작 가능 표시 */
-  --border-emphasized:  var(--gray-a7);   /* 위 요소의 호버 */
+  /* 반투명 회색 — 어떤 면 위에 올려도 자연스러운 구분선용 */
+  --gray-a2: rgba(0,0,0,.04);
+  --gray-a3: rgba(0,0,0,.06);
+  --gray-a5: rgba(0,0,0,.11);
+  --gray-a6: rgba(0,0,0,.14);
+  --gray-a7: rgba(0,0,0,.18);
+  /* 빈 단 채움 (2026-09-15) — a1 · a4 · a8. DS 와 같은 단계. 겹판 · 옅은 띠가 .08 을 제일 자주 씁니다 */
+  --gray-a1: rgba(0,0,0,.02); --gray-a4: rgba(0,0,0,.08); --gray-a8: rgba(0,0,0,.24);
 
-  /* ── Status ──────────────────────────
-     각 상태는 3단: solid(글자·점) · subtle(면) · border(테두리).
-     면·테두리는 solid에서 파생하므로 다크에서도 자동으로 유효합니다. */
-  --success: #2f9e44;
-  --warning: #e69100;
-  --error:  #d6362a;
-  /* 글자용 상태색 — 지금은 위 값과 같지만 **따로 두는 데 이유가 있습니다** (2026-09-08).
-     위 셋은 앱이 자기 브랜드에 맞춰 덮어쓰는 **면 색**입니다(배지 바탕 · 점 · 테두리).
-     면은 비텍스트 기준(3:1)이라 원색을 그대로 써도 되지만, 글자는 4.5:1이 필요합니다.
-     둘을 한 토큰으로 두면 앱이 면을 바꾸는 순간 글자까지 따라가 대비가 무너집니다 —
-     실제로 그랬습니다: front-ux가 `--success`를 콘솔 값(#2f9e44)으로 덮자 `.badge.success` ·
-     `.check` · `.card .delta`가 전부 3.45:1이 됐고, 경고는 2.50:1까지 내려갔습니다.
-     **이 저장소의 대비 게이트는 자기 값만 검사하므로 그걸 못 잡습니다.**
-     `--primary` / `--primary-text` 를 나눈 것과 같은 이유이고, 관리자 콘솔이 이미 쓰던 방식입니다. */
-  --success-text: #17803d;
-  --warning-text: #9a6700;
-  --error-text:  #c92a2a;
-  --info:    var(--primary);
-  --favorite: #e8a800;      /* 즐겨찾기 별 — 골드 (비텍스트 UI, 3:1) */
+  /* 보더 3단 — 콘솔의 세 값에 '행 사이 구분선'만 더했습니다 */
+  --border-subtle: rgba(0,0,0,.05);
+
+  /* 브랜드 상호작용 단계 — 콘솔엔 hover/active 단계가 없어 여기서 정의합니다 */
+  --primary-hover: #1c74dc;
+  --primary-active: #1a6ccc;
+  /* 브랜드를 **글자·링크로** 쓸 때의 색. 면(--primary #1f7ff0)은 흰 배경과 3.92:1 이라
+     글자로 쓰면 WCAG AA(4.5:1)에 미달합니다. 점·링·보더는 비텍스트 기준(3:1)이라
+     --primary 로 충분하고, 글자만 이 값을 씁니다(5.89:1).
+     디자인시스템 원본이 쓰는 이름이라, 없으면 동기화할 때 색이 통째로 빕니다. */
+  --primary-text: #0f62c4;
+
+  /* 상태 3단 — solid(콘솔) + subtle(면) + border(테두리). 면·선은 solid에서 파생 */
+  --success-subtle: color-mix(in srgb, var(--success) 6%, var(--card));
+  --success-border: color-mix(in srgb, var(--success) 28%, transparent);
+  --warning-subtle: color-mix(in srgb, var(--warning) 6%, var(--card));
+  --warning-border: color-mix(in srgb, var(--warning) 30%, transparent);
+  --error-subtle:   color-mix(in srgb, var(--error) 6%, var(--card));
+  --error-border:   color-mix(in srgb, var(--error) 28%, transparent);
+  --info-subtle:    color-mix(in srgb, var(--primary) 5%, var(--card));
+  --info-border:    color-mix(in srgb, var(--primary) 24%, transparent);
+  /* 에러 포커스 링 — 면(6%)보다 진합니다. 3.5px 띠라 면과 같은 농도로는 안 보입니다 */
+  --error-ring: color-mix(in srgb, var(--error) 16%, var(--card));
+
+  /* 뒤집힌 면(토스트·툴팁) 위에 얹는 상태색 — 현재 테마 값을 쓰면 어두운 면에
+     어두운 색이 얹혀 안 보이므로 '반대 테마의 값'을 씁니다 */
+  --success-on-inverse: #51cf66;
+  --error-on-inverse:   #ff6b6b;
+
+  --favorite: #e8a800;   /* 즐겨찾기 별 — 골드 (비텍스트 UI, 3:1) */
   /* ── 파일 유형 — 확장자 아이콘 · 배지 색 (2026-09-15 신설) ──────────────────
      세 곳(콘솔 문서 탐색 · 이용자 AI 드라이브 · 파일피커)이 같은 팔레트를 저마다 적고,
      답변서 · 프로젝트 · 국회질의 분류는 **다른 팔레트**(React 포트 잔재: pdf #E5484D …)를 쓰고
      있었습니다 — 같은 PDF 가 화면마다 다른 빨강. 값은 콘솔 것입니다(콘솔이 정답, 2026-08-28 규칙).
-     확장자 → 토큰 매핑은 앱의 공용/파일유형.ts 한 벌입니다.
+     확장자 → 토큰 매핑은 공용/파일유형.ts 한 벌입니다.
      ⚠ 다크 값은 라이트와 같습니다 — 정한 사람이 없어 지금 화면과 같게 둡니다(React 원본의
        light-dark() 짝은 포트 때 버려졌습니다). 다크에서 탁하면 그때 .dark 에 값을 주세요 */
   --ft-pdf: #d6452e; --ft-doc: #3b78d8; --ft-sheet: #2f9e44; --ft-slide: #e8730c;
   --ft-hwp: #0e8ba8; --ft-image: #8250c4; --ft-archive: #b98900; --ft-csv: #12a594;
+  --ft-audio: #c2255c;                      /* 음성 — 시큐어노트 음성 소스 (2026-09-21 신설) */
   --ft-text: var(--muted-foreground);
   /* 인용 하이라이트 — 출처 창 · 인용 서랍의 <mark>. 라이트/다크 짝은 chat.css 가 갖고 있던 값 그대로 */
   --highlight-bg: #ffe28a;
-  /* 개인정보 분류 — 비식별화의 직접식별 · 준식별 · 민감. 범주 팔레트에 얹습니다(색맹 검증 · 다크 값 공유).
-     앞서 비식별화.css 가 #e8590c · #0c8599 · #7048e8 로 따로 들고 있었습니다 — 각각 cat-2 · 7 · 8 과 한 계열 */
-  --pii-direct: var(--cat-2); --pii-quasi: var(--cat-7); --pii-sensitive: var(--cat-8);
+  /* 개인정보 분류 — 비식별화의 직접식별 · 준식별 · 민감(영업기밀).
+     ⚠ **위험이 큰 쪽이 붉습니다** (2026-09-22 사용자 지시: "레드는 직접식별자고 준식별자는
+       주황 민감정보도 주황색") — 직접식별자 **레드** → 준식별자 **주황** → 민감 **앰버**.
+       앞 판은 주황 · 청록 · 보라라 **세 갈래가 서로 무관한 색**이어서, 무엇이 더 위험한지를
+       색이 전혀 말하지 않았습니다(cat-2 · 7 · 8).
+     ⚠⚠ 루트와 다크 **양쪽**에 적습니다 — var() 는 **선언된 자리에서 굳습니다**. 한쪽만 적으면
+       다크에서도 라이트 값이 나옵니다(집 규칙 '--nav-active 3종'과 같은 함정). 앞 판이 실제로
+       그랬습니다: 다크에서 cat-2 · 7 · 8 의 다크 값이 **한 번도 안 쓰였습니다**.
+     ⚠ 쓰는 곳 — 비식별화 본문 마크(.cog-dax__mk) · 항목 알약(.cog-dax__cattag) · 점(.cog-dax__dot) ·
+       시큐어노트 기본설정 점 · 실행 카드. 한 곳에서 바꾸면 전부 따라옵니다. */
+  --pii-direct: var(--error); --pii-quasi: var(--cat-2); --pii-sensitive: var(--warning);
+  /* ⚠ **면 위에 얹는 글자는 -text 쪽**입니다 — 12% 옅은 면 위에 원색을 그대로 올리면
+     앰버가 배경에 묻힙니다(실측: 라이트에서 #e69100 이 대비 2.3:1). 집의 C · S · O 배지가
+     이미 같은 규칙입니다(면 --error 10% + 글자 --error-text).
+     ⚠ 준식별자만 -text 짝이 없어 **잉크색을 섞어** 만듭니다 — 라이트에서는 어두워지고
+       다크에서는 밝아져, 두 모드에서 한 줄로 해결됩니다.
+     ⚠ 면(마크 · 점 · 실행 카드)은 위의 원색 그대로입니다 — 어두워지면 형광펜이 탁해집니다. */
+  --pii-direct-text: var(--error-text);
+  --pii-quasi-text: color-mix(in srgb, var(--cat-2) 75%, var(--foreground));
+  --pii-sensitive-text: var(--warning-text);
   /* 가장 위험 — 개인 · 그룹 기준 동시 초과(통합 프로파일링). --error 보다 어둡고 진한 진홍 */
   --error-deep: #8e1023;
   /* 그림자 4단 (2026-09-15 신설) — 55곳이 저마다 rgba 를 적고 있었습니다.
@@ -167,6 +257,9 @@
      ⚠ 그림자는 다크에서도 **검정**입니다 — --gray-a 처럼 흰색으로 뒤집으면 빛이 납니다.
        다크는 면이 어두워 같은 알파로는 안 보여서 --shadow-overlay 와 같은 요령으로 진하게 */
   --shadow-sm: 0 1px 2px rgba(0,0,0,.06);
+  /* 위로 지는 sm — 판 **아래**에 붙박인 줄(비식별화 항목의 [+ 추가])이 넘친 줄 위에 떠 있을 때.
+     값은 sm 그대로 y 만 뒤집은 것입니다 — 새 단계가 아니라 같은 단계의 방향 짝 (2026-09-23) */
+  --shadow-up-sm: 0 -1px 2px rgba(0,0,0,.06);
   --shadow-md: 0 2px 8px rgba(0,0,0,.10);
   --shadow-lg: 0 6px 20px -6px rgba(0,0,0,.18);
   --shadow-xl: 0 12px 40px -12px rgba(0,0,0,.35);
@@ -175,80 +268,28 @@
      ⚠ 값은 관리자 콘솔 dlp.css 의 조건 편집 패널 것입니다 — 이용자 화면 두 곳(국회 답변서 · 프로젝트)이
        -8px 0 24px rgba(0,0,0,.08) 로 따로 놀던 것을 2026-09-15 에 이 한 벌로 모았습니다 */
   --shadow-drawer: -12px 0 28px -18px rgba(0,0,0,.35);
-  --scrim: rgba(0,0,0,.4);   /* 모달 뒤 가림막 */
+  /* 모달 뒤 가림막 — ui.css · 문의창 · 설정창이 저마다 rgba(0,0,0,.4) 였습니다. 다크도 같은 값(면이 어두워 더 진할 필요 없음) */
+  --scrim: rgba(0,0,0,.4);
 
-  --success-subtle: color-mix(in srgb, var(--success) 6%, var(--background));
-  --success-border: color-mix(in srgb, var(--success) 28%, transparent);
-  --warning-subtle: color-mix(in srgb, var(--warning) 6%, var(--background));
-  --warning-border: color-mix(in srgb, var(--warning) 30%, transparent);
-  --error-subtle:  color-mix(in srgb, var(--error) 6%, var(--background));
-  /* 에러 포커스 링 — 면(--error-subtle)보다 진합니다.
-     6%짜리 면을 링에 그대로 쓰면 흰 배경에서 거의 안 보였습니다.
-     면은 넓게 깔려 6%로도 읽히지만, 링은 3.5px 띠라 더 진해야 같은 세기로 읽힙니다.
-     브랜드 링(#EBF3FE)과 비슷한 눈에 띔을 목표로 잡았습니다. */
-  --error-ring: color-mix(in srgb, var(--error) 16%, var(--background));
-  --error-border:  color-mix(in srgb, var(--error) 28%, transparent);
-  --info-subtle:    color-mix(in srgb, var(--info) 5%, var(--background));
-  --info-border:    color-mix(in srgb, var(--info) 24%, transparent);
+  /* 라운드 — 콘솔은 요소 6 / 컨테이너 10 두 단. 그 안쪽(체크박스·작은 칩)만 더합니다 */
+  --r-in: 4px;
+  --r-full: 9999px;
 
-  /* 뒤집힌 면(--gray-12) 위에 얹는 상태색 — 토스트·툴팁처럼 배경이 반전된 곳.
-     현재 테마의 상태색을 그대로 쓰면 어두운 면에 어두운 초록이 얹혀 안 보입니다.
-     그래서 "반대 테마의 값"을 씁니다. */
-  --success-on-inverse: #51cf66;
-  --error-on-inverse:  #ff6b6b;
+  /* ⚠⚠ **Consolas 를 빼지 마세요** — 앞의 둘은 macOS 전용이라 윈도우에서는 브라우저
+     기본 고정폭(타자기체)으로 떨어져 Pretendard 옆에서 혼자 튑니다 (2026-09-11).
+     ⚠ 관리자 콘솔 index.css 의 --mono 와 **같은 값**입니다 — 한쪽만 고치지 마세요 */
+  --mono: ui-monospace, SFMono-Regular, Menlo, Consolas, 'Liberation Mono', monospace;
 
-  /* ── Data Visualization — 차트 계열 ──────────────
-     브랜드에서 시작해 색상환을 돌되 명도를 맞춰 인접 계열이 구분되게 했습니다.
-     상태색과 겹치지 않는 색만 씁니다.
-     ⚠ **순서대로 배정하는 색**입니다 — 1부터 채우고 필요한 만큼만. 그래서 이름이 번호입니다
-       (shadcn `--chart-1..5`, Atlassian `color.chart.categorical.1–8`과 같은 규칙).
-     ⚠ 2026-08-28에 `--cat-*`의 별칭이던 것을 **끊고 자기 값을 갖게** 했습니다.
-       한 팔레트로 차트와 라벨을 겸하던 것이 문제였습니다 — 조사한 시스템(shadcn · Atlassian ·
-       Carbon · Primer) 중 둘을 겸용하는 곳은 없습니다. 차트는 **순서**가 정보라 인접 색의
-       대비가 중요하고, 범주는 **종류에 고정**이라 값이 앱을 따라 바뀝니다. 요구가 반대입니다 */
-  --chart-1: #1F7FF0;   /* 브랜드 블루 */
-  --chart-2: #16a3a3;   /* 틸 */
-  --chart-3: #8b5cf6;   /* 바이올렛 */
-  --chart-4: #e8963c;   /* 앰버 */
-  --chart-5: #d6539b;   /* 핑크 */
-  --chart-6: #4f9e4f;   /* 그린 */
-
-  /* ── Category — 종류에 고정으로 붙는 색 ──────────────
-     순위나 개수가 바뀌어도 그 종류는 늘 같은 색입니다. 문서 종류 · 노드 라벨처럼
-     화면을 오가며 대조하는 값이 대상입니다.
-     ⚠ **값의 원본은 콘솔(llmops-console-ux)의 `src/shared/index.css`입니다.** 여기는
-       따라옵니다 — 토큰 값이 리포마다 다르면 디자인 시스템이 아닙니다.
-     ⚠ 그래서 이 색들은 **언제든 바뀔 수 있습니다.** 색 이름(`teal` · `violet`)으로 부르지
-       마세요 — 값이 바뀌는 순간 이름이 거짓말이 됩니다(2026-08-28에 실제로 그랬습니다).
-       Atlassian이 같은 이유로 accent를 "한 색을 다른 색으로 바꿔도 경험이 그대로여야 한다"고
-       못박습니다. 부를 때는 **슬롯 번호**로 부릅니다 */
-  --cat-1: #1f7ff0;
-  --cat-2: #eb6834;
-  --cat-3: #1baf7a;
-  --cat-4: #eda100;
-  --cat-5: #e87ba4;
-  --cat-6: #008300;
-  --cat-7: #0b87a3;
-  --cat-8: #8250c4;
-
-  /* ── Shape ── */
-  --r-in: 4px; --r-el: 6px; --r-ct: 10px; --r-full: 9999px;
-
-  --font: "Pretendard Variable", Pretendard, system-ui, sans-serif;
-  --mono: ui-monospace, SFMono-Regular, monospace;
-
-  /* ── Type scale ──────────────────────
-     UI(조작면)와 Prose(읽는 면)를 구분합니다.
-     UI는 조밀하게, Prose는 넉넉하게. 같은 크기를 쓰면 둘 다 어중간해집니다. */
+  /* 타이포 스케일 — 11/12/13/14/15/16/20/24. 이 밖의 값·반픽셀 금지 */
   --text-2xs:  11px;   /* 마이크로 라벨 — 배지 안, 스와치 캡션 */
   --text-xs:   12px;   /* 라벨 · 메타 · 표 헤더 */
   --text-sm:   13px;   /* 조밀한 UI — 테이블 셀, 사이드바 */
-  --text-base: 14px;   /* UI 기본 — 버튼, 입력, 본문 UI */
+  --text-base: 14px;   /* UI 기본 — 버튼, 입력, 본문 UI. 메뉴급 */
   --text-md:   15px;   /* Prose 본문 — 읽는 글 */
   --text-lg:   16px;   /* 작은 제목 */
   --text-xl:   20px;   /* 섹션 제목 */
-  --text-2xl:  24px;   /* 페이지 제목 */
-  --text-3xl:  30px;   /* 페이지 제목 상한 */
+  --text-2xl:  24px;   /* 페이지 제목 · 카드 숫자 */
+  --text-3xl:  30px;
   --text-4xl:  36px;   /* 랜딩 대표 제목 */
 
   --leading-tight:  1.3;    /* 제목 */
@@ -256,51 +297,35 @@
   --leading-normal: 1.62;   /* 기본 */
   --leading-prose:  1.8;    /* 읽는 글 */
 
-  --measure: 720px;         /* 읽는 글의 최대 줄 길이.
-                               ch 단위는 한글(전각)에서 라틴보다 좁게 잡혀
-                               px로 고정합니다 — Stripe·Tailwind와 같은 폭 */
+  /* 읽는 글의 최대 줄 길이. ch 단위는 한글(전각)에서 좁게 잡혀 px로 고정합니다 */
+  --measure: 720px;
 
   --weight-normal: 400;
   --weight-medium: 500;
   --weight-semibold: 600;
 
-  --background: #ffffff;
-  --card: #ffffff;
-
-  /* 떠 있는 요소의 그림자 — 1px 윤곽 + 근거리 + 원거리 3겹.
-     단층 그림자는 뿌옇게 보입니다. */
+  /* 떠 있는 요소의 그림자 — 1px 윤곽 + 근거리 + 원거리 3겹. 단층은 뿌옇게 보입니다 */
   --shadow-overlay:
     0 0 0 1px var(--border),
     0 2px 4px rgba(0, 0, 0, .06),
     0 12px 28px rgba(0, 0, 0, .10);
 
-  /* 포커스 링 — 배경색 2px + 브랜드 2px 이중 링. 모든 조작 요소가 같은 링을 씁니다. */
+  /* 포커스 링 — 배경 2px + 브랜드 2px 이중 링. 모든 조작 요소가 같은 링을 씁니다 */
   --focus-ring: 0 0 0 2px var(--background), 0 0 0 4px var(--primary);
 
-  /* ── 선택 · 활성 상태 ── (2026-08-19 개정)
-     원칙: 목록 행·트리처럼 **면으로 넓게 깔리는** 선택 표시는 중립(회색)입니다.
-     파란 면이 사방에 깔리면 정작 primary 버튼이 묻힙니다.
-     예외: **탭·필터처럼 "지금 어느 화면·조건인가"를 가리키는 표시**는 브랜드를 씁니다.
-     선(밑줄·테두리)과 글자에만 얹히고 면은 아주 옅게(6~8%)만 깔아, 버튼과 경쟁하지 않습니다. */
-  --selected-fill: var(--gray-4);
+  /* ── DS 사이트 전용 — 앱 토큰(공용/스타일/토큰.css)에 없는 이름. 값은 그대로 둡니다(scripts-pull-tokens.mjs) ── */
+  --gray-a9: color-mix(in srgb, var(--gray-12) 36%, transparent);
+  --gray-a10: color-mix(in srgb, var(--gray-12) 46%, transparent);
+  --gray-a11: color-mix(in srgb, var(--gray-12) 62%, transparent);
+  --gray-a12: color-mix(in srgb, var(--gray-12) 92%, transparent);
+  --info: var(--primary);
+  --chart-1: #1F7FF0;
+  --chart-2: #16a3a3;
+  --chart-3: #8b5cf6;
+  --chart-4: #e8963c;
+  --chart-5: #d6539b;
+  --chart-6: #4f9e4f;
   --selected-foreground: var(--gray-12);
-  /* 탭·필터 활성 — 선·글자는 브랜드, 면은 옅은 브랜드 */
-  --nav-active: var(--primary);
-  --nav-active-fg: var(--primary-text);
-  --nav-active-bg: color-mix(in srgb, var(--primary) 7%, transparent);
-  /* ── 콘솔 시맨틱 이름 ──────────────────
-     앱 규칙은 회색 번호가 아니라 뜻으로 부릅니다. 다크에서 회색 값이 바뀌면
-     이 이름들도 함께 따라갑니다(:root 에 var()로 걸어 둔 덕분). */
-  --foreground: var(--gray-12);
-  --muted-foreground: var(--gray-11);
-  --muted: var(--gray-3);
-  --overlay-hover: var(--gray-a3);
-  --scrollbar: var(--gray-6);
-  --scrollbar-hover: var(--gray-8);
-
-  /* ── 구 이름 별칭 ──────────────────────
-     문서 사이트(docs.css · templates · *.js)가 아직 옛 이름을 씁니다.
-     새 코드에서는 위의 콘솔 이름을 쓰세요. */
   --brand-text: var(--primary-text);
   --brand-hover: var(--primary-hover);
   --brand-active: var(--primary-active);
@@ -318,81 +343,107 @@
   --danger: var(--error);
   --sel-bg: var(--selected-fill);
   --sel-fg: var(--selected-foreground);
-  /* ⚠ `--chart-*`는 2026-08-28부터 `--cat-*`의 별칭이 아닙니다 — 위에서 자기 값을 갖습니다.
-     차트는 순서대로 배정하는 색, 범주는 종류에 고정하는 색이라 요구가 반대입니다 */
   --r-sm: var(--r-in);
   --r-md: var(--r-el);
   --r-xl: var(--r-ct);
-  --r-lg: var(--r-el);   /* 구 8px 단 — 규격이 6/10 두 단으로 줄면서 요소 라운드로 흡수 */
+  --r-lg: var(--r-el);
 }
 
 /* 다크 — 콘솔과 같은 `.dark` 를 기본으로, 구 속성 셀렉터도 함께 받습니다 */
 [data-theme="dark"], .dark {
-  /* ── Radix Slate Dark 1~12 ── */
-  --gray-1: #111113; --gray-2: #18191b; --gray-3: #212225; --gray-4: #272a2d;
-  --gray-5: #2e3135; --gray-6: #363a3f; --gray-7: #43484e; --gray-8: #5a6169;
-  --gray-9: #696e77; --gray-10: #777b84; --gray-11: #b0b4ba; --gray-12: #edeef0;
+  /* ⚠ 이 덩이는 앱 토큰 파일에서 받아 온 것입니다 — 여기서 고치지 말고 앱 토큰.css 를 고친 뒤 npm run tokens:pull (2026-10-06) */
+  /* ── 콘솔 원본 ─────────────────────────────────────────────
+     다크 위계(2026-08-13 콘솔 확정) — 콘텐츠 면은 어두워야 글자 대비가 높아 잘 읽히고,
+     캔버스를 살짝 밝은 톤으로 올려 영역을 구분합니다. (라이트와 명암 관계가 반대)
+     2026-09-10 두 면을 **한 단씩 내렸습니다** — 캔버스 #232529→#181818, 콘텐츠 #17181b→#101013.
+     위계(콘텐츠가 더 어둡다)는 그대로 두고 전체를 어둡게만 한 것입니다.
+     ⚠ --background도 같이 내립니다(#131316→#0c0c0f). 이 값은 **콘텐츠 면 아래 한 단**이라는
+       뜻이라, 안 내리면 --background를 쓰는 것들(권한 화면의 sticky 표 머리, 토큰 칩의
+       color-mix 바탕, 포커스 링 안쪽 2px)이 카드보다 **밝아져** 관계가 뒤집힙니다. */
+  --background:#0c0c0f; --foreground:#f4f4f5; --card:#101013;
+  --primary:#4a97f5; --primary-foreground:#ffffff;   /* 다크에서도 프라이머리 버튼 글자는 흰색 */
+  --muted:#222327; --muted-foreground:#a3a3ac;
+  --border:#2c2d33; --input:#3a3b42; --ring:#4a97f5;
+  --border-emphasized:#3a3b42;
+  --success:#51cf66; --error:#ff6b6b; --warning:#ffd43b;
+  --error-text:#ff8787; --warning-text:#ffd43b; --success-text:#51cf66;
+  --accent-muted:#1a2c47;
+  --overlay-hover:rgba(255,255,255,.06); --selected-fill:rgba(255,255,255,.09);
+  --canvas:#181818;   /* 캔버스 — 콘텐츠보다 살짝 밝은 톤으로 영역 구분 */
+  /* 다크는 자동 반전이 아니라 어두운 면(#101013)에 맞춰 따로 고른 단계입니다 */
+  --cat-1: #3987e5; --cat-2: #d95926; --cat-3: #199e70;
+  --cat-4: #c98500; --cat-5: #d55181; --cat-6: #008300;
+  --cat-7: #2ea3bd; --cat-8: #9a72d6;
+  /* 개인정보 분류 — 루트와 **같은 줄을 여기에도** 적습니다(위 머리글의 var() 함정) */
+  --pii-direct: var(--error); --pii-quasi: var(--cat-2); --pii-sensitive: var(--warning);
+  --pii-direct-text: var(--error-text);
+  --pii-quasi-text: color-mix(in srgb, var(--cat-2) 75%, var(--foreground));
+  --pii-sensitive-text: var(--warning-text);
+  --kb: #8b5cf6;   /* 프라이머리와 같은 요령으로 한 단 밝게 — 흰 글자 대비 4.2:1 */
+  color-scheme: dark;
+  --scrollbar: rgba(255, 255, 255, .28); --scrollbar-hover: rgba(255, 255, 255, .45);
 
-  /* 다크에선 파랑을 밝게 — 어두운 배경에서 대비를 얻습니다.
-     다크에서는 면과 글자가 같은 값이어도 둘 다 AA를 통과합니다. */
-  /* 면(버튼·체크박스)은 라이트와 같은 브랜드 원색을 씁니다.
-     밝은 파랑(#4593F5)을 쓰면 그 위의 글자를 검정으로 둬야 대비가 나오는데,
-     그러면 같은 Primary 버튼이 라이트에서는 흰 글자, 다크에서는 검은 글자로
-     갈립니다 — 같은 버튼이 테마에 따라 다른 물건처럼 읽힙니다.
-     원색을 유지하고 글자는 양쪽 모두 흰색으로 통일합니다. */
-  --primary: #1F7FF0;
-  --primary-text: #6BA9F7;    /* 글자·링크용은 별도로 밝게 — 다크 배경과 7.4:1 */
-  --primary-hover: #3A8DF3;
-  --primary-active: #5AA0F6;
-  --accent-muted: #10243E;
-  --primary-foreground: #ffffff;
+  /* ── 확장 ────────────────────────────────────────────────── */
+  --gray-1: #0e0e10;
+  --gray-2: #171719;
+  --gray-3: var(--muted);              /* #222327 */
+  --gray-4: #27282d;
+  --gray-5: var(--border);             /* #2c2d33 */
+  --gray-6: var(--input);              /* #3a3b42 */
+  --gray-7: var(--border-emphasized);  /* #3a3b42 */
+  --gray-8: #55565e;
+  --gray-9: #7b7c85;
+  --gray-10: var(--muted-foreground);  /* #a3a3ac */
+  --gray-11: #c8c8ce;
+  --gray-12: var(--foreground);        /* #f4f4f5 */
 
-  --success: #51cf66; --warning: #ffd43b; --error: #ff6b6b; --favorite: #f5c518;
+  --gray-a2: rgba(255,255,255,.04);
+  --gray-a3: rgba(255,255,255,.06);
+  --gray-a5: rgba(255,255,255,.11);
+  --gray-a6: rgba(255,255,255,.14);
+  --gray-a7: rgba(255,255,255,.18);
+  --gray-a1: rgba(255,255,255,.02); --gray-a4: rgba(255,255,255,.08); --gray-a8: rgba(255,255,255,.24);
+
+  --border-subtle: rgba(255,255,255,.06);
+
+  --primary-hover: #5da5f7;
+  --primary-active: #7ab5f8;
+  /* 글자·링크용 — 어두운 배경과 7.4:1 */
+  --primary-text: #6ba9f7;
+
+  /* 뒤집힌 면이 밝으므로 어두운 상태색을 씁니다 */
+  --success-on-inverse: #2f9e44;
+  --error-on-inverse:   #d6362a;
+
+  --favorite: #f5c518;
   --highlight-bg: #7a601f;
   --error-deep: #ff4d4d;
   --shadow-sm: 0 1px 2px rgba(0,0,0,.3);
+  --shadow-up-sm: 0 -1px 2px rgba(0,0,0,.3);
   --shadow-md: 0 2px 8px rgba(0,0,0,.4);
   --shadow-lg: 0 6px 20px -6px rgba(0,0,0,.5);
   --shadow-xl: 0 12px 40px -12px rgba(0,0,0,.6);
   --shadow-drawer: -12px 0 28px -18px rgba(0,0,0,.6);
-  --scrim: rgba(0,0,0,.4);   /* 모달 뒤 가림막 */
-  /* 글자용 — 다크에서는 면 색이 이미 밝아 글자로도 충분합니다 (배경 #111113과 10:1 이상).
-     경고가 --warning과 같은 값인 것도 같은 까닭입니다. 라이트에서만 따로 골라야 합니다. */
-  --success-text: #51cf66; --warning-text: #ffd43b; --error-text: #ff8787;
-  /* 다크에서는 뒤집힌 면이 밝으므로 어두운 상태색을 씁니다 */
-  --success-on-inverse: #2f9e44;
-  --error-on-inverse:  #d6362a;
+  --scrim: rgba(0,0,0,.4);
+  /* 탭 · 필터 활성 — index.css 다크 블록에 있던 셋을 옮겨 왔습니다(값은 var 라 같습니다) */
+  --nav-active: var(--primary);
+  --nav-active-fg: var(--primary);
+  --nav-active-bg: color-mix(in srgb, var(--primary) 7%, transparent);
 
-  /* 차트 — 다크 배경에서 채도가 죽지 않게 한 톤 밝게 */
+  --shadow-overlay:
+    0 0 0 1px var(--border),
+    0 1px 2px rgba(0, 0, 0, .3),
+    0 8px 24px rgba(0, 0, 0, .5);
+  --focus-ring: 0 0 0 2px var(--background), 0 0 0 4px var(--primary);
+  /* subtle/border/ring 공식은 --card·상태색을 참조하므로 다크에서도 그대로 유효 — 재정의 없음 */
+
+  /* ── DS 사이트 전용 — 앱 토큰(공용/스타일/토큰.css)에 없는 이름. 값은 그대로 둡니다(scripts-pull-tokens.mjs) ── */
   --chart-1: #4593F5;
   --chart-2: #2ec4c4;
   --chart-3: #a78bfa;
   --chart-4: #f0a94e;
   --chart-5: #ec6cb0;
   --chart-6: #63b563;
-
-  /* 범주 — 콘솔의 다크 값 그대로 */
-  --cat-1: #3987e5;
-  --cat-2: #d95926;
-  --cat-3: #199e70;
-  --cat-4: #c98500;
-  --cat-5: #d55181;
-  --cat-6: #008300;
-  --cat-7: #2ea3bd;
-  --cat-8: #9a72d6;
-
-  --background: #111113;
-  --card: #18191b;
-  /* danger-subtle/border는 공식이 다크에서도 유효 — 재정의 불필요 */
-
-  --shadow-overlay:
-    0 0 0 1px var(--input),
-    0 1px 2px rgba(0, 0, 0, .3),
-    0 8px 24px rgba(0, 0, 0, .5);
-  --focus-ring: 0 0 0 2px var(--background), 0 0 0 4px var(--primary);
-  /* ── 구 이름 별칭 ──────────────────────
-     문서 사이트(docs.css · templates · *.js)가 아직 옛 이름을 씁니다.
-     새 코드에서는 위의 콘솔 이름을 쓰세요. */
   --brand-text: var(--primary-text);
   --brand-hover: var(--primary-hover);
   --brand-active: var(--primary-active);
@@ -403,8 +454,6 @@
   --surface: var(--card);
   --danger-on-inverse: var(--error-on-inverse);
   --danger: var(--error);
-  /* ⚠ `--chart-*`는 2026-08-28부터 `--cat-*`의 별칭이 아닙니다 — 위에서 자기 값을 갖습니다.
-     차트는 순서대로 배정하는 색, 범주는 종류에 고정하는 색이라 요구가 반대입니다 */
 }
 ```
 

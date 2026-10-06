@@ -22,8 +22,8 @@ If two components look interchangeable, the "confused with" section of each
 
 ## Rules
 - Import from the correct barrel. Mixing them breaks builds in apps without Vuetify.
-- Use CSS variables only — never hardcode hex, spacing or radius.
-- One primary button per screen.
+- Use CSS variables only — never hardcode hex, spacing or radius (--r-in 4 / --r-el 6 / --r-ct 10).
+- One primary button per screen. Button labels are "대상 + 동사", verb last (사용자 추가, 권한 편집).
 - Every list/table needs default, loading, empty, error and partial states.
 - Async agent work shows PROGRESS (DsToolCallStep / DsThinkingIndicator), never a bare spinner.
 - Icons come from `~/design/icon` by semantic name; components take them via an `#icon` slot.
@@ -145,7 +145,7 @@ If two components look interchangeable, the "confused with" section of each
   props: modelValue, label, hint, error, placeholder, type='text', size='default'
   usage:
     <DsInput v-model="name" label="Workspace name"
-      placeholder="Acme Inc." hint="모든 멤버에게 표시됩니다." />
+      placeholder="Acme Inc." hint="모든 구성원에게 표시됩니다." />
     
     <DsInput v-model="email" label="Email"
       :error="emailError" />
