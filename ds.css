@@ -1167,6 +1167,14 @@ input[type="date"].input::-webkit-calendar-picker-indicator { opacity: .5; curso
 .infoi { display: inline-flex; margin-left: 4px; color: var(--muted-foreground); cursor: help; }
 .infoi:hover { color: var(--foreground); }
 
+/* ── 인라인 svg 아이콘 (.ic) — 공용 부품(조건 칩 ×, 열기 배지, 상세 검색 …)이 손으로 그린 lucide 패스에 답니다.
+   굵기 2 · 끝 둥글게(lucide 기본) · 16 / sm 14 / lg 18. (2026-10-06 관리자 콘솔 index.css 에서 올림 —
+   두 앱이 함께 쓰는 부품이 콘솔 리셋 파일에 기대고 있어, 이용자 화면에서는 조건 칩의 × 가 안 보였습니다) */
+svg.ic { width: 16px; height: 16px; flex: none; fill: none; stroke: currentColor;
+  stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+svg.ic.sm { width: 14px; height: 14px; }
+svg.ic.lg { width: 18px; height: 18px; }
+
 /* ── ds-kbd ── */
 /* 키캡 — 높이 20px 고정, 최소 폭 20px이라 한 글자짜리는 정사각입니다.
    글자 폭에 맡기면 키마다 폭이 달라지고 소수 상자(24.67 × 23.15)가 나옵니다. */
@@ -1351,8 +1359,14 @@ input[type="date"].input::-webkit-calendar-picker-indicator { opacity: .5; curso
   padding: 0 4px;
 }
 
-/* 검색칸 — 왼쪽 돋보기 */
-.searchwrap { position: relative; display: inline-flex; align-items: center; }
+/* 필터 줄 — [필터] · 검색칸 · 초기화 … 오른쪽 끝 [표 열 설정]. 관리자 콘솔 목록 화면의 줄이고 이용자 화면 목록(이력 · 모든 프로젝트)도 같은 줄입니다
+   (2026-10-06 콘솔 ui.css 에서 올림 — 두 앱 한 벌).
+   ⚠ position: relative 는 **필터 패널(.filpanel)의 기준 상자** 몫입니다 — 버튼을 감싼 작은 상자 안에 두면 패널이 그 폭으로 찌그러집니다.
+   ⛔ 건수를 이 줄 오른쪽에 두지 마세요 — 건수는 아래 .resultmeta 한 줄입니다 */
+.filters { position: relative; display: flex; align-items: center; gap: 10px; flex-wrap: wrap; padding: 14px 20px 0; }
+
+/* 검색칸 — 왼쪽 돋보기. ⚠ 폭은 **감싸개에** 줍니다(260) — 칸에 주면 감싸개와 어긋난 만큼 빈 자리가 생깁니다(콘솔 2026-09 실측) */
+.searchwrap { position: relative; display: inline-flex; align-items: center; width: 260px; }
 .searchwrap > svg {
   position: absolute;
   left: 9px;
@@ -1361,7 +1375,7 @@ input[type="date"].input::-webkit-calendar-picker-indicator { opacity: .5; curso
 }
 .searchwrap .input {
   height: 32px;
-  width: 260px;
+  width: 100%;
   padding: 0 10px 0 32px;
   border: 1px solid var(--border);
   border-radius: var(--r-el);
@@ -1398,6 +1412,27 @@ input[type="date"].input::-webkit-calendar-picker-indicator { opacity: .5; curso
   font-variant-numeric: tabular-nums;
 }
 .resultmeta b { color: var(--foreground); font-weight: 600; }
+
+/* 선택 막대 — 고른 줄이 있으면 건수 줄(.resultmeta) 자리를 **같은 상자로** 대신합니다(목록이 밀리지 않게).
+   글자 단추입니다 — 할 일(.bulk-act)은 활성 글자색 600, 해제 · 취소(.bulk-clr)는 회색. 버튼 상자를 세우지 않습니다
+   (2026-10-06 관리자 콘솔 알림 이력의 .ntf-bulk · 문서 탐색 벌크 바 규약을 DS 로 올림 — 이용자 화면 이력이 씀) */
+.bulkbar { display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap; padding: 12px 20px 0; font-size: 13px; line-height: normal; }
+.bulkbar b { font-weight: 600; color: var(--nav-active-fg); font-variant-numeric: tabular-nums; }
+.bulkbar button { padding: 0; border: 0; background: none; font: inherit; cursor: pointer; }
+.bulkbar .bulk-act { color: var(--nav-active-fg); font-weight: 600; }
+.bulkbar .bulk-clr { color: var(--muted-foreground); }
+.bulkbar .bulk-act:hover, .bulkbar .bulk-clr:hover { text-decoration: underline; text-underline-offset: 2px; }
+.bulkbar button:disabled { opacity: .45; cursor: default; text-decoration: none; }
+
+/* 걸린 조건 줄 — **필터 줄과 건수 줄 사이의 제 줄**(2026-10-06 콘솔 ui.css 에서 올림). 필터 패널은 이 줄 아래로 열립니다.
+   칩은 .chip.brand 에서 **면만** 벗긴 것 — 활성 표시 한 벌(--nav-active 스트로크 · --nav-active-fg 글자) · 네모 · 28px · 13px.
+   × 는 그 값 하나만 뺍니다. 걸린 게 없으면 줄째로 감춥니다. ⛔ 면을 채우지 마세요 — 조건이 여럿이면 알약 덩어리가 됩니다 */
+.chipbar { display: flex; align-items: center; flex-wrap: wrap; gap: 6px; padding: 12px 20px 0; }
+.chipbar .chip.brand { height: 28px; padding: 0 7px 0 10px; gap: 6px; border-radius: var(--r-el); font-size: 13px;
+  background: transparent; border-color: var(--nav-active); color: var(--nav-active-fg); }
+.chipbar .chip.brand .x { width: 18px; height: 18px; border-radius: var(--r-el); }
+/* Vue 화면은 조건 줄을 .filters 안 다음 줄에 둡니다(ChipBar inside) — 절대 배치인 필터 패널의 top:100% 가 저절로 그 아래가 됩니다 */
+.filters > .chipbar--in { flex: 0 0 100%; padding: 0; }
 
 /* ── 필터 패널 — 왼쪽 항목 · 오른쪽 값 ────────────────────────────────── */
 .filpanel {
