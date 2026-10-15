@@ -32,6 +32,9 @@
      글자로 쓰면 WCAG AA 미달입니다 — 배지 바탕·점에만 쓰세요. */
   --error-text:#c92a2a; --warning-text:#9a6700; --success-text:#17803d;
   --accent-muted:#e9f2fe;
+  /* 사용자 말풍선 — 면 · 글자 (2026-10-14 사용자 지정값). --accent-muted 와 라이트는 거의 같지만 다크가 다르고
+     (#1a2c47 → #273e74 · 글자도 따로), --accent-muted 는 마흔 곳 넘게 써서 그 값을 바꾸지 않고 따로 둡니다 */
+  --user-bubble:#ebf3fe; --user-bubble-fg:#172749;
   --overlay-hover:rgba(0,0,0,.05); --selected-fill:rgba(0,0,0,.06);
   --canvas:#f4f4f5;
   --r-el:6px; --r-ct:10px;
@@ -123,6 +126,7 @@
   --ft-pdf: #d6452e; --ft-doc: #3b78d8; --ft-sheet: #2f9e44; --ft-slide: #e8730c;
   --ft-hwp: #0e8ba8; --ft-image: #8250c4; --ft-archive: #b98900; --ft-csv: #12a594;
   --ft-audio: #c2255c;                      /* 음성 — 시큐어노트 음성 소스 (2026-09-21 신설) */
+  --ft-video: #4f55d6;                      /* 영상 — 영상 수사의 CCTV · 블랙박스 원본 (2026-10-15 신설). 문서 파랑과 이미지 보라 사이 남색 */
   --ft-text: var(--muted-foreground);
   /* 인용 하이라이트 — 출처 창 · 인용 서랍의 <mark>. 라이트/다크 짝은 chat.css 가 갖고 있던 값 그대로 */
   --highlight-bg: #ffe28a;
@@ -264,6 +268,7 @@
   --success:#51cf66; --error:#ff6b6b; --warning:#ffd43b;
   --error-text:#ff8787; --warning-text:#ffd43b; --success-text:#51cf66;
   --accent-muted:#1a2c47;
+  --user-bubble:#273e74; --user-bubble-fg:#ecf0f7;   /* 사용자 말풍선 (2026-10-14 사용자 지정값) */
   --overlay-hover:rgba(255,255,255,.06); --selected-fill:rgba(255,255,255,.09);
   --canvas:#181818;   /* 캔버스 — 콘텐츠보다 살짝 밝은 톤으로 영역 구분 */
   /* 다크는 자동 반전이 아니라 어두운 면(#101013)에 맞춰 따로 고른 단계입니다 */
