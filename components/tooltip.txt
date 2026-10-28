@@ -19,6 +19,10 @@ import { DsTooltip } from '~/design/vuetify'   // Vuetify 필요 · ds.css + ds-
 </DsTooltip>
 ```
 
+## 앱별
+- 이용자 화면 (Vuetify 있음): 이 부품 그대로
+- 관리자 콘솔 (Vuetify 없음): title 속성 — 공용/부품/GlobalTooltip.vue 가 DS 툴팁으로 바꿔 그립니다 — title 과 data-tip 을 한 요소에 같이 두지 않습니다(툴팁이 둘 뜸)
+
 
 ## 지침
 - [하지 말 것] 툴팁에만 있는 정보를 만들지 않습니다. 터치 기기에서는 보이지 않습니다.
@@ -29,8 +33,8 @@ import { DsTooltip } from '~/design/vuetify'   // Vuetify 필요 · ds.css + ds-
 직접 처리: 툴팁에만 있는 정보를 만들지 않기 — 터치 기기에서 안 보임 / aria-label과 중복되지 않게
 
 ## 시스템 규칙 (요약)
-- 색·간격·모서리는 CSS 변수만 (var(--gray-6), var(--brand)) — hex 금지
-- primary 버튼은 화면당 하나. 선택·활성 상태는 중립(--sel-bg/--sel-fg)
-- 컨트롤 높이 32(sm)/40/48 — 필터 바·툴바는 sm
+- 색·간격·모서리는 제품 토큰만 (var(--border), var(--primary), var(--r-el)) — hex 금지. --brand · --sel-bg 는 문서 사이트 전용이라 앱에 없습니다
+- primary 버튼은 화면당 하나. 활성(탭·필터)은 --nav-active 선+글자, 목록 행 선택은 --selected-fill 회색 면
+- 컨트롤 높이 32(기본) / 28(sm — 필터 바·툴바) / 40(lg — 로그인 제출 전용)
 - 목록·테이블은 default/loading/empty/error/partial 5상태
 - 전체 규칙: https://Cogniterm.github.io/design-system/llms.txt

@@ -1,0 +1,70 @@
+# DsSplitButton — Cogniterm Design System
+
+import { DsSplitButton } from '~/design'   // Vuetify 불필요 · ds.css만
+
+## 용도
+제목줄의 게시 · 저장 · 내보내기 — 기본 방법 하나와 그 변형.
+
+## Props
+- label: string = 필수 — 기본 동작 — 왼쪽 버튼 글자.
+- items: SplitButtonItem[] = 필수 — { label, value, disabled? } 1~4개 — ▾ 를 누르면 뜨는 변형.
+- menuLabel: string = 필수 — ▾ 버튼의 이름 — 스크린리더가 읽습니다("다른 저장 방법").
+- variant: 'primary' | 'secondary' = 'primary' — 파괴적 동작(danger)은 받지 않습니다.
+- size: 'default' | 'sm' = 'default' — 높이 32 / 28.
+- align: 'start' | 'end' = 'start' — 목록을 맞출 끝 — 버튼이 오른쪽 끝에 붙어 있으면 end.
+- disabled: boolean = false — 두 칸을 함께 끕니다.
+
+## Events
+- @click (MouseEvent) — 왼쪽(기본 동작)을 눌렀을 때.
+- @select (string) — 목록에서 고른 항목의 value.
+
+## 사용 예
+```vue
+<DsSplitButton
+  label="게시" menu-label="다른 게시 방법"
+  :items="[
+    { label: '지금 게시', value: 'now' },
+    { label: '예약 게시', value: 'schedule' },
+    { label: '초안으로 저장', value: 'draft' },
+  ]"
+  @click="publish" @select="onPublishOption" />
+```
+
+## HTML 문법 — Vue 없이 문자열로 그리는 화면
+```html
+<!-- 여닫기는 화면이: ▾ 를 누르면 목록의 hidden 을 풀고 aria-expanded="true". 바깥 클릭 · Esc 로 닫기 -->
+<div class="splitbtn">
+  <button class="btn btn-primary">게시</button>
+  <button class="btn btn-primary splitbtn__more" aria-label="다른 게시 방법" aria-haspopup="menu" aria-expanded="false"><!-- chevron-down 16 --></button>
+  <div class="splitbtn__menu" role="menu" hidden>
+    <button class="splitbtn__item" role="menuitem">지금 게시</button>
+    <button class="splitbtn__item" role="menuitem">예약 게시</button>
+    <button class="splitbtn__item" role="menuitem">초안으로 저장</button>
+  </div>
+</div>
+```
+
+## 앱별
+- 이용자 화면 (Vuetify 있음): 이 부품 그대로
+- 관리자 콘솔 (Vuetify 없음): 이 부품 그대로 (~/design · html 문법)
+
+## 구분
+- vs Menu: 서로 다른 동작(수정 · 복제 · 삭제)을 모으면 Menu(더보기)
+- vs ButtonGroup: 값을 고르는 전환이면 ButtonGroup — SplitButton은 실행
+
+## 지침
+- [해야 할 것] 왼쪽은 열에 아홉 번 하는 일 하나, 목록은 같은 일의 다른 방법 1~4개.
+- [해야 할 것] 목록 첫 줄에 기본 동작을 다시 두면 키보드 · 스크린리더도 같은 선택지를 봅니다.
+- [하지 말 것] 서로 다른 동작(수정 · 복제 · 삭제)을 모으지 않습니다 — 그건 Menu(더보기)입니다.
+- [하지 말 것] 삭제 같은 파괴적 동작을 넣지 않습니다.
+
+## 접근성
+키보드: Enter · Space=왼쪽: 기본 동작 · ▾: 목록 열기 · ↓ · ↑=▾에서 목록을 열고 첫 · 끝 항목으로 · ↑ ↓ · Home · End=항목 이동 · Esc=닫고 ▾로 복귀 · Tab=닫기
+직접 처리: menuLabel에 무엇의 다른 방법인지 — "다른 게시 방법"
+
+## 시스템 규칙 (요약)
+- 색·간격·모서리는 제품 토큰만 (var(--border), var(--primary), var(--r-el)) — hex 금지. --brand · --sel-bg 는 문서 사이트 전용이라 앱에 없습니다
+- primary 버튼은 화면당 하나. 활성(탭·필터)은 --nav-active 선+글자, 목록 행 선택은 --selected-fill 회색 면
+- 컨트롤 높이 32(기본) / 28(sm — 필터 바·툴바) / 40(lg — 로그인 제출 전용)
+- 목록·테이블은 default/loading/empty/error/partial 5상태
+- 전체 규칙: https://Cogniterm.github.io/design-system/llms.txt

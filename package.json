@@ -16,7 +16,8 @@
     "docs": "npx --yes http-server -p 4173 -c-1 .",
     "sync:app": "node scripts-sync-app.mjs",
     "tokens:pull": "node scripts-pull-tokens.mjs",
-    "tokens:check": "node scripts-pull-tokens.mjs --check"
+    "tokens:check": "node scripts-pull-tokens.mjs --check",
+    "ds": "node ds.mjs"
   },
   "devDependencies": {
     "stylelint": "^16.10.0",

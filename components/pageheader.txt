@@ -1,0 +1,52 @@
+# DsPageHeader — Cogniterm Design System
+
+import { DsPageHeader } from '~/design'   // Vuetify 불필요 · ds.css만
+
+## 용도
+모든 화면의 맨 위 — 제목과 그 화면의 기본 액션.
+
+## Props
+- title: string = 필수 — 화면 제목 — GNB 메뉴 이름과 같은 낱말.
+
+## Slots
+- #default — 오른쪽 액션 — 기본 액션 버튼 하나(btn-primary)와 보조 버튼.
+
+## 사용 예
+```vue
+<DsPageHeader title="사용자 관리">
+  <DsButton variant="secondary">내보내기</DsButton>
+  <DsButton>사용자 추가</DsButton>
+</DsPageHeader>
+```
+
+## HTML 문법 — Vue 없이 문자열로 그리는 화면
+```html
+<div class="ptitle">
+  <h1>사용자 관리</h1>
+  <button class="btn">내보내기</button>
+  <button class="btn btn-primary">사용자 추가</button>
+</div>
+```
+
+## 앱별
+- 이용자 화면 (Vuetify 있음): 이 부품 그대로
+- 관리자 콘솔 (Vuetify 없음): 이 부품 그대로 (~/design · html 문법)
+
+## 구분
+- vs Toolbar: 필터 · 검색 · 일괄 작업 줄은 Toolbar — 제목줄에는 기본 액션만
+
+## 지침
+- [해야 할 것] 화면의 기본 액션(만들기 · 편집 · 저장)은 여기 오른쪽에 둡니다. primary는 하나.
+- [해야 할 것] 제목은 GNB 메뉴 이름과 같은 낱말 — 눈으로 이어집니다.
+- [하지 말 것] 아래 여백을 따로 주지 않습니다 — 다음 블록의 위 여백(16)이 맡습니다.
+- [하지 말 것] 필터 · 검색을 제목줄에 올리지 않습니다 — 그건 필터줄(Toolbar)입니다.
+
+## 접근성
+직접 처리: 화면에 h1은 하나 — 탭 줄이 제목을 대신하면 .sr 로 숨긴 h1을 둡니다
+
+## 시스템 규칙 (요약)
+- 색·간격·모서리는 제품 토큰만 (var(--border), var(--primary), var(--r-el)) — hex 금지. --brand · --sel-bg 는 문서 사이트 전용이라 앱에 없습니다
+- primary 버튼은 화면당 하나. 활성(탭·필터)은 --nav-active 선+글자, 목록 행 선택은 --selected-fill 회색 면
+- 컨트롤 높이 32(기본) / 28(sm — 필터 바·툴바) / 40(lg — 로그인 제출 전용)
+- 목록·테이블은 default/loading/empty/error/partial 5상태
+- 전체 규칙: https://Cogniterm.github.io/design-system/llms.txt

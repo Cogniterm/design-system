@@ -10,6 +10,7 @@ import {
   DsFileGrid, DsFileRow, DsLink, DsKbd, DsCode, DsTimestamp,
   DsMetaList, DsSearchField, DsSystemMessage, DsToolbar, DsTableOfContents, DsVisuallyHidden,
   DsTreeview, DsTimeline,
+  DsPageHeader, DsStatus, DsStatCard, DsDetailTable, DsSplitButton, DsGauge,
 } from '~/design'
 import {
   DsIconButton, DsMenu, DsTabs, DsBreadcrumbs, DsPagination,
@@ -133,6 +134,7 @@ const tab = ref('all'); const view = ref('list'); const period = ref('w'); const
 const nav = ref(['logs']); const step = ref(2); const listSel = ref([])
 const tree = ref([5]); const treeOpen = ref([1, 4]); const acc = ref<any>(null)
 const dlg = ref(false); const snack = ref(false); const pal = ref(false)
+const picked = ref('')
 const streaming = ref(true); const toolStatus = ref<'running' | 'done' | 'error'>('running')
 /* thinking — 단계 문구 자동 전환 (스펙: 2.6s 간격, 450ms fade-in) */
 const stages = ['문서 분석 중', '근거 문서 검색 중', '답변 정리 중']
@@ -801,6 +803,57 @@ const badgeLabel: Record<string, string> = { default: '대기', brand: '실행�
           { label: '수행자', value: 'Jiyong Kim' },
           { label: '이벤트 ID', value: 'evt_8f3a2c91', mono: true },
           { label: 'IP', value: '10.4.22.108', mono: true }]" /></div>
+      </template>
+
+      <template v-else-if="id === 'pageheader'">
+        <div style="width:100%;background:var(--card);border:1px solid var(--border);border-radius:var(--r-ct);padding-bottom:18px">
+          <DsPageHeader title="사용자 관리">
+            <DsButton variant="secondary">내보내기</DsButton>
+            <DsButton>사용자 추가</DsButton>
+          </DsPageHeader>
+        </div>
+      </template>
+
+      <template v-else-if="id === 'status'">
+        <DsStatus tone="ok">정상</DsStatus>
+        <DsStatus tone="wait">대기</DsStatus>
+        <DsStatus tone="err">오류</DsStatus>
+        <DsStatus tone="off">일시정지</DsStatus>
+      </template>
+
+      <template v-else-if="id === 'statcard'">
+        <div class="summary" style="width:100%;padding:0">
+          <DsStatCard label="오늘 검색" :value="1284" delta="+8%" delta-tone="good" delta-label="어제 대비" />
+          <DsStatCard label="차단된 유출 시도" :value="12" delta="+3건" delta-tone="bad" delta-label="직전 7일 대비" />
+          <DsStatCard label="동기화된 문서" :value="845" :of="26482" sub="3.2%" />
+          <DsStatCard label="평균 응답" value="23.7" unit="초" />
+        </div>
+      </template>
+
+      <template v-else-if="id === 'detailtable'">
+        <div style="width:100%"><DsDetailTable
+          :columns="[{ key: 'model', label: '모델' }, { key: 'calls', label: '호출' }, { key: 'cost', label: '비용', align: 'right' }]"
+          :rows="[{ model: 'gpt-4.1', calls: '1,204', cost: '₩48,210' }, { model: 'claude-sonnet', calls: '860', cost: '₩31,980' }]"
+          row-key="model">
+          <template #model="{ value }"><b>{{ value }}</b></template>
+        </DsDetailTable></div>
+      </template>
+
+      <template v-else-if="id === 'splitbutton'">
+        <DsSplitButton label="게시" menu-label="다른 게시 방법"
+          :items="[{ label: '지금 게시', value: '지금 게시' }, { label: '예약 게시', value: '예약 게시' }, { label: '초안으로 저장', value: '초안으로 저장' }]"
+          @click="picked = '게시'" @select="picked = $event" />
+        <DsSplitButton label="내보내기" menu-label="다른 형식으로 내보내기" variant="secondary" size="sm"
+          :items="[{ label: 'CSV', value: 'CSV' }, { label: 'Excel', value: 'Excel' }, { label: 'PDF', value: 'PDF', disabled: true }]"
+          @click="picked = '내보내기'" @select="picked = $event" />
+        <span v-if="picked" style="font-size:12px;color:var(--muted-foreground)">{{ picked }}</span>
+      </template>
+
+      <template v-else-if="id === 'gauge'">
+        <DsGauge :value="42" label="라이선스 좌석" size="sm" />
+        <DsGauge :value="72" label="저장 공간 사용률" show-value />
+        <DsGauge :value="91" label="월 토큰 한도" size="lg" variant="warning" show-value />
+        <DsGauge :value="98" label="캐시 적중률" size="lg" variant="success" show-value />
       </template>
 
       <template v-else-if="id === 'timestamp'">

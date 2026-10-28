@@ -1,6 +1,6 @@
 # Components — Cogniterm Design System
 
-> 68 components. 38 standalone
+> 74 components. 44 standalone
 > (no Vuetify needed, import from `~/design`) and
 > 30 Vuetify-based
 > (import from `~/design/vuetify`, also needs ds-vuetify.css).
@@ -10,15 +10,27 @@
 Read in this order. Do not skip step 1 — picking the wrong component is the
 most common failure, and the index below is what prevents it.
 
-1. This file — scan the category list at the bottom and pick candidates.
+1. This file — scan the category list below and pick candidates. The `id` after
+   each name is its file name.
 2. https://Cogniterm.github.io/design-system/components/<id>.txt — the picked component, one file each
    (e.g. /components/button.txt). It carries when to use it, which variant to
-   pick, what it is confused with, props, and keyboard behaviour.
+   pick, what it is confused with, props, events, slots, a usage example, the
+   HTML class grammar, what the admin console uses, and keyboard behaviour.
+   The same data as JSON: https://Cogniterm.github.io/design-system/components/index.json
 3. https://Cogniterm.github.io/design-system/patterns/llms.txt — only when composing a whole screen or an agent flow.
 4. https://Cogniterm.github.io/design-system/foundation/llms.txt — only when you need a colour, spacing or type token.
 
 If two components look interchangeable, the "confused with" section of each
 <id>.txt states the deciding question. Answer it before writing code.
+
+## First: which app are you in?
+- **User app (이용자 화면)** has Vuetify — every component here works.
+- **Admin console (관리자 콘솔)** has NO Vuetify. Only `~/design` (standalone) components and
+  the HTML class grammar work there. Each Vuetify-based component below carries a
+  `console:` line naming what the console uses instead (its own 공용/부품/*.vue or a
+  ui.css class grammar). The console's DsSelect · DsSearchField · DsSlider share the
+  DS names but have DIFFERENT props — follow the console line, not the DS props.
+- Many console screens render HTML strings, not Vue — use the "HTML 문법" block in <id>.txt.
 
 ## Rules
 - Import from the correct barrel. Mixing them breaks builds in apps without Vuetify.
@@ -29,618 +41,379 @@ If two components look interchangeable, the "confused with" section of each
 - Icons come from `~/design/icon` by semantic name; components take them via an `#icon` slot.
 
 ### Action (액션)
-- **DsButton** (버튼) — 액션을 실행하는 기본 버튼.
-  import: ~/design | origin: custom
+- **DsButton** (버튼) `button` — 액션을 실행하는 기본 버튼.
+  import: ~/design
   where: 모든 화면의 액션. primary는 화면당 하나만.
-  props: variant='primary', size='default', disabled=false, type='button'
-  usage:
-    <DsButton variant="primary" @click="run">New agent</DsButton>
-    <DsButton variant="secondary">Cancel</DsButton>
-    <DsButton variant="ghost">Learn more</DsButton>
-    <DsButton variant="danger" @click="remove">Delete</DsButton>
-    <DsButton disabled>Disabled</DsButton>
-    <DsButton size="sm">Small</DsButton>
-    <DsButton size="lg">Large</DsButton>
-- **DsIconButton** (아이콘 버튼) — 아이콘만 있는 버튼.
-  import: ~/design/vuetify | origin: wrapped (VBtn)
+  props: variant='primary', size='default', disabled=false, type='button', loading=false
+- **DsIconButton** (아이콘 버튼) `iconbutton` — 아이콘만 있는 버튼.
+  import: ~/design/vuetify (wraps VBtn)
   where: 테이블 행 끝 ⋯, 툴바, 입력창 부가 버튼.
   props: label, variant='ghost', size='default'
-  usage:
-    <DsIconButton label="More"><DsIcon name="more" /></DsIconButton>
-    <DsIconButton label="Archive" variant="secondary"><DsIcon name="archive" /></DsIconButton>
-- **DsButtonGroup** (버튼 그룹) — 서로 배타적인 보기 전환 — 세그먼티드 컨트롤.
-  import: ~/design | origin: custom
+  console: 쓸 수 없음 (Vuetify 없음) — 대응 부품이 없으면 먼저 물어보세요
+- **DsButtonGroup** (버튼 그룹) `buttongroup` — 서로 배타적인 보기 전환 — 세그먼티드 컨트롤.
+  import: ~/design
   where: 그리드/리스트 보기 전환, 기간(일·주·월), 밀도 전환.
   props: modelValue, items, size='default'
   vs: Tabs — 내용이 통째로 바뀌면 Tabs
-  usage:
-    <DsButtonGroup v-model="view" :items="[
-      { value: 'list', label: '리스트' },
-      { value: 'grid', label: '그리드' },
-    ]" />
-- **DsToolbar** (툴바) — 컨트롤 줄 정렬 규약.
-  import: ~/design | origin: custom
+- **DsToolbar** (툴바) `toolbar` — 컨트롤 줄 정렬 규약.
+  import: ~/design
   where: 테이블 위 컨트롤 줄, 상세 헤더 액션 줄.
-  props: dense=false, label, size='default'
-  usage:
-    <DsToolbar dense>
-      <DsButton variant="secondary" size="sm">필터</DsButton>
-      <span class="sep"></span>
-      <span class="spacer"></span>
-      <DsButton size="sm">에이전트 추가</DsButton>
-    </DsToolbar>
+  props: dense=false, label
+- **DsSplitButton** (분할 버튼) `splitbutton` — 기본 동작 버튼 + 같은 일의 다른 방법을 여는 ▾ — 붙은 한 덩어리.
+  import: ~/design
+  where: 제목줄의 게시 · 저장 · 내보내기 — 기본 방법 하나와 그 변형.
+  props: label, items, menuLabel, variant='primary', size='default', align='start', disabled=false
+  vs: Menu — 서로 다른 동작(수정 · 복제 · 삭제)을 모으면 Menu(더보기) / ButtonGroup — 값을 고르는 전환이면 ButtonGroup — SplitButton은 실행
 ### Navigation (내비게이션)
-- **DsTabs** (탭) — 같은 대상의 여러 단면을 전환합니다.
-  import: ~/design/vuetify | origin: wrapped (VTabs)
+- **DsTabs** (탭) `tabs` — 같은 대상의 여러 단면을 전환합니다.
+  import: ~/design/vuetify (wraps VTabs)
   where: 상세 화면 섹션 전환(개요·활동·설정), 로그 수준 필터.
   props: modelValue, items
   vs: ButtonGroup — 페이지 섹션 전환이면 Tabs, 같은 데이터의 보기 전환이면 ButtonGroup
-  usage:
-    <DsTabs v-model="tab" :items="[
-      { value: 'all', label: '전체', count: 12 },
-      { value: 'error', label: '실패', count: 3 },
-    ]" />
-- **DsBreadcrumbs** (경로) — 현재 위치의 계층 경로.
-  import: ~/design/vuetify | origin: wrapped (VBreadcrumbs)
+  console: .tabs > button (공용/스타일/ui.css) — 활성은 .on — --nav-active 밑줄 + 글자. 건수는 .tabcnt
+- **DsBreadcrumbs** (경로) `breadcrumbs` — 현재 위치의 계층 경로.
+  import: ~/design/vuetify (wraps VBreadcrumbs)
   where: 드라이브 폴더 경로, 설정 하위 페이지.
   props: items
-  usage:
-    <DsBreadcrumbs :items="[
-      { title: 'Drive' }, { title: '법무' }, { title: '2026', disabled: true },
-    ]" />
-- **DsPagination** (페이지네이션) — 긴 목록을 페이지로 나눕니다.
-  import: ~/design/vuetify | origin: wrapped (VPagination)
+  console: 쓸 수 없음 (Vuetify 없음) — 대응 부품이 없으면 먼저 물어보세요
+- **DsPagination** (페이지네이션) `pagination` — 긴 목록을 페이지로 나눕니다.
+  import: ~/design/vuetify (wraps VPagination)
   where: 테이블 하단, 검색 결과 하단.
   props: modelValue=1, length, totalVisible=7
-  usage:
-    <DsPagination v-model="page" :length="8" />
-- **DsNavList** (내비게이션 목록) — 좌측 사이드바 메뉴.
-  import: ~/design/vuetify | origin: wrapped (VList)
+  console: 공용/부품/Pager.vue — 마크업은 .pfoot > .pages — v-model:page · total · size · unit. 발은 판 바닥에 붙습니다(margin-top: auto · sticky)
+- **DsNavList** (내비게이션 목록) `navlist` — 좌측 사이드바 메뉴.
+  import: ~/design/vuetify (wraps VList)
   where: 앱 좌측 사이드바, 설정 좌측 메뉴.
   props: modelValue, modelValue, items
-  usage:
-    <DsNavList v-model="nav" :items="[
-      { subheader: '워크스페이스' },
-      { value: 'agents', title: '에이전트', icon: 'agent', badge: 17 },
-      { value: 'logs', title: '감사 로그', icon: 'tableView', badge: 3 },
-    ]" />
-- **DsStepper** (단계 표시) — 여러 단계로 나뉜 흐름.
-  import: ~/design/vuetify | origin: wrapped (VStepper)
+  console: 쓸 수 없음 (Vuetify 없음) — 대응 부품이 없으면 먼저 물어보세요
+- **DsStepper** (단계 표시) `stepper` — 여러 단계로 나뉜 흐름.
+  import: ~/design/vuetify (wraps VStepper)
   where: 에이전트 생성 마법사, 온보딩, 다단계 폼.
   props: modelValue=1, items
-  usage:
-    <DsStepper v-model="step" :items="['소스 선택', '규칙 설정', '검토']">
-      <template #item.1>1단계 내용</template>
-    </DsStepper>
-- **DsLink** (링크) — 본문 속 이동.
-  import: ~/design | origin: custom
+  console: 쓸 수 없음 (Vuetify 없음) — 대응 부품이 없으면 먼저 물어보세요
+- **DsLink** (링크) `link` — 본문 속 이동.
+  import: ~/design
   where: 본문·설명 속 이동. 동작 실행은 Button.
   props: href, external=false
   vs: Button — 이동이면 Link, 실행이면 Button
-  usage:
-    <DsLink href="/docs/audit">감사 로그 문서</DsLink>
-    <DsLink href="https://…" external>외부 문서<template #icon>​</template></DsLink>
-- **DsTableOfContents** (목차) — 긴 문서 옆에서 지금 어느 절을 보고 있는지 알려 줍니다.
-  import: ~/design | origin: custom
+- **DsTableOfContents** (목차) `tableofcontents` — 긴 문서 옆에서 지금 어느 절을 보고 있는지 알려 줍니다.
+  import: ~/design
   where: 긴 문서·설정 화면의 본문 옆. 절이 3개 이상일 때.
   props: items, scrollTarget=null
-  usage:
-    <DsTableOfContents :items="[
-      { id: 'overview', label: '개요' },
-      { id: 'install', label: '설치' },
-      { id: 'usage', label: '사용법' },
-    ]" />
-- **DsCommandPalette** (명령 팔레트) — ⌘K — 어디서든 검색·실행.
-  import: ~/design/vuetify | origin: wrapped (VDialog)
+- **DsCommandPalette** (명령 팔레트) `commandpalette` — ⌘K — 어디서든 검색·실행.
+  import: ~/design/vuetify (wraps VDialog)
   where: 전역 ⌘K — 문서·에이전트·명령으로 점프.
-  props: modelValue=false, items, placeholder
+  props: modelValue=false, items, placeholder, limit=30
   vs: SearchField — 한 목록 안 검색은 SearchField
-  usage:
-    <DsCommandPalette v-model="open" :items="commands" @select="run" />
-    <!-- 전역: keydown ⌘K → open = true -->
+  console: 쓸 수 없음 (Vuetify 없음) — 대응 부품이 없으면 먼저 물어보세요
+- **DsPageHeader** (화면 제목줄) `pageheader` — 화면 맨 위 제목 한 줄 — 제목 왼쪽, 화면의 기본 액션 오른쪽.
+  import: ~/design
+  where: 모든 화면의 맨 위 — 제목과 그 화면의 기본 액션.
+  props: title
+  vs: Toolbar — 필터 · 검색 · 일괄 작업 줄은 Toolbar — 제목줄에는 기본 액션만
 ### Data Input (입력)
-- **DsInput** (입력 필드) — 한 줄 텍스트 입력.
-  import: ~/design | origin: custom
+- **DsInput** (입력 필드) `input` — 한 줄 텍스트 입력.
+  import: ~/design
   where: 한 줄 입력 전부. 에러 상태는 필수.
   props: modelValue, label, hint, error, placeholder, type='text', size='default'
-  usage:
-    <DsInput v-model="name" label="Workspace name"
-      placeholder="Acme Inc." hint="모든 구성원에게 표시됩니다." />
-    
-    <DsInput v-model="email" label="Email"
-      :error="emailError" />
-- **DsSelect** (선택) — 옵션 목록에서 하나 또는 여러 개를 고릅니다.
-  import: ~/design/vuetify | origin: wrapped (VSelect)
+- **DsSelect** (선택) `select` — 옵션 목록에서 하나 또는 여러 개를 고릅니다.
+  import: ~/design/vuetify (wraps VSelect)
   where: 옵션 10개 이하의 선택. 그 이상은 Autocomplete.
   props: modelValue, items, label, multiple=false, size='default', error
   vs: Autocomplete — 옵션 10개를 넘으면 Autocomplete
-  usage:
-    <DsSelect v-model="status" label="Status"
-      :items="['Draft', 'Running', 'Completed']" />
-- **DsChip** (칩) — 선택된 항목을 표시하고 제거합니다.
-  import: ~/design | origin: custom
+  console: 공용/부품/DsSelect.vue — 이름은 같지만 다른 부품 — options: string[] · v-model: string · width · bare. DS DsSelect(Vuetify)의 items 를 쓰지 마세요
+- **DsChip** (칩) `chip` — 선택된 항목을 표시하고 제거합니다.
+  import: ~/design
   where: 활성 필터 표시, 첨부 파일 목록, 선택된 태그.
   props: variant='default', removable=true
   vs: Badge — 조작할 수 없으면 Badge
-  usage:
-    <DsChip @remove="detach(file)">design-system.pdf</DsChip>
-    <DsChip variant="brand" @remove="clearFilter">Status: Running</DsChip>
-- **DsTextarea** (여러 줄 입력) — 여러 줄 텍스트 입력.
-  import: ~/design/vuetify | origin: wrapped (VTextarea)
+  console: 걸린 조건 줄은 공용/부품/ChipBar.vue — 필터 줄과 건수 줄 사이의 제 줄
+- **DsTextarea** (여러 줄 입력) `textarea` — 여러 줄 텍스트 입력.
+  import: ~/design/vuetify (wraps VTextarea)
   where: 설명·메모 입력, 프롬프트 편집. (대화 입력은 AgentInput)
-  props: modelValue, label, hint, error, rows=3, size='default'
+  props: modelValue, label, hint, error, rows=3, placeholder, size='default'
   vs: AgentInput — 에이전트 대화 입력이면 AgentInput
-  usage:
-    <DsTextarea v-model="memo" label="메모" hint="줄이 늘면 자동으로 커집니다." />
-- **DsAutocomplete** (검색 선택) — 검색해서 고르는 선택.
-  import: ~/design/vuetify | origin: wrapped (VAutocomplete)
+  console: 쓸 수 없음 (Vuetify 없음) — 대응 부품이 없으면 먼저 물어보세요
+- **DsAutocomplete** (검색 선택) `autocomplete` — 검색해서 고르는 선택.
+  import: ~/design/vuetify (wraps VAutocomplete)
   where: 옵션이 10개를 넘는 선택 — 사용자 지정, 태그, 폴더 이동.
-  props: modelValue, items, multiple=false, error, size='default'
+  props: modelValue, items, label, placeholder, multiple=false, error, size='default'
   vs: Select — 옵션 10개 이하면 Select로 충분
-  usage:
-    <DsAutocomplete v-model="folders" label="폴더" multiple
-      :items="['법무', '재무', '인사', '영업']" />
-- **DsCheckbox** (체크박스) — 켜고 끄는 선택. 저장 버튼과 함께 씁니다.
-  import: ~/design | origin: custom
+  console: 쓸 수 없음 (Vuetify 없음) — 대응 부품이 없으면 먼저 물어보세요
+- **DsCheckbox** (체크박스) `checkbox` — 켜고 끄는 선택. 저장 버튼과 함께 씁니다.
+  import: ~/design
   where: 테이블 다중 선택, 약관 동의, 저장 버튼이 있는 설정.
   props: modelValue=false, label, hint, indeterminate=false, size='default', disabled=false
   vs: Switch — 즉시 반영되면 Switch, 저장 버튼을 눌러야 반영되면 Checkbox
-  usage:
-    <DsCheckbox v-model="notify" label="이메일 알림 받기"
-      hint="실패한 실행에 대해서만 발송됩니다." />
-    
-    <DsCheckbox :indeterminate="someSelected" label="전체 선택" />
-- **DsSwitch** (스위치) — 즉시 반영되는 on/off.
-  import: ~/design/vuetify | origin: wrapped (VSwitch)
+- **DsSwitch** (스위치) `switch` — 즉시 반영되는 on/off.
+  import: ~/design/vuetify (wraps VSwitch)
   where: 즉시 적용되는 on/off — 에이전트 활성화, 자동 실행.
-  props: modelValue, label, hint
+  props: modelValue, label, hint, disabled=false, size='default'
   vs: Checkbox — 저장 버튼이 필요하면 Checkbox, 즉시 반영이면 Switch
-  usage:
-    <DsSwitch v-model="enabled" label="에이전트 활성화"
-      hint="끄면 예약된 실행도 중단됩니다." />
-- **DsRadioGroup** (라디오 그룹) — 여러 선택지 중 하나.
-  import: ~/design | origin: custom
+  console: 쓸 수 없음 (Vuetify 없음) — 대응 부품이 없으면 먼저 물어보세요
+- **DsRadioGroup** (라디오 그룹) `radiogroup` — 여러 선택지 중 하나.
+  import: ~/design
   where: 배타적 설정 — 보존 기간, 공개 범위.
   props: modelValue, label, items, inline=false, size='default', disabled=false
-  usage:
-    <DsRadioGroup v-model="retention" label="보존 기간" :items="[
-      { value: '90', label: '90일', hint: '기본값' },
-      { value: '180', label: '180일', hint: '현재 설정' },
-    ]" />
-- **DsSlider** (슬라이더) — 범위 안에서 값을 조정합니다.
-  import: ~/design/vuetify | origin: wrapped (VSlider)
+- **DsSlider** (슬라이더) `slider` — 범위 안에서 값을 조정합니다.
+  import: ~/design/vuetify (wraps VSlider)
   where: 임계값 조정 — 신뢰도 컷오프, 결과 개수.
   props: modelValue=0, label, min / max / step=0 / 100 / 1, suffix
-  usage:
-    <DsSlider v-model="threshold" label="신뢰도 임계값" suffix="%" />
-- **DsFileInput** (파일 선택) — 파일을 고르거나 끌어다 놓습니다.
-  import: ~/design/vuetify | origin: wrapped (VFileInput)
+  console: 공용/부품/DsSlider.vue — 이름은 같지만 다른 부품 — v-model: number | number[] · min · max · step
+- **DsFileInput** (파일 선택) `fileinput` — 파일을 고르거나 끌어다 놓습니다.
+  import: ~/design/vuetify (wraps VFileInput)
   where: 문서 업로드, 로고 교체.
-  props: modelValue, label, accept, multiple=false, error, size='default'
-  usage:
-    <DsFileInput v-model="file" label="문서 업로드"
-      accept=".pdf,.docx" hint="PDF·DOCX · 최대 10MB" :error="sizeError" />
-- **DsCalendar** (달력) — 화면에 펼쳐 두는 달력 격자.
-  import: ~/design/vuetify | origin: wrapped (VDatePicker)
+  props: modelValue, label, hint, placeholder, accept, multiple=false, error, size='default'
+  console: 쓸 수 없음 (Vuetify 없음) — 대응 부품이 없으면 먼저 물어보세요
+- **DsCalendar** (달력) `calendar` — 화면에 펼쳐 두는 달력 격자.
+  import: ~/design/vuetify (wraps VDatePicker)
   where: 예약 화면, 늘 펼쳐 두는 기간 필터 패널.
   props: modelValue, mode='single', min, max, disablePast=false, disableFuture=false
-  usage:
-    <DsCalendar v-model="range" mode="range" disable-future />
-- **DsDatePicker** (날짜 선택) — 필드를 눌러 달력에서 날짜를 고릅니다.
-  import: ~/design/vuetify | origin: wrapped (VMenu + VDatePicker)
+  console: 공용/dscal.js (window.dsCalMount) — 검색 현황 · 검색 로그 · 문서중앙화가 같은 한 벌
+- **DsDatePicker** (날짜 선택) `datepicker` — 필드를 눌러 달력에서 날짜를 고릅니다.
+  import: ~/design/vuetify (wraps VMenu + VDatePicker)
   where: 폼 안의 날짜 한 칸 — 계약 만료일, 감사 로그 기간 필터.
-  props: modelValue, mode='single', label, hint, error, placeholder='날짜 선택', size='default', clearable=false, presets, min · max · disablePast · disableFuture
-  usage:
-    <DsDatePicker
-      v-model="period" mode="range" label="조회 기간"
-      :presets="[['최근 7일', 7], ['최근 30일', 30], ['최근 90일', 90]]"
-      disable-future clearable />
-- **DsSearchField** (검색 입력) — 검색 전용 입력 — 돋보기 · 지우기 · 단축키 힌트 · 로딩.
-  import: ~/design | origin: custom
+  props: modelValue, mode='single', label, hint, error, placeholder='날짜 선택', size='default', clearable=false, disabled=false, presets, min · max · disablePast · disableFuture
+  console: 공용/부품/ConsoleDateField.vue — 읽기전용 트리거 + DS 달력 팝업. 문자열로 그리는 화면은 공용/dscal.js
+- **DsSearchField** (검색 입력) `searchfield` — 검색 전용 입력 — 돋보기 · 지우기 · 단축키 힌트 · 로딩.
+  import: ~/design
   where: 목록 상단·GNB 검색. 전역이면 CommandPalette와 연동.
   props: modelValue='', placeholder='검색…', shortcut, loading=false, size='default'
   vs: Input — 검색이 아닌 일반 입력은 Input
-  usage:
-    <DsSearchField v-model="q" shortcut="⌘K" :loading="searching" @search="run" />
-- **DsNumberInput** (숫자 입력) — 스텝 버튼이 있는 숫자 입력.
-  import: ~/design/vuetify | origin: wrapped (VNumberInput)
+  console: 공용/부품/DsSearchField.vue — 이름은 같지만 다른 부품 — 검색 범위(scope · scopeOptions)를 칸 안에 품고 @submit. DS 의 shortcut · loading · @search 는 없습니다
+- **DsNumberInput** (숫자 입력) `numberinput` — 스텝 버튼이 있는 숫자 입력.
+  import: ~/design/vuetify (wraps VNumberInput)
   where: 재시도 횟수·한도·개수 — 스텝이 필요한 숫자.
   props: modelValue, min / max / step=— / — / 1, label / hint / error, size='default'
-  usage:
-    <DsNumberInput v-model="retries" label="재시도 횟수" :min="0" :max="10" />
-- **DsCombobox** (자유 태그 입력) — 목록에 없는 값도 입력하는 태그 입력.
-  import: ~/design/vuetify | origin: wrapped (VCombobox)
+  console: 쓸 수 없음 (Vuetify 없음) — 대응 부품이 없으면 먼저 물어보세요
+- **DsCombobox** (자유 태그 입력) `combobox` — 목록에 없는 값도 입력하는 태그 입력.
+  import: ~/design/vuetify (wraps VCombobox)
   where: 태그·수신자 — 자유 입력 + 제안.
-  props: modelValue=[], items, label / hint / error, size='default'
+  props: modelValue=[], items, label / hint / error, placeholder, size='default'
   vs: Autocomplete — 목록의 값만 허용하면 Autocomplete
-  usage:
-    <DsCombobox v-model="tags" label="태그" :items="suggested" />
+  console: 쓸 수 없음 (Vuetify 없음) — 대응 부품이 없으면 먼저 물어보세요
 ### Content (콘텐츠)
-- **DsAvatar** (아바타) — 사람 또는 에이전트를 나타내는 원형 표식.
-  import: ~/design | origin: custom
+- **DsAvatar** (아바타) `avatar` — 사람 또는 에이전트를 나타내는 원형 표식.
+  import: ~/design
   where: 사용자·에이전트 표시. 이름과 함께 씁니다.
   props: size='default', variant='default', src
-  usage:
-    <DsAvatar>JK</DsAvatar>
-    <DsAvatar size="sm">JK</DsAvatar>
-    <DsAvatar size="lg">JK</DsAvatar>
-    <DsAvatar variant="brand">A</DsAvatar>
-    <DsAvatar src="/photo.jpg" />
-- **DsCard** (카드) — 콘텐츠를 담는 면(Surface).
-  import: ~/design | origin: custom
+- **DsCard** (카드) `card` — 콘텐츠를 담는 면(Surface).
+  import: ~/design
   where: 대시보드 통계, 설정 그룹.
   props: title, subtitle
-  usage:
-    <DsCard title="Tasks automated" subtitle="Last 30 days">
-      <div class="num">1,284<span class="delta">+12.4%</span></div>
-    </DsCard>
-- **DsDivider** (구분선) — 내용을 나누는 1px 선.
-  import: ~/design | origin: custom
+- **DsDivider** (구분선) `divider` — 내용을 나누는 1px 선.
+  import: ~/design
   where: 설정 그룹 사이, 대화의 날짜 구분.
   props: label
-  usage:
-    <DsDivider />
-    <DsDivider label="Yesterday" />
-- **DsEmptyState** (빈 상태) — 데이터가 없을 때 보여주는 화면.
-  import: ~/design | origin: custom
+- **DsEmptyState** (빈 상태) `empty` — 데이터가 없을 때 보여주는 화면.
+  import: ~/design
   where: 모든 목록·테이블·검색의 빈 상태. 다음 행동을 반드시 제안.
   props: title, description
-  usage:
-    <DsEmptyState title="No agents yet" description="첫 에이전트를 만들어 업무 자동화를 시작하세요.">
-      <DsButton @click="create">New agent</DsButton>
-    </DsEmptyState>
-- **DsIcon** (아이콘) — 아이콘 하나를 그립니다.
-  import: ~/design | origin: custom
+- **DsIcon** (아이콘) `icon` — 아이콘 하나를 그립니다.
+  import: ~/design/icon
   where: 아이콘이 필요한 모든 곳. 의미 이름으로 부르고, 없으면 vue/icons.ts에 등록합니다.
   props: name, size='md', label, spin=false
-  usage:
-    import { DsIcon } from '~/design/icon'
-    
-    <DsIcon name="delete" />
-    <DsIcon name="agent" size="lg" />
-    <DsIcon name="loading" spin />
-    <DsIcon name="search" label="검색" />
-- **DsKbd** (키 표기) — 키보드 키를 표기합니다.
-  import: ~/design | origin: custom
+- **DsKbd** (키 표기) `kbd` — 키보드 키를 표기합니다.
+  import: ~/design
   where: 단축키 안내 — 팔레트 항목, 툴팁, 문서.
   props: keys
-  usage:
-    <DsKbd :keys="['⌘', 'K']" />
-    <DsKbd>Esc</DsKbd>
-- **DsCode** (코드) — 인라인 · 블록 코드.
-  import: ~/design | origin: custom
+- **DsCode** (코드) `code` — 인라인 · 블록 코드.
+  import: ~/design
   where: 식별자·페이로드·API 응답 표기.
   props: block=false, copyable=true
-  usage:
-    <DsCode>agent.run()</DsCode>
-    <DsCode block>const result = await agent.run()</DsCode>
-- **DsTimestamp** (시각) — 용어집 규칙이 내장된 시각 표기.
-  import: ~/design | origin: custom
+- **DsTimestamp** (시각) `timestamp` — 용어집 규칙이 내장된 시각 표기.
+  import: ~/design
   where: 테이블 시각 열, 메시지 시각, 실행 기록.
   props: value, mode='auto'
-  usage:
-    <DsTimestamp :value="log.createdAt" />
-    <DsTimestamp :value="log.createdAt" mode="absolute" />
-- **DsMetaList** (메타 목록) — 키-값 정보 나열.
-  import: ~/design | origin: custom
+- **DsMetaList** (메타 목록) `metalist` — 키-값 정보 나열.
+  import: ~/design
   where: 상세 패널의 키-값 — 이벤트·문서·에이전트 속성.
   props: items
-  usage:
-    <DsMetaList :items="[
-      { label: '수행자', value: 'Jiyong Kim' },
-      { label: '이벤트 ID', value: 'evt_8f3a2c91', mono: true },
-    ]" />
-- **DsVisuallyHidden** (시각 숨김) — 화면에는 없고 스크린리더에는 읽힘.
-  import: ~/design | origin: custom
+  vs: DetailTable — 같은 열을 가진 줄이 여럿이면 DetailTable
+- **DsVisuallyHidden** (시각 숨김) `visuallyhidden` — 화면에는 없고 스크린리더에는 읽힘.
+  import: ~/design
   where: 아이콘·시각 정보에 보조기기용 설명을 붙일 때.
   props: 없음
-  usage:
-    <DsVisuallyHidden>검색 결과 12건</DsVisuallyHidden>
+- **DsStatCard** (요약 카드) `statcard` — 화면 위의 요약 숫자 한 장 — 라벨 · 큰 숫자 · 곁말 · 증감.
+  import: ~/design
+  where: 목록 · 현황 · 로그 화면 위의 요약 숫자 줄.
+  props: label, value, unit, of, sub, delta, deltaTone='flat', deltaLabel
+  vs: Card — 숫자 하나를 크게 보이는 요약이면 StatCard, 내용을 담는 상자면 Card
+  console: .summary .card 그대로 · 보고서 안은 공용/부품/ReportStat.vue (.rep-stat) — ReportStat 과 props 이름이 같습니다(label · value · unit · of · sub · delta)
 ### Feedback & Status (피드백·상태)
-- **DsBadge** (배지) — 상태·분류를 표시하는 작은 읽기 전용 라벨.
-  import: ~/design | origin: custom
+- **DsBadge** (배지) `badge` — 상태·분류를 표시하는 작은 읽기 전용 라벨.
+  import: ~/design
   where: 테이블 상태 열, 목록 항목의 상태 표시. 읽기 전용.
   props: variant='default', appearance='subtle', size='default'
-  vs: Chip — Badge는 읽기 전용, Chip은 제거 가능
-  usage:
-    <DsBadge>대기</DsBadge>
-    <DsBadge variant="brand">실행중</DsBadge>
-    <DsBadge variant="success" appearance="solid">완료</DsBadge>
-    <DsBadge variant="danger" appearance="outline">실패</DsBadge>
-    <DsBadge variant="cat-3" size="sm">베타</DsBadge>
-- **DsSkeleton** (스켈레톤) — 데이터 로딩 중 콘텐츠의 자리를 미리 보여줍니다.
-  import: ~/design | origin: custom
+  vs: Chip — Badge는 읽기 전용, Chip은 제거 가능 / Status — 지금 상태(정상 · 일시정지)는 Status, 한 번의 결과(완료 · 실패)는 Badge
+- **DsSkeleton** (스켈레톤) `skeleton` — 데이터 로딩 중 콘텐츠의 자리를 미리 보여줍니다.
+  import: ~/design
   where: 목록·테이블의 로딩 상태. 에이전트 응답 대기에는 쓰지 않습니다.
   props: variant='text', width, height
   vs: ThinkingIndicator — 에이전트 응답 대기에는 Skeleton을 쓰지 않습니다
-  usage:
-    <DsSkeleton variant="circle" width="32px" height="32px" />
-    <DsSkeleton width="60%" />
-    <DsSkeleton width="90%" />
-- **DsToast** (토스트) — 작업 결과를 잠깐 알리는 알림.
-  import: ~/design | origin: custom
+- **DsToast** (토스트) `toast` — 작업 결과를 잠깐 알리는 알림.
+  import: ~/design
   where: Snackbar의 시각 부분. 큐 관리가 필요하면 Snackbar를 쓰세요.
   props: variant='success', action
   vs: Snackbar — 알림의 생김새는 Toast 하나뿐입니다. 실제로 떠서 사라져야 하면 Snackbar가 이걸 감쌉니다
-  usage:
-    <DsToast variant="success" action="View" @action="open">
-      에이전트를 추가했습니다.
-    </DsToast>
-    
-    <DsToast variant="danger" action="Retry" @action="retry">
-      파일이 10MB를 초과했습니다. 나누어 업로드하세요.
-    </DsToast>
-- **DsAlert** (알림) — 화면에 머무는 상태 알림.
-  import: ~/design/vuetify | origin: wrapped (VAlert)
+  console: window.toast() (공용/toast) · Vue 화면은 공용/부품/Toaster.vue — 생김새는 이 부품(.toast)과 같습니다
+- **DsAlert** (알림) `alert` — 화면에 머무는 상태 알림.
+  import: ~/design/vuetify (wraps VAlert)
   where: 폼 상단 검증 요약, 권한 부족 안내, 한도 경고. 사라지면 안 되는 정보.
   props: variant='info', title, closable=false
   vs: Snackbar — 사라지면 안 되는 정보는 Alert, 지나가도 되는 결과는 Snackbar / Banner — Alert는 영역 단위, Banner는 페이지 전체 단위
-  usage:
-    <DsAlert variant="error" title="삭제하지 못했습니다">
-      법무 폴더는 관리자만 삭제할 수 있습니다.
-      <template #actions>
-        <DsButton variant="secondary" size="sm">권한 요청</DsButton>
-      </template>
-    </DsAlert>
-- **DsBanner** (배너) — 페이지 전체에 해당하는 공지.
-  import: ~/design/vuetify | origin: wrapped (VBanner)
+  console: 쓸 수 없음 (Vuetify 없음) — 대응 부품이 없으면 먼저 물어보세요
+- **DsBanner** (배너) `banner` — 페이지 전체에 해당하는 공지.
+  import: ~/design/vuetify (wraps VBanner)
   where: 화면 최상단 전역 공지 — 점검 예정, 요금제 만료.
   props: icon
   vs: Alert — 페이지 전체에 해당하면 Banner, 특정 영역이면 Alert
-  usage:
-    <DsBanner icon="notification">
-      8월 3일 02:00~04:00 서비스 점검이 예정되어 있습니다.
-      <template #actions><DsButton variant="ghost" size="sm">자세히</DsButton></template>
-    </DsBanner>
-- **DsProgressBar** (진행 막대) — 진행률을 아는 작업의 막대.
-  import: ~/design/vuetify | origin: wrapped (VProgressLinear)
+  console: 쓸 수 없음 (Vuetify 없음) — 대응 부품이 없으면 먼저 물어보세요
+- **DsProgressBar** (진행 막대) `progressbar` — 진행률을 아는 작업의 막대.
+  import: ~/design/vuetify (wraps VProgressLinear)
   where: 업로드·일괄 처리 — 진행률을 아는 경우만. 모르면 ThinkingIndicator.
   props: value=0, label, indeterminate=false
-  vs: ThinkingIndicator — 진행률을 모르면 ProgressBar 대신 ThinkingIndicator
-  usage:
-    <DsProgressBar :value="progress" label="문서 분석 중" />
-- **DsSpinner** (스피너) — 아주 짧은 대기 표시.
-  import: ~/design/vuetify | origin: wrapped (VProgressCircular)
+  vs: ThinkingIndicator — 진행률을 모르면 ProgressBar 대신 ThinkingIndicator / Gauge — 끝나 가는 작업이면 ProgressBar, 정해진 최대 대비 얼마나 찼나(할당량 · 사용률)면 Gauge
+  console: 쓸 수 없음 (Vuetify 없음) — 대응 부품이 없으면 먼저 물어보세요
+- **DsSpinner** (스피너) `spinner` — 아주 짧은 대기 표시.
+  import: ~/design/vuetify (wraps VProgressCircular)
   where: 버튼 내부, 인라인 짧은 대기(2초 이내). 에이전트 작업에는 쓰지 않습니다.
   props: size=16, variant='brand'
   vs: ThinkingIndicator — 2초 이내면 Spinner, 에이전트 작업이면 ThinkingIndicator (원칙 1) / Skeleton — 자리를 미리 보여줘야 하면 Skeleton
-  usage:
-    <DsSpinner />
-    <DsButton variant="secondary"><DsSpinner :size="13" /> 저장 중…</DsButton>
-- **DsDotField** (도트 필드 로더) — 이미지·미디어 생성 대기 전용 앰비언트 로더.
-  import: ~/design | origin: custom
+  console: 공용/부품/Spinner.vue · 공용/스타일/로딩.css — 버튼 안 · 혼자 서는 자리 크기가 정해져 있습니다
+- **DsDotField** (도트 필드 로더) `dotfield` — 이미지·미디어 생성 대기 전용 앰비언트 로더.
+  import: ~/design
   where: 이미지·미디어 생성 대기 — 단계 문구도 진행률도 줄 수 없는 생성형 작업 전용.
   props: cols=17, speed=1.1, size=380, label='콘텐츠 생성 중'
   vs: ThinkingIndicator — 단계를 말로 알릴 수 있으면 ThinkingIndicator — DotField는 말할 단계가 없는 생성 대기 전용 / ProgressBar — 진행률을 알면 ProgressBar / Skeleton — 결과의 자리(레이아웃)를 미리 알면 Skeleton
-  usage:
-    <DsDotField v-if="generating" label="이미지 생성 중" />
-- **DsLoadingScreen** (풀스크린 로딩) — 페이지·데이터 로딩용 풀스크린 로딩 화면.
-  import: ~/design | origin: custom
+- **DsLoadingScreen** (풀스크린 로딩) `loadingscreen` — 페이지·데이터 로딩용 풀스크린 로딩 화면.
+  import: ~/design
   where: 첫 진입·전체 화면 전환 — 화면 전체가 아직 없을 때만. 준비되면 즉시 교체.
   props: fullscreen=true, speed=2, size=50, label='불러오는 중'
   vs: Skeleton — 화면의 레이아웃을 이미 알면 Skeleton — LoadingScreen은 화면 전체가 아직 없을 때만 / Spinner — 영역 하나의 2초 이내 대기면 Spinner / ThinkingIndicator — 에이전트 작업 대기면 ThinkingIndicator (원칙 1)
-  usage:
-    <DsLoadingScreen v-if="booting" label="문서함 불러오는 중" />
-- **DsSnackbar** (스낵바) — 떴다가 사라지는 알림.
-  import: ~/design/vuetify | origin: wrapped (VSnackbar)
+- **DsSnackbar** (스낵바) `snackbar` — 떴다가 사라지는 알림.
+  import: ~/design/vuetify (wraps VSnackbar)
   where: 저장·삭제 결과 알림. 후속 액션은 하나까지.
   props: modelValue=false, variant='success', action, timeout=내용에 따라
   vs: Toast — 같은 생김새입니다 — Snackbar가 Toast를 그대로 그립니다. 띄우고 없애는 동작이 필요하면 Snackbar / Alert — 지나가도 되면 Snackbar, 남아야 하면 Alert
-  usage:
-    <DsSnackbar v-model="open" variant="success" action="View" @action="go">
-      에이전트를 추가했습니다.
-    </DsSnackbar>
+  console: window.toast() (공용/toast) · Vue 화면은 공용/부품/Toaster.vue — 알약 모양 — 자리는 쓰는 쪽(가운데 아래)
+- **DsStatus** (상태 표시) `status` — 점 + 상태 글자 — 표 칸의 지금 상태.
+  import: ~/design
+  where: 표의 상태 열 — 연결 · 정책 · 계정의 지금 상태.
+  props: tone='neutral'
+  vs: Badge — 실행 한 번의 결과면 Badge — Status는 지금 상태
+- **DsGauge** (게이지) `gauge` — 정해진 최대 대비 비율 하나를 고리로 — 할당량 · 사용률.
+  import: ~/design
+  where: 요약 카드 · 상세의 할당량 · 사용률 · 적중률.
+  props: value, max=100, label, size='md', showValue=false, variant='brand'
+  vs: ProgressBar — 끝나 가는 작업(업로드 · 색인)이면 ProgressBar / StatCard — 비율보다 숫자 자체가 요점이면 StatCard — 둘을 함께 둘 수도 있습니다
 ### Overlay (오버레이)
-- **DsMenu** (메뉴) — 클릭하면 열리는 드롭다운 메뉴.
-  import: ~/design/vuetify | origin: wrapped (VMenu)
+- **DsMenu** (메뉴) `menu` — 클릭하면 열리는 드롭다운 메뉴.
+  import: ~/design/vuetify (wraps VMenu)
   where: 테이블 행 액션, 프로필 메뉴, 더보기.
-  props: location='bottom start'
-  vs: Dialog — 폼이 들어가면 Menu가 아니라 Dialog
-  usage:
-    <DsMenu location="bottom end">
-      <template #activator="props">
-        <DsButton variant="secondary" v-bind="props">More</DsButton>
-      </template>
-      <div class="ds-menu-label">동작</div>
-      <div class="ds-menu-item" @click="rename">
-        <DsIcon name="edit" size="sm" /><span class="ds-menu-item__label">이름 바꾸기</span><span class="ds-menu-item__trail">F2</span>
-      </div>
-      <div class="ds-menu-item" @click="duplicate">
-        <DsIcon name="copy" size="sm" /><span class="ds-menu-item__label">복제</span><span class="ds-menu-item__trail">⌘D</span>
-      </div>
-      <hr class="ds-menu-sep" />
-      <div class="ds-menu-item ds-menu-item--danger" @click="remove">
-        <DsIcon name="delete" size="sm" /><span class="ds-menu-item__label">삭제</span>
-      </div>
-    </DsMenu>
-- **DsDialog** (다이얼로그) — 화면 위에 떠서 흐름을 멈추는 창.
-  import: ~/design/vuetify | origin: wrapped (VDialog)
+  props: modelValue=false, location='bottom start'
+  vs: Dialog — 폼이 들어가면 Menu가 아니라 Dialog / SplitButton — 같은 일의 다른 방법(지금 게시 · 예약 게시)이면 SplitButton
+  console: .pop 안에 .ds-menu-item · .ds-menu-sep (공용/스타일/ui.css) — 항목 글자 .ds-menu-item__label · 꼬리 .ds-menu-item__trail
+- **DsDialog** (다이얼로그) `dialog` — 화면 위에 떠서 흐름을 멈추는 창.
+  import: ~/design/vuetify (wraps VDialog)
   where: 되돌릴 수 없는 확인, 흐름을 멈춰야 하는 입력.
-  props: modelValue=false, title, width=480, persistent=false
+  props: modelValue=false, title, width=480, persistent=false, closable=false
   vs: Snackbar — 단순 알림이면 Dialog가 아니라 Snackbar / Menu — 선택지 나열이면 Menu
-  usage:
-    <DsDialog v-model="open" title="에이전트 삭제">
-      이 작업은 되돌릴 수 없습니다. 연결된 실행 기록 128건도 함께 삭제됩니다.
-      <template #actions>
-        <DsButton variant="secondary" size="sm" @click="open = false">Cancel</DsButton>
-        <DsButton variant="danger" size="sm" @click="remove">Delete</DsButton>
-      </template>
-    </DsDialog>
-- **DsTooltip** (툴팁) — 요소에 마우스를 올리면 뜨는 짧은 설명.
-  import: ~/design/vuetify | origin: wrapped (VTooltip)
+  console: .scrim > .dlg (공용/스타일/ui.css) — 제목 h2 16/600 · 설명 .dlgdesc · 버튼 줄 .foot(오른쪽). 여는 것은 .scrim.open
+- **DsTooltip** (툴팁) `tooltip` — 요소에 마우스를 올리면 뜨는 짧은 설명.
+  import: ~/design/vuetify (wraps VTooltip)
   where: 아이콘 버튼 설명, 잘린 텍스트 전체 보기.
   props: text, location='top'
-  usage:
-    <DsTooltip text="보관함으로 이동">
-      <button class="ai-tool" aria-label="Archive"><svg class="lic " width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="20" height="5" x="2" y="3" rx="1"/><path d="M4 8v11a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8"/><path d="M10 12h4"/></svg></button>
-    </DsTooltip>
-- **DsPopover** (팝오버) — 클릭으로 여는 내용 패널.
-  import: ~/design/vuetify | origin: wrapped (VMenu)
+  console: title 속성 — 공용/부품/GlobalTooltip.vue 가 DS 툴팁으로 바꿔 그립니다 — title 과 data-tip 을 한 요소에 같이 두지 않습니다(툴팁이 둘 뜸)
+- **DsPopover** (팝오버) `popover` — 클릭으로 여는 내용 패널.
+  import: ~/design/vuetify (wraps VMenu)
   where: 아이콘 옆 부가 설명, 짧은 미리보기 — 클릭으로 엶.
-  props: location='bottom start', width=280, variant='prose'
+  props: modelValue=false, location='bottom start', width=280, variant='prose'
   vs: Tooltip — 한 줄이면 Tooltip / Dialog — 확인·입력이 필요하면 Dialog
-  usage:
-    <DsPopover :width="260">
-      <template #activator="props">
-        <DsIconButton label="설명" v-bind="props"><DsIcon name="info" /></DsIconButton>
-      </template>
-      180일이 지난 기록은 보관 저장소로 이동합니다.
-    </DsPopover>
-- **DsHoverCard** (호버 카드) — 올리면 뜨는 미리보기.
-  import: ~/design/vuetify | origin: wrapped (VMenu)
+  console: .pop (공용/스타일/ui.css) — 고르기 목록은 .pop--sel · 열 설정은 .pop--cols
+- **DsHoverCard** (호버 카드) `hovercard` — 올리면 뜨는 미리보기.
+  import: ~/design/vuetify (wraps VMenu)
   where: 사용자·문서 이름 위 미리보기 — 부가 정보만.
   props: location='bottom start', openDelay=350
   vs: Popover — 클릭으로 여는 건 Popover
-  usage:
-    <DsHoverCard>
-      <template #activator="props">
-        <span v-bind="props" class="ds-link">Jiyong Kim</span>
-      </template>
-      <DsAvatar>JK</DsAvatar> 편집자 · 법무팀
-    </DsHoverCard>
+  console: 쓸 수 없음 (Vuetify 없음) — 대응 부품이 없으면 먼저 물어보세요
 ### Table & List (표·목록)
-- **DsDataTable** (데이터 테이블) — 정렬·페이지네이션이 되는 데이터 목록.
-  import: ~/design/vuetify | origin: wrapped (VDataTable)
+- **DsDataTable** (데이터 테이블) `datatable` — 정렬·페이지네이션이 되는 데이터 목록.
+  import: ~/design/vuetify (wraps VDataTable)
   where: 감사 로그, 에이전트 목록, 실행 이력 — 열이 고정된 데이터.
-  props: headers, items, size='default', striped=false, sticky=false, bordered=true, selectable=false, loading=false, emptyText='표시할 데이터가 없습니다.'
-  vs: List — 열이 고정되고 정렬이 필요하면 DataTable, 아니면 List / FileRow — 파일이면 FileRow
-  usage:
-    <DsDataTable :headers="headers" :items="agents" density="compact">
-      <template #item.status="{ item }">
-        <DsBadge :variant="item.status">{{ item.statusLabel }}</DsBadge>
-      </template>
-    </DsDataTable>
-- **DsFileGrid** (파일 그리드) — 드라이브의 그리드(카드) 보기.
-  import: ~/design | origin: custom
+  props: headers, items, size='default', striped=false, sticky=false, bordered=true, selectable=false, selected=[], loading=false, emptyText='표시할 데이터가 없습니다.'
+  vs: List — 열이 고정되고 정렬이 필요하면 DataTable, 아니면 List / FileRow — 파일이면 FileRow / DetailTable — 상세 화면 안의 작은 표(정렬 · 선택 없음)면 DetailTable
+  console: 쓸 수 없음 (Vuetify 없음) — 대응 부품이 없으면 먼저 물어보세요
+- **DsFileGrid** (파일 그리드) `filegrid` — 드라이브의 그리드(카드) 보기.
+  import: ~/design
   where: 드라이브 그리드 보기 — 훑어보기용.
   props: files, selected
   vs: FileRow — 훑어보기면 그리드, 세부 비교면 리스트
-  usage:
-    <DsFileGrid :files="files" :selected="selectedIds" @select="toggle">
-      <template #icon="{ file }"><DsIcon :name="file.icon" size="lg" /></template>
-    </DsFileGrid>
-- **DsFileRow** (파일 행) — 드라이브의 리스트 보기 한 줄.
-  import: ~/design | origin: custom
+- **DsFileRow** (파일 행) `filerow` — 드라이브의 리스트 보기 한 줄.
+  import: ~/design
   where: 드라이브 리스트 보기 — 세부 비교용.
   props: name, meta, icon, selected=false, checkbox=false, disabled=false
   vs: FileGrid — 썸네일이 중요하면 그리드
-  usage:
-    <DsFileRow v-for="f in files" :key="f.id"
-      :name="f.name" :meta="f.meta"
-      :selected="isSelected(f)" @select="toggle(f)"&gt;
-      <template #icon><DsIcon :name="f.icon" size="sm" /></template>
-    </DsFileRow>
-- **DsSearchResult** (검색 결과) — 검색 결과 한 건.
-  import: ~/design | origin: custom
+- **DsSearchResult** (검색 결과) `searchresult` — 검색 결과 한 건.
+  import: ~/design
   where: 검색 화면, 문서 찾기 결과.
   props: title, path, href='#'
-  usage:
-    <DsSearchResult title="계약서_최종.pdf" path="Drive / 법무 / 2026">
-      본 <mark>계약서</mark>는 2026년 7월 1일부터 효력이 발생하며…
-      <template #footer>
-        <DsBadge variant="success">Signed</DsBadge>
-      </template>
-    </DsSearchResult>
-- **DsList** (목록) — 열이 고정되지 않은 항목 목록.
-  import: ~/design/vuetify | origin: wrapped (VList)
+- **DsList** (목록) `list` — 열이 고정되지 않은 항목 목록.
+  import: ~/design/vuetify (wraps VList)
   where: 설정 항목, 선택 가능한 항목 나열. (파일은 FileRow, 고정 열은 DataTable)
   props: modelValue, items, selectable=false
   vs: DataTable — 정렬·필터가 필요해지면 DataTable로 바꿉니다
-  usage:
-    <DsList :items="[
-      { value: 'a', title: '자동 분류', subtitle: '규칙에 따라 분류', icon: 'run', meta: '켜짐' },
-    ]" selectable />
-- **DsTreeview** (트리) — 계층 구조를 펼쳐서 봅니다. 파일 피커에서 확정한 평탄화 렌더.
-  import: ~/design | origin: custom
+  console: 쓸 수 없음 (Vuetify 없음) — 대응 부품이 없으면 먼저 물어보세요
+- **DsTreeview** (트리) `treeview` — 계층 구조를 펼쳐서 봅니다. 파일 피커에서 확정한 평탄화 렌더.
+  import: ~/design
   where: 드라이브 폴더 트리, 문서 목차, 조직도.
-  props: items, modelValue=[], opened=[]
-  usage:
-    <DsTreeview v-model="activated" v-model:opened="opened" :items="[
-      { id: 1, title: '법무', children: [{ id: 2, title: '2026' }] },
-    ]" />
-- **DsTimeline** (타임라인) — 시간순 이력. 속이 빈 링과 이어 주는 선.
-  import: ~/design | origin: custom
+  props: items, modelValue=[], opened=[], getChildren, rowClass, ariaLabel, expandOnSelect=true
+- **DsTimeline** (타임라인) `timeline` — 시간순 이력. 속이 빈 링과 이어 주는 선.
+  import: ~/design
   where: 문서 변경 이력, 에이전트 실행 이력, 승인 흐름.
   props: items, ariaLabel
-  usage:
-    <DsTimeline :items="[
-      { id: 1, time: '09:14', datetime: '2026-08-28T09:14',
-        title: '삭제 시도 차단', body: '권한 없음 — 법무 폴더', variant: 'danger' },
-    ]" />
-- **DsAccordion** (아코디언) — 접었다 펴는 영역.
-  import: ~/design/vuetify | origin: wrapped (VExpansionPanels)
+- **DsAccordion** (아코디언) `accordion` — 접었다 펴는 영역.
+  import: ~/design/vuetify (wraps VExpansionPanels)
   where: 툴콜 원본 페이로드, 고급 설정, FAQ. (원칙 4의 "접기")
-  props: items
-  usage:
-    <DsAccordion v-model="open" :items="[
-      { title: '원본 페이로드 보기' },
-    ]">
-      <template #item-0><pre>{{ payload }}</pre></template>
-    </DsAccordion>
+  props: items, modelValue
+  console: 쓸 수 없음 (Vuetify 없음) — 대응 부품이 없으면 먼저 물어보세요
+- **DsDetailTable** (상세 표) `detailtable` — 상세 화면 안의 작은 표 — 라운드 래퍼 · 면 없는 머리 · 줄 46.
+  import: ~/design
+  where: 상세 화면 안의 표 — 사용 내역 · 구성 · 이력.
+  props: columns, rows, rowKey
+  vs: DataTable — 정렬 · 선택 · 쪽 넘김이 필요한 목록이면 DataTable / MetaList — 열이 없는 키-값 나열이면 MetaList
 ### Agent (에이전트)
-- **DsCitationChip** (인용 칩) — 에이전트 응답의 근거 출처를 가리키는 번호 칩.
-  import: ~/design | origin: custom
+- **DsCitationChip** (인용 칩) `citation` — 에이전트 응답의 근거 출처를 가리키는 번호 칩.
+  import: ~/design
   where: 에이전트 응답에서 근거가 있는 주장 뒤.
   props: index
-  usage:
-    본문 텍스트<DsCitationChip :index="1" @open="scrollToSource(1)" />
-- **DsAgentInput** (에이전트 입력창) — 에이전트에게 메시지를 보내는 입력창.
-  import: ~/design | origin: custom
+- **DsAgentInput** (에이전트 입력창) `agentinput` — 에이전트에게 메시지를 보내는 입력창.
+  import: ~/design
   where: 챗 화면 하단. Enter 전송, Shift+Enter 줄바꿈.
   props: modelValue='', placeholder='질문을 입력하세요', sendLabel='Send'
   vs: Textarea — 일반 여러 줄 입력이면 Textarea
-  usage:
-    <DsAgentInput v-model="draft" @send="submit" @attach="pickFile" />
-- **DsChatMessage** (채팅 메시지) — 대화의 메시지 한 건.
-  import: ~/design | origin: custom
+- **DsChatMessage** (채팅 메시지) `chatmessage` — 대화의 메시지 한 건.
+  import: ~/design
   where: 챗 화면. 툴콜은 본문 위에 — 근거가 답보다 먼저.
   props: role='agent', streaming=false
-  usage:
-    <DsChatMessage role="user">
-      지난달 계약서 파일 찾아서 요약해줘
-    </DsChatMessage>
-    
-    <DsChatMessage role="agent" :streaming="isStreaming">
-      <template #tools>
-        <DsToolCallStep status="done">search_drive("계약서", June) — 3 files</DsToolCallStep>
-      </template>
-      6월에 체결된 계약서 3건을 찾았습니다<DsCitationChip :index="1" />
-    </DsChatMessage>
-- **DsStreamingText** (스트리밍 텍스트) — 응답이 실시간으로 흘러나오는 중임을 나타냅니다.
-  import: ~/design | origin: custom
+- **DsStreamingText** (스트리밍 텍스트) `streamingtext` — 응답이 실시간으로 흘러나오는 중임을 나타냅니다.
+  import: ~/design
   where: 스트리밍 중인 응답 본문.
   props: done=false
-  usage:
-    <DsStreamingText :done="!isStreaming">{{ text }}</DsStreamingText>
-- **DsThinkingIndicator** (추론 표시) — 에이전트가 무엇을 하는 중인지 알립니다. (Soft Rise v1.0)
-  import: ~/design | origin: custom
+- **DsThinkingIndicator** (추론 표시) `thinking` — 에이전트가 무엇을 하는 중인지 알립니다. (Soft Rise v1.0)
+  import: ~/design
   where: 에이전트 대기 전부. 10초 이상이면 문구를 단계에 맞게 갱신.
   props: label='답변 생성 중', size='default'
-  usage:
-    <DsThinkingIndicator :label="currentStep" />
-    <DsThinkingIndicator size="compact" label="생성 중" />
-    <DsThinkingIndicator size="inline" label="검토 의견 생성 중" />
-- **DsToolCallStep** (툴콜 단계) — 에이전트가 도구를 실행하는 과정 한 단계.
-  import: ~/design | origin: custom
+- **DsToolCallStep** (툴콜 단계) `toolcall` — 에이전트가 도구를 실행하는 과정 한 단계.
+  import: ~/design
   where: 에이전트가 도구를 쓸 때마다. 실패한 단계도 그대로 보여줍니다.
   props: status='running'
-  usage:
-    <DsToolCallStep status="done">search_drive("계약서", June) — 3 files</DsToolCallStep>
-    <DsToolCallStep status="running">read_document("계약서_최종.pdf")</DsToolCallStep>
-    <DsToolCallStep status="error">extract_table("스캔본.pdf") — 텍스트 레이어 없음</DsToolCallStep>
-- **DsArtifactPanel** (산출물 패널) — 에이전트가 만든 산출물(코드·문서·표)을 대화 옆에 보여줍니다.
-  import: ~/design | origin: custom
+- **DsArtifactPanel** (산출물 패널) `artifact` — 에이전트가 만든 산출물(코드·문서·표)을 대화 옆에 보여줍니다.
+  import: ~/design
   where: 20줄이 넘는 에이전트 산출물 — 코드·문서·표.
   props: title, copyable=false, downloadable=false
-  usage:
-    <DsArtifactPanel title="summary_report.md" copyable downloadable
-      @copy="copy" @download="save">
-    {{ markdown }}
-    </DsArtifactPanel>
-- **DsSystemMessage** (시스템 메시지) — 대화 속 시스템 알림.
-  import: ~/design | origin: custom
+- **DsSystemMessage** (시스템 메시지) `systemmessage` — 대화 속 시스템 알림.
+  import: ~/design
   where: 대화 스트림 속 시스템 안내 — 요약됨·초기화됨.
   props: time
   vs: Alert — 에러·경고는 Alert
-  usage:
-    <DsSystemMessage time="09:14">이전 대화가 요약되었습니다</DsSystemMessage>

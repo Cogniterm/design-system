@@ -16,6 +16,15 @@ import { DsCitationChip } from '~/design'   // Vuetify 불필요 · ds.css만
 본문 텍스트<DsCitationChip :index="1" @open="scrollToSource(1)" />
 ```
 
+## HTML 문법 — Vue 없이 문자열로 그리는 화면
+```html
+본문 텍스트<span class="cite">1</span>
+```
+
+## 앱별
+- 이용자 화면 (Vuetify 있음): 이 부품 그대로
+- 관리자 콘솔 (Vuetify 없음): 이 부품 그대로 (~/design · html 문법)
+
 
 ## 지침
 - [해야 할 것] 원칙 4 — 근거는 접을 수 있어도 없앨 수 없습니다. 항상 열어볼 수 있게 합니다.
@@ -26,8 +35,8 @@ import { DsCitationChip } from '~/design'   // Vuetify 불필요 · ds.css만
 직접 처리: 번호만으로는 뜻이 없으므로 aria-label에 "출처 1: 계약서_최종.pdf"처럼 대상 명시 / 이동 후 포커스를 원문 위치로 옮기기
 
 ## 시스템 규칙 (요약)
-- 색·간격·모서리는 CSS 변수만 (var(--gray-6), var(--brand)) — hex 금지
-- primary 버튼은 화면당 하나. 선택·활성 상태는 중립(--sel-bg/--sel-fg)
-- 컨트롤 높이 32(sm)/40/48 — 필터 바·툴바는 sm
+- 색·간격·모서리는 제품 토큰만 (var(--border), var(--primary), var(--r-el)) — hex 금지. --brand · --sel-bg 는 문서 사이트 전용이라 앱에 없습니다
+- primary 버튼은 화면당 하나. 활성(탭·필터)은 --nav-active 선+글자, 목록 행 선택은 --selected-fill 회색 면
+- 컨트롤 높이 32(기본) / 28(sm — 필터 바·툴바) / 40(lg — 로그인 제출 전용)
 - 목록·테이블은 default/loading/empty/error/partial 5상태
 - 전체 규칙: https://Cogniterm.github.io/design-system/llms.txt

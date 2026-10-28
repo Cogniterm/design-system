@@ -36,6 +36,7 @@ export const COMPONENTS = [
     ['size', `'default' | 'sm' | 'lg'`, `'default'`, '높이 32(기본) / 28(sm) / 40(lg — 로그인 제출 버튼 전용).'],
     ['disabled', 'boolean', 'false', '비활성화. 이유를 Tooltip으로 알려주는 것을 권장.'],
     ['type', `'button' | 'submit' | 'reset'`, `'button'`, '폼 안에서도 기본은 button — 누른다고 제출되지 않습니다.'],
+    ['loading', 'boolean', 'false', '진행 중 — 앞에 스피너를 붙이고 누를 수 없게 합니다. 라벨은 지우지 않습니다(버튼 폭이 변하면 옆 버튼이 밀림). 스피너 색은 variant를 보고 고릅니다.'],
   ],
   events: [['click', 'MouseEvent', '클릭 시 발생.']],
   slots: [['default', '버튼 라벨. 아이콘만 넣을 경우 aria-label 필수.']],
@@ -49,8 +50,8 @@ export const COMPONENTS = [
   thumb: `<button class="btn btn-primary">New agent</button>`,
   demo: `<div class="row">
     <button class="btn btn-primary">New agent</button>
-    <button class="btn btn-secondary">Cancel</button>
-    <button class="btn btn-ghost">Learn more</button>
+    <button class="btn">Cancel</button>
+    <button class="btn">Learn more</button>
     <button class="btn btn-danger">Delete</button>
     <button class="btn" disabled>Disabled</button>
     <button class="btn btn-primary btn-sm">Small</button>
@@ -64,8 +65,8 @@ export const COMPONENTS = [
 <DsButton size="sm">Small</DsButton>
 <DsButton size="lg">Large</DsButton>`,
   html: `<button class="btn btn-primary">New agent</button>
-<button class="btn btn-secondary">Cancel</button>
-<button class="btn btn-ghost">Learn more</button>
+<button class="btn">Cancel</button>
+<button class="btn">Learn more</button>
 <button class="btn btn-danger">Delete</button>
 <button class="btn" disabled>Disabled</button>
 <button class="btn btn-primary btn-sm">Small</button>
@@ -86,6 +87,7 @@ export const COMPONENTS = [
   reason: { ko: '뷰포트 경계에서 위치를 뒤집는 포지셔닝과 키보드 네비게이션을 직접 만들기 어렵습니다. Vuetify의 VMenu를 유지하고 안쪽 면만 우리 스타일로 바꿉니다.',
             en: 'Viewport-aware positioning and keyboard nav are hard to rebuild; keep VMenu, restyle the panel.' },
   props: [
+    ['modelValue', 'boolean', 'false', '열림 (v-model).'],
     ['location', 'string', `'bottom start'`, '열리는 방향. Vuetify VMenu의 location을 그대로 전달합니다.'],
   ],
   slots: [['activator', '메뉴를 여는 요소. v-bind="props" 필수.'], ['default', '메뉴 내용. .ds-menu-item + __label / __trail 로 조립.']],
@@ -531,6 +533,7 @@ export const COMPONENTS = [
     ['title', 'string', '—', '제목.'],
     ['width', 'number | string', '480', '너비.'],
     ['persistent', 'boolean', 'false', '바깥 클릭·Esc로 닫히지 않게 합니다. **되돌릴 수 없는 진행 중 작업에만**(올리는 중·실행 중). 확인 창에는 쓰지 마세요 — 닫히는 결과가 [취소]와 같습니다.'],
+    ['closable', 'boolean', 'false', '제목줄 오른쪽 위 닫기 X — 조회 · 안내 창에만. 결정 창(삭제 확인 등)은 취소 · 실행 버튼으로만 닫습니다.'],
   ],
   slots: [['default', '본문.'], ['actions', '하단 버튼 영역.']],
   demo: `<div class="ds-dialog-panel" style="max-width:420px">
@@ -593,6 +596,7 @@ export const COMPONENTS = [
     ['sticky', 'boolean', 'false', '헤더 고정 — height와 함께 씁니다.'],
     ['bordered', 'boolean', 'true', '바깥 테두리·모서리. 이미 테두리가 있는 카드 안에서는 false.'],
     ['selectable', 'boolean', 'false', '행 선택 체크박스 열 (v-model:selected).'],
+    ['selected', 'any[]', '[]', '고른 행 (v-model:selected) — selectable과 함께.'],
     ['loading', 'boolean', 'false', '로딩 표시.'],
     ['emptyText', 'string', `'표시할 데이터가 없습니다.'`, '행이 없을 때 문구.'],
   ],
@@ -606,13 +610,13 @@ export const COMPONENTS = [
     { key: 'loading',    title: 'Loading',    desc: '헤더는 남기고 본문 자리에 진행 표시 — 표가 사라졌다 나타나지 않게.' },
     { key: 'empty',      title: 'Empty',      desc: '행이 없을 때. 문구는 emptyText로 바꿉니다.' },
   ],
-  thumb: `<div class="table-wrap" style="min-width:300px"><table><thead><tr><th>Name</th><th>Status</th></tr></thead><tbody><tr><td>Weekly report agent</td><td><span class="badge brand"><span class="dot"></span>Running</span></td></tr><tr><td>Invoice classifier</td><td><span class="badge success"><span class="dot"></span>Completed</span></td></tr></tbody></table></div>`,
+  thumb: `<div class="table-wrap" style="min-width:300px"><table><thead><tr><th>Name</th><th>Status</th></tr></thead><tbody><tr><td>Weekly report agent</td><td><span class="badge brand">Running</span></td></tr><tr><td>Invoice classifier</td><td><span class="badge success">Completed</span></td></tr></tbody></table></div>`,
   demo: `<div class="table-wrap"><table>
     <thead><tr><th>Name</th><th>Status</th><th>Owner</th><th>Updated</th></tr></thead>
     <tbody>
-      <tr><td>Weekly report agent</td><td><span class="badge brand"><span class="dot"></span>Running</span></td><td>Jiyong Kim</td><td class="mono">2h ago</td></tr>
-      <tr><td>Invoice classifier</td><td><span class="badge success"><span class="dot"></span>Completed</span></td><td>Minji Park</td><td class="mono">1d ago</td></tr>
-      <tr><td>Drive sync</td><td><span class="badge danger"><span class="dot"></span>Failed</span></td><td>Jiyong Kim</td><td class="mono">3d ago</td></tr>
+      <tr><td>Weekly report agent</td><td><span class="badge brand">Running</span></td><td>Jiyong Kim</td><td class="mono">2h ago</td></tr>
+      <tr><td>Invoice classifier</td><td><span class="badge success">Completed</span></td><td>Minji Park</td><td class="mono">1d ago</td></tr>
+      <tr><td>Drive sync</td><td><span class="badge danger">Failed</span></td><td>Jiyong Kim</td><td class="mono">3d ago</td></tr>
     </tbody>
   </table></div>`,
   vue: `<DsDataTable :headers="headers" :items="agents" density="compact">
@@ -624,7 +628,7 @@ export const COMPONENTS = [
   <thead><tr><th>Name</th><th>Status</th></tr></thead>
   <tbody>
     <tr><td>Weekly report agent</td>
-        <td><span class="badge brand"><span class="dot"></span>Running</span></td></tr>
+        <td><span class="badge brand">Running</span></td></tr>
   </tbody>
 </table></div>`,
   guidelines: [
@@ -872,7 +876,7 @@ export const COMPONENTS = [
   slots: [['default', '산출물 내용.']],
   thumb: `<div class="artifact" style="min-width:240px"><div class="a-head"><span class="a-title">summary_report.md</span></div><div class="a-body"># 6월 계약서 요약</div></div>`,
   demo: `<div class="artifact" style="max-width:560px">
-    <div class="a-head"><span class="a-title">summary_report.md</span><button class="btn btn-ghost btn-sm">Copy</button><button class="btn btn-secondary btn-sm">Download</button></div>
+    <div class="a-head"><span class="a-title">summary_report.md</span><button class="btn btn-sm">Copy</button><button class="btn btn-sm">Download</button></div>
     <div class="a-body"># 6월 계약서 요약
 - 계약 기간: 12개월 (자동 갱신)
 - 대금 지급: 월말 정산 후 30일 이내
@@ -885,8 +889,8 @@ export const COMPONENTS = [
   html: `<div class="artifact">
   <div class="a-head">
     <span class="a-title">summary_report.md</span>
-    <button class="btn btn-ghost btn-sm">Copy</button>
-    <button class="btn btn-secondary btn-sm">Download</button>
+    <button class="btn btn-sm">Copy</button>
+    <button class="btn btn-sm">Download</button>
   </div>
   <div class="a-body">산출물 내용</div>
 </div>`,
@@ -1088,6 +1092,7 @@ export const COMPONENTS = [
     ['hint', 'string', '—', '보조 설명.'],
     ['error', 'string', '—', '에러 메시지.'],
     ['rows', 'number', '3', '초기 줄 수. 내용이 늘면 자동 확장.'],
+    ['placeholder', 'string', '—', '비었을 때 문구.'],
     ['size', `'sm' | 'default'`, `'default'`, '높이 — 기본 32. 제품의 컨트롤은 기본 32 · sm 28 · lg 40(로그인 · 큰 검색칸)입니다.'],
   ],
   slots: [],
@@ -1105,6 +1110,8 @@ export const COMPONENTS = [
   props: [
     ['modelValue', 'any', '—', 'v-model.'],
     ['items', 'any[]', '필수', '옵션.'],
+    ['label', 'string', '—', '라벨.'],
+    ['placeholder', 'string', '—', '비었을 때 문구.'],
     ['multiple', 'boolean', 'false', '다중 선택 시 칩으로 표시됩니다.'],
     ['error', 'string', '—', '에러 메시지.'],
     ['size', `'sm' | 'default'`, `'default'`, '높이 — 기본 32. 제품의 컨트롤은 기본 32 · sm 28 · lg 40(로그인 · 큰 검색칸)입니다.'],
@@ -1146,7 +1153,7 @@ export const COMPONENTS = [
 
 <DsCheckbox :indeterminate="someSelected" label="전체 선택" />`,
   html: `<!-- Vue 없이 쓸 때 — ds.css의 .check 하나면 됩니다 -->
-<label class="row" style="gap:9px">
+<label style="display:inline-flex;align-items:center;gap:9px">
   <input class="check" type="checkbox" checked />
   이메일 알림 받기
 </label>
@@ -1171,6 +1178,8 @@ export const COMPONENTS = [
     ['modelValue', 'boolean', '—', 'v-model.'],
     ['label', 'string', '—', '라벨.'],
     ['hint', 'string', '—', '끄면 무슨 일이 생기는지 적습니다.'],
+    ['disabled', 'boolean', 'false', '비활성.'],
+    ['size', `'sm' | 'default' | 'lg'`, `'default'`, '트랙 크기 — sm 32×18 / default 40×22 / lg 48×26.'],
   ],
   slots: [],
   demo: `<div style="display:flex;gap:10px;align-items:center"><span style="width:34px;height:20px;border-radius:999px;background:var(--brand);position:relative;display:inline-block"><i style="position:absolute;right:2px;top:2px;width:16px;height:16px;border-radius:50%;background:#fff"></i></span><span style="font-size:13.5px">에이전트 활성화</span></div>`,
@@ -1236,6 +1245,8 @@ export const COMPONENTS = [
   props: [
     ['modelValue', 'File | File[]', '—', 'v-model.'],
     ['label', 'string', '—', '라벨.'],
+    ['hint', 'string', '—', '보조 설명.'],
+    ['placeholder', 'string', '—', '비었을 때 문구.'],
     ['accept', 'string', '—', '허용 확장자.'],
     ['multiple', 'boolean', 'false', '여러 개 선택.'],
     ['error', 'string', '—', '에러 메시지.'],
@@ -1294,6 +1305,7 @@ export const COMPONENTS = [
     ['placeholder', 'string', `'날짜 선택'`, '비었을 때 문구.'],
     ['size', `'sm' | 'default'`, `'default'`, '높이 — 기본 32. 제품의 컨트롤은 기본 32 · sm 28 · lg 40(로그인 · 큰 검색칸)입니다.'],
     ['clearable', 'boolean', 'false', '지우기 버튼.'],
+    ['disabled', 'boolean', 'false', '비활성.'],
     ['presets', '[string, number][]', '—', `기간 프리셋. 예: [['최근 7일', 7]].`],
     ['min · max · disablePast · disableFuture', '—', '—', 'Calendar와 같습니다.'],
   ],
@@ -1549,6 +1561,10 @@ export const COMPONENTS = [
     ['items', 'DsTreeNode[]', '필수', '{ id, title, icon?, locked?, children? } — children으로 중첩합니다.'],
     ['modelValue', '(string|number)[]', '[]', '활성(선택) 노드 id (v-model).'],
     ['opened', '(string|number)[]', '[]', '펼쳐진 노드 id (v-model:opened).'],
+    ['getChildren', '(n) => T[] | undefined', '—', '자식을 걸러서 내려줄 때(권한 없는 폴더 숨김 등). 빈 배열 · undefined면 잎.'],
+    ['rowClass', '(n, ctx) => unknown', '—', '행에 덧붙일 클래스 — 선택 · 비활성 · 드롭 강조 같은 화면 고유 상태. ctx = { depth, expanded, hasChildren }.'],
+    ['ariaLabel', 'string', '—', '트리 전체의 이름(스크린리더).'],
+    ['expandOnSelect', 'boolean', 'true', '선택하면 자식이 있는 노드를 함께 펼칩니다. false면 펼침은 셰브런만(행 클릭 = 선택 전용).'],
   ],
   slots: [['prepend', '노드 아이콘 교체. 기본은 폴더(열림/닫힘)·자물쇠. { item, expanded }를 받습니다.']],
   demo: `<div class="cog-tree" style="width:220px">
@@ -1600,7 +1616,7 @@ export const COMPONENTS = [
   summary: '접었다 펴는 영역.',
   reason: { ko: '원칙 4 — 근거를 접을 수는 있어도 없애지 않습니다. 그 "접기"의 구현체입니다.',
             en: 'Principle 4 — evidence may be collapsed, never removed. This is that collapse.' },
-  props: [['items', '{ title, text? }[]', '필수', '패널 목록.']],
+  props: [['items', '{ title, text? }[]', '필수', '패널 목록.'], ['modelValue', 'number | number[]', '—', '펼친 패널 (v-model).']],
   slots: [['item-N', 'N번째 패널의 내용(텍스트 대신 컴포넌트를 넣을 때).']],
   demo: `<div class="ds-acc-demo"><div class="h">원본 페이로드 보기 <span>${ic('expand','sm')}</span></div><div class="b">{ "event": "document.delete", "allowed": false }</div><div class="h">고급 설정 <span>${ic('collapse','sm')}</span></div></div>`,
   vue: `<DsAccordion v-model="open" :items="[
@@ -1746,9 +1762,8 @@ export const COMPONENTS = [
   summary: '컨트롤 줄 정렬 규약.',
   reason: { ko: '컨트롤 줄의 높이·간격·구분이 화면마다 달라지는 것을 막습니다. 밀한 맥락 = sm 규칙의 집.', en: 'One control-row convention.' },
   props: [
-    ['dense','boolean','false','40px 줄 (기본 48).'],
+    ['dense','boolean','false','32px 줄 (기본 40).'],
     ['label','string','—','화면에 툴바가 둘 이상이면 구분할 이름.'],
-    ['size', `'sm' | 'default'`, `'default'`, '높이 — 기본 32. 제품의 컨트롤은 기본 32 · sm 28 · lg 40(로그인 · 큰 검색칸)입니다.'],
   ],
   slots: [['default','컨트롤들. .sep(구분) · .spacer(밀기) 사용 가능.']],
   demo: `<div class="ds-toolbar" style="width:100%"><button class="btn btn-secondary btn-sm">필터</button><button class="btn btn-ghost btn-sm">내보내기</button><span class="sep"></span><span style="font-size:var(--text-xs);color:var(--gray-9)">12건</span><span class="spacer"></span><button class="btn btn-primary btn-sm">에이전트 추가</button></div>`,
@@ -1790,7 +1805,7 @@ export const COMPONENTS = [
   origin: 'wrapped', vuetifyBase: 'VCombobox',
   summary: '목록에 없는 값도 입력하는 태그 입력.',
   reason: { ko: '자유 입력 + 제안 + 칩 관리 + 한글 조합을 함께 처리해야 합니다.', en: 'Free entry + suggestions + chips + IME.' },
-  props: [['modelValue','string[]','[]','v-model — 칩 배열.'],['items','string[]','—','제안 목록.'],['label / hint / error','string','—','필드 공통.'],['size',`'sm' | 'default'`,`'default'`,'컨트롤 스케일 — 기본 32 / md 36 / lg 40 (sm은 32의 다른 이름).']],
+  props: [['modelValue','string[]','[]','v-model — 칩 배열.'],['items','string[]','—','제안 목록.'],['label / hint / error','string','—','필드 공통.'],['placeholder','string','—','비었을 때 문구.'],['size',`'sm' | 'default'`,`'default'`,'컨트롤 스케일 — 기본 32 / md 36 / lg 40 (sm은 32의 다른 이름).']],
   slots: [],
   demo: `<div class="field" style="width:280px"><label>태그</label><div class="input" style="height:auto;min-height:40px;display:flex;gap:6px;align-items:center;flex-wrap:wrap;padding:6px 12px"><span class="chip" style="height:24px">법무</span><span class="chip" style="height:24px">계약</span><span style="color:var(--gray-9);font-size:var(--text-sm)">입력…</span></div></div>`,
   vue: `<DsCombobox v-model="tags" label="태그" :items="suggested" />`,
@@ -1802,7 +1817,7 @@ export const COMPONENTS = [
   origin: 'wrapped', vuetifyBase: 'VMenu',
   summary: '클릭으로 여는 내용 패널.',
   reason: { ko: 'Tooltip보다 길고 Dialog보다 가벼운 정보가 있습니다. 포지셔닝은 VMenu가 처리합니다.', en: 'Between tooltip and dialog; VMenu does positioning.' },
-  props: [['location','string',`'bottom start'`,'열리는 방향.'],['width','number | string','280','패널 폭.'],['variant',`'prose' | 'list'`,`'prose'`,'담는 내용. 설명·짧은 폼이면 prose, 선택지 목록이면 list(메뉴와 같은 4px 인셋).']],
+  props: [['modelValue','boolean','false','열림 (v-model).'],['location','string',`'bottom start'`,'열리는 방향.'],['width','number | string','280','패널 폭.'],['variant',`'prose' | 'list'`,`'prose'`,'담는 내용. 설명·짧은 폼이면 prose, 선택지 목록이면 list(메뉴와 같은 4px 인셋).']],
   slots: [['activator','여는 요소. v-bind 필수.'],['default','패널 내용.']],
   demo: `<div class="ds-popover" style="width:240px;box-shadow:none"><b style="color:var(--gray-12);font-size:var(--text-sm)">보존 기간</b><div style="margin-top:6px">180일이 지난 기록은 보관 저장소로 이동합니다.</div></div>`,
   vue: `<DsPopover :width="260">
@@ -1836,7 +1851,7 @@ export const COMPONENTS = [
   origin: 'wrapped', vuetifyBase: 'VDialog',
   summary: '⌘K — 어디서든 검색·실행.',
   reason: { ko: '검색 + 키보드 탐색 + 실행을 하나로. 포커스 트랩은 VDialog가 처리합니다.', en: 'Search, keyboard nav and execute in one; VDialog traps focus.' },
-  props: [['modelValue','boolean','false','열림.'],['items','PaletteItem[]','필수','{ id, title, group?, hint? }'],['placeholder','string','—','입력 안내.']],
+  props: [['modelValue','boolean','false','열림.'],['items','PaletteItem[]','필수','{ id, title, group?, hint? }'],['placeholder','string','—','입력 안내.'],['limit','number','30','결과 상한 — 넘치면 목록이 스크롤됩니다.']],
   events: [['select','PaletteItem','선택 시. 팔레트는 자동으로 닫힘.']],
   slots: [],
   thumb: `<div class="ds-palette" style="box-shadow:none;max-width:300px"><input class="ds-palette-input" placeholder="검색 또는 명령…" disabled /><div class="ds-palette-list"><button class="ds-palette-item active"><span class="pi-title">감사 로그 열기</span></button></div></div>`,
@@ -1845,6 +1860,203 @@ export const COMPONENTS = [
 <!-- 전역: keydown ⌘K → open = true -->`,
   html: null,
   guidelines: [['해야 할 것','⌘K 하나로 통일 — SearchField의 shortcut과 연결.'],['해야 할 것','최근 사용을 상단에.']],
+},
+
+/* ── 콘솔에서 받아 온 부품 (2026-10-27) ──
+   관리자 콘솔이 열 화면 넘게 쓰던 문법을 그대로 옮긴 것입니다(공용/스타일/ui.css → ds.css).
+   콘솔은 Vuetify 가 없고 문자열로 그리는 화면도 많아서 **html 문법이 1차**입니다 — Vue 화면만 Ds* 를 씁니다 */
+{
+  id: 'pageheader', name: 'PageHeader', ko: '화면 제목줄', category: 'nav',
+  origin: 'custom', vuetifyBase: null,
+  summary: '화면 맨 위 제목 한 줄 — 제목 왼쪽, 화면의 기본 액션 오른쪽.',
+  reason: { ko: '콘솔 35개 화면이 같은 .ptitle 문법을 손으로 적고 있었습니다. 제목 크기 · 위 여백 · 액션 자리가 화면마다 갈리지 않게 한 벌로 묶습니다.',
+            en: '35 console screens hand-wrote the same title row; one definition keeps size, spacing and the action slot identical.' },
+  props: [['title', 'string', '필수', '화면 제목 — GNB 메뉴 이름과 같은 낱말.']],
+  events: [],
+  slots: [['default', '오른쪽 액션 — 기본 액션 버튼 하나(btn-primary)와 보조 버튼.']],
+  demo: `<div style="width:100%;background:var(--card);border:1px solid var(--border);border-radius:var(--r-ct);padding-bottom:18px"><div class="ptitle"><h1>사용자 관리</h1><button class="btn">내보내기</button><button class="btn btn-primary">사용자 추가</button></div></div>`,
+  vue: `<DsPageHeader title="사용자 관리">
+  <DsButton variant="secondary">내보내기</DsButton>
+  <DsButton>사용자 추가</DsButton>
+</DsPageHeader>`,
+  html: `<div class="ptitle">
+  <h1>사용자 관리</h1>
+  <button class="btn">내보내기</button>
+  <button class="btn btn-primary">사용자 추가</button>
+</div>`,
+  guidelines: [
+    ['해야 할 것', '화면의 기본 액션(만들기 · 편집 · 저장)은 여기 오른쪽에 둡니다. primary는 하나.'],
+    ['해야 할 것', '제목은 GNB 메뉴 이름과 같은 낱말 — 눈으로 이어집니다.'],
+    ['하지 말 것', '아래 여백을 따로 주지 않습니다 — 다음 블록의 위 여백(16)이 맡습니다.'],
+    ['하지 말 것', '필터 · 검색을 제목줄에 올리지 않습니다 — 그건 필터줄(Toolbar)입니다.'],
+  ],
+},
+{
+  id: 'status', name: 'Status', ko: '상태 표시', category: 'feedback',
+  origin: 'custom', vuetifyBase: null,
+  summary: '점 + 상태 글자 — 표 칸의 지금 상태.',
+  reason: { ko: '콘솔 22개 화면이 .state 로 상태를 그립니다. 배지는 면이 있어 줄이 많은 표에서 시끄럽고, 상태(지금)와 결과(한 번)를 같은 모양으로 그리면 두 축이 섞입니다.',
+            en: 'Dot + label for current state in table cells — quieter than a badge, and keeps state apart from one-off results.' },
+  props: [['tone', `'neutral' | 'ok' | 'wait' | 'err' | 'off'`, `'neutral'`, 'ok 정상 · 활성 / wait 대기 · 확인 필요 / err 오류 / off 일시정지 · 비활성.']],
+  events: [],
+  slots: [['default', '상태 낱말 — 정상 · 일시정지 · 활성 · 비활성.']],
+  demo: `<div style="display:flex;gap:20px;flex-wrap:wrap"><span class="state ok">정상</span><span class="state wait">대기</span><span class="state err">오류</span><span class="state off">일시정지</span></div>`,
+  vue: `<DsStatus tone="ok">정상</DsStatus>
+<DsStatus tone="off">일시정지</DsStatus>`,
+  html: `<span class="state ok">정상</span>
+<span class="state off">일시정지</span>`,
+  guidelines: [
+    ['해야 할 것', '상태는 지금의 모습입니다 — 정상 · 일시정지 / 활성 · 비활성. 실행 한 번의 결과(완료 · 실패)는 Badge.'],
+    ['해야 할 것', '글자를 늘 함께 씁니다 — 점 색만으로는 읽을 수 없습니다.'],
+    ['하지 말 것', '실행 결과에 "정상"을 쓰지 않습니다.'],
+  ],
+},
+{
+  id: 'statcard', name: 'StatCard', ko: '요약 카드', category: 'content',
+  origin: 'custom', vuetifyBase: null,
+  summary: '화면 위의 요약 숫자 한 장 — 라벨 · 큰 숫자 · 곁말 · 증감.',
+  reason: { ko: '콘솔 12개 화면이 .summary .card 를 씁니다. 카드 수가 적을 때 칸 폭 · 증감 색의 뜻 · 분모 표기처럼 화면마다 다시 정하던 규칙을 한 벌로 묶습니다.',
+            en: 'KPI card row used by 12 console screens; keeps column width, delta meaning and denominators consistent.' },
+  props: [
+    ['label', 'string', '필수', '무엇을 센 숫자인가.'],
+    ['value', 'string | number', '필수', '숫자 — number면 천 단위 쉼표를 붙입니다.'],
+    ['unit', 'string', '—', '단위 — "초" · "건". 숫자에 붙되 한 단 작게.'],
+    ['of', 'string | number', '—', '분모 — 값 옆에 " / 26,482"로 한 단 작게.'],
+    ['sub', 'string', '—', '곁말 한 줄 — 집계 기준 · 비율.'],
+    ['delta', 'string', '—', '증감 글자 — "+12%".'],
+    ['deltaTone', `'good' | 'bad' | 'flat'`, `'flat'`, '증감의 뜻 — 방향이 아니라 좋고 나쁨. 나쁜 지표가 늘면 bad.'],
+    ['deltaLabel', 'string', '—', '비교 기준 — "직전 30일 대비".'],
+  ],
+  events: [],
+  slots: [],
+  demo: `<div class="summary" style="width:100%;padding:0"><div class="card"><span class="l">오늘 검색</span><span class="v">1,284</span><span class="delta delta--good">+8% <span class="delta-l">· 어제 대비</span></span></div><div class="card"><span class="l">차단된 유출 시도</span><span class="v">12</span><span class="delta delta--bad">+3건 <span class="delta-l">· 직전 7일 대비</span></span></div><div class="card"><span class="l">동기화된 문서</span><span class="v">845<span class="card-of"> / 26,482</span></span><span class="s">3.2%</span></div></div>`,
+  vue: `<div class="summary">
+  <DsStatCard label="오늘 검색" value="1,284" delta="+8%" delta-tone="good" delta-label="어제 대비" />
+  <DsStatCard label="차단된 유출 시도" value="12" delta="+3건" delta-tone="bad" delta-label="직전 7일 대비" />
+  <DsStatCard label="동기화된 문서" :value="845" :of="26482" sub="3.2%" />
+  <DsStatCard label="평균 응답" value="23.7" unit="초" />
+</div>`,
+  html: `<div class="summary">
+  <div class="card">
+    <span class="l">오늘 검색</span>
+    <span class="v">1,284</span>
+    <span class="delta delta--good">+8% <span class="delta-l">· 어제 대비</span></span>
+  </div>
+</div>`,
+  guidelines: [
+    ['해야 할 것', '여러 장은 .summary 로 감쌉니다 — 넉 장 한 줄, 적으면 왼쪽부터 같은 칸 폭, 1100px 이하 두 장.'],
+    ['해야 할 것', '증감 색은 뜻으로 — "유출 시도 +3건"은 늘었지만 나쁘므로 bad(빨강).'],
+    ['하지 말 것', '화면 CSS에서 장 수만큼 열을 다시 나누지 않습니다.'],
+    ['하지 말 것', '숫자에 단위를 같은 크기로 붙이지 않습니다 — 분모 · 단위는 한 단 작게.'],
+  ],
+},
+{
+  id: 'detailtable', name: 'DetailTable', ko: '상세 표', category: 'data',
+  origin: 'custom', vuetifyBase: null,
+  summary: '상세 화면 안의 작은 표 — 라운드 래퍼 · 면 없는 머리 · 줄 46.',
+  reason: { ko: '콘솔 12개 상세 화면이 .jtw > .jt 를 씁니다. 목록 표(줄 52 · 정렬 · 선택)와 다른 물건이라 따로 둡니다 — 같은 부품으로 그리면 상세 안의 표가 목록처럼 커집니다.',
+            en: 'Small table inside detail screens (46px rows, no header fill); distinct from the list DataTable.' },
+  props: [
+    ['columns', 'DetailColumn[]', '필수', '{ key, label, align? } — 숫자 열은 align: \'right\'.'],
+    ['rows', 'Record<string, unknown>[]', '필수', '줄 데이터. 빈 값은 "—"로 그립니다.'],
+    ['rowKey', 'string', '—', '줄 구분 키 — 없으면 순번.'],
+  ],
+  events: [],
+  slots: [['(열 key)', '그 열 칸을 직접 그림 — { row, value }. 배지 · 링크 등.']],
+  demo: `<div class="jtw" style="width:100%"><table class="jt"><thead><tr><th>모델</th><th>호출</th><th class="num--right">비용</th></tr></thead><tbody><tr><td><b>gpt-4.1</b></td><td>1,204</td><td class="num--right">₩48,210</td></tr><tr><td><b>claude-sonnet</b></td><td>860</td><td class="num--right">₩31,980</td></tr></tbody></table></div>`,
+  vue: `<DsDetailTable
+  :columns="[{ key: 'model', label: '모델' }, { key: 'calls', label: '호출' }, { key: 'cost', label: '비용', align: 'right' }]"
+  :rows="usage" row-key="model" />`,
+  html: `<div class="jtw">
+  <table class="jt">
+    <thead><tr><th>모델</th><th class="num--right">비용</th></tr></thead>
+    <tbody><tr><td><b>gpt-4.1</b></td><td class="num--right">₩48,210</td></tr></tbody>
+  </table>
+</div>`,
+  guidelines: [
+    ['해야 할 것', '숫자 열은 머리와 칸 모두 오른쪽(num--right).'],
+    ['해야 할 것', '빈 칸은 "—" — 0으로 채우지 않습니다.'],
+    ['하지 말 것', '머리 행에 회색 면을 깔지 않습니다 — 1px 밑선만.'],
+    ['하지 말 것', '정렬 · 선택 · 쪽 넘김이 필요하면 이게 아니라 DataTable입니다.'],
+  ],
+},
+{
+  id: 'splitbutton', name: 'SplitButton', ko: '분할 버튼', category: 'action',
+  origin: 'custom', vuetifyBase: null,
+  summary: '기본 동작 버튼 + 같은 일의 다른 방법을 여는 ▾ — 붙은 한 덩어리.',
+  reason: { ko: '"저장"과 "초안으로 저장"처럼 같은 일의 변형을 버튼 두세 개로 늘어놓으면 제목줄의 프라이머리가 하나라는 규칙이 깨집니다. Geist Split Button과 같은 물건이고, Vuetify 없이 그려 관리자 콘솔에서도 씁니다.',
+            en: 'One default action plus 1–4 close variants behind a caret (Geist Split Button); keeps one primary per header. No Vuetify, so it works in the console.' },
+  props: [
+    ['label', 'string', '필수', '기본 동작 — 왼쪽 버튼 글자.'],
+    ['items', 'SplitButtonItem[]', '필수', '{ label, value, disabled? } 1~4개 — ▾ 를 누르면 뜨는 변형.'],
+    ['menuLabel', 'string', '필수', '▾ 버튼의 이름 — 스크린리더가 읽습니다("다른 저장 방법").'],
+    ['variant', `'primary' | 'secondary'`, `'primary'`, '파괴적 동작(danger)은 받지 않습니다.'],
+    ['size', `'default' | 'sm'`, `'default'`, '높이 32 / 28.'],
+    ['align', `'start' | 'end'`, `'start'`, '목록을 맞출 끝 — 버튼이 오른쪽 끝에 붙어 있으면 end.'],
+    ['disabled', 'boolean', 'false', '두 칸을 함께 끕니다.'],
+  ],
+  events: [['click', 'MouseEvent', '왼쪽(기본 동작)을 눌렀을 때.'], ['select', 'string', '목록에서 고른 항목의 value.']],
+  slots: [],
+  demo: `<div class="splitbtn"><button class="btn btn-primary">게시</button><button class="btn btn-primary splitbtn__more" aria-label="다른 게시 방법"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></button></div><div class="splitbtn"><button class="btn btn-sm">내보내기</button><button class="btn btn-sm splitbtn__more" aria-label="다른 형식으로 내보내기"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></button></div>`,
+  vue: `<DsSplitButton
+  label="게시" menu-label="다른 게시 방법"
+  :items="[
+    { label: '지금 게시', value: 'now' },
+    { label: '예약 게시', value: 'schedule' },
+    { label: '초안으로 저장', value: 'draft' },
+  ]"
+  @click="publish" @select="onPublishOption" />`,
+  html: `<!-- 여닫기는 화면이: ▾ 를 누르면 목록의 hidden 을 풀고 aria-expanded="true". 바깥 클릭 · Esc 로 닫기 -->
+<div class="splitbtn">
+  <button class="btn btn-primary">게시</button>
+  <button class="btn btn-primary splitbtn__more" aria-label="다른 게시 방법" aria-haspopup="menu" aria-expanded="false"><!-- chevron-down 16 --></button>
+  <div class="splitbtn__menu" role="menu" hidden>
+    <button class="splitbtn__item" role="menuitem">지금 게시</button>
+    <button class="splitbtn__item" role="menuitem">예약 게시</button>
+    <button class="splitbtn__item" role="menuitem">초안으로 저장</button>
+  </div>
+</div>`,
+  guidelines: [
+    ['해야 할 것', '왼쪽은 열에 아홉 번 하는 일 하나, 목록은 같은 일의 다른 방법 1~4개.'],
+    ['해야 할 것', '목록 첫 줄에 기본 동작을 다시 두면 키보드 · 스크린리더도 같은 선택지를 봅니다.'],
+    ['하지 말 것', '서로 다른 동작(수정 · 복제 · 삭제)을 모으지 않습니다 — 그건 Menu(더보기)입니다.'],
+    ['하지 말 것', '삭제 같은 파괴적 동작을 넣지 않습니다.'],
+  ],
+},
+{
+  id: 'gauge', name: 'Gauge', ko: '게이지', category: 'feedback',
+  origin: 'custom', vuetifyBase: null,
+  summary: '정해진 최대 대비 비율 하나를 고리로 — 할당량 · 사용률.',
+  reason: { ko: '할당량 · 사용률은 "얼마나 찼나"가 요점이라 숫자만으로는 비교가 느립니다. 진행 막대는 끝나 가는 작업이라 뜻이 다릅니다. Geist Gauge와 같은 물건입니다.',
+            en: 'A 0–100 ratio against a fixed maximum (quota, usage, hit rate), like Geist Gauge. Task progress stays ProgressBar.' },
+  props: [
+    ['value', 'number', '필수', '값 — 0 ~ max.'],
+    ['max', 'number', '100', '최대 — 좌석 7 / 10이면 :value="7" :max="10".'],
+    ['label', 'string', '필수', '무엇의 비율인가 — 스크린리더가 읽는 이름("저장 공간 사용률").'],
+    ['size', `'sm' | 'md' | 'lg'`, `'md'`, '지름 24 / 48 / 80.'],
+    ['showValue', 'boolean', 'false', '고리 안에 숫자 — 단위 없이 숫자만. sm은 그리지 않습니다.'],
+    ['variant', `'brand' | 'success' | 'warning' | 'danger'`, `'brand'`, '색 — 화면이 가진 기준 하나로 쓰는 쪽이 고릅니다.'],
+  ],
+  events: [],
+  slots: [],
+  demo: `<span class="gauge gauge--sm" style="--gauge-value:42"><svg viewBox="0 0 36 36"><circle class="gauge__track" cx="18" cy="18" r="15.75"/><circle class="gauge__arc" cx="18" cy="18" r="15.75" pathLength="100"/></svg></span><span class="gauge" style="--gauge-value:72"><svg viewBox="0 0 36 36"><circle class="gauge__track" cx="18" cy="18" r="15.75"/><circle class="gauge__arc" cx="18" cy="18" r="15.75" pathLength="100"/></svg><span class="gauge__value">72</span></span><span class="gauge gauge--lg warning" style="--gauge-value:91"><svg viewBox="0 0 36 36"><circle class="gauge__track" cx="18" cy="18" r="15.75"/><circle class="gauge__arc" cx="18" cy="18" r="15.75" pathLength="100"/></svg><span class="gauge__value">91</span></span>`,
+  vue: `<DsGauge :value="72" label="저장 공간 사용률" show-value />
+<DsGauge :value="7" :max="10" label="라이선스 좌석" size="sm" />
+<DsGauge :value="91" label="월 토큰 한도" size="lg" variant="warning" show-value />`,
+  html: `<span class="gauge" role="meter" aria-label="저장 공간 사용률" aria-valuemin="0" aria-valuemax="100" aria-valuenow="72" style="--gauge-value: 72">
+  <svg viewBox="0 0 36 36" aria-hidden="true">
+    <circle class="gauge__track" cx="18" cy="18" r="15.75" />
+    <circle class="gauge__arc" cx="18" cy="18" r="15.75" pathLength="100" />
+  </svg>
+  <span class="gauge__value">72</span>
+</span>`,
+  guidelines: [
+    ['해야 할 것', '곁에 무엇의 비율인지 글자로 — "저장 공간 72 / 100GB". 고리만 두지 않습니다.'],
+    ['해야 할 것', '색은 그 화면이 이미 가진 기준 하나로 고릅니다(예: 한도 경고를 보내는 값).'],
+    ['하지 말 것', '부품 안이나 화면마다 임계(80% 넘으면 주황)를 새로 정하지 않습니다 — 같은 숫자가 화면마다 다른 색이 됩니다.'],
+    ['하지 말 것', '끝나 가는 작업(업로드 · 색인)에 쓰지 않습니다 — 그건 ProgressBar입니다.'],
+    ['하지 말 것', '고리 안 숫자에 % · 단위를 붙이지 않습니다 — 단위는 곁의 글자에.'],
+  ],
 },
 ]
 
@@ -2060,6 +2272,12 @@ export const WHERE = {
   popover: '아이콘 옆 부가 설명, 짧은 미리보기 — 클릭으로 엶.',
   hovercard: '사용자·문서 이름 위 미리보기 — 부가 정보만.',
   commandpalette: '전역 ⌘K — 문서·에이전트·명령으로 점프.',
+  pageheader: '모든 화면의 맨 위 — 제목과 그 화면의 기본 액션.',
+  status: '표의 상태 열 — 연결 · 정책 · 계정의 지금 상태.',
+  statcard: '목록 · 현황 · 로그 화면 위의 요약 숫자 줄.',
+  detailtable: '상세 화면 안의 표 — 사용 내역 · 구성 · 이력.',
+  splitbutton: '제목줄의 게시 · 저장 · 내보내기 — 기본 방법 하나와 그 변형.',
+  gauge: '요약 카드 · 상세의 할당량 · 사용률 · 적중률.',
 }
 
 /* ============================================
@@ -2368,6 +2586,19 @@ Object.assign(A11Y, {
   timestamp: { keys: [], free: ['<time datetime> · title에 ISO'],
     yours: ['감사 기록은 absolute 고정'] },
   metalist: { keys: [], free: ['<dl> 시맨틱'], yours: ['라벨을 짧게 — 88px 폭'] },
+  pageheader: { keys: [], free: ['<h1> — 화면의 첫 제목'],
+    yours: ['화면에 h1은 하나 — 탭 줄이 제목을 대신하면 .sr 로 숨긴 h1을 둡니다'] },
+  status: { keys: [], free: ['점은 장식(::before) — 읽히는 것은 글자'],
+    yours: ['상태 낱말을 늘 함께 — 점 색만으로 뜻을 전하지 않기'] },
+  statcard: { keys: [], free: ['숫자에 tabular-nums'],
+    yours: ['증감 글자에 비교 기준을 함께(deltaLabel) — "+8%"만으로는 무엇 대비인지 모릅니다'] },
+  detailtable: { keys: [], free: ['<table> · <th> 시맨틱'],
+    yours: ['표가 무엇인지 앞의 절 제목으로 알리기 — 표 혼자 두지 않기'] },
+  splitbutton: { keys: [['Enter · Space', '왼쪽: 기본 동작 · ▾: 목록 열기'], ['↓ · ↑', '▾에서 목록을 열고 첫 · 끝 항목으로'], ['↑ ↓ · Home · End', '항목 이동'], ['Esc', '닫고 ▾로 복귀'], ['Tab', '닫기']],
+    free: ['▾에 aria-haspopup="menu" · aria-expanded', '목록 role="menu" · 항목 role="menuitem"', '고르면 닫고 ▾로 포커스 복귀 · 바깥 클릭 닫기'],
+    yours: ['menuLabel에 무엇의 다른 방법인지 — "다른 게시 방법"'] },
+  gauge: { keys: [], free: ['role="meter" · aria-valuenow · aria-valuemin · aria-valuemax', '고리 svg는 aria-hidden'],
+    yours: ['label 채우기 — 스크린리더가 읽는 이름', '색만으로 경고하지 않기 — 곁 글자에 상태를 함께'] },
   searchfield: { keys: [['Enter','검색 실행'],['Esc','브라우저 기본 — 값 지움']],
     free: ['type=search','지우기 버튼 aria-label'],
     yours: ['결과 수를 aria-live로 알리기'] },
@@ -2402,6 +2633,31 @@ Object.assign(A11Y, {
 /* ============================================
    비슷한 컴포넌트 구분 — 오용의 가장 큰 원인
    ============================================ */
+/* ── 관리자 콘솔에서는 — DS 부품 대신 콘솔이 쓰는 것 (2026-10-27 실측, llmops-console-ux main) ──
+   콘솔에는 **Vuetify 가 없습니다**(console.main.ts — ds-vuetify.css 도 안 실음). 그래서 wrapped 부품은 거기서 못 쓰고,
+   콘솔은 같은 일을 하는 제 부품(공용/부품/*.vue)과 클래스 문법(공용/스타일/ui.css)을 갖고 있습니다.
+   ⚠ **이름이 같은데 다른 부품**이 있습니다 — 콘솔 DsSelect · DsSearchField · DsSlider 는 DS 것과 props 가 다릅니다.
+   AI 가 DS 문서의 props 로 콘솔 코드를 쓰면 틀립니다. 이 표가 부품 문서(<id>.txt) · 색인 · index.json 에 실립니다.
+   경로는 콘솔 저장소 frontend/ 기준 */
+export const CONSOLE = {
+  select: { use: '공용/부품/DsSelect.vue', note: '이름은 같지만 다른 부품 — options: string[] · v-model: string · width · bare. DS DsSelect(Vuetify)의 items 를 쓰지 마세요' },
+  searchfield: { use: '공용/부품/DsSearchField.vue', note: '이름은 같지만 다른 부품 — 검색 범위(scope · scopeOptions)를 칸 안에 품고 @submit. DS 의 shortcut · loading · @search 는 없습니다' },
+  slider: { use: '공용/부품/DsSlider.vue', note: '이름은 같지만 다른 부품 — v-model: number | number[] · min · max · step' },
+  pagination: { use: '공용/부품/Pager.vue — 마크업은 .pfoot > .pages', note: 'v-model:page · total · size · unit. 발은 판 바닥에 붙습니다(margin-top: auto · sticky)' },
+  datepicker: { use: '공용/부품/ConsoleDateField.vue', note: '읽기전용 트리거 + DS 달력 팝업. 문자열로 그리는 화면은 공용/dscal.js' },
+  calendar: { use: '공용/dscal.js (window.dsCalMount)', note: '검색 현황 · 검색 로그 · 문서중앙화가 같은 한 벌' },
+  dialog: { use: '.scrim > .dlg (공용/스타일/ui.css)', note: '제목 h2 16/600 · 설명 .dlgdesc · 버튼 줄 .foot(오른쪽). 여는 것은 .scrim.open' },
+  tabs: { use: '.tabs > button (공용/스타일/ui.css)', note: '활성은 .on — --nav-active 밑줄 + 글자. 건수는 .tabcnt' },
+  menu: { use: '.pop 안에 .ds-menu-item · .ds-menu-sep (공용/스타일/ui.css)', note: '항목 글자 .ds-menu-item__label · 꼬리 .ds-menu-item__trail' },
+  popover: { use: '.pop (공용/스타일/ui.css)', note: '고르기 목록은 .pop--sel · 열 설정은 .pop--cols' },
+  tooltip: { use: 'title 속성 — 공용/부품/GlobalTooltip.vue 가 DS 툴팁으로 바꿔 그립니다', note: 'title 과 data-tip 을 한 요소에 같이 두지 않습니다(툴팁이 둘 뜸)' },
+  snackbar: { use: 'window.toast() (공용/toast) · Vue 화면은 공용/부품/Toaster.vue', note: '알약 모양 — 자리는 쓰는 쪽(가운데 아래)' },
+  toast: { use: 'window.toast() (공용/toast) · Vue 화면은 공용/부품/Toaster.vue', note: '생김새는 이 부품(.toast)과 같습니다' },
+  spinner: { use: '공용/부품/Spinner.vue · 공용/스타일/로딩.css', note: '버튼 안 · 혼자 서는 자리 크기가 정해져 있습니다' },
+  chip: { use: '걸린 조건 줄은 공용/부품/ChipBar.vue', note: '필터 줄과 건수 줄 사이의 제 줄' },
+  statcard: { use: '.summary .card 그대로 · 보고서 안은 공용/부품/ReportStat.vue (.rep-stat)', note: 'ReportStat 과 props 이름이 같습니다(label · value · unit · of · sub · delta)' },
+}
+
 export const VERSUS = {
   checkbox: [['Switch', '즉시 반영되면 Switch, 저장 버튼을 눌러야 반영되면 Checkbox']],
   switch: [['Checkbox', '저장 버튼이 필요하면 Checkbox, 즉시 반영이면 Switch']],
@@ -2420,17 +2676,31 @@ export const VERSUS = {
                   ['Spinner', '영역 하나의 2초 이내 대기면 Spinner'],
                   ['ThinkingIndicator', '에이전트 작업 대기면 ThinkingIndicator (원칙 1)']],
   skeleton: [['ThinkingIndicator', '에이전트 응답 대기에는 Skeleton을 쓰지 않습니다']],
-  progressbar: [['ThinkingIndicator', '진행률을 모르면 ProgressBar 대신 ThinkingIndicator']],
+  progressbar: [['ThinkingIndicator', '진행률을 모르면 ProgressBar 대신 ThinkingIndicator'],
+                ['Gauge', '끝나 가는 작업이면 ProgressBar, 정해진 최대 대비 얼마나 찼나(할당량 · 사용률)면 Gauge']],
+  gauge: [['ProgressBar', '끝나 가는 작업(업로드 · 색인)이면 ProgressBar'],
+          ['StatCard', '비율보다 숫자 자체가 요점이면 StatCard — 둘을 함께 둘 수도 있습니다']],
+  splitbutton: [['Menu', '서로 다른 동작(수정 · 복제 · 삭제)을 모으면 Menu(더보기)'],
+                ['ButtonGroup', '값을 고르는 전환이면 ButtonGroup — SplitButton은 실행']],
   select: [['Autocomplete', '옵션 10개를 넘으면 Autocomplete']],
   autocomplete: [['Select', '옵션 10개 이하면 Select로 충분']],
-  badge: [['Chip', 'Badge는 읽기 전용, Chip은 제거 가능']],
+  badge: [['Chip', 'Badge는 읽기 전용, Chip은 제거 가능'],
+          ['Status', '지금 상태(정상 · 일시정지)는 Status, 한 번의 결과(완료 · 실패)는 Badge']],
+  status: [['Badge', '실행 한 번의 결과면 Badge — Status는 지금 상태']],
+  statcard: [['Card', '숫자 하나를 크게 보이는 요약이면 StatCard, 내용을 담는 상자면 Card']],
+  detailtable: [['DataTable', '정렬 · 선택 · 쪽 넘김이 필요한 목록이면 DataTable'],
+                ['MetaList', '열이 없는 키-값 나열이면 MetaList']],
+  metalist: [['DetailTable', '같은 열을 가진 줄이 여럿이면 DetailTable']],
+  pageheader: [['Toolbar', '필터 · 검색 · 일괄 작업 줄은 Toolbar — 제목줄에는 기본 액션만']],
   chip: [['Badge', '조작할 수 없으면 Badge']],
   datatable: [['List', '열이 고정되고 정렬이 필요하면 DataTable, 아니면 List'],
-              ['FileRow', '파일이면 FileRow']],
+              ['FileRow', '파일이면 FileRow'],
+              ['DetailTable', '상세 화면 안의 작은 표(정렬 · 선택 없음)면 DetailTable']],
   list: [['DataTable', '정렬·필터가 필요해지면 DataTable로 바꿉니다']],
   dialog: [['Snackbar', '단순 알림이면 Dialog가 아니라 Snackbar'],
            ['Menu', '선택지 나열이면 Menu']],
-  menu: [['Dialog', '폼이 들어가면 Menu가 아니라 Dialog']],
+  menu: [['Dialog', '폼이 들어가면 Menu가 아니라 Dialog'],
+         ['SplitButton', '같은 일의 다른 방법(지금 게시 · 예약 게시)이면 SplitButton']],
   tabs: [['ButtonGroup', '페이지 섹션 전환이면 Tabs, 같은 데이터의 보기 전환이면 ButtonGroup']],
   buttongroup: [['Tabs', '내용이 통째로 바뀌면 Tabs']],
   textarea: [['AgentInput', '에이전트 대화 입력이면 AgentInput']],

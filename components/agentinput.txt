@@ -20,6 +20,23 @@ import { DsAgentInput } from '~/design'   // Vuetify 불필요 · ds.css만
 <DsAgentInput v-model="draft" @send="submit" @attach="pickFile" />
 ```
 
+## HTML 문법 — Vue 없이 문자열로 그리는 화면
+```html
+<div class="agent-input">
+  <textarea rows="1" placeholder="질문을 입력하세요"></textarea>
+  <div class="ai-bar">
+    <button class="ai-tool" aria-label="Attach file"><svg class="lic " width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m16 6-8.414 8.586a2 2 0 0 0 2.829 2.829l8.414-8.586a4 4 0 1 0-5.657-5.657l-8.379 8.551a6 6 0 1 0 8.485 8.485l8.379-8.551"/></svg></button>
+    <button class="ai-tool" aria-label="Slash commands"><svg class="lic " width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 2 2 22"/></svg></button>
+    <span class="ai-spacer"></span>
+    <button class="btn btn-primary btn-sm">Send</button>
+  </div>
+</div>
+```
+
+## 앱별
+- 이용자 화면 (Vuetify 있음): 이 부품 그대로
+- 관리자 콘솔 (Vuetify 없음): 이 부품 그대로 (~/design · html 문법)
+
 ## 구분
 - vs Textarea: 일반 여러 줄 입력이면 Textarea
 
@@ -32,8 +49,8 @@ import { DsAgentInput } from '~/design'   // Vuetify 불필요 · ds.css만
 직접 처리: 도구 버튼에 aria-label / 전송 중에는 버튼을 정지(Stop)로 바꾸기
 
 ## 시스템 규칙 (요약)
-- 색·간격·모서리는 CSS 변수만 (var(--gray-6), var(--brand)) — hex 금지
-- primary 버튼은 화면당 하나. 선택·활성 상태는 중립(--sel-bg/--sel-fg)
-- 컨트롤 높이 32(sm)/40/48 — 필터 바·툴바는 sm
+- 색·간격·모서리는 제품 토큰만 (var(--border), var(--primary), var(--r-el)) — hex 금지. --brand · --sel-bg 는 문서 사이트 전용이라 앱에 없습니다
+- primary 버튼은 화면당 하나. 활성(탭·필터)은 --nav-active 선+글자, 목록 행 선택은 --selected-fill 회색 면
+- 컨트롤 높이 32(기본) / 28(sm — 필터 바·툴바) / 40(lg — 로그인 제출 전용)
 - 목록·테이블은 default/loading/empty/error/partial 5상태
 - 전체 규칙: https://Cogniterm.github.io/design-system/llms.txt

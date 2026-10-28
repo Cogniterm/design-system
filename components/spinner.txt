@@ -16,6 +16,10 @@ import { DsSpinner } from '~/design/vuetify'   // Vuetify 필요 · ds.css + ds-
 <DsButton variant="secondary"><DsSpinner :size="13" /> 저장 중…</DsButton>
 ```
 
+## 앱별
+- 이용자 화면 (Vuetify 있음): 이 부품 그대로
+- 관리자 콘솔 (Vuetify 없음): 공용/부품/Spinner.vue · 공용/스타일/로딩.css — 버튼 안 · 혼자 서는 자리 크기가 정해져 있습니다
+
 ## 구분
 - vs ThinkingIndicator: 2초 이내면 Spinner, 에이전트 작업이면 ThinkingIndicator (원칙 1)
 - vs Skeleton: 자리를 미리 보여줘야 하면 Skeleton
@@ -28,8 +32,8 @@ import { DsSpinner } from '~/design/vuetify'   // Vuetify 필요 · ds.css + ds-
 직접 처리: 주변에 무엇을 기다리는지 텍스트로 함께 표시 / 2초를 넘길 것 같으면 Skeleton이나 진행 표시로 교체
 
 ## 시스템 규칙 (요약)
-- 색·간격·모서리는 CSS 변수만 (var(--gray-6), var(--brand)) — hex 금지
-- primary 버튼은 화면당 하나. 선택·활성 상태는 중립(--sel-bg/--sel-fg)
-- 컨트롤 높이 32(sm)/40/48 — 필터 바·툴바는 sm
+- 색·간격·모서리는 제품 토큰만 (var(--border), var(--primary), var(--r-el)) — hex 금지. --brand · --sel-bg 는 문서 사이트 전용이라 앱에 없습니다
+- primary 버튼은 화면당 하나. 활성(탭·필터)은 --nav-active 선+글자, 목록 행 선택은 --selected-fill 회색 면
+- 컨트롤 높이 32(기본) / 28(sm — 필터 바·툴바) / 40(lg — 로그인 제출 전용)
 - 목록·테이블은 default/loading/empty/error/partial 5상태
 - 전체 규칙: https://Cogniterm.github.io/design-system/llms.txt

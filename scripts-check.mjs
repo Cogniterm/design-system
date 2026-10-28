@@ -1,10 +1,11 @@
 /* 문서 데이터 무결성 검사 — CI 게이트.
    기계가 막아야 사람이 빠져도 유지됩니다 (브리프 11장). */
-import { COMPONENTS, CATEGORIES, WHERE, VUETIFY_COVERAGE, A11Y, VERSUS } from './data.js'
+import { COMPONENTS, CATEGORIES, WHERE, VUETIFY_COVERAGE, A11Y, VERSUS, CONSOLE } from './data.js'
 import { FOUNDATION_PAGES, FD_RENDERERS } from './foundation.js'
 import { PATTERNS, PATTERN_GROUPS } from './patterns.js'
 import { ICON_NAMES } from './icons-svg.js'
-import { readFileSync } from 'node:fs'
+import { readFileSync, existsSync } from 'node:fs'
+import { execFileSync } from 'node:child_process'
 
 const errors = []
 const warn = []
@@ -377,6 +378,113 @@ if (scaleOk) {
   if (offenders.length)
     errors.push(`색 정의 블록 밖에서 hex를 직접 씁니다 — ${offenders.join(', ')} (토큰을 쓰세요)`)
   else ok('hex 직접 사용 — 색 정의 블록 안에서만')
+}
+
+/* ══ AI 가 읽는 내용이 코드와 맞는가 (2026-10-27) ══════════════════════════════════
+   AI 는 문서에 적힌 대로 코드를 씁니다. 문서가 코드와 갈리면 틀린 코드가 **조용히** 나옵니다 —
+   없는 prop 은 아무 일도 안 하고, 적히지 않은 prop 은 아무도 안 씁니다. 처음 돌렸을 때 실제로 이랬습니다:
+   DsButton 의 loading · DsDialog 의 closable 이 문서에 없었고, DsToolbar 의 size 는 코드에 없었습니다. */
+
+/* ── 20. 문서 props ↔ Vue 코드 props ── */
+{
+  const braceBody = (src, start) => {
+    let d = 1, i = start
+    while (d && i < src.length) { if (src[i] === '{') d++; else if (src[i] === '}') d--; i++ }
+    return src.slice(start, i - 1)
+  }
+  /* defineProps<{…}> · defineProps<Props>(interface) · defineProps({…}) 의 맨 바깥 키 + defineModel 이름.
+     한 줄에 몰아 쓴 props('{ title?: string; subtitle?: string }')도 잡히게 ; , 줄바꿈으로 자릅니다 */
+  const vueProps = (src) => {
+    let m = src.match(/defineProps<\s*\{/), body = ''
+    if (m) body = braceBody(src, m.index + m[0].length)
+    else if ((m = src.match(/defineProps<\s*(\w+)\s*>/))) {
+      const i = src.match(new RegExp(`(?:interface|type)\\s+${m[1]}\\s*=?\\s*\\{`))
+      if (i) body = braceBody(src, i.index + i[0].length)
+    } else if ((m = src.match(/defineProps\(\s*\{/))) body = braceBody(src, m.index + m[0].length)
+    const keys = []
+    let depth = 0, seg = ''
+    const flush = () => { const k = seg.match(/^\s*(?:readonly\s+)?['"]?([A-Za-z_][\w-]*)['"]?\??\s*:/); if (k) keys.push(k[1]); seg = '' }
+    for (const ch of body.replace(/\/\*[\s\S]*?\*\//g, '').replace(/\/\/[^\n]*/g, '')) {
+      if (ch === '{' || ch === '(' || ch === '[') depth++
+      else if (ch === '}' || ch === ')' || ch === ']') depth--
+      if (depth === 0 && (ch === ';' || ch === ',' || ch === '\n')) flush(); else seg += ch
+    }
+    flush()
+    for (const dm of src.matchAll(/defineModel(?:<[^(\n]*>)?\(\s*(?:'([\w-]+)'|"([\w-]+)")?/g)) keys.push(dm[1] || dm[2] || 'modelValue')
+    return keys
+  }
+  const drift = []
+  for (const c of COMPONENTS) {
+    const f = [`vue/components/Ds${c.name}.vue`, `vue/components/vuetify/Ds${c.name}.vue`].find(existsSync)
+    if (!f) continue   // DsIcon 처럼 배럴이 따로인 것
+    const code = vueProps(readFileSync(f, 'utf8'))
+    // 문서는 한 줄에 여럿을 묶기도 합니다 — 'min / max / step' · 'label / hint / error'
+    const docs = (c.props || []).flatMap((p) => p[0].split(/\s*[/·]\s*/)).filter((n) => /^[A-Za-z_][\w-]*$/.test(n))
+    const onlyDocs = docs.filter((d) => !code.includes(d))
+    const onlyCode = code.filter((k) => !docs.includes(k))
+    /* 감싼 부품은 적히지 않은 속성이 Vuetify 로 흘러가므로(attrs fallthrough) 문서에만 있는 것은 경고로 둡니다 */
+    if (onlyDocs.length) (c.origin === 'wrapped' ? warn : drift).push(`Ds${c.name}: 문서에만 있는 prop ${onlyDocs.join(', ')} — 코드에 없어 써도 아무 일이 없습니다`)
+    if (onlyCode.length) drift.push(`Ds${c.name}: 코드에만 있는 prop ${onlyCode.join(', ')} — data.js props 에 적으세요(AI 가 모릅니다)`)
+  }
+  if (drift.length) errors.push(`문서 ↔ 코드 props 불일치 — ${drift.join(' · ')}`)
+  else ok('문서 props ↔ Vue 코드 props 일치')
+}
+
+/* ── 21. 예제가 부르는 부품이 실제로 있는가 · 앱에 없는 토큰을 쓰지 않는가 ── */
+{
+  const siteOnly = existsSync('foundation/tokens.json')
+    ? JSON.parse(readFileSync('foundation/tokens.json', 'utf8')).docsSiteOnly.map((t) => t.name) : []
+  const bad = []
+  for (const c of COMPONENTS) {
+    for (const m of (c.vue || '').matchAll(/<(Ds[A-Z]\w+)/g)) if (!exported.has(m[1])) bad.push(`Ds${c.name} 예제의 <${m[1]}> — 그런 부품이 없습니다`)
+    /* vue · html 예제는 AI 가 그대로 옮겨 적는 칸입니다(demo 는 문서 사이트 그림이라 제외) */
+    for (const [field, text] of [['vue', c.vue], ['html', c.html]])
+      for (const m of (text || '').matchAll(/var\((--[\w-]+)/g)) if (siteOnly.includes(m[1])) bad.push(`Ds${c.name} ${field} 예제의 ${m[1]} — 문서 사이트 전용 토큰(앱에 없음)`)
+  }
+  if (bad.length) errors.push(`예제 — ${bad.join(' · ')}`)
+  else ok('예제 — 부르는 부품 실재 · 앱에 없는 토큰 없음')
+}
+
+/* ── 22. HTML 문법 예제의 클래스가 ds.css 에 있는가 ──
+   콘솔처럼 문자열로 그리는 화면은 이 html 을 그대로 씁니다. 없는 클래스면 아무 모양도 안 납니다 */
+{
+  const css = ['ds.css', 'ds-vuetify.css'].map((f) => readFileSync(f, 'utf8')).join('\n')
+  const defined = new Set([...css.matchAll(/\.([a-zA-Z][\w-]*)/g)].map((m) => m[1]))
+  const missing = []
+  for (const c of COMPONENTS) {
+    for (const m of (c.html || '').matchAll(/class="([^"]+)"/g))
+      for (const cls of m[1].split(/\s+/)) if (cls && !cls.includes('{') && !defined.has(cls)) missing.push(`Ds${c.name}: .${cls}`)
+  }
+  if (missing.length) warn.push(`HTML 문법에 ds.css 에 없는 클래스 — ${[...new Set(missing)].join(' · ')}`)
+  else ok('HTML 문법 예제의 클래스 — 전부 ds.css 에 있음')
+}
+
+/* ── 23. 관리자 콘솔 대응표의 키 ── */
+{
+  const ids3 = new Set(COMPONENTS.map((c) => c.id))
+  const badKeys = Object.keys(CONSOLE).filter((k) => !ids3.has(k))
+  if (badKeys.length) errors.push(`CONSOLE '${badKeys.join(', ')}': 그런 컴포넌트가 없습니다`)
+  else ok(`관리자 콘솔 대응표 ${Object.keys(CONSOLE).length}종`)
+}
+
+/* ── 24. AI 문서 생성물이 최신인가 ──
+   data.js · patterns.js · ds.css 를 고치고 npm run gen:llms 를 빼먹으면 AI 는 옛 문서를 읽습니다 */
+try {
+  execFileSync(process.execPath, ['scripts-gen-llms.mjs', '--check'], { stdio: 'pipe' })
+  ok('AI 문서 생성물 최신 (llms.txt · <id>.txt · index.json)')
+} catch (e) {
+  errors.push(String(e.stdout || e.message).trim() || 'AI 문서 생성물이 낡았습니다 — npm run gen:llms')
+}
+
+/* ── AI가 읽는 파일 크기 ──
+   에이전트는 llms.txt 하나를 통째로 읽습니다. 32 KB를 넘으면 한 번에 다 못 읽거나 앞부분만 쓰게 됩니다
+   (Astryx의 doctor 도 같은 문턱으로 경고합니다). 넘으면 파일을 나누거나 덜어 냅니다 */
+{
+  const LIMIT = 32 * 1024
+  const files = ['llms.txt', 'components/llms.txt', 'patterns/llms.txt', 'foundation/llms.txt', 'vuetify/llms.txt', 'a11y/llms.txt']
+  const big = files.map((f) => [f, readFileSync(f).length]).filter(([, n]) => n > LIMIT)
+  if (big.length) for (const [f, n] of big) warn.push(`AI 문서 크기 — ${f} ${(n / 1024).toFixed(1)} KB (권장 32 KB 이하 · 나누거나 덜어 낼 것)`)
+  else ok('AI 문서 크기 — 전부 32 KB 이하')
 }
 
 /* ── 결과 ── */

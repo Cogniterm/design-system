@@ -11,7 +11,15 @@ const strip = (h) => String(h).replace(/<[^>]+>/g, '').replace(/\s+/g, ' ').trim
 export const importPath = (c) =>
   c.importFrom ?? (c.origin === 'wrapped' ? '~/design/vuetify' : '~/design')
 
-export function componentPrompt(c, { WHERE, VERSUS, A11Y, SITE }) {
+/* 앱별로 쓸 수 있는가 — 관리자 콘솔엔 Vuetify 가 없습니다(data.js CONSOLE 머리말).
+   부품 문서 · 색인 · index.json 이 같은 문장을 쓰도록 여기 한 곳에서 만듭니다 */
+export function consoleLine(c, CONSOLE = {}) {
+  const k = CONSOLE[c.id]
+  if (k) return `${k.use} — ${k.note}`
+  return c.origin === 'wrapped' ? '쓸 수 없음 (Vuetify 없음) — 대응 부품이 없으면 먼저 물어보세요' : `이 부품 그대로 (${importPath(c)} · html 문법)`
+}
+
+export function componentPrompt(c, { WHERE, VERSUS, A11Y, SITE, CONSOLE = {} }) {
   const imp = importPath(c)
   const needs = c.origin === 'wrapped'
     ? 'Vuetify 필요 · ds.css + ds-vuetify.css'
@@ -48,12 +56,16 @@ ${events ? `\n## Events\n${events}` : ''}${slots ? `\n## Slots\n${slots}` : ''}
 \`\`\`vue
 ${c.vue}
 \`\`\`
+${c.html ? `\n## HTML 문법 — Vue 없이 문자열로 그리는 화면\n\`\`\`html\n${c.html}\n\`\`\`\n` : ''}
+## 앱별
+- 이용자 화면 (Vuetify 있음): 이 부품 그대로
+- 관리자 콘솔 (Vuetify 없음): ${consoleLine(c, CONSOLE)}
 ${vs ? `\n## 구분\n${vs}` : ''}${guide ? `\n\n## 지침\n${guide}` : ''}${a11y ? `\n\n## 접근성\n${a11y}` : ''}
 
 ## 시스템 규칙 (요약)
-- 색·간격·모서리는 CSS 변수만 (var(--gray-6), var(--brand)) — hex 금지
-- primary 버튼은 화면당 하나. 선택·활성 상태는 중립(--sel-bg/--sel-fg)
-- 컨트롤 높이 32(sm)/40/48 — 필터 바·툴바는 sm
+- 색·간격·모서리는 제품 토큰만 (var(--border), var(--primary), var(--r-el)) — hex 금지. --brand · --sel-bg 는 문서 사이트 전용이라 앱에 없습니다
+- primary 버튼은 화면당 하나. 활성(탭·필터)은 --nav-active 선+글자, 목록 행 선택은 --selected-fill 회색 면
+- 컨트롤 높이 32(기본) / 28(sm — 필터 바·툴바) / 40(lg — 로그인 제출 전용)
 - 목록·테이블은 default/loading/empty/error/partial 5상태
 - 전체 규칙: ${SITE}/llms.txt
 `

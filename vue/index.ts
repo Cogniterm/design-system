@@ -38,6 +38,16 @@ export { default as DsTreeview } from './components/DsTreeview.vue'
 export type { DsTreeNode } from './components/DsTreeview.vue'
 export { default as DsTimeline } from './components/DsTimeline.vue'
 export type { TimelineItem } from './components/DsTimeline.vue'
+// 콘솔에서 받아 온 부품 (2026-10-27) — 콘솔 ui.css 의 문법 그대로
+export { default as DsPageHeader } from './components/DsPageHeader.vue'
+export { default as DsStatus } from './components/DsStatus.vue'
+export { default as DsStatCard } from './components/DsStatCard.vue'
+export { default as DsDetailTable } from './components/DsDetailTable.vue'
+export type { DetailColumn } from './components/DsDetailTable.vue'
+// Geist 에서 들인 부품 (2026-10-28)
+export { default as DsSplitButton } from './components/DsSplitButton.vue'
+export type { SplitButtonItem } from './components/DsSplitButton.vue'
+export { default as DsGauge } from './components/DsGauge.vue'
 export { default as DsVisuallyHidden } from './components/DsVisuallyHidden.vue'
 
 // 이 앱이 어느 시점의 디자인 시스템을 쓰는지 — 내용 지문 + 생성일

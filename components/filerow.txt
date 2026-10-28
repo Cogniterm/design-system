@@ -28,6 +28,19 @@ import { DsFileRow } from '~/design'   // Vuetify 불필요 · ds.css만
 </DsFileRow>
 ```
 
+## HTML 문법 — Vue 없이 문자열로 그리는 화면
+```html
+<div class="file-row">
+  <span class="f-icon"><svg class="lic " width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 22a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h8a2.4 2.4 0 0 1 1.704.706l3.588 3.588A2.4 2.4 0 0 1 20 8v12a2 2 0 0 1-2 2z"/><path d="M14 2v5a1 1 0 0 0 1 1h5"/><path d="M10 9H8"/><path d="M16 13H8"/><path d="M16 17H8"/></svg></span>
+  <span class="f-name">계약서_최종.pdf</span>
+  <span class="f-meta">2.1 MB · Jun 28</span>
+</div>
+```
+
+## 앱별
+- 이용자 화면 (Vuetify 있음): 이 부품 그대로
+- 관리자 콘솔 (Vuetify 없음): 이 부품 그대로 (~/design · html 문법)
+
 ## 구분
 - vs FileGrid: 썸네일이 중요하면 그리드
 
@@ -39,8 +52,8 @@ import { DsFileRow } from '~/design'   // Vuetify 불필요 · ds.css만
 직접 처리: 행 전체가 클릭 가능하면 <a> 또는 <button>으로 / 선택 상태를 aria-selected로
 
 ## 시스템 규칙 (요약)
-- 색·간격·모서리는 CSS 변수만 (var(--gray-6), var(--brand)) — hex 금지
-- primary 버튼은 화면당 하나. 선택·활성 상태는 중립(--sel-bg/--sel-fg)
-- 컨트롤 높이 32(sm)/40/48 — 필터 바·툴바는 sm
+- 색·간격·모서리는 제품 토큰만 (var(--border), var(--primary), var(--r-el)) — hex 금지. --brand · --sel-bg 는 문서 사이트 전용이라 앱에 없습니다
+- primary 버튼은 화면당 하나. 활성(탭·필터)은 --nav-active 선+글자, 목록 행 선택은 --selected-fill 회색 면
+- 컨트롤 높이 32(기본) / 28(sm — 필터 바·툴바) / 40(lg — 로그인 제출 전용)
 - 목록·테이블은 default/loading/empty/error/partial 5상태
 - 전체 규칙: https://Cogniterm.github.io/design-system/llms.txt

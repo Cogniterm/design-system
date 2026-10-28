@@ -2,7 +2,7 @@
    넘기지 않으면 docs.js만 새것이고 data.js는 브라우저가 캐시해 둔 옛것이 와서,
    새 코드가 없는 데이터를 찾다가 화면이 통째로 비어버립니다. */
 const V = new URL(import.meta.url).search
-const { CATEGORIES, COMPONENTS, TEMPLATES, VUETIFY_COVERAGE, WHERE, A11Y, VERSUS } = await import('./data.js' + V)
+const { CATEGORIES, COMPONENTS, TEMPLATES, VUETIFY_COVERAGE, WHERE, A11Y, VERSUS, CONSOLE } = await import('./data.js' + V)
 const { FOUNDATION_PAGES, FD_RENDERERS } = await import('./foundation.js' + V)
 const { ic } = await import('./icons-svg.js' + V)
 const { componentPrompt, importPath } = await import('./ai-prompt.js' + V)
@@ -120,6 +120,19 @@ function toast(message, variant = 'success') {
   setTimeout(() => el.remove(), 3000)
 }
 
+/* 계산된 색 문자열 → #rrggbb (반투명이면 rgba). color-mix 는 color(srgb …) 로 나옵니다 */
+function cssColorText(s) {
+  let m = s.match(/rgba?\(\s*([\d.]+)[,\s]+([\d.]+)[,\s]+([\d.]+)(?:\s*[,/]\s*([\d.]+%?))?/)
+  let rgb, a = 1
+  if (m) { rgb = [m[1], m[2], m[3]].map(Number); if (m[4]) a = m[4].endsWith('%') ? parseFloat(m[4]) / 100 : +m[4] }
+  else if ((m = s.match(/color\(srgb\s+([\d.e-]+)\s+([\d.e-]+)\s+([\d.e-]+)(?:\s*\/\s*([\d.]+%?))?/))) {
+    rgb = [m[1], m[2], m[3]].map((v) => +v * 255); if (m[4]) a = m[4].endsWith('%') ? parseFloat(m[4]) / 100 : +m[4]
+  } else return s.trim()
+  rgb = rgb.map((v) => Math.max(0, Math.min(255, Math.round(v))))
+  if (a < 1) return `rgba(${rgb.join(',')},${String(+a.toFixed(2)).replace(/^0\./, '.')})`
+  return '#' + rgb.map((v) => v.toString(16).padStart(2, '0')).join('')
+}
+
 function enhance() {
   const content = $('#content')
 
@@ -153,6 +166,19 @@ function enhance() {
         toast(ok ? `${b.dataset.tok} 복사했습니다` : '복사하지 못했습니다', ok ? 'success' : 'danger')
       })
     })
+  })
+
+  // 컬러 견본의 실제 값 — 칸(.fd-light · .fd-dark)에서 계산된 색을 읽어 적습니다.
+  // 값을 페이지에 적지 않으니 토큰이 바뀌어도 늘 지금 값입니다
+  content.querySelectorAll('[data-hex]').forEach((out) => {
+    const el = out.parentElement.querySelector('[data-p]')
+    if (el) out.textContent = cssColorText(getComputedStyle(el).getPropertyValue(el.dataset.p))
+  })
+
+  // 토큰 값 — 크기 · 굵기 · 줄 간격처럼 색이 아닌 값도 ds.css 에서 읽어 적습니다
+  const rootStyle = getComputedStyle(document.documentElement)
+  content.querySelectorAll('[data-var]').forEach((el) => {
+    el.textContent = rootStyle.getPropertyValue(el.dataset.var).trim()
   })
 
   // 표 가로 스크롤
@@ -375,7 +401,7 @@ function renderComponent(id, tab) {
   // AI 프롬프트 — 이 페이지 전체를 프롬프트 하나로 (components/<id>.txt와 동일)
   $('#aiCopy')?.addEventListener('click', function () {
     const SITE = location.origin + location.pathname.replace(/index\.html$/, '').replace(/\/$/, '')
-    copyText(componentPrompt(c, { WHERE, VERSUS, A11Y, SITE })).then((ok) =>
+    copyText(componentPrompt(c, { WHERE, VERSUS, A11Y, SITE, CONSOLE })).then((ok) =>
       toast(ok ? 'AI 프롬프트를 복사했습니다 — 그대로 붙여넣으세요' : '복사하지 못했습니다 — 직접 선택하세요',
         ok ? 'success' : 'danger'))
   })

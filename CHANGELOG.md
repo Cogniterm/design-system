@@ -18,6 +18,21 @@
 
 ---
 
+## 2026-10-28 — 전역 클래스 추가 (이름이 겹치면 모양이 바뀜)
+
+### Added
+
+**ds.css 에 전역 클래스가 늘었습니다 — 받는 쪽 화면에 같은 이름이 있으면 그 화면 모양이 바뀝니다**
+
+`.ptitle` · `.state` · `.summary`(+ `.card` 안 `.l` · `.v` · `.s` · `.card-of`) · `.jtw` / `.jt` · `.splitbtn` · `.gauge`.
+앞의 넷은 관리자 콘솔 ui.css 의 값을 그대로 옮긴 것이고(DsPageHeader · DsStatus · DsStatCard · DsDetailTable),
+뒤의 둘은 새 부품(DsSplitButton · DsGauge)입니다.
+
+- DocuPortal UX 는 확인을 마쳤습니다 — 콘솔 45화면 · 이용자 화면 7화면의 계산값을 복사 전후로 대조해 차이 0건.
+- 다른 곳에 복사한다면 먼저 `grep -rE "\b(ptitle|state|summary|jtw|jt|splitbtn|gauge)\b"` 로 같은 이름을 찾아보세요.
+
+---
+
 ## 2026-08-28 — 깨지는 변경 (색)
 
 ### Changed

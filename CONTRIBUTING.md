@@ -64,7 +64,11 @@ npm run live
 - [ ] 포커스 링을 지우지 않음 (`outline: none` 금지)
 - [ ] 아이콘만 있는 버튼에 `aria-label`
 - [ ] `data.js`에 문서 항목 추가 — `reason`(왜 만들었나)과 `WHERE`(어디에 쓰나)를 **비워두지 않음**
+- [ ] `data.js`의 props가 Vue 코드의 props와 **같은 이름 · 같은 개수** — 다르면 `npm run check`가 막습니다(AI는 문서대로 코드를 씁니다)
+- [ ] `html` 문법을 적었다면 그 클래스가 `ds.css`에 있음 — 관리자 콘솔은 문자열로 그리는 화면이 많아 이게 1차 사용법입니다
+- [ ] 관리자 콘솔(Vuetify 없음)에서 쓸 수 있는가 — `wrapped`인데 콘솔에 같은 일을 하는 것이 있으면 `data.js`의 `CONSOLE`에 적음
 - [ ] `npm run gen:meta` 실행 (meta.ts 재생성)
+- [ ] `npm run gen:llms` 실행 (AI 문서 재생성 — 빼먹으면 `npm run check`가 막습니다)
 - [ ] 라이브 갤러리에 추가해 실제 Vuetify 위에서 확인
 - [ ] `npm run live` 실행 후 결과를 함께 커밋 — 문서 사이트 데모가 이 빌드본입니다
 

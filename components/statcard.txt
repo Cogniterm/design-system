@@ -1,0 +1,61 @@
+# DsStatCard — Cogniterm Design System
+
+import { DsStatCard } from '~/design'   // Vuetify 불필요 · ds.css만
+
+## 용도
+목록 · 현황 · 로그 화면 위의 요약 숫자 줄.
+
+## Props
+- label: string = 필수 — 무엇을 센 숫자인가.
+- value: string | number = 필수 — 숫자 — number면 천 단위 쉼표를 붙입니다.
+- unit: string — 단위 — "초" · "건". 숫자에 붙되 한 단 작게.
+- of: string | number — 분모 — 값 옆에 " / 26,482"로 한 단 작게.
+- sub: string — 곁말 한 줄 — 집계 기준 · 비율.
+- delta: string — 증감 글자 — "+12%".
+- deltaTone: 'good' | 'bad' | 'flat' = 'flat' — 증감의 뜻 — 방향이 아니라 좋고 나쁨. 나쁜 지표가 늘면 bad.
+- deltaLabel: string — 비교 기준 — "직전 30일 대비".
+
+
+## 사용 예
+```vue
+<div class="summary">
+  <DsStatCard label="오늘 검색" value="1,284" delta="+8%" delta-tone="good" delta-label="어제 대비" />
+  <DsStatCard label="차단된 유출 시도" value="12" delta="+3건" delta-tone="bad" delta-label="직전 7일 대비" />
+  <DsStatCard label="동기화된 문서" :value="845" :of="26482" sub="3.2%" />
+  <DsStatCard label="평균 응답" value="23.7" unit="초" />
+</div>
+```
+
+## HTML 문법 — Vue 없이 문자열로 그리는 화면
+```html
+<div class="summary">
+  <div class="card">
+    <span class="l">오늘 검색</span>
+    <span class="v">1,284</span>
+    <span class="delta delta--good">+8% <span class="delta-l">· 어제 대비</span></span>
+  </div>
+</div>
+```
+
+## 앱별
+- 이용자 화면 (Vuetify 있음): 이 부품 그대로
+- 관리자 콘솔 (Vuetify 없음): .summary .card 그대로 · 보고서 안은 공용/부품/ReportStat.vue (.rep-stat) — ReportStat 과 props 이름이 같습니다(label · value · unit · of · sub · delta)
+
+## 구분
+- vs Card: 숫자 하나를 크게 보이는 요약이면 StatCard, 내용을 담는 상자면 Card
+
+## 지침
+- [해야 할 것] 여러 장은 .summary 로 감쌉니다 — 넉 장 한 줄, 적으면 왼쪽부터 같은 칸 폭, 1100px 이하 두 장.
+- [해야 할 것] 증감 색은 뜻으로 — "유출 시도 +3건"은 늘었지만 나쁘므로 bad(빨강).
+- [하지 말 것] 화면 CSS에서 장 수만큼 열을 다시 나누지 않습니다.
+- [하지 말 것] 숫자에 단위를 같은 크기로 붙이지 않습니다 — 분모 · 단위는 한 단 작게.
+
+## 접근성
+직접 처리: 증감 글자에 비교 기준을 함께(deltaLabel) — "+8%"만으로는 무엇 대비인지 모릅니다
+
+## 시스템 규칙 (요약)
+- 색·간격·모서리는 제품 토큰만 (var(--border), var(--primary), var(--r-el)) — hex 금지. --brand · --sel-bg 는 문서 사이트 전용이라 앱에 없습니다
+- primary 버튼은 화면당 하나. 활성(탭·필터)은 --nav-active 선+글자, 목록 행 선택은 --selected-fill 회색 면
+- 컨트롤 높이 32(기본) / 28(sm — 필터 바·툴바) / 40(lg — 로그인 제출 전용)
+- 목록·테이블은 default/loading/empty/error/partial 5상태
+- 전체 규칙: https://Cogniterm.github.io/design-system/llms.txt

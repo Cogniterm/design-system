@@ -1,0 +1,25 @@
+# Settings Page (설정 화면) — Cogniterm Design System pattern
+
+> 값을 바꾸고 저장하는 화면.
+> Group: Page Templates (페이지 템플릿) · Index: https://Cogniterm.github.io/design-system/patterns/llms.txt
+
+## 골격
+
+```
+좌: 섹션 내비   우: 섹션별 설정 그룹
+                  ├ 그룹 제목 + 설명
+                  ├ 항목들
+                  └ 구분선
+                  위험 구역 (맨 아래)
+```
+
+| 항목 종류 | 컴포넌트 |
+|---|---|
+| 즉시 반영되는 on/off | **Switch** — 저장 버튼 없음 |
+| 저장이 필요한 값 | Input · Select + 하단 저장 버튼 |
+| 배타적 선택 | RadioGroup |
+| 위험 구역 | 맨 아래, danger 버튼, 확인창 |
+
+- **Switch와 Checkbox를 섞지 않습니다.** 한 화면에서 저장 방식이 갈리면 혼란스럽습니다.
+- 변경 후 이동하려 하면 **저장하지 않은 변경이 있다고 알립니다**.
+- 여러 값을 함께 고치는 화면은 **편집 모드** 패턴을 씁니다 — [○○ 편집] → [저장].

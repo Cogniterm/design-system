@@ -303,6 +303,36 @@ Keyboard: n/a
 Component handles: <dl> 시맨틱
 YOU must handle: 라벨을 짧게 — 88px 폭
 
+### DsPageHeader (화면 제목줄)
+Keyboard: n/a
+Component handles: <h1> — 화면의 첫 제목
+YOU must handle: 화면에 h1은 하나 — 탭 줄이 제목을 대신하면 .sr 로 숨긴 h1을 둡니다
+
+### DsStatus (상태 표시)
+Keyboard: n/a
+Component handles: 점은 장식(::before) — 읽히는 것은 글자
+YOU must handle: 상태 낱말을 늘 함께 — 점 색만으로 뜻을 전하지 않기
+
+### DsStatCard (요약 카드)
+Keyboard: n/a
+Component handles: 숫자에 tabular-nums
+YOU must handle: 증감 글자에 비교 기준을 함께(deltaLabel) — "+8%"만으로는 무엇 대비인지 모릅니다
+
+### DsDetailTable (상세 표)
+Keyboard: n/a
+Component handles: <table> · <th> 시맨틱
+YOU must handle: 표가 무엇인지 앞의 절 제목으로 알리기 — 표 혼자 두지 않기
+
+### DsSplitButton (분할 버튼)
+Keyboard: Enter · Space = 왼쪽: 기본 동작 · ▾: 목록 열기 | ↓ · ↑ = ▾에서 목록을 열고 첫 · 끝 항목으로 | ↑ ↓ · Home · End = 항목 이동 | Esc = 닫고 ▾로 복귀 | Tab = 닫기
+Component handles: ▾에 aria-haspopup="menu" · aria-expanded; 목록 role="menu" · 항목 role="menuitem"; 고르면 닫고 ▾로 포커스 복귀 · 바깥 클릭 닫기
+YOU must handle: menuLabel에 무엇의 다른 방법인지 — "다른 게시 방법"
+
+### DsGauge (게이지)
+Keyboard: n/a
+Component handles: role="meter" · aria-valuenow · aria-valuemin · aria-valuemax; 고리 svg는 aria-hidden
+YOU must handle: label 채우기 — 스크린리더가 읽는 이름; 색만으로 경고하지 않기 — 곁 글자에 상태를 함께
+
 ### DsSearchField (검색 입력)
 Keyboard: Enter = 검색 실행 | Esc = 브라우저 기본 — 값 지움
 Component handles: type=search; 지우기 버튼 aria-label

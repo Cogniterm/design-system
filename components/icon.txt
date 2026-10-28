@@ -22,6 +22,10 @@ import { DsIcon } from '~/design/icon'
 <DsIcon name="search" label="검색" />
 ```
 
+## 앱별
+- 이용자 화면 (Vuetify 있음): 이 부품 그대로
+- 관리자 콘솔 (Vuetify 없음): 이 부품 그대로 (~/design/icon · html 문법)
+
 
 ## 지침
 - [해야 할 것] 같은 뜻에는 항상 같은 아이콘을 씁니다. 새 아이콘은 vue/icons.ts에 의미 이름으로 등록합니다.
@@ -33,8 +37,8 @@ import { DsIcon } from '~/design/icon'
 직접 처리: 뜻을 전달하는 아이콘에는 label 필수 / 장식이면 label을 비워두기 (자동 숨김)
 
 ## 시스템 규칙 (요약)
-- 색·간격·모서리는 CSS 변수만 (var(--gray-6), var(--brand)) — hex 금지
-- primary 버튼은 화면당 하나. 선택·활성 상태는 중립(--sel-bg/--sel-fg)
-- 컨트롤 높이 32(sm)/40/48 — 필터 바·툴바는 sm
+- 색·간격·모서리는 제품 토큰만 (var(--border), var(--primary), var(--r-el)) — hex 금지. --brand · --sel-bg 는 문서 사이트 전용이라 앱에 없습니다
+- primary 버튼은 화면당 하나. 활성(탭·필터)은 --nav-active 선+글자, 목록 행 선택은 --selected-fill 회색 면
+- 컨트롤 높이 32(기본) / 28(sm — 필터 바·툴바) / 40(lg — 로그인 제출 전용)
 - 목록·테이블은 default/loading/empty/error/partial 5상태
 - 전체 규칙: https://Cogniterm.github.io/design-system/llms.txt

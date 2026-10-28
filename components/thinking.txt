@@ -19,6 +19,18 @@ import { DsThinkingIndicator } from '~/design'   // Vuetify 불필요 · ds.css�
 <DsThinkingIndicator size="inline" label="검토 의견 생성 중" />
 ```
 
+## HTML 문법 — Vue 없이 문자열로 그리는 화면
+```html
+<div class="thinking" role="status" aria-live="polite">
+  <span class="dots" aria-hidden="true"><i></i><i></i><i></i></span>
+  <span class="t-label">문서 분석 중</span>
+</div>
+```
+
+## 앱별
+- 이용자 화면 (Vuetify 있음): 이 부품 그대로
+- 관리자 콘솔 (Vuetify 없음): 이 부품 그대로 (~/design · html 문법)
+
 
 ## 지침
 - [해야 할 것] 10초 이상 걸리면 단계에 맞게 문구를 갱신합니다("문서 분석 중" → "근거 문서 검색 중" → "답변 정리 중").
@@ -30,8 +42,8 @@ import { DsThinkingIndicator } from '~/design'   // Vuetify 불필요 · ds.css�
 직접 처리: aria-live="polite"로 단계 변경을 알리기 / 점 애니메이션은 aria-hidden / prefers-reduced-motion에서 애니메이션 정지
 
 ## 시스템 규칙 (요약)
-- 색·간격·모서리는 CSS 변수만 (var(--gray-6), var(--brand)) — hex 금지
-- primary 버튼은 화면당 하나. 선택·활성 상태는 중립(--sel-bg/--sel-fg)
-- 컨트롤 높이 32(sm)/40/48 — 필터 바·툴바는 sm
+- 색·간격·모서리는 제품 토큰만 (var(--border), var(--primary), var(--r-el)) — hex 금지. --brand · --sel-bg 는 문서 사이트 전용이라 앱에 없습니다
+- primary 버튼은 화면당 하나. 활성(탭·필터)은 --nav-active 선+글자, 목록 행 선택은 --selected-fill 회색 면
+- 컨트롤 높이 32(기본) / 28(sm — 필터 바·툴바) / 40(lg — 로그인 제출 전용)
 - 목록·테이블은 default/loading/empty/error/partial 5상태
 - 전체 규칙: https://Cogniterm.github.io/design-system/llms.txt

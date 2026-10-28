@@ -7,10 +7,13 @@
 > white panel inset 8px. Shadows only on floating things. Light + dark via the
 > `.dark` class in the products (this doc site uses [data-theme="dark"]).
 > The product (admin console + user app) is the reference — where they differ, it wins.
-> 68 components, 19 patterns, 14 foundation pages.
+> 74 components, 19 patterns, 14 foundation pages.
 > Docs: https://Cogniterm.github.io/design-system
 
 ## Read the section you need — not everything
+
+Don't crawl the doc pages — they render in the browser, so a fetch returns only the
+site chrome. Everything on them is in these text files.
 
 | Section | File | Use it when |
 |---|---|---|
@@ -21,17 +24,26 @@
 | Accessibility | https://Cogniterm.github.io/design-system/a11y/llms.txt | Keyboard tables and per-component a11y duties. |
 
 For a whole screen you usually need **Foundation + Components + Patterns**.
+Each index points to one file per component (components/<id>.txt) and per pattern
+(patterns/<id>.txt) — read the index, pick, then read only what you picked.
+Machine-readable: https://Cogniterm.github.io/design-system/components/index.json · https://Cogniterm.github.io/design-system/patterns/index.json · https://Cogniterm.github.io/design-system/foundation/tokens.json
+
+Working in a product repo that has design-system next to it? Query it instead:
+`node ../design-system/ds.mjs search <words>` → `component <id>` / `pattern <id>` / `tokens <filter>`.
 
 ## The ten rules that matter most
 
-1. Import from the right barrel — `~/design` (standalone) or `~/design/vuetify`
-   (needs Vuetify). Mixing them breaks builds.
+1. Know your app. The admin console has NO Vuetify — only `~/design` and the HTML
+   class grammar; each component file says what the console uses instead. The user
+   app has Vuetify. Import from the right barrel — `~/design` (standalone) or
+   `~/design/vuetify` (needs Vuetify). Mixing them breaks builds.
 2. CSS variables only. Never hardcode hex, spacing or radius.
 3. Gray does 95% of the work. Brand only for primary actions, links, focus and
    ACTIVE marks — tabs, segmented, filter-with-value and chips get brand stroke +
    brand text with NO fill (--nav-active); selected list/nav rows get a neutral
    gray fill (--selected-fill).
-4. Spacing is multiples of 4 (page side padding 20). Radius: --r-el 6 for
+4. Spacing is multiples of 4, plus 2px half steps (2 6 10 14) in dense UI
+   (page side padding 20). Radius: --r-el 6 for
    controls, --r-ct 10 for containers, --r-in 4 inside. Borders 1px solid tokens.
 5. Things in the page have no shadow; floating things use --shadow-* tokens only.
 6. One primary button per screen, on the title bar right. Labels are

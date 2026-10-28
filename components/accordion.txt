@@ -7,6 +7,7 @@ import { DsAccordion } from '~/design/vuetify'   // Vuetify 필요 · ds.css + d
 
 ## Props
 - items: { title, text? }[] = 필수 — 패널 목록.
+- modelValue: number | number[] — 펼친 패널 (v-model).
 
 ## Slots
 - #item-N — N번째 패널의 내용(텍스트 대신 컴포넌트를 넣을 때).
@@ -20,6 +21,10 @@ import { DsAccordion } from '~/design/vuetify'   // Vuetify 필요 · ds.css + d
 </DsAccordion>
 ```
 
+## 앱별
+- 이용자 화면 (Vuetify 있음): 이 부품 그대로
+- 관리자 콘솔 (Vuetify 없음): 쓸 수 없음 (Vuetify 없음) — 대응 부품이 없으면 먼저 물어보세요
+
 
 ## 지침
 - [해야 할 것] 기본은 접힌 상태로 둡니다. 중요한 정보라면 접지 않습니다.
@@ -30,8 +35,8 @@ import { DsAccordion } from '~/design/vuetify'   // Vuetify 필요 · ds.css + d
 직접 처리: 에러 메시지를 접어두지 않기 / 기본은 접힌 상태로
 
 ## 시스템 규칙 (요약)
-- 색·간격·모서리는 CSS 변수만 (var(--gray-6), var(--brand)) — hex 금지
-- primary 버튼은 화면당 하나. 선택·활성 상태는 중립(--sel-bg/--sel-fg)
-- 컨트롤 높이 32(sm)/40/48 — 필터 바·툴바는 sm
+- 색·간격·모서리는 제품 토큰만 (var(--border), var(--primary), var(--r-el)) — hex 금지. --brand · --sel-bg 는 문서 사이트 전용이라 앱에 없습니다
+- primary 버튼은 화면당 하나. 활성(탭·필터)은 --nav-active 선+글자, 목록 행 선택은 --selected-fill 회색 면
+- 컨트롤 높이 32(기본) / 28(sm — 필터 바·툴바) / 40(lg — 로그인 제출 전용)
 - 목록·테이블은 default/loading/empty/error/partial 5상태
 - 전체 규칙: https://Cogniterm.github.io/design-system/llms.txt

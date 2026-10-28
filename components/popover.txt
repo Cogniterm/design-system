@@ -6,6 +6,7 @@ import { DsPopover } from '~/design/vuetify'   // Vuetify 필요 · ds.css + ds-
 아이콘 옆 부가 설명, 짧은 미리보기 — 클릭으로 엶.
 
 ## Props
+- modelValue: boolean = false — 열림 (v-model).
 - location: string = 'bottom start' — 열리는 방향.
 - width: number | string = 280 — 패널 폭.
 - variant: 'prose' | 'list' = 'prose' — 담는 내용. 설명·짧은 폼이면 prose, 선택지 목록이면 list(메뉴와 같은 4px 인셋).
@@ -24,6 +25,10 @@ import { DsPopover } from '~/design/vuetify'   // Vuetify 필요 · ds.css + ds-
 </DsPopover>
 ```
 
+## 앱별
+- 이용자 화면 (Vuetify 있음): 이 부품 그대로
+- 관리자 콘솔 (Vuetify 없음): .pop (공용/스타일/ui.css) — 고르기 목록은 .pop--sel · 열 설정은 .pop--cols
+
 ## 구분
 - vs Tooltip: 한 줄이면 Tooltip
 - vs Dialog: 확인·입력이 필요하면 Dialog
@@ -37,8 +42,8 @@ import { DsPopover } from '~/design/vuetify'   // Vuetify 필요 · ds.css + ds-
 직접 처리: activator에 뜻 있는 라벨
 
 ## 시스템 규칙 (요약)
-- 색·간격·모서리는 CSS 변수만 (var(--gray-6), var(--brand)) — hex 금지
-- primary 버튼은 화면당 하나. 선택·활성 상태는 중립(--sel-bg/--sel-fg)
-- 컨트롤 높이 32(sm)/40/48 — 필터 바·툴바는 sm
+- 색·간격·모서리는 제품 토큰만 (var(--border), var(--primary), var(--r-el)) — hex 금지. --brand · --sel-bg 는 문서 사이트 전용이라 앱에 없습니다
+- primary 버튼은 화면당 하나. 활성(탭·필터)은 --nav-active 선+글자, 목록 행 선택은 --selected-fill 회색 면
+- 컨트롤 높이 32(기본) / 28(sm — 필터 바·툴바) / 40(lg — 로그인 제출 전용)
 - 목록·테이블은 default/loading/empty/error/partial 5상태
 - 전체 규칙: https://Cogniterm.github.io/design-system/llms.txt

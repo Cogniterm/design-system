@@ -6,6 +6,7 @@ import { DsMenu } from '~/design/vuetify'   // Vuetify 필요 · ds.css + ds-vue
 테이블 행 액션, 프로필 메뉴, 더보기.
 
 ## Props
+- modelValue: boolean = false — 열림 (v-model).
 - location: string = 'bottom start' — 열리는 방향. Vuetify VMenu의 location을 그대로 전달합니다.
 
 ## Slots
@@ -32,8 +33,13 @@ import { DsMenu } from '~/design/vuetify'   // Vuetify 필요 · ds.css + ds-vue
 </DsMenu>
 ```
 
+## 앱별
+- 이용자 화면 (Vuetify 있음): 이 부품 그대로
+- 관리자 콘솔 (Vuetify 없음): .pop 안에 .ds-menu-item · .ds-menu-sep (공용/스타일/ui.css) — 항목 글자 .ds-menu-item__label · 꼬리 .ds-menu-item__trail
+
 ## 구분
 - vs Dialog: 폼이 들어가면 Menu가 아니라 Dialog
+- vs SplitButton: 같은 일의 다른 방법(지금 게시 · 예약 게시)이면 SplitButton
 
 ## 지침
 - [해야 할 것] 항목은 아이콘 + __label(신축·말줄임) + 선택적 __trail(단축키·메타) 순서로 조립합니다.
@@ -48,8 +54,8 @@ import { DsMenu } from '~/design/vuetify'   // Vuetify 필요 · ds.css + ds-vue
 직접 처리: 항목에 role="menuitem" 부여 / 파괴적 항목은 마지막에 두고 구분선으로 분리
 
 ## 시스템 규칙 (요약)
-- 색·간격·모서리는 CSS 변수만 (var(--gray-6), var(--brand)) — hex 금지
-- primary 버튼은 화면당 하나. 선택·활성 상태는 중립(--sel-bg/--sel-fg)
-- 컨트롤 높이 32(sm)/40/48 — 필터 바·툴바는 sm
+- 색·간격·모서리는 제품 토큰만 (var(--border), var(--primary), var(--r-el)) — hex 금지. --brand · --sel-bg 는 문서 사이트 전용이라 앱에 없습니다
+- primary 버튼은 화면당 하나. 활성(탭·필터)은 --nav-active 선+글자, 목록 행 선택은 --selected-fill 회색 면
+- 컨트롤 높이 32(기본) / 28(sm — 필터 바·툴바) / 40(lg — 로그인 제출 전용)
 - 목록·테이블은 default/loading/empty/error/partial 5상태
 - 전체 규칙: https://Cogniterm.github.io/design-system/llms.txt

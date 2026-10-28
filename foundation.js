@@ -67,8 +67,8 @@ export function fdOverview() {
       <code style="font-family:var(--mono);font-size:11px">160ms ease</code>
     </div>`,
     state: `<div style="display:flex;gap:6px;flex-wrap:wrap;justify-content:center">
-      <span class="badge brand"><span class="dot"></span>실행 중</span>
-      <span class="badge danger"><span class="dot"></span>실패</span>
+      <span class="badge brand">실행 중</span>
+      <span class="badge danger">실패</span>
     </div>`,
     a11y: `<div style="display:flex;align-items:center;gap:10px">
       <div style="width:34px;height:24px;border-radius:var(--r-md);background:var(--brand);box-shadow:var(--focus-ring)"></div>
@@ -85,7 +85,7 @@ export function fdOverview() {
   }
 
   const DESC = {
-    tokens: '모든 값의 단일 원본', color: '브랜드 1 · 회색 12 · 알파 12 · 상태 4',
+    tokens: '모든 값의 단일 원본', color: '제품 토큰 전체 — 라이트 · 다크 나란히',
     typography: 'Pretendard 11~24 여덟 단계 — UI와 본문 분리', spacing: '4px 배수 · 문서형 화면 층 간격',
     shape: '4 · 6 · 10 — 안쪽 · 요소 · 컨테이너', elevation: '면은 1px 선 · 떠 있는 것만 그림자',
     density: '컨트롤 32 · 표 줄 52 · 머리 40', iconography: `Lucide ${ICON_NAMES.length} · stroke 2`,
@@ -128,7 +128,7 @@ export function fdTokens() {
       <table>
         <thead><tr><th>접두사</th><th>뜻</th><th>예</th></tr></thead>
         <tbody>
-          <tr><td><code>--brand-*</code></td><td>브랜드 색과 그 변형</td><td><code>--brand-hover</code></td></tr>
+          <tr><td><code>--primary-*</code></td><td>브랜드 색과 그 변형 (부품 안쪽의 <code>--brand-*</code>는 별칭)</td><td><code>--primary-hover</code></td></tr>
           <tr><td><code>--gray-1~12</code></td><td>불투명 회색 — 배경·텍스트</td><td><code>--gray-11</code></td></tr>
           <tr><td><code>--gray-a1~a12</code></td><td>반투명 회색 — 보더·오버레이</td><td><code>--gray-a3</code></td></tr>
           <tr><td><code>--border</code> · <code>--input</code> · <code>--border-emphasized</code> · <code>--border-subtle</code></td><td>보더 시맨틱 (<code>--border-strong</code> · <code>--border-hover</code>는 옛 별칭)</td><td><code>--border</code></td></tr>
@@ -173,55 +173,121 @@ export function fdTokens() {
     </div>`
 }
 
+/* 라이트 · 다크 견본 칸 — 페이지 테마와 상관없이 두 모드를 나란히 그립니다.
+   ds.css 의 토큰 덩이(:root · 다크)를 그대로 읽어 .fd-light · .fd-dark 에 다시 선언합니다.
+   값을 여기 적지 않으므로 토큰이 바뀌어도(npm run tokens:pull) 이 페이지는 따라옵니다.
+   다크 칸은 라이트 선언 위에 다크 선언을 덮습니다 — 다크 덩이가 다시 적지 않는 color-mix 파생값
+   (--success-subtle 등)이 그 칸의 --card 로 다시 계산되게 하려면 같은 자리에 둘 다 있어야 합니다. */
+function themeScopes() {
+  if (typeof document === 'undefined' || document.getElementById('fd-scopes')) return   // 검사 스크립트(node)도 이 함수를 부릅니다
+  let light = '', dark = ''
+  for (const sheet of document.styleSheets) {
+    if (!/\/ds\.css/.test(sheet.href || '')) continue
+    let rules
+    try { rules = sheet.cssRules } catch { continue }
+    for (const r of rules) {
+      const sel = (r.selectorText || '').replace(/\s+/g, '')
+      if (sel === ':root') light += r.style.cssText
+      else if (sel === '[data-theme="dark"],.dark') dark += r.style.cssText
+    }
+  }
+  const el = document.createElement('style')
+  el.id = 'fd-scopes'
+  el.textContent = `.fd-light{${light}}.fd-dark{${light}${dark}}`
+  document.head.appendChild(el)
+}
+
 /* ════════════════════════════════════════ */
 export function fdColor() {
-  /* 토큰 견본 — 클릭하면 이름이 복사됩니다 */
-  const sw = (name, note = '') => `
-    <button class="tok" data-tok="${name}" title="클릭하면 복사">
-      <span class="tok-chip" style="background:var(${name})"></span>
-      <span class="tok-name">${name}</span>
-      ${note ? `<span class="tok-note">${note}</span>` : ''}
-    </button>`
+  themeScopes()
 
-  const scale = (nums, prefix) => `<div class="tok-scale">` +
-    nums.map((n) => `
-      <button class="tok-step" data-tok="${prefix}${n}" title="${prefix}${n} — 클릭하면 복사">
-        <span class="ts-chip" style="background:var(${prefix}${n})"></span>
-        <span class="ts-n">${n}</span>
-      </button>`).join('') + `</div>`
+  /* 견본 하나 — kind: fill(면) · text(글자) · line(선) · on:<면 토큰>(그 면 위 글자) */
+  const chip = (name, kind = 'fill') => {
+    if (kind === 'text') return `<span class="ctok-aa" data-p="color" style="color:var(${name})">가나</span>`
+    if (kind === 'line') return `<span class="ctok-chip ctok-line" data-p="border-top-color" style="border-color:var(${name})"></span>`
+    if (kind.startsWith('on:')) return `<span class="ctok-aa ctok-on" data-p="color" style="color:var(${name});background:var(${kind.slice(3)})">가나</span>`
+    return `<span class="ctok-chip" data-p="background-color" style="background:var(${name})"></span>`
+  }
+  const row = ([name, note, kind]) => `
+    <div class="ctok">
+      <button class="ctok-name" data-tok="${name}" title="클릭하면 복사"><code>${name}</code><span>${note}</span></button>
+      ${['fd-light', 'fd-dark'].map((s) => `<div class="ctok-sw ${s}">${chip(name, kind)}<code data-hex></code></div>`).join('')}
+    </div>`
+  const table = (rows) => `
+    <div class="ctok-list">
+      <div class="ctok ctok-head"><span>토큰</span><span>라이트</span><span>다크</span></div>
+      ${rows.map(row).join('')}
+    </div>`
+  const strip = (prefix, nums) => ['fd-light', 'fd-dark'].map((s) => `
+    <div class="ctok-strip ${s}">
+      <span class="ctok-strip-l">${s === 'fd-light' ? '라이트' : '다크'}</span>
+      ${nums.map((n) => `<button class="ctok-step" data-tok="${prefix}${n}" title="${prefix}${n} — 클릭하면 복사"><span style="background:var(${prefix}${n})"></span><i>${n}</i></button>`).join('')}
+    </div>`).join('')
 
-  const N = [1,2,3,4,5,6,7,8,9,10,11,12]
+  const status = (k, d) => [
+    [`--${k}`, `${d} — 점 · 막대 · 배지 면`],
+    [`--${k}-text`, '글자', 'text'],
+    [`--${k}-subtle`, '옅은 면'],
+    [`--${k}-border`, '테두리', 'line'],
+  ]
 
   return `
     <div class="page-head"><h1>Color</h1></div>
     <p class="page-lead">
-      브랜드 1 · 회색 12 · 알파 12 · 보더 4 · 상태 4×3 · 차트 6 · 범주 8.
-      <b>모든 토큰을 클릭하면 이름이 복사됩니다.</b>
+      제품(관리자 콘솔 · 이용자 화면)이 쓰는 토큰입니다 — 원본은 앱의 <code>공용/스타일/토큰.css</code>.
+      <b>모든 토큰을 라이트 · 다크로 나란히</b> 보여 줍니다. 이름을 누르면 복사됩니다.
     </p>
     <div class="prose">
 
-      <h2>Brand</h2>
-      <div class="tok-row">
-        ${sw('--brand', '면 — 버튼 배경 · 점')}
-        ${sw('--brand-text', '글자 · 링크')}
-        ${sw('--brand-hover', '호버')}
-        ${sw('--brand-active', '누름')}
-        ${sw('--brand-subtle', '연한 면')}
-        ${sw('--on-brand', '브랜드 위 글자')}
-      </div>
+      <h2>Surface</h2>
+      ${table([
+        ['--canvas', '셸 바탕'],
+        ['--card', '패널 · 카드 면'],
+        ['--background', '카드 아래 한 단 — sticky 표 머리 · 포커스 링 안쪽'],
+        ['--muted', '옅은 면'],
+        ['--accent-muted', '옅은 브랜드 면'],
+        ['--overlay-hover', '호버 (반투명)'],
+        ['--selected-fill', '목록 · 내비 행의 선택 (반투명)'],
+        ['--scrim', '모달 뒤 가림막'],
+      ])}
       <p>
-        <b>면과 글자를 나눕니다.</b>
-        <code>--brand</code>(제품 토큰 <code>--primary</code> — 라이트 <code>#1F7FF0</code> · 다크 <code>#4A97F5</code>, 두 모드 모두 위 글자는 흰색)는 브랜드 원색이며 버튼 배경·점·포커스 링처럼
-        <b>면</b>에만 씁니다. 흰 배경 위 <b>글자·링크</b>에 쓰면 대비가 부족하므로
-        반드시 <code>--brand-text</code>를 씁니다 (5.89:1).
+        <b>셸은 캔버스 위 패널입니다</b> — <code>--canvas</code> 위에 <code>--card</code> 패널을 8px 인셋으로 얹습니다.
+        다크에서는 명암 관계가 반대입니다: 콘텐츠 면이 캔버스보다 <b>어둡습니다</b> — 글자 대비가 높은 쪽이 읽는 면입니다.
       </p>
+
+      <h2>Text</h2>
+      ${table([
+        ['--foreground', '본문 · 제목', 'text'],
+        ['--muted-foreground', '보조 글자', 'text'],
+        ['--primary-text', '링크 · 브랜드 글자', 'text'],
+      ])}
+
+      <h2>Border</h2>
+      ${table([
+        ['--border-subtle', '행 구분선 (반투명)', 'line'],
+        ['--border', '카드 · 표 · 패널', 'line'],
+        ['--input', '입력칸 · 한 단 강한 선', 'line'],
+        ['--border-emphasized', '호버', 'line'],
+      ])}
       <p>
-        <b>브랜드 원색을 그대로 쓰기로 한 결정입니다.</b>
-        흰 라벨을 얹으면 3.92:1로 WCAG AA(4.5:1)에 미달합니다 —
-        색 일치를 우선한 선택이며, 무결성 검사에도 예외로 기록해 두었습니다.
-        비텍스트 UI 기준(3:1)은 통과하므로 점·포커스 링·보더는 문제가 없습니다.
-        접근성이 요구되는 화면에서는 primary 버튼 대신 secondary를 쓰거나
-        라벨을 크게(18px 이상) 잡으면 기준을 충족합니다.
+        <b>보더는 불투명 실선입니다.</b> 반투명은 행 사이 구분선 <code>--border-subtle</code> 하나뿐입니다.
+        <code>--border-strong</code> · <code>--border-hover</code>는 옛 별칭입니다.
+      </p>
+
+      <h2>Brand</h2>
+      ${table([
+        ['--primary', '면 — 버튼 배경 · 점 · 포커스'],
+        ['--primary-hover', '호버'],
+        ['--primary-active', '누름'],
+        ['--primary-foreground', '브랜드 면 위 글자', 'on:--primary'],
+        ['--ring', '포커스 링'],
+        ['--nav-active', '탭 · 필터 활성 선 · 글자'],
+        ['--nav-active-bg', '활성 옅은 면'],
+      ])}
+      <p>
+        <b>면과 글자를 나눕니다.</b> <code>--primary</code>는 버튼 배경 · 점 · 포커스 링처럼 <b>면</b>에만 씁니다.
+        흰 배경 위 <b>글자 · 링크</b>는 대비가 부족하므로 <code>--primary-text</code>를 씁니다.
+        디자인 시스템 부품 안쪽의 <code>--brand-*</code>는 이 토큰들의 별칭입니다.
       </p>
       <div class="dodont">
         <div class="dd do">
@@ -246,85 +312,27 @@ export function fdColor() {
       </div>
       <p>
         <b>활성과 선택은 다른 규칙입니다.</b>
-        탭 · 세그먼티드 · 값 걸린 필터 트리거 · 조건 칩의 활성은 <code>--nav-active</code>(브랜드 선)
-        + <code>--nav-active-fg</code>(브랜드 글자)이고 면은 그대로 둡니다.
-        목록 · 내비 행(GNB 현재 메뉴, 고른 행)의 선택은 중립 회색 면 <code>--selected-fill</code>입니다.
-        면을 브랜드로 채우면 여러 개를 고른 줄이 덩어리로 보이고 정작 주요 버튼이 눈에 들어오지 않습니다.
-      </p>
-
-      <h2>Gray</h2>
-      ${scale(N, '--gray-')}
-      <p>
-        화면의 95%는 이 12단계입니다. <b>푸른 기가 없는 중립 회색</b>입니다 — 제품의 의미 토큰
-        (3 <code>--muted</code> #f4f4f5 · 5 <code>--border</code> #e4e4e7 · 6 <code>--input</code> #d6d6da ·
-        7 <code>--border-emphasized</code> #c9c9cd · 10 <code>--muted-foreground</code> #707070 ·
-        12 <code>--foreground</code> #1a1a1a)을 계조로 늘린 것이라 그 단계는 같은 값을 가리킵니다.
-        화면 CSS는 번호 대신 의미 토큰을 씁니다.
-      </p>
-      <table>
-        <thead><tr><th>단계</th><th>역할</th></tr></thead>
-        <tbody>
-          <tr><td><code>1–2</code></td><td>페이지 · 패널 배경</td></tr>
-          <tr><td><code>3</code></td><td>호버 배경</td></tr>
-          <tr><td><code>4</code></td><td>선택 배경 (<code>--sel-bg</code>) · 비활성</td></tr>
-          <tr><td><code>5–8</code></td><td>면 요소 (스위치 트랙 등) · 비활성 텍스트</td></tr>
-          <tr><td><code>9</code></td><td>약한 텍스트 · placeholder</td></tr>
-          <tr><td><code>10–11</code></td><td>보조 텍스트</td></tr>
-          <tr><td><code>12</code></td><td>본문 텍스트 · 제목</td></tr>
-        </tbody>
-      </table>
-      <p>
-        <b>보더는 번호가 아니라 아래 보더 토큰으로</b> 고릅니다.
-      </p>
-
-      <h2>Gray Alpha</h2>
-      ${scale(N, '--gray-a')}
-      <p>
-        반투명 회색. 어떤 면 위에 올려도 자연스러운 hover 면(<code>--overlay-hover</code>) ·
-        겹판 · 행 구분선(<code>--border-subtle</code>)이 여기서 나옵니다.
-      </p>
-
-      <h2>Border</h2>
-      <div class="tok-row">
-        ${sw('--border-subtle', '행 구분선 (반투명)')}
-        ${sw('--border', '카드 · 표 · 패널')}
-        ${sw('--input', '한 단 강한 선')}
-        ${sw('--border-emphasized', '호버')}
-      </div>
-      <div class="demo" style="border-radius:var(--r-ct)">
-        <div style="display:flex;gap:14px;flex-wrap:wrap;width:100%">
-          ${['--border-subtle', '--border', '--input', '--border-emphasized'].map((t) =>
-            `<div style="flex:1;min-width:140px;border:1px solid var(${t});border-radius:var(--r-el);padding:14px;font-size:var(--text-xs);color:var(--gray-10);font-family:var(--mono)">${t}</div>`
-          ).join('')}
-        </div>
-      </div>
-      <p>
-        <b>보더는 불투명 실선입니다</b> — <code>--border</code> #e4e4e7 · <code>--input</code> #d6d6da ·
-        <code>--border-emphasized</code> #c9c9cd (다크 #2c2d33 · #3a3b42 · #3a3b42).
-        반투명은 행 사이 구분선 <code>--border-subtle</code> 하나뿐입니다.
-        번호를 직접 고르지 않고 역할로 고릅니다. <code>--border-strong</code> · <code>--border-hover</code>는 옛 별칭입니다.
+        탭 · 세그먼티드 · 값 걸린 필터 · 조건 칩의 활성은 <code>--nav-active</code>(브랜드 선 + 글자)이고 면은 그대로 둡니다.
+        목록 · 내비 행의 선택은 중립 회색 면 <code>--selected-fill</code>입니다.
       </p>
 
       <h2>Status</h2>
-      <div class="tok-grid">
-        ${[['success', '완료'], ['warning', '확인 필요'], ['error', '실패 · 오류 · 파괴적'], ['info', '정보']].map(([k, d]) => `
-          <div class="tok-status">
-            <div class="tok-status-h">
-              <span class="tok-chip" style="background:var(--${k})"></span>
-              <b>${k}</b><span>${d}</span>
-            </div>
-            <div class="tok-status-b">
-              <button class="tok-step" data-tok="--${k}"><span class="ts-chip" style="background:var(--${k})"></span><span class="ts-n">solid</span></button>
-              <button class="tok-step" data-tok="--${k}-subtle"><span class="ts-chip" style="background:var(--${k}-subtle);border:1px solid var(--border)"></span><span class="ts-n">subtle</span></button>
-              <button class="tok-step" data-tok="--${k}-border"><span class="ts-chip" style="background:var(--${k}-border)"></span><span class="ts-n">border</span></button>
-            </div>
-          </div>`).join('')}
-      </div>
+      ${table([
+        ...status('success', '완료'),
+        ...status('warning', '확인 필요'),
+        ...status('error', '실패 · 오류 · 파괴적'),
+        ['--error-ring', '오류 칸의 포커스 링'],
+        ['--error-deep', '가장 위험 — 개인 · 그룹 기준 동시 초과'],
+        ['--info-subtle', '정보 — 옅은 면'],
+        ['--info-border', '정보 — 테두리', 'line'],
+        ['--success-on-inverse', '토스트 · 툴팁 위 성공 아이콘', 'on:--foreground'],
+        ['--error-on-inverse', '토스트 · 툴팁 위 실패 아이콘', 'on:--foreground'],
+      ])}
       <p>
-        상태마다 단이 나뉩니다 — <b>solid</b>(점 · 막대 · 배지 면의 원색) · <b>-text</b>(글자 — 원색은 흰 배경에서
-        AA 미달이라 글자에는 <code>--error-text</code> · <code>--warning-text</code> · <code>--success-text</code>) ·
-        <b>subtle</b>(면) · <b>border</b>(테두리). 면·테두리는 solid에서 파생하므로 다크에서도 자동으로 맞습니다.
-        이름은 <code>--error-*</code>이고 <code>--danger-*</code>는 옛 별칭입니다.
+        상태마다 단이 나뉩니다 — 원색(점 · 막대 · 배지 면) · <code>-text</code>(글자) · <code>-subtle</code>(면) · <code>-border</code>(테두리).
+        <b>원색은 흰 배경에서 AA 미달이라 글자에는 <code>-text</code></b>를 씁니다.
+        면 · 테두리는 원색에서 파생하므로 다크에서도 자동으로 맞습니다.
+        <code>--danger-*</code>는 옛 별칭입니다.
       </p>
       <div class="dodont">
         <div class="dd dont">
@@ -338,257 +346,230 @@ export function fdColor() {
               <li>진짜 그 상태일 때만</li></ul>
         </div>
       </div>
-      <div class="demo" style="border-radius:var(--r-xl)">
-        <div class="row">
-          <span class="badge"><span class="dot"></span>대기</span>
-          <span class="badge brand"><span class="dot"></span>실행 중</span>
-          <span class="badge success"><span class="dot"></span>완료</span>
-          <span class="badge danger"><span class="dot"></span>실패</span>
-        </div>
+      <div class="ctok-demo">
+        ${['fd-light', 'fd-dark'].map((s) => `
+          <div class="${s}">
+            <span class="badge">대기</span>
+            <span class="badge brand">실행 중</span>
+            <span class="badge success">완료</span>
+            <span class="badge warning">확인 필요</span>
+            <span class="badge danger">실패</span>
+          </div>`).join('')}
       </div>
 
       <h2>대비</h2>
-      <p>WCAG 2.2 AA 기준 — 본문 4.5:1, UI 요소·보더 3:1.</p>
+      <p>WCAG 2.2 AA 기준 — 본문 4.5:1, UI 요소 · 보더 3:1. 다크는 콘텐츠 면 <code>--card</code> 위에서 잽니다.</p>
       <table>
         <thead><tr><th>조합</th><th>라이트</th><th>다크</th></tr></thead>
         <tbody>
           <tr><td>본문 (<code>--foreground</code>)</td><td>17.4:1</td><td>17.3:1</td></tr>
-          <tr><td>보조 텍스트 (<code>--muted-foreground</code> · gray-10)</td><td>4.9:1</td><td>7.6:1</td></tr>
+          <tr><td>보조 텍스트 (<code>--muted-foreground</code>)</td><td>4.9:1</td><td>7.6:1</td></tr>
           <tr><td>링크 (<code>--primary-text</code>)</td><td>5.9:1</td><td>7.8:1</td></tr>
-          <tr><td>버튼 라벨 (흰 글자 on <code>--primary</code>)</td><td><b>3.9:1 — 미달(승인된 예외)</b></td><td><b>3.0:1 — 미달(승인된 예외)</b></td></tr>
+          <tr><td>버튼 라벨 (<code>--primary-foreground</code> on <code>--primary</code>)</td><td><b>3.9:1 — 미달(승인된 예외)</b></td><td><b>3.0:1 — 미달(승인된 예외)</b></td></tr>
           <tr><td>상태 글자 (<code>-text</code>)</td><td>4.9~5.5:1</td><td>8.2~13.3:1</td></tr>
         </tbody>
       </table>
       <p>
-        <code>gray-9</code>(2.9:1)는 본문 기준에 미달합니다 —
-        <b>의미 있는 정보를 담지 마세요.</b> placeholder·장식 메타에만 씁니다.
-        (값은 제품 토큰 기준, 다크는 콘텐츠 면 <code>--card</code> #101013 위)
-      </p>
-
-      <h2>Chart</h2>
-      <div class="tok-row">
-        ${[1,2,3,4,5,6].map((n) => sw(`--chart-${n}`)).join('')}
-      </div>
-      <div class="demo" style="border-radius:var(--r-xl)">
-        <div style="display:flex;align-items:flex-end;gap:8px;height:120px;width:100%">
-          ${[68, 92, 45, 78, 34, 58].map((h, i) => `
-            <div style="flex:1;height:${h}%;background:var(--chart-${i + 1});border-radius:var(--r-sm) var(--r-sm) 0 0"></div>`).join('')}
-        </div>
-      </div>
-      <p>
-        계열 색은 <b>순서대로</b> 씁니다 — 1부터 채우고 필요한 만큼만.
-        상태색과 겹치지 않아 "빨강 = 실패"의 의미가 차트에서 흐려지지 않습니다.
-        7개를 넘으면 색이 아니라 그룹핑이나 하이라이트를 검토합니다.
+        <b>버튼 라벨은 브랜드 원색을 그대로 쓰기로 한 결정입니다</b> — 색 일치를 우선한 선택이며 무결성 검사에도 예외로 기록해 두었습니다.
+        접근성이 요구되는 화면에서는 primary 버튼 대신 secondary를 쓰거나 라벨을 18px 이상으로 잡습니다.
       </p>
 
       <h2>Category</h2>
-      <div class="tok-row">
-        ${[1,2,3,4,5,6,7,8].map((n) => sw(`--cat-${n}`)).join('')}
-      </div>
+      ${table([1, 2, 3, 4, 5, 6, 7, 8].map((n) => [`--cat-${n}`, n === 1 ? '1번 — 브랜드색' : `${n}번`]))}
       <p>
-        차트와 <b>다른 팔레트입니다.</b> 차트는 1부터 <b>순서대로 배정</b>하고, 여기서는
         <b>'종류'에 색을 고정</b>합니다 — 순위나 개수가 바뀌어도 그 종류는 늘 같은 색입니다.
-        문서 종류·노드 라벨처럼 화면을 오가며 대조하는 값이 대상이라 여덟까지 있습니다.
-      </p>
-      <p>
-        <b>값의 원본은 앱(llmops-console-ux)이고 여기가 따라옵니다.</b> 그래서 이 색들은
-        언제든 바뀝니다 — 부를 때는 <b>색 이름이 아니라 슬롯 번호</b>로 부르세요
-        (<code>.badge.cat-2</code>). 2026-08-28에 <code>.badge.teal</code>이 주황을 칠하게
-        되면서 개명한 이유입니다. Atlassian도 같은 이유로 accent를 두고
-        "한 색을 다른 색으로 바꿔도 경험이 그대로여야 한다"고 못박습니다.
+        다크는 자동 반전이 아니라 어두운 면에 맞춰 따로 고른 값입니다.
+        부를 때는 <b>색 이름이 아니라 슬롯 번호</b>로 부르세요(<code>.badge.cat-2</code>) — 값은 언제든 바뀝니다.
+        상태색과 섞어 쓰지 않습니다.
       </p>
 
-      <h2>Surface</h2>
-      <div class="tok-row">
-        ${sw('--canvas', '셸 바탕')}
-        ${sw('--card', '패널 · 카드 면')}
-        ${sw('--muted', '옅은 면')}
-        ${sw('--selected-fill', '행 선택 면')}
-      </div>
+      <h2>File type</h2>
+      ${table([
+        ['--ft-pdf', 'PDF'], ['--ft-doc', '문서'], ['--ft-sheet', '스프레드시트'], ['--ft-slide', '슬라이드'],
+        ['--ft-hwp', '한글'], ['--ft-image', '이미지'], ['--ft-archive', '압축'], ['--ft-csv', 'CSV'],
+        ['--ft-audio', '음성'], ['--ft-video', '영상'], ['--ft-text', '텍스트 · 기타'],
+      ])}
+      <p>확장자 아이콘 · 배지 색입니다. 확장자 → 토큰 매핑은 <code>공용/파일유형.ts</code> 한 벌입니다. 다크 값은 아직 라이트와 같습니다.</p>
+
+      <h2>Privacy</h2>
+      ${table([
+        ['--pii-direct', '직접식별자 — 면 · 점'],
+        ['--pii-direct-text', '직접식별자 — 글자', 'text'],
+        ['--pii-quasi', '준식별자 — 면 · 점'],
+        ['--pii-quasi-text', '준식별자 — 글자', 'text'],
+        ['--pii-sensitive', '민감정보 — 면 · 점'],
+        ['--pii-sensitive-text', '민감정보 — 글자', 'text'],
+      ])}
+      <p><b>위험이 큰 쪽이 붉습니다</b> — 직접식별자 레드 → 준식별자 주황 → 민감 앰버. 면 위에 얹는 글자는 <code>-text</code> 쪽입니다.</p>
+
+      <h2>Feature</h2>
+      ${table([
+        ['--user-bubble', '사용자 말풍선 면'],
+        ['--user-bubble-fg', '사용자 말풍선 글자', 'on:--user-bubble'],
+        ['--highlight-bg', '인용 하이라이트'],
+        ['--kb', '지식자산 갈래'],
+        ['--favorite', '즐겨찾기 별'],
+        ['--scrollbar', '스크롤바'],
+      ])}
+
+      <h2>Gray</h2>
+      ${strip('--gray-', [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12])}
       <p>
-        <b>셸은 캔버스 위 흰 패널입니다</b> — <code>--canvas</code>(#F4F4F5) 위에 <code>--card</code> 패널을
-        <b>8px 인셋</b>으로 얹습니다. 다크에서는 명암 관계가 반대입니다: 콘텐츠 면(<code>--card</code> #101013)이
-        캔버스(#181818)보다 <b>어둡습니다</b> — 글자 대비가 높은 쪽이 읽는 면입니다.
+        <b>디자인 시스템 부품 안쪽용입니다 — 화면 CSS는 번호 대신 위의 의미 토큰을 씁니다.</b>
+        3 · 5 · 6 · 7 · 10 · 12는 <code>--muted</code> · <code>--border</code> · <code>--input</code> ·
+        <code>--border-emphasized</code> · <code>--muted-foreground</code> · <code>--foreground</code>와 같은 값입니다.
+        <code>gray-9</code>는 본문 대비에 미달하므로 의미 있는 정보를 담지 않습니다.
+      </p>
+
+      <h2>Gray Alpha</h2>
+      ${strip('--gray-a', [1, 2, 3, 4, 5, 6, 7, 8])}
+      <p>반투명 회색 — 어떤 면 위에 올려도 자연스러운 겹판 · 옅은 띠. 다크에서는 흰색 기반으로 뒤집힙니다.</p>
+
+      <h2>Chart</h2>
+      ${table([1, 2, 3, 4, 5, 6].map((n) => [`--chart-${n}`, `${n}번 계열`]))}
+      <p>
+        <b>이 문서 사이트에만 있습니다</b> — 앱 토큰 파일에는 아직 <code>--chart-*</code>가 없습니다.
+        계열 색은 1부터 순서대로 씁니다. 상태색과 겹치지 않아 "빨강 = 실패"가 차트에서 흐려지지 않습니다.
       </p>
     </div>`
 }
 
 /* ════════════════════════════════════════ */
 export function fdTypography() {
-  const rows = [
-    ['2xl', '24px', '600', '카드 숫자 (KPI)', 'font-size:24px;font-weight:600;letter-spacing:-.025em'],
-    ['xl', '20px', '600', '화면 제목 · 문서형 화면의 대분류', 'font-size:20px;font-weight:600;letter-spacing:-.015em'],
-    ['lg', '16px', '600', '소분류 · 카드 · 다이얼로그 · 절 제목', 'font-size:16px;font-weight:600;letter-spacing:-.01em'],
-    ['md', '15px', '400', '읽는 글 본문', 'font-size:15px'],
-    ['base', '14px', '400', 'UI 기본 — 입력 · 탭 · 표 본문', 'font-size:14px'],
-    ['sm', '13px', '400', '조밀한 UI — 버튼 · 표 머리(600) · 칩', 'font-size:13px'],
-    ['xs', '12px', '500', '메타 · 곁말 · 쪽 발', 'font-size:12px;font-weight:500'],
-    ['2xs', '11px', '600', '마이크로 라벨 · 배지 · 키캡', 'font-size:11px;font-weight:600'],
+  /* 역할 — 크기 · 굵기 · 줄 간격을 묶은 실제 조합. 견본은 토큰으로 그립니다 */
+  const roles = [
+    ['KPI 숫자', '2xl', 'semibold', 'tight', '-.025em', '요약 카드의 큰 숫자', '1,284건'],
+    ['화면 제목', 'xl', 'semibold', 'tight', '-.015em', '패널 맨 위 제목 · 문서형 화면의 대분류', '검색 로그'],
+    ['절 제목', 'lg', 'semibold', 'tight', '-.01em', '카드 · 다이얼로그 · 절의 제목', '최근 30일 추이'],
+    ['읽는 글', 'md', 'normal', 'prose', '', '설명 문단 · 에이전트 응답', '문서를 중앙에서 관리하고 권한에 맞게 검색합니다.'],
+    ['UI 기본', 'base', 'normal', 'ui', '', '입력 · 탭 · 메뉴 · 표 본문', '문서를 중앙에서 관리하세요'],
+    ['조밀 UI', 'sm', 'normal', 'ui', '', '버튼 · 표 셀 · 칩 · 사이드 목록', '문서를 중앙에서 관리하세요'],
+    ['표 머리', 'sm', 'semibold', 'ui', '', '표 머리 — 색은 --muted-foreground', '등록일'],
+    ['메타', 'xs', 'medium', 'ui', '', '라벨 · 곁말 · 시각 · 쪽 발', '2026-10-27 14:02 · 관리자'],
+    ['마이크로 라벨', '2xs', 'semibold', 'ui', '', '배지 · 키캡 · 견본 캡션', '실행 중'],
   ]
+  const v = (name) => `<span class="mono" data-var="${name}"></span>`
   return `
     <div class="page-head"><h1>Typography</h1></div>
     <p class="page-lead">
-      Pretendard 여덟 단계 — 11 · 12 · 13 · 14 · 15 · 16 · 20 · 24. <b>위계는 크기보다 굵기와 색으로</b> 만듭니다 —
-      크기를 키우면 화면이 커 보이고, 굵기를 바꾸면 위계만 생깁니다.
+      Pretendard 여덟 단계 — 11 · 12 · 13 · 14 · 15 · 16 · 20 · 24.
+      <b>위계는 크기보다 굵기와 색으로</b> 만듭니다.
     </p>
     <div class="prose">
-      <p>
-        <b>UI와 Prose를 구분합니다.</b>
-        조작하는 면(버튼·표·사이드바)은 13~14px로 조밀하게,
-        읽는 면(설명·에이전트 응답)은 15px에 줄 간격 1.8로 넉넉하게.
-        둘을 같은 크기로 두면 <b>양쪽 다 어중간해집니다</b>.
-      </p>
 
-      <h2>스케일</h2>
+      <h2>역할</h2>
       <div class="typescale">
-        ${rows.map(([n, s, w, use, css]) => `
+        ${roles.map(([role, s, w, l, ls, use, text]) => `
           <div class="ts-row">
-            <div class="ts-meta"><code>--text-${n}</code><span>${s} · ${w}</span></div>
-            <div class="ts-sample" style="${css}">문서를 중앙에서 관리하세요</div>
+            <div class="ts-meta"><b>${role}</b><span><i data-var="--text-${s}"></i> · <i data-var="--weight-${w}"></i> · <i data-var="--leading-${l}"></i></span></div>
+            <div class="ts-sample" style="font-size:var(--text-${s});font-weight:var(--weight-${w});line-height:var(--leading-${l});${ls ? `letter-spacing:${ls};` : ''}${role === '표 머리' || role === '메타' ? 'color:var(--muted-foreground);' : ''}">${text}</div>
             <div class="ts-use">${use}</div>
           </div>`).join('')}
       </div>
       <p>
-        <b>이 여덟 밖의 값과 반픽셀은 쓰지 않습니다.</b> 20은 화면 제목, 24는 카드 숫자 전용입니다.
-        <code>--text-3xl</code>(30) · <code>--text-4xl</code>(36) 토큰은 남아 있지만 제품 화면에는 쓰지 않습니다(랜딩 전용).
+        <b>UI와 읽는 글을 구분합니다.</b> 조작하는 면(버튼 · 표 · 메뉴)은 13~14px로 조밀하게,
+        읽는 면(설명 · 에이전트 응답)은 15px에 줄 간격 1.8로 넉넉하게 둡니다.
+        읽는 글의 줄 길이는 <a href="#/foundation/spacing">Spacing &amp; Layout</a>의 <code>--measure</code>를 따릅니다.
       </p>
 
-      <h2>굵기</h2>
-      <table>
-        <thead><tr><th>토큰</th><th>값</th><th>용도</th></tr></thead>
-        <tbody>
-          <tr><td><code>--weight-normal</code></td><td>400</td><td>본문 전부</td></tr>
-          <tr><td><code>--weight-medium</code></td><td>500</td><td>라벨, 버튼, 강조된 셀, 활성 항목</td></tr>
-          <tr><td><code>--weight-semibold</code></td><td>600</td><td>제목</td></tr>
-        </tbody>
-      </table>
+      <h2>토큰</h2>
+      <div class="ty-toks">
+        ${[
+          ['크기', ['2xs', 'xs', 'sm', 'base', 'md', 'lg', 'xl', '2xl'].map((n) => `--text-${n}`)],
+          ['굵기', ['normal', 'medium', 'semibold'].map((n) => `--weight-${n}`)],
+          ['줄 간격', ['tight', 'ui', 'normal', 'prose'].map((n) => `--leading-${n}`)],
+        ].map(([h, toks]) => `
+          <table>
+            <thead><tr><th>${h}</th><th>값</th></tr></thead>
+            <tbody>${toks.map((t) => `<tr><td><code>${t}</code></td><td>${v(t)}</td></tr>`).join('')}</tbody>
+          </table>`).join('')}
+      </div>
       <p>
-        <b>700 이상은 쓰지 않습니다.</b> Pretendard의 600으로 충분히 위계가 생기고,
-        더 굵어지면 미니멀한 인상이 깨집니다. Stylelint가 막습니다.
-      </p>
-
-      <h2>줄 간격</h2>
-      <table>
-        <thead><tr><th>토큰</th><th>값</th><th>용도</th></tr></thead>
-        <tbody>
-          <tr><td><code>--leading-tight</code></td><td>1.3</td><td>제목</td></tr>
-          <tr><td><code>--leading-ui</code></td><td>1.5</td><td>표 셀, 사이드바, 카드 설명</td></tr>
-          <tr><td><code>--leading-normal</code></td><td>1.62</td><td>기본</td></tr>
-          <tr><td><code>--leading-prose</code></td><td>1.8</td><td>읽는 글, 에이전트 응답</td></tr>
-        </tbody>
-      </table>
-
-      <h2>줄 길이</h2>
-      <p>
-        읽는 글은 <code>--measure</code>(720px)를 넘기지 않습니다. ch 단위는 한글(전각)에서 좁게 잡혀 px로 고정합니다.
-        한 줄이 너무 길면 다음 줄 첫 글자를 찾기 어려워집니다.
-        표와 데이터 화면은 예외입니다 — 넓을수록 좋습니다.
+        <b>이 여덟 밖의 크기와 반픽셀은 쓰지 않습니다</b> — 10 · 17 · 18 · 22 같은 값이 그 예입니다.
+        <code>--text-3xl</code>(30) · <code>--text-4xl</code>(36)은 랜딩 전용이라 제품 화면에는 쓰지 않습니다.
+        <b>700 이상의 굵기도 쓰지 않습니다</b> — 600으로 위계가 충분합니다.
       </p>
 
       <h2>글꼴</h2>
-      <p>
-        <b>설치가 필요합니다.</b> <code>npm install pretendard</code> 후
-        <code>pretendard/dist/web/variable/pretendardvariable-dynamic-subset.css</code>를 등록하세요.
-        빠뜨리면 에러 없이 조용히 시스템 글꼴로 렌더됩니다.
-        <br><span style="color:var(--gray-9);font-size:var(--text-xs)">라이선스 SIL OFL 1.1 — 재배포 가능, 판매 금지</span>
-      </p>
       <table>
         <thead><tr><th>토큰</th><th>글꼴</th><th>용도</th></tr></thead>
         <tbody>
-          <tr><td><code>--font</code></td><td>Pretendard Variable</td><td>UI 전부. 한글·영문·숫자가 한 벌로 어울립니다.</td></tr>
-          <tr><td><code>--mono</code></td><td>시스템 고정폭 (SF Mono · Consolas)</td><td>코드, 툴콜, 시각, IP, 파일 크기</td></tr>
+          <tr><td><code>--font</code></td><td>Pretendard Variable</td><td>UI 전부 — 한글 · 영문 · 숫자가 한 벌로 어울립니다</td></tr>
+          <tr><td><code>--mono</code></td><td>시스템 고정폭 (SF Mono · Consolas)</td><td>코드 · 툴콜 · 시각 · IP · 파일 크기</td></tr>
         </tbody>
       </table>
       <p>
-        <b>고정폭 글꼴을 쓰는 기준</b> — 세로로 자릿수를 맞춰 읽어야 하는 값.
-        시각·용량·ID·코드가 여기 해당합니다. 사람 이름이나 문서 제목은 아닙니다.
-        <b>키캡(<code>.kbd</code>)도 아닙니다</b> — 'Ctrl' · 'Esc'는 코드가 아니라 키 이름이라 <code>--font</code>(Pretendard)입니다.
+        <b>고정폭은 세로로 자릿수를 맞춰 읽는 값에만</b> 씁니다 — 시각 · 용량 · ID · 코드.
+        사람 이름 · 문서 제목 · 키캡(<code>.kbd</code>)은 아닙니다.
+        세로로 놓이는 숫자에는 <code>font-variant-numeric: tabular-nums</code>를 씁니다(<code>.mono</code> · <code>code</code>에는 자동).
       </p>
-
-      <h2>한글에서 주의할 것</h2>
-      <ul>
-        <li><b>letter-spacing을 양수로 주지 않습니다.</b> 한글은 자간이 벌어지면 단어 경계가 무너집니다. 제목에만 <code>-0.01~-0.03em</code>을 씁니다.</li>
-        <li><b>대문자 변환(uppercase)을 쓰지 않습니다.</b> 한글에는 대문자가 없어 영문만 튀어 보입니다. Vuetify 기본값을 <code>defaults.ts</code>에서 해제했고, Stylelint가 막습니다.</li>
-        <li><b>줄바꿈은 <code>word-break: keep-all</code></b>을 기본으로 합니다. 단어 중간에서 끊기지 않습니다.</li>
-      </ul>
-
-      <h2>마이크로 라벨 — 대문자 대신</h2>
       <p>
-        표 헤더·섹션 라벨 같은 작은 라벨에 <b>대문자 + 벌어진 자간</b>을 쓰면
-        전형적인 "관리자 템플릿" 인상이 됩니다. Geist 계열은 쓰지 않습니다.
-        대신 <b>작은 크기 + 굵기 + 회색</b>으로 위계를 만듭니다.
+        <b>Pretendard는 설치가 필요합니다.</b> <code>npm install pretendard</code> 후
+        <code>pretendard/dist/web/variable/pretendardvariable-dynamic-subset.css</code>를 등록하세요.
+        빠뜨리면 에러 없이 시스템 글꼴로 그려집니다. 라이선스는 SIL OFL 1.1입니다.
       </p>
+
+      <h2>한글 규칙</h2>
       <div class="dodont">
         <div class="dd do"><span class="dd-tag">이렇게</span><ul>
-          <li>표 헤더: 13px · 600 · <code>--muted-foreground</code> · 소문자 그대로</li>
-          <li>섹션 라벨: 12px · 500 · <code>--muted-foreground</code></li>
+          <li>제목에만 음수 자간 <code>-0.01~-0.025em</code></li>
+          <li>줄바꿈은 <code>word-break: keep-all</code> — 단어 중간에서 끊지 않습니다</li>
+          <li>작은 라벨의 위계는 <b>크기 + 굵기 + 회색</b>으로 — 표 머리 13 · 600 · <code>--muted-foreground</code></li>
         </ul></div>
         <div class="dd dont"><span class="dd-tag">이렇지 않게</span><ul>
-          <li><span style="font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.07em">Section Title</span> — 템플릿 인상</li>
-          <li>11px 미만 + 양수 자간 조합</li>
+          <li>양수 자간 — 한글은 단어 경계가 무너집니다</li>
+          <li><span style="font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.07em">Section Title</span> — 대문자 변환 + 벌어진 자간. 한글엔 대문자가 없어 영문만 튑니다</li>
+          <li>11px 미만</li>
         </ul></div>
       </div>
-
-      <h2>숫자 — tabular-nums</h2>
-      <p>
-        시각·용량·건수처럼 <b>세로로 놓이는 숫자</b>는 자리 폭이 같아야 흔들리지 않습니다.
-        <code>.mono</code>·<code>code</code>·통계 숫자에는
-        <code>font-variant-numeric: tabular-nums</code>가 자동 적용됩니다.
-      </p>
     </div>`
 }
 
 /* ════════════════════════════════════════ */
 export function fdSpacing() {
-  const scale = [0, 4, 8, 12, 16, 24, 32, 48, 64]
+  /* 단계 — 관리자 콘솔 실측(2026-10-27, 여백 값 1,566개)에서 자주 쓰는 순 */
+  const base = [
+    [4, '아이콘과 글자 사이 (조밀)'],
+    [8, '관련된 요소 사이 · 셸 인셋'],
+    [12, '버튼 사이 · 카드 사이 · 입력 안쪽'],
+    [16, '카드 안쪽 · 블록 위'],
+    [20, '패널 좌우 여백'],
+    [24, '섹션 안쪽'],
+    [32, '섹션 사이'],
+    [48, '큰 구획'],
+  ]
+  const half = [
+    [2, '붙어 있는 요소 — 아이콘 버튼 사이'],
+    [6, '버튼 안 아이콘–글자 · 라벨–입력–힌트'],
+    [10, '제목 아래 · 머리줄 요소 사이'],
+    [14, '머리줄 위'],
+  ]
+  const bars = (rows) => `<div class="spacescale">${rows.map(([v, use]) => `
+    <div class="sp-row"><code>${v}</code><div class="sp-bar" style="width:${v}px"></div><span>${use}</span></div>`).join('')}</div>`
+
   return `
     <div class="page-head"><h1>Spacing &amp; Layout</h1></div>
     <p class="page-lead">
-      4px 배수 9단계. 그림자가 없는 시스템에서는 <b>여백이 구조를 만듭니다</b> —
-      가까이 있으면 한 덩어리, 멀면 다른 덩어리입니다.
+      그림자가 없는 시스템에서는 <b>여백이 구조를 만듭니다</b> — 가까이 있으면 한 덩어리, 멀면 다른 덩어리입니다.
     </p>
     <div class="prose">
-      <h2>스케일</h2>
-      <div class="spacescale">
-        ${scale.map((v) => `
-          <div class="sp-row">
-            <code>${v}</code>
-            <div class="sp-bar" style="width:${v}px"></div>
-            <span>${v === 0 ? '없음' : v === 4 ? '아이콘과 글자 사이' : v === 8 ? '관련된 요소 사이' : v === 12 ? '버튼 사이, 카드 안쪽' : v === 16 ? '카드 안쪽 여백' : v === 24 ? '섹션 안쪽' : v === 32 ? '섹션 사이' : v === 48 ? '큰 구획' : '페이지 상하'}</span>
-          </div>`).join('')}
-      </div>
-      <p><b>컴포넌트 안은 4px 배수만 씁니다.</b> 7px, 15px 같은 값이 섞이면 정렬이 미묘하게 어긋납니다.</p>
 
-      <h2>예외 — 문서형 화면의 층 간격</h2>
+      <h2>기본 단계 — 4의 배수</h2>
+      ${bars(base)}
+
+      <h2>조밀 보정 — 2의 배수</h2>
+      ${bars(half)}
       <p>
-        보고서 · 평가 · 프로파일링처럼 <b>절이 층으로 쌓이는 화면</b>은 층을 여백 차이로 말합니다.
-        먼 것은 멀리, 가까운 것은 가까이 — <b>이 차이 자체가 어디까지가 한 덩어리인지</b>를 알려 줍니다.
-      </p>
-      <table>
-        <thead><tr><th>사이</th><th>값</th></tr></thead>
-        <tbody>
-          <tr><td>대분류 ↔ 대분류 (20px/600)</td><td><code>44</code></td></tr>
-          <tr><td>문서 머리 → 첫 대분류</td><td><code>32</code></td></tr>
-          <tr><td>소분류 ↔ 소분류 (16px/600 — 카드 하나)</td><td><code>28</code></td></tr>
-          <tr><td>대분류 → 첫 소분류</td><td><code>18</code></td></tr>
-          <tr><td>소분류 → 그 내용</td><td><code>10</code></td></tr>
-        </tbody>
-      </table>
-      <p>
-        층 간격은 <b>한 곳에서만</b> 냅니다(절 · 덩어리 · 머리 중 하나). 내용이 제 안여백을 더하므로
-        바꾼 뒤에는 <b>그려진 것 기준으로</b> 잽니다.
-        대시보드 카드는 <b>사방 16 · 제목 16px/600 · 제목 아래 10</b>입니다.
+        <b>표 · 필터 · 머리줄처럼 조밀한 UI는 4의 배수 사이를 2px로 보정합니다.</b>
+        이 열둘 밖의 값(5 · 7 · 9 · 13)은 쓰지 않습니다 — 정렬이 미묘하게 어긋납니다.
       </p>
 
       <h2>덩어리 짓기</h2>
-      <p>
-        같은 의미의 요소는 <b>가깝게</b>, 다른 의미는 <b>멀게</b>.
-        이것만 지켜도 보더 없이 구조가 읽힙니다.
-      </p>
-      <div class="demo" style="border-radius:var(--r-lg)">
+      <p>같은 의미의 요소는 <b>가깝게</b>, 다른 의미는 <b>멀게</b>. 이것만 지켜도 보더 없이 구조가 읽힙니다.</p>
+      <div class="demo" style="border-radius:var(--r-ct)">
         <div style="display:flex;gap:40px;flex-wrap:wrap">
           <div>
-            <div style="font-size:11px;font-weight:600;color:var(--success);margin-bottom:10px">좋음</div>
+            <div style="font-size:var(--text-2xs);font-weight:600;color:var(--success-text);margin-bottom:10px">좋음</div>
             <div class="field" style="width:200px">
               <label style="margin-bottom:6px">이름</label>
               <input class="input" placeholder="Acme Inc." />
@@ -596,7 +577,7 @@ export function fdSpacing() {
             </div>
           </div>
           <div>
-            <div style="font-size:11px;font-weight:600;color:var(--danger);margin-bottom:10px">나쁨</div>
+            <div style="font-size:var(--text-2xs);font-weight:600;color:var(--error-text);margin-bottom:10px">나쁨</div>
             <div style="width:200px">
               <label style="display:block;font-size:13px;font-weight:500;margin-bottom:16px">이름</label>
               <input class="input" style="width:100%" placeholder="Acme Inc." />
@@ -606,47 +587,66 @@ export function fdSpacing() {
         </div>
       </div>
 
-      <h2>페이지 골격</h2>
+      <h2>화면 골격</h2>
+      <div class="sp-shell" aria-hidden="true">
+        <div class="sp-gnb"><b>GNB</b><span>268</span></div>
+        <div class="sp-panel">
+          <div class="sp-title">화면 제목 <span>위 18 · 좌우 20</span></div>
+          <div class="sp-block">다음 블록 <span>위 16</span></div>
+          <div class="sp-cards"><i></i><i></i><i></i><i></i></div>
+          <span class="sp-inset">캔버스 인셋 8</span>
+        </div>
+      </div>
       <table>
         <thead><tr><th>영역</th><th>값</th></tr></thead>
         <tbody>
-          <tr><td>본문 최대 너비 (읽는 화면)</td><td><code>720px</code> (<code>--measure</code>)</td></tr>
-          <tr><td>본문 최대 너비 (문서·설정)</td><td><code>900px</code></td></tr>
-          <tr><td>본문 최대 너비 (데이터 화면)</td><td><code>1080~1280px</code></td></tr>
-          <tr><td>셸</td><td><code>--canvas</code> 바탕 + 흰 패널(<code>--card</code>) <code>8px</code> 인셋 · GNB <code>268px</code>(관리자 콘솔)</td></tr>
-          <tr><td>패널 좌우 여백</td><td><code>20px</code> 하나 — 목록 · 판 · 한 칸 화면 모두 (글자 시작점이 화면마다 움직이지 않게)</td></tr>
-          <tr><td>화면 제목 줄</td><td>20px/600 · 위 <code>18px</code> · 아래 여백은 다음 블록의 padding-top <code>16px</code>이 맡음</td></tr>
-          <tr><td>버튼 · 입력 높이</td><td>기본 <code>32</code> · sm <code>28</code> · lg <code>40</code>(로그인 제출 · 이용자 목록 화면의 큰 검색칸만)</td></tr>
+          <tr><td>셸</td><td><code>--canvas</code> 바탕 + 패널(<code>--card</code>) <code>8</code> 인셋 · GNB <code>268</code></td></tr>
+          <tr><td>패널 좌우 여백</td><td><code>20</code> 하나 — 목록 · 판 · 한 칸 화면 모두 (글자 시작점이 화면마다 움직이지 않게)</td></tr>
+          <tr><td>화면 제목 줄</td><td>20 · 600 · 위 <code>18</code> · 아래 여백은 다음 블록의 위 <code>16</code>이 맡음</td></tr>
+          <tr><td>요약 카드 줄</td><td>4열 · 사이 <code>12</code> · 카드 안 위아래 <code>14</code> 좌우 <code>16</code> · 줄 사이 <code>6</code></td></tr>
+          <tr><td>읽는 글 최대 너비</td><td><code>--measure</code> <span data-var="--measure"></span> — 에이전트 응답 · 설명 문단</td></tr>
+          <tr><td>문서 · 상세 최대 너비</td><td><code>760</code> ~ <code>900</code></td></tr>
         </tbody>
       </table>
       <p>
-        <b>에이전트 응답은 720px을 넘기지 않습니다.</b>
-        한 줄이 너무 길면 다음 줄 첫 글자를 찾기 어려워집니다.
-        데이터 테이블은 반대로 넓을수록 좋습니다 — 화면 성격에 따라 다르게 잡습니다.
+        <b>표와 데이터 화면은 최대 너비를 두지 않습니다</b> — 넓을수록 좋습니다.
+        컨트롤 · 표 줄 높이는 <a href="#/foundation/density">밀도</a>에 있습니다.
       </p>
 
-      <h2>그리드</h2>
+      <h2>문서형 화면의 층 간격</h2>
       <p>
-        12열 그리드를 강제하지 않습니다. 대신 화면을 <b>역할 열</b>로 나눕니다 —
-        문서 화면 기준: LNB <code>264px</code> · 본문 <code>minmax(0, 720px)</code> ·
-        목차 레일 <code>192px</code>, 열 간격 <code>48px</code>.
-        카드 나열은 <code>repeat(auto-fill, minmax(232px, 1fr))</code>처럼
-        내용이 스스로 줄 바꾸게 두어 브레이크포인트를 늘리지 않습니다.
+        보고서 · 평가 · 프로파일링처럼 <b>절이 층으로 쌓이는 화면</b>은 층을 여백 차이로 말합니다 —
+        이 차이 자체가 어디까지가 한 덩어리인지를 알려 줍니다.
+      </p>
+      <table>
+        <thead><tr><th>사이</th><th>값</th></tr></thead>
+        <tbody>
+          <tr><td>대분류 ↔ 대분류 (20 · 600)</td><td><code>44</code></td></tr>
+          <tr><td>문서 머리 → 첫 대분류</td><td><code>32</code></td></tr>
+          <tr><td>소분류 ↔ 소분류 (16 · 600 — 카드 하나)</td><td><code>28</code></td></tr>
+          <tr><td>대분류 → 첫 소분류</td><td><code>18</code></td></tr>
+          <tr><td>소분류 → 그 내용</td><td><code>10</code></td></tr>
+        </tbody>
+      </table>
+      <p>
+        층 간격은 <b>한 곳에서만</b> 냅니다(절 · 덩어리 · 머리 중 하나). 내용이 제 안여백을 더하므로
+        바꾼 뒤에는 <b>그려진 것 기준으로</b> 잽니다.
       </p>
 
-      <h2>브레이크포인트</h2>
+      <h2>줄 바꿈 지점</h2>
       <table>
         <thead><tr><th>지점</th><th>바뀌는 것</th></tr></thead>
         <tbody>
-          <tr><td><code>1280px</code></td><td>목차 레일 숨김</td></tr>
-          <tr><td><code>1080px</code></td><td>본문 좌우 여백 축소 (56 → 32px)</td></tr>
-          <tr><td><code>900px</code></td><td><b>LNB → 드로어.</b> 사라지는 게 아니라 서랍으로 들어갑니다. 2열 카드가 1열로</td></tr>
-          <tr><td><code>640px</code></td><td>검색 숨김, 통계 2열, 버튼 전체 폭</td></tr>
+          <tr><td><code>1100px</code></td><td>요약 카드 4열 → 2열</td></tr>
+          <tr><td><code>900px</code></td><td>GNB 숨김 · 캔버스 인셋 사방 8</td></tr>
+          <tr><td><code>760px</code></td><td>2 · 3열 리포트 그리드 → 1열</td></tr>
         </tbody>
       </table>
       <p>
-        표는 줄이지 않고 <b>가로 스크롤</b>로 둡니다 — 열을 빼면 정보가 사라집니다.
-        표가 가로로 넘치면 첫 열을 붙박을 수 있습니다(머리 칸의 압정).
+        <b>관리자 콘솔은 데스크톱 전용입니다.</b> 패널 안 카드 묶음은 화면 폭이 아니라
+        <b>패널 폭</b>을 보고 바뀌도록 <code>@container</code>로 같은 지점(760 · 900)을 씁니다.
+        카드 나열은 <code>repeat(auto-fill, minmax(…, 1fr))</code>로 내용이 스스로 줄 바꾸게 둡니다.
+        표는 열을 빼지 않고 <b>가로 스크롤</b>로 둡니다 — 열을 빼면 정보가 사라집니다.
       </p>
     </div>`
 }
@@ -1077,7 +1077,7 @@ export function fdState() {
         <div class="row">
           <button class="btn btn-secondary">기본 · 호버 · 클릭해보세요</button>
           <button class="btn" disabled>disabled</button>
-          <span class="badge brand"><span class="dot"></span>selected</span>
+          <span class="badge brand">selected</span>
           <input class="input" placeholder="탭 키로 포커스" style="width:180px" />
         </div>
       </div>

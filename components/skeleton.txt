@@ -18,6 +18,17 @@ import { DsSkeleton } from '~/design'   // Vuetify 불필요 · ds.css만
 <DsSkeleton width="90%" />
 ```
 
+## HTML 문법 — Vue 없이 문자열로 그리는 화면
+```html
+<div class="skeleton circle" style="width:32px;height:32px"></div>
+<div class="skeleton text" style="width:60%"></div>
+<div class="skeleton text" style="width:90%"></div>
+```
+
+## 앱별
+- 이용자 화면 (Vuetify 있음): 이 부품 그대로
+- 관리자 콘솔 (Vuetify 없음): 이 부품 그대로 (~/design · html 문법)
+
 ## 구분
 - vs ThinkingIndicator: 에이전트 응답 대기에는 Skeleton을 쓰지 않습니다
 
@@ -29,8 +40,8 @@ import { DsSkeleton } from '~/design'   // Vuetify 불필요 · ds.css만
 직접 처리: 로딩 영역에 aria-busy="true" / 스켈레톤 자체는 aria-hidden — 스크린리더가 읽을 내용이 없음 / prefers-reduced-motion에서 셔머 애니메이션 정지
 
 ## 시스템 규칙 (요약)
-- 색·간격·모서리는 CSS 변수만 (var(--gray-6), var(--brand)) — hex 금지
-- primary 버튼은 화면당 하나. 선택·활성 상태는 중립(--sel-bg/--sel-fg)
-- 컨트롤 높이 32(sm)/40/48 — 필터 바·툴바는 sm
+- 색·간격·모서리는 제품 토큰만 (var(--border), var(--primary), var(--r-el)) — hex 금지. --brand · --sel-bg 는 문서 사이트 전용이라 앱에 없습니다
+- primary 버튼은 화면당 하나. 활성(탭·필터)은 --nav-active 선+글자, 목록 행 선택은 --selected-fill 회색 면
+- 컨트롤 높이 32(기본) / 28(sm — 필터 바·툴바) / 40(lg — 로그인 제출 전용)
 - 목록·테이블은 default/loading/empty/error/partial 5상태
 - 전체 규칙: https://Cogniterm.github.io/design-system/llms.txt

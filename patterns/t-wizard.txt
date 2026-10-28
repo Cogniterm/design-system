@@ -1,0 +1,22 @@
+# Wizard (마법사) — Cogniterm Design System pattern
+
+> 여러 단계로 나뉜 생성 흐름.
+> Group: Page Templates (페이지 템플릿) · Index: https://Cogniterm.github.io/design-system/patterns/llms.txt
+
+## 골격
+
+```
+Stepper (1 소스 → 2 규칙 → 3 검토)
+─────────────────────────
+현재 단계 내용
+─────────────────────────
+이전                    다음 / 만들기
+```
+
+- **단계는 5개를 넘지 않습니다.** 넘으면 흐름을 나눕니다.
+- 마지막은 항상 **검토 단계** — 지금까지 고른 것을 요약해 보여줍니다.
+- 이전 단계로 돌아가도 **입력한 값이 남아 있어야** 합니다.
+- 중간에 나가면 **임시 저장**하거나 나가도 되는지 확인합니다.
+- 각 단계에서 **지금 무엇을 정하는지** 한 줄로 설명합니다.
+
+쓰는 것: Stepper · Input · Select · Alert · Button

@@ -1,0 +1,58 @@
+# DsGauge — Cogniterm Design System
+
+import { DsGauge } from '~/design'   // Vuetify 불필요 · ds.css만
+
+## 용도
+요약 카드 · 상세의 할당량 · 사용률 · 적중률.
+
+## Props
+- value: number = 필수 — 값 — 0 ~ max.
+- max: number = 100 — 최대 — 좌석 7 / 10이면 :value="7" :max="10".
+- label: string = 필수 — 무엇의 비율인가 — 스크린리더가 읽는 이름("저장 공간 사용률").
+- size: 'sm' | 'md' | 'lg' = 'md' — 지름 24 / 48 / 80.
+- showValue: boolean = false — 고리 안에 숫자 — 단위 없이 숫자만. sm은 그리지 않습니다.
+- variant: 'brand' | 'success' | 'warning' | 'danger' = 'brand' — 색 — 화면이 가진 기준 하나로 쓰는 쪽이 고릅니다.
+
+
+## 사용 예
+```vue
+<DsGauge :value="72" label="저장 공간 사용률" show-value />
+<DsGauge :value="7" :max="10" label="라이선스 좌석" size="sm" />
+<DsGauge :value="91" label="월 토큰 한도" size="lg" variant="warning" show-value />
+```
+
+## HTML 문법 — Vue 없이 문자열로 그리는 화면
+```html
+<span class="gauge" role="meter" aria-label="저장 공간 사용률" aria-valuemin="0" aria-valuemax="100" aria-valuenow="72" style="--gauge-value: 72">
+  <svg viewBox="0 0 36 36" aria-hidden="true">
+    <circle class="gauge__track" cx="18" cy="18" r="15.75" />
+    <circle class="gauge__arc" cx="18" cy="18" r="15.75" pathLength="100" />
+  </svg>
+  <span class="gauge__value">72</span>
+</span>
+```
+
+## 앱별
+- 이용자 화면 (Vuetify 있음): 이 부품 그대로
+- 관리자 콘솔 (Vuetify 없음): 이 부품 그대로 (~/design · html 문법)
+
+## 구분
+- vs ProgressBar: 끝나 가는 작업(업로드 · 색인)이면 ProgressBar
+- vs StatCard: 비율보다 숫자 자체가 요점이면 StatCard — 둘을 함께 둘 수도 있습니다
+
+## 지침
+- [해야 할 것] 곁에 무엇의 비율인지 글자로 — "저장 공간 72 / 100GB". 고리만 두지 않습니다.
+- [해야 할 것] 색은 그 화면이 이미 가진 기준 하나로 고릅니다(예: 한도 경고를 보내는 값).
+- [하지 말 것] 부품 안이나 화면마다 임계(80% 넘으면 주황)를 새로 정하지 않습니다 — 같은 숫자가 화면마다 다른 색이 됩니다.
+- [하지 말 것] 끝나 가는 작업(업로드 · 색인)에 쓰지 않습니다 — 그건 ProgressBar입니다.
+- [하지 말 것] 고리 안 숫자에 % · 단위를 붙이지 않습니다 — 단위는 곁의 글자에.
+
+## 접근성
+직접 처리: label 채우기 — 스크린리더가 읽는 이름 / 색만으로 경고하지 않기 — 곁 글자에 상태를 함께
+
+## 시스템 규칙 (요약)
+- 색·간격·모서리는 제품 토큰만 (var(--border), var(--primary), var(--r-el)) — hex 금지. --brand · --sel-bg 는 문서 사이트 전용이라 앱에 없습니다
+- primary 버튼은 화면당 하나. 활성(탭·필터)은 --nav-active 선+글자, 목록 행 선택은 --selected-fill 회색 면
+- 컨트롤 높이 32(기본) / 28(sm — 필터 바·툴바) / 40(lg — 로그인 제출 전용)
+- 목록·테이블은 default/loading/empty/error/partial 5상태
+- 전체 규칙: https://Cogniterm.github.io/design-system/llms.txt

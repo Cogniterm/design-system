@@ -67,19 +67,32 @@ createVuetify({ theme: dsTheme, defaults: dsDefaults, locale: dsLocale, date: ds
 
 ## AI에게 시킬 때
 
-섹션별로 나뉘어 있어 필요한 것만 읽히면 됩니다.
+**고를 것 → 그것 하나**만 읽히면 됩니다. 색인 파일로 고르고, 고른 부품 · 패턴은 파일 하나씩.
+전부 `npm run gen:llms` 가 만듭니다 — 손으로 고치지 마세요.
 
 | 파일 | 언제 |
 |---|---|
-| [`/llms.txt`](llms.txt) | 색인 — 항상 먼저 (2.4 KB) |
-| [`/components/llms.txt`](components/llms.txt) | UI를 만들 때 (19 KB) |
-| [`/patterns/llms.txt`](patterns/llms.txt) | 화면 전체·에이전트 흐름 (10 KB) |
-| [`/foundation/llms.txt`](foundation/llms.txt) | 색·여백·타이포·토큰 (5 KB) |
-| [`/vuetify/llms.txt`](vuetify/llms.txt) | 설치와 연동 (3 KB) |
-| [`/a11y/llms.txt`](a11y/llms.txt) | 접근성 (10 KB) |
+| [`/llms.txt`](llms.txt) | 시작점 — 항상 먼저 |
+| [`/components/llms.txt`](components/llms.txt) → `components/<id>.txt` | 부품 고르기 → 고른 부품 하나 |
+| [`/patterns/llms.txt`](patterns/llms.txt) → `patterns/<id>.txt` | 패턴 고르기 → 고른 패턴 하나 |
+| [`/foundation/llms.txt`](foundation/llms.txt) | 규칙 · 토큰 표(라이트 · 다크) |
+| [`/vuetify/llms.txt`](vuetify/llms.txt) | 설치와 연동 |
+| [`/a11y/llms.txt`](a11y/llms.txt) | 접근성 |
+| `components/index.json` · `patterns/index.json` · `foundation/tokens.json` | 같은 데이터를 프로그램이 읽는 꼴로 |
+
+`npm run check` 가 이 파일들이 32 KB 를 넘으면 경고합니다.
+
+**앱 저장소에서 일하는 AI 는 명령으로 꺼내 씁니다** — 옆 폴더의 `ds.mjs` (페이지를 훑을 필요가 없습니다):
+
+```
+node ../design-system/ds.mjs search 날짜 고르기    부품 · 패턴 · 토큰 찾기
+node ../design-system/ds.mjs component button       부품 하나
+node ../design-system/ds.mjs pattern forms          패턴 하나
+node ../design-system/ds.mjs tokens border          토큰 — 문서 사이트 전용 이름이면 대신 쓸 이름을 알려 줌
+```
 
 > "이 디자인 시스템으로 설정 화면 만들어줘.
-> foundation/llms.txt, components/llms.txt, patterns/llms.txt 읽고 규칙 따라줘."
+> foundation/llms.txt 읽고, ds.mjs search 로 필요한 부품 · 패턴을 골라 하나씩 읽고 규칙 따라줘."
 
 ## 구조
 

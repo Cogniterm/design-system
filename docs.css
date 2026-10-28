@@ -675,13 +675,20 @@
 .statusrow span { font-size: var(--text-xs); color: var(--gray-10); }
 
 .typescale { border: 1px solid var(--border); border-radius: var(--r-xl); overflow: hidden; margin-bottom: 22px; }
-.ts-row { display: grid; grid-template-columns: 124px 1fr 168px; gap: 18px; align-items: center; padding: 18px 20px; }
+.ts-row { display: grid; grid-template-columns: 124px 1fr 232px; gap: 18px; align-items: center; padding: 18px 20px; }
 .ts-row + .ts-row { border-top: 1px solid var(--border-subtle); }
 .ts-meta code {
   font-family: var(--mono); font-size: var(--text-xs); color: var(--brand);
   background: var(--gray-3); padding: 2px 6px; border-radius: var(--r-sm);
 }
 .ts-meta span { display: block; font-size: var(--text-2xs); color: var(--gray-9); margin-top: 5px; font-family: var(--mono); }
+.ts-meta b { font-size: var(--text-sm); font-weight: var(--weight-semibold); color: var(--foreground); }
+.ts-meta i { font-style: normal; }
+/* 타이포 토큰 세 표 — 크기 · 굵기 · 줄 간격을 나란히 (표 하나에 몰면 빈 칸만 남습니다) */
+.ty-toks { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; align-items: start; margin-bottom: 18px; }
+.ty-toks .table-scroll, .ty-toks table { margin: 0; }
+.ty-toks table { min-width: 0; width: 100%; }   /* 문서 표의 최소 폭(520)이 세 칸 나란히에서는 값 열을 밀어냅니다 */
+@media (max-width: 900px) { .ty-toks { grid-template-columns: 1fr; } }
 .ts-sample { color: var(--gray-12); }
 .ts-use { font-size: var(--text-xs); color: var(--gray-10); text-align: right; }
 
@@ -691,6 +698,22 @@
 .sp-row code { font-family: var(--mono); font-size: var(--text-xs); color: var(--gray-12); }
 .sp-bar { height: 14px; background: var(--brand-subtle); border-left: 2px solid var(--brand); }
 .sp-row span { font-size: var(--text-xs); color: var(--gray-10); }
+
+/* 화면 골격 그림 — 콘솔 셸을 줄여 그린 것. 숫자는 실제 px */
+.sp-shell {
+  display: flex; gap: 0; height: 220px; margin-bottom: 18px; padding: 8px 8px 8px 0;
+  background: var(--canvas); border: 1px solid var(--border); border-radius: var(--r-ct); overflow: hidden;
+}
+.sp-gnb { flex: 0 0 22%; padding: 12px; display: flex; flex-direction: column; gap: 4px; }
+.sp-panel { position: relative; flex: 1; min-width: 0; background: var(--card); border: 1px solid var(--border); border-radius: var(--r-ct); padding: 18px 20px; display: flex; flex-direction: column; gap: 16px; }
+.sp-gnb b, .sp-title { font-size: var(--text-sm); font-weight: var(--weight-semibold); color: var(--foreground); }
+.sp-gnb span, .sp-title span, .sp-block span, .sp-inset { font-family: var(--mono); font-size: var(--text-2xs); font-weight: var(--weight-normal); color: var(--muted-foreground); }
+.sp-title span, .sp-block span { margin-left: 8px; }
+.sp-block { font-size: var(--text-xs); color: var(--muted-foreground); border-top: 1px dashed var(--border); padding-top: 8px; }
+.sp-cards { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; flex: 1; }
+.sp-cards i { border: 1px solid var(--border); border-radius: var(--r-el); }
+.sp-inset { position: absolute; right: 12px; bottom: 8px; }
+@media (max-width: 640px) { .sp-gnb { display: none; } .sp-shell { padding: 8px; } .sp-cards { grid-template-columns: repeat(2, 1fr); } }
 
 .radiusrow { display: grid; grid-template-columns: repeat(auto-fit, minmax(148px, 1fr)); gap: 12px; margin: 16px 0 22px; }
 .radiusrow > div { border: 1px solid var(--border); border-radius: var(--r-xl); padding: 18px; text-align: center; }
@@ -1028,52 +1051,73 @@
 /* ══════════════════════════════════════
    토큰 견본 — 클릭하면 이름 복사
    ══════════════════════════════════════ */
-.tok-row { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 18px; }
-.tok {
-  all: unset; box-sizing: border-box; cursor: pointer;
-  display: inline-flex; align-items: center; gap: 9px;
-  padding: 8px 12px 8px 9px; border-radius: var(--r-lg);
-  border: 1px solid var(--border); background: var(--surface);
-  font-family: var(--font); transition: border-color .16s ease;
-}
-.tok:hover { border-color: var(--border-hover); }
-.tok:focus-visible { outline: none; box-shadow: var(--focus-ring); }
-.tok-chip {
-  width: 24px; height: 24px; border-radius: var(--r-md); flex-shrink: 0;
-  box-shadow: inset 0 0 0 1px var(--gray-a3);
-}
-.tok-name { font-family: var(--mono); font-size: var(--text-xs); color: var(--gray-12); }
-.tok-note { font-size: var(--text-2xs); color: var(--gray-9); }
-.tok.copied { border-color: var(--brand); }
-.tok.copied .tok-name::after { content: ' 복사됨'; color: var(--brand); }
+/* 라이트 · 다크 칸 — 토큰 값은 foundation.js 가 ds.css 에서 읽어 .fd-light · .fd-dark 에 심습니다.
+   칸이 자기 테마의 --card 면을 깔아야 "그 모드에서 어떻게 보이는지"가 됩니다 */
+.fd-light, .fd-dark { background: var(--card); color: var(--foreground); }
 
-.tok-scale { display: flex; gap: 2px; margin-bottom: 18px; flex-wrap: wrap; }
-.tok-step {
-  all: unset; box-sizing: border-box; cursor: pointer;
-  flex: 1 1 52px; min-width: 46px;
-  display: flex; flex-direction: column; align-items: stretch; gap: 5px;
+.ctok-list { border: 1px solid var(--border); border-radius: var(--r-ct); overflow: hidden; margin-bottom: 18px; }
+.ctok {
+  display: grid; grid-template-columns: minmax(0, 1fr) 200px 200px;
+  border-top: 1px solid var(--border);
+}
+/* .prose code 의 회색 알약을 걷습니다 — 칸 안에서는 이름 · 값이 글자일 뿐입니다 */
+.prose .ctok code { background: none; border: 0; padding: 0; border-radius: 0; }
+.ctok:first-child { border-top: 0; }
+.ctok-head > span {
+  padding: 8px 14px; font-size: var(--text-xs); font-weight: var(--weight-semibold); color: var(--muted-foreground);
+}
+.ctok-name {
+  all: unset; box-sizing: border-box; cursor: pointer; min-width: 0;
+  display: flex; flex-direction: column; justify-content: center; gap: 2px; padding: 10px 14px;
   font-family: var(--font);
 }
-.tok-step:focus-visible { outline: none; box-shadow: var(--focus-ring); border-radius: var(--r-sm); }
-.ts-chip {
-  height: 44px; border-radius: var(--r-sm);
+.ctok-name code { font-family: var(--mono); font-size: var(--text-xs); color: var(--foreground); }
+.ctok-name span { font-size: var(--text-xs); color: var(--muted-foreground); }
+.ctok-name:hover code { color: var(--primary-text); }
+.ctok-name:focus-visible { outline: none; box-shadow: inset var(--focus-ring); }
+.ctok-name.copied code::after { content: ' 복사됨'; color: var(--primary-text); }
+.ctok-sw { display: flex; align-items: center; gap: 10px; padding: 10px 14px; border-left: 1px solid var(--border); }
+.ctok-sw code { font-family: var(--mono); font-size: var(--text-2xs); color: var(--muted-foreground); white-space: nowrap; }
+.ctok-chip {
+  width: 28px; height: 28px; flex-shrink: 0; border-radius: var(--r-el);
   box-shadow: inset 0 0 0 1px var(--gray-a3);
-  transition: transform .16s ease;
 }
-.tok-step:hover .ts-chip { transform: translateY(-2px); }
-.ts-n {
-  font-family: var(--mono); font-size: var(--text-2xs);
-  color: var(--gray-9); text-align: center;
+.ctok-line { box-shadow: none; border: 1px solid; background: transparent; }
+.ctok-aa {
+  width: 28px; height: 28px; flex-shrink: 0; display: inline-flex; align-items: center; justify-content: center;
+  font-size: var(--text-xs); font-weight: var(--weight-semibold);
 }
-.tok-step.copied .ts-n { color: var(--brand); }
+.ctok-on { border-radius: var(--r-el); }
 
-.tok-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(216px, 1fr)); gap: 12px; margin-bottom: 18px; }
-.tok-status { border: 1px solid var(--border); border-radius: var(--r-xl); overflow: hidden; }
-.tok-status-h {
-  display: flex; align-items: center; gap: 9px; padding: 12px 14px;
-  border-bottom: 1px solid var(--border-subtle);
+.ctok-strip {
+  display: flex; align-items: flex-end; gap: 2px; padding: 12px 14px;
+  border: 1px solid var(--border); border-radius: var(--r-ct); margin-bottom: 8px;
 }
-.tok-status-h b { font-family: var(--mono); font-size: var(--text-xs); color: var(--gray-12); }
-.tok-status-h span:last-child { font-size: var(--text-xs); color: var(--gray-10); }
-.tok-status-b { display: flex; gap: 4px; padding: 10px 12px 12px; }
-.tok-status-b .ts-chip { height: 32px; }
+.ctok-strip:last-of-type { margin-bottom: 18px; }
+.ctok-strip-l { width: 44px; flex-shrink: 0; align-self: center; font-size: var(--text-xs); color: var(--muted-foreground); }
+.ctok-step {
+  all: unset; box-sizing: border-box; cursor: pointer; flex: 1 1 0; min-width: 0;
+  display: flex; flex-direction: column; gap: 5px; font-family: var(--font);
+}
+.ctok-step span { height: 36px; border-radius: var(--r-in); box-shadow: inset 0 0 0 1px var(--gray-a3); }
+.ctok-step i { font-style: normal; font-family: var(--mono); font-size: var(--text-2xs); color: var(--muted-foreground); text-align: center; }
+.ctok-step:focus-visible { outline: none; box-shadow: var(--focus-ring); border-radius: var(--r-in); }
+.ctok-step.copied i { color: var(--primary-text); }
+
+.ctok-demo { display: grid; grid-template-columns: 1fr 1fr; border: 1px solid var(--border); border-radius: var(--r-ct); overflow: hidden; margin-bottom: 18px; }
+.ctok-demo > div { display: flex; flex-wrap: wrap; gap: 8px; padding: 20px; }
+.ctok-demo > div + div { border-left: 1px solid var(--border); }
+
+@media (max-width: 640px) {
+  .ctok { grid-template-columns: 1fr 1fr; }
+  .ctok-name { grid-column: 1 / -1; padding-bottom: 4px; }
+  .ctok-head > span:first-child { display: none; }
+  .ctok-sw { border-left: 0; padding-top: 6px; min-width: 0; }
+  .ctok-sw code { white-space: normal; word-break: break-all; }   /* 390 폭에서 반투명 값(rgba 21자)이 반 칸을 넘습니다 */
+  .ctok-sw + .ctok-sw { border-left: 1px solid var(--border); }
+  .ctok-head > span + span { border-left: 1px solid var(--border); }
+  .ctok-head > span:nth-child(2) { border-left: 0; }
+  .ctok-demo { grid-template-columns: 1fr; }
+  .ctok-demo > div + div { border-left: 0; border-top: 1px solid var(--border); }
+  .ctok-strip-l { display: none; }
+}

@@ -17,6 +17,18 @@ import { DsLoadingScreen } from '~/design'   // Vuetify 불필요 · ds.css만
 <DsLoadingScreen v-if="booting" label="문서함 불러오는 중" />
 ```
 
+## HTML 문법 — Vue 없이 문자열로 그리는 화면
+```html
+<!-- 정적 마크업은 골격만 — 도트 44개의 위치·크기·색은 rAF로 매 프레임 계산 -->
+<div class="loading-screen" role="status" aria-label="불러오는 중">
+  <div class="loading-screen__sphere" aria-hidden="true"><!-- 44 <div> --></div>
+</div>
+```
+
+## 앱별
+- 이용자 화면 (Vuetify 있음): 이 부품 그대로
+- 관리자 콘솔 (Vuetify 없음): 이 부품 그대로 (~/design · html 문법)
+
 ## 구분
 - vs Skeleton: 화면의 레이아웃을 이미 알면 Skeleton — LoadingScreen은 화면 전체가 아직 없을 때만
 - vs Spinner: 영역 하나의 2초 이내 대기면 Spinner
@@ -31,8 +43,8 @@ import { DsLoadingScreen } from '~/design'   // Vuetify 불필요 · ds.css만
 직접 처리: label에 무엇을 불러오는지 구체적으로 ("문서함 불러오는 중") / 준비되면 즉시 화면으로 교체
 
 ## 시스템 규칙 (요약)
-- 색·간격·모서리는 CSS 변수만 (var(--gray-6), var(--brand)) — hex 금지
-- primary 버튼은 화면당 하나. 선택·활성 상태는 중립(--sel-bg/--sel-fg)
-- 컨트롤 높이 32(sm)/40/48 — 필터 바·툴바는 sm
+- 색·간격·모서리는 제품 토큰만 (var(--border), var(--primary), var(--r-el)) — hex 금지. --brand · --sel-bg 는 문서 사이트 전용이라 앱에 없습니다
+- primary 버튼은 화면당 하나. 활성(탭·필터)은 --nav-active 선+글자, 목록 행 선택은 --selected-fill 회색 면
+- 컨트롤 높이 32(기본) / 28(sm — 필터 바·툴바) / 40(lg — 로그인 제출 전용)
 - 목록·테이블은 default/loading/empty/error/partial 5상태
 - 전체 규칙: https://Cogniterm.github.io/design-system/llms.txt

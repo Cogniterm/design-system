@@ -1,0 +1,250 @@
+{
+ "site": "https://Cogniterm.github.io/design-system",
+ "patterns": [
+  {
+   "id": "forms",
+   "name": "Forms",
+   "ko": "폼",
+   "group": "core",
+   "summary": "입력을 받고 검증하고 저장합니다.",
+   "sections": [
+    "구조",
+    "검증은 언제",
+    "에러 처리",
+    "저장 상태",
+    "값을 고르는 컨트롤",
+    "한글 입력 (IME)",
+    "쓰는 컴포넌트"
+   ],
+   "file": "https://Cogniterm.github.io/design-system/patterns/forms.txt"
+  },
+  {
+   "id": "filtering",
+   "name": "Filtering",
+   "ko": "필터",
+   "group": "core",
+   "summary": "많은 데이터에서 원하는 것만 남깁니다.",
+   "sections": [
+    "구조",
+    "규칙",
+    "쓰는 컴포넌트"
+   ],
+   "file": "https://Cogniterm.github.io/design-system/patterns/filtering.txt"
+  },
+  {
+   "id": "states",
+   "name": "Loading & Empty & Error",
+   "ko": "로딩 · 빈 · 에러",
+   "group": "core",
+   "summary": "데이터가 없거나 실패했을 때의 다섯 가지 상태.",
+   "sections": [
+    "다섯 상태",
+    "빈 상태는 네 종류입니다",
+    "partial — 에이전트 제품의 필수 상태"
+   ],
+   "file": "https://Cogniterm.github.io/design-system/patterns/states.txt"
+  },
+  {
+   "id": "destructive",
+   "name": "Confirmation & Destructive",
+   "ko": "확인 · 파괴적 액션",
+   "group": "core",
+   "summary": "되돌릴 수 없는 작업을 안전하게 처리합니다.",
+   "sections": [
+    "먼저: 확인창을 띄우지 않는 방법을 찾습니다",
+    "확인창이 필요한 경우",
+    "확인창 쓰기",
+    "다이얼로그는 두 규격입니다",
+    "닫히는 길",
+    "끄기와 켜기"
+   ],
+   "file": "https://Cogniterm.github.io/design-system/patterns/destructive.txt"
+  },
+  {
+   "id": "status",
+   "name": "Object Status",
+   "ko": "객체 상태",
+   "group": "core",
+   "summary": "항목이 지금 어떤 상태인지 일관되게 보여줍니다.",
+   "sections": [
+    "상태 어휘를 고정합니다",
+    "상태와 결과는 다른 축입니다",
+    "규칙"
+   ],
+   "file": "https://Cogniterm.github.io/design-system/patterns/status.txt"
+  },
+  {
+   "id": "edit-mode",
+   "name": "Edit mode",
+   "ko": "편집 모드",
+   "group": "core",
+   "summary": "여러 값을 함께 고치고 한 번에 저장합니다 — 조직 · 권한 · 직제 · 사용자 · 정책.",
+   "sections": [
+    "흐름",
+    "규칙",
+    "하지 않는 것"
+   ],
+   "file": "https://Cogniterm.github.io/design-system/patterns/edit-mode.txt"
+  },
+  {
+   "id": "streaming",
+   "name": "Streaming Response",
+   "ko": "스트리밍 응답",
+   "group": "agent",
+   "summary": "응답이 만들어지는 동안 무엇을 보여줄지.",
+   "sections": [
+    "네 단계",
+    "규칙"
+   ],
+   "file": "https://Cogniterm.github.io/design-system/patterns/streaming.txt"
+  },
+  {
+   "id": "evidence",
+   "name": "Citations & Evidence",
+   "ko": "근거 표시",
+   "group": "agent",
+   "summary": "무엇을 근거로 답했는지 항상 열어볼 수 있게 합니다.",
+   "sections": [
+    "세 층",
+    "규칙"
+   ],
+   "file": "https://Cogniterm.github.io/design-system/patterns/evidence.txt"
+  },
+  {
+   "id": "approval",
+   "name": "Human in the Loop",
+   "ko": "사람의 승인",
+   "group": "agent",
+   "summary": "에이전트가 되돌릴 수 없는 일을 하기 전에 멈춥니다.",
+   "sections": [
+    "언제 멈추나",
+    "승인 요청의 모양",
+    "규칙"
+   ],
+   "file": "https://Cogniterm.github.io/design-system/patterns/approval.txt"
+  },
+  {
+   "id": "ai-content",
+   "name": "AI Content Labeling",
+   "ko": "AI 생성 표시",
+   "group": "agent",
+   "summary": "무엇이 AI가 만든 것인지 구분합니다.",
+   "sections": [
+    "표시 방법",
+    "규칙"
+   ],
+   "file": "https://Cogniterm.github.io/design-system/patterns/ai-content.txt"
+  },
+  {
+   "id": "recovery",
+   "name": "Error Recovery",
+   "ko": "실패 복구",
+   "group": "agent",
+   "summary": "에이전트가 실패했을 때 사용자가 빠져나갈 길.",
+   "sections": [
+    "실패 종류별 처리",
+    "규칙"
+   ],
+   "file": "https://Cogniterm.github.io/design-system/patterns/recovery.txt"
+  },
+  {
+   "id": "t-index",
+   "name": "Index Page",
+   "ko": "목록 화면",
+   "group": "template",
+   "summary": "데이터를 나열하고 찾는 화면.",
+   "sections": [
+    "골격",
+    "버튼의 자리",
+    "표는 두 갈래 — 한 표 안에서 섞지 않습니다",
+    "정렬",
+    "쪽 나눔",
+    "칸",
+    "탭"
+   ],
+   "file": "https://Cogniterm.github.io/design-system/patterns/t-index.txt"
+  },
+  {
+   "id": "t-detail",
+   "name": "Detail Page",
+   "ko": "상세 화면",
+   "group": "template",
+   "summary": "한 항목을 자세히 보고 조작하는 화면.",
+   "sections": [
+    "골격"
+   ],
+   "file": "https://Cogniterm.github.io/design-system/patterns/t-detail.txt"
+  },
+  {
+   "id": "t-settings",
+   "name": "Settings Page",
+   "ko": "설정 화면",
+   "group": "template",
+   "summary": "값을 바꾸고 저장하는 화면.",
+   "sections": [
+    "골격"
+   ],
+   "file": "https://Cogniterm.github.io/design-system/patterns/t-settings.txt"
+  },
+  {
+   "id": "t-wizard",
+   "name": "Wizard",
+   "ko": "마법사",
+   "group": "template",
+   "summary": "여러 단계로 나뉜 생성 흐름.",
+   "sections": [
+    "골격"
+   ],
+   "file": "https://Cogniterm.github.io/design-system/patterns/t-wizard.txt"
+  },
+  {
+   "id": "t-chat",
+   "name": "Chat / Agent",
+   "ko": "챗 · 에이전트",
+   "group": "template",
+   "summary": "에이전트와 대화하는 화면.",
+   "sections": [
+    "골격"
+   ],
+   "file": "https://Cogniterm.github.io/design-system/patterns/t-chat.txt"
+  },
+  {
+   "id": "t-search",
+   "name": "Search Results",
+   "ko": "검색 결과",
+   "group": "template",
+   "summary": "찾은 것을 보여주는 화면.",
+   "sections": [
+    "골격"
+   ],
+   "file": "https://Cogniterm.github.io/design-system/patterns/t-search.txt"
+  },
+  {
+   "id": "t-drive",
+   "name": "File Browser",
+   "ko": "드라이브",
+   "group": "template",
+   "summary": "파일을 찾고 정리하는 화면.",
+   "sections": [
+    "골격"
+   ],
+   "file": "https://Cogniterm.github.io/design-system/patterns/t-drive.txt"
+  },
+  {
+   "id": "t-dashboard",
+   "name": "Dashboard & Report",
+   "ko": "대시보드 · 보고서",
+   "group": "template",
+   "summary": "현황을 한눈에 보고, 문제가 있으면 그 화면으로 건너갑니다.",
+   "sections": [
+    "골격",
+    "카드",
+    "구성 — 켜고 끄기 · 옮기기",
+    "차트",
+    "기간과 비교",
+    "문서형 보고서의 층"
+   ],
+   "file": "https://Cogniterm.github.io/design-system/patterns/t-dashboard.txt"
+  }
+ ]
+}

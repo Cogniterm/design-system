@@ -1,0 +1,20 @@
+# File Browser (드라이브) — Cogniterm Design System pattern
+
+> 파일을 찾고 정리하는 화면.
+> Group: Page Templates (페이지 템플릿) · Index: https://Cogniterm.github.io/design-system/patterns/llms.txt
+
+## 골격
+
+```
+Breadcrumbs + 보기 전환 + 업로드
+─────────────────────────
+좌: 폴더 트리   우: 파일 그리드 또는 목록
+                   선택 시 하단 액션 바
+```
+
+- **그리드와 리스트가 같은 데이터**여야 합니다. 전환해도 선택이 유지됩니다.
+- 그리드는 훑어보기용, 리스트는 세부 비교용입니다.
+- 다중 선택 시 **하단에 액션 바**가 올라옵니다 — 선택 개수와 함께.
+- 업로드는 **드래그 앤 드롭**을 함께 지원하고, 허용 형식·최대 크기를 미리 알립니다.
+
+쓰는 것: Breadcrumbs · ButtonGroup · Treeview · FileGrid · FileRow · FileInput
