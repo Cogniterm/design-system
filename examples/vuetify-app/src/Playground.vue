@@ -614,9 +614,9 @@ const badgeLabel: Record<string, string> = { default: '대기', brand: '실행�
           <DsBadge :appearance="gv(['subtle','solid','outline'], 'subtle')" variant="warning">보류</DsBadge>
           <DsBadge :appearance="gv(['subtle','solid','outline'], 'subtle')" variant="danger">실패</DsBadge>
           <DsBadge :appearance="gv(['subtle','solid','outline'], 'subtle')" variant="info">안내</DsBadge>
-          <DsBadge :appearance="gv(['subtle','solid','outline'], 'subtle')" variant="violet">베타</DsBadge>
-          <DsBadge :appearance="gv(['subtle','solid','outline'], 'subtle')" variant="teal">신규</DsBadge>
-          <DsBadge :appearance="gv(['subtle','solid','outline'], 'subtle')" variant="pink">실험</DsBadge>
+          <DsBadge :appearance="gv(['subtle','solid','outline'], 'subtle')" variant="cat-3">베타</DsBadge>
+          <DsBadge :appearance="gv(['subtle','solid','outline'], 'subtle')" variant="cat-2">신규</DsBadge>
+          <DsBadge :appearance="gv(['subtle','solid','outline'], 'subtle')" variant="cat-5">실험</DsBadge>
         </div>
       </template>
 

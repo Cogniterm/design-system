@@ -55,6 +55,8 @@ Object.defineProperty(globalThis, 'navigator', {
   value: { clipboard: { writeText: async () => {} } }, configurable: true,
 })
 globalThis.localStorage = { getItem: () => null, setItem() {} }
+// Foundation 견본 · 토큰 표가 계산값을 읽어 적습니다(docs.js enhance) — 여기선 빈 값이면 충분합니다
+globalThis.getComputedStyle = () => ({ getPropertyValue: () => '' })
 
 console.log('문서 사이트 렌더 검사')
 
