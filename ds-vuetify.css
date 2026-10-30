@@ -1182,6 +1182,11 @@
   transform: translateX(calc((var(--sw-w) - var(--sw-h)) / 2));
 }
 .v-switch .v-label { padding-inline-start: 10px; }
+/* 손잡이 색 — ds.css .switch 와 같은 규칙(2026-10-30 다크 시인성): 켜짐 = 흰색 · 다크의 꺼짐 = --foreground.
+   앞 판은 늘 --card 라 다크에서 꺼진 스위치의 손잡이가 바탕에 묻혔습니다 */
+.v-switch .v-selection-control--dirty .v-switch__thumb { background: var(--primary-foreground); }
+[data-theme="dark"] .v-switch .v-selection-control:not(.v-selection-control--dirty) .v-switch__thumb,
+.dark .v-switch .v-selection-control:not(.v-selection-control--dirty) .v-switch__thumb { background: var(--foreground); }
 /* 비활성 — 면을 죽이고 손잡이는 그대로 둡니다 (켜짐·꺼짐은 계속 읽혀야 합니다) */
 .v-switch .v-selection-control--disabled .v-switch__track { background: var(--gray-4); }
 .v-switch .v-selection-control--disabled.v-selection-control--dirty .v-switch__track {
