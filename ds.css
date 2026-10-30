@@ -1320,8 +1320,7 @@ svg.ic.lg { width: 18px; height: 18px; }
    · 켜짐 = 늘 --primary-foreground(흰색) — 라이트는 전과 같은 흰색입니다
    · 다크의 꺼짐 = --foreground(밝은 회색) — shadcn Switch 다크와 같은 손(unchecked thumb = foreground) */
 .switch[aria-checked="true"]::after { background: var(--primary-foreground); }
-[data-theme="dark"] .switch:not([aria-checked="true"])::after,
-.dark .switch:not([aria-checked="true"])::after { background: var(--foreground); }
+.dark .switch:not([aria-checked="true"])::after, [data-theme="dark"] .switch:not([aria-checked="true"])::after { background: var(--foreground); }
 
 /* ── 필터 줄의 컨트롤 ─────────────────────────────────────────────────── */
 

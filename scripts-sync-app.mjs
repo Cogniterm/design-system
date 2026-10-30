@@ -76,7 +76,10 @@ const keepLocal = new Set(conf.keepLocal ?? [])
    `:root {` 와 `[data-theme="dark"], .dark {` 로 시작하는 최상위 블록만 지웁니다.
    중괄호를 세어 끝을 찾습니다 — 정규식으로는 안쪽 중괄호(color-mix 등)에서 일찍 끊깁니다. */
 function stripTokens (css) {
-  const heads = [/^:root\s*\{/m, /^\[data-theme="dark"\][^{]*\{/m]
+  /* ⚠ 다크 머리는 **토큰 블록 그 선택자 그대로**(`[data-theme="dark"], .dark {`)만 잡습니다 (2026-10-30).
+     앞 판의 `^\[data-theme="dark"\][^{]*\{` 는 그 줄로 시작하는 **부품 규칙까지** 토큰 블록으로 보고 지웠습니다 —
+     다크 스위치 손잡이 규칙 · 다크 ::selection 규칙이 앱 사본에서 조용히 빠졌습니다 */
+  const heads = [/^:root\s*\{/m, /^\[data-theme="dark"\],\s*\.dark\s*\{/m]
   let out = css
   for (const head of heads) {
     for (;;) {
